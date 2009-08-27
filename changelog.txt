@@ -1,6 +1,6 @@
 next
 ---
-* Added Finnish (FI) and Bulgarian (BR) localization
+* Added Persian (FA), Finnish (FI) and Bulgarian (BR) localization
 
 1.5.5
 ---
