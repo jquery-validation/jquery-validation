@@ -4,7 +4,7 @@
  */
 jQuery.extend(jQuery.validator.messages, {
 	required: "Detta f&auml;lt &auml;r obligatoriskt.",
-	maxlength: jQuery.validator.format("Du får ange högst {0} tecken."),
+	maxlength: jQuery.validator.format("Du f&aring;r ange h&ouml;gst {0} tecken."),
 	minlength: jQuery.validator.format("Du m&aring;ste ange minst {0} tecken."),
 	rangelength: jQuery.validator.format("Ange minst {0} och max {1} tecken."),
 	email: "Ange en korrekt e-postadress.",

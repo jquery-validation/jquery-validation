@@ -1,6 +1,7 @@
 next
 ---
 * Added Persian (FA), Finnish (FI) and Bulgarian (BR) localization
+* Updated Swedish (SE) localization (some missing html iso characters)
 
 1.5.5
 ---
