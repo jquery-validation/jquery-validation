@@ -715,7 +715,7 @@ $.extend($.validator, {
 		},
 		
 		previousValue: function(element) {
-			return $.data(element, "previousValue") || $.data(element, "previousValue", previous = {
+			return $.data(element, "previousValue") || $.data(element, "previousValue", {
 				old: null,
 				valid: true,
 				message: this.defaultMessage( element, "remote" )
@@ -1032,7 +1032,7 @@ $.extend($.validator, {
 
 			value = value.replace(/\D/g, "");
 
-			for (n = value.length - 1; n >= 0; n--) {
+			for (var n = value.length - 1; n >= 0; n--) {
 				var cDigit = value.charAt(n);
 				var nDigit = parseInt(cDigit, 10);
 				if (bEven) {

@@ -1,3 +1,5 @@
+(function($) {
+	
 function methodTest( methodName ) {
 	var v = jQuery("#form").validate();
 	var method = $.validator.methods[methodName];
@@ -551,3 +553,5 @@ test('creditcardtypes, mastercard', function() {
 	testCardTypeByNumber("3400-0000-0000-009", "AMEX", false);
 	testCardTypeByNumber("4111-1111-1111-1111", "VISA", false);
 });
+
+})(jQuery);

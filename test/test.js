@@ -52,7 +52,7 @@ test("addMethod", function() {
 	$.validator.addMethod("hi", function(value) {
 		return value == "hi";
 	}, "hi me too");
-	var method = $.validator.methods.hi;
+	var method = $.validator.methods.hi,
 		e = $('#text1')[0];
 	ok( !method(e.value, e), "Invalid" );
 	e.value = "hi";
