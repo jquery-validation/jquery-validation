@@ -4,6 +4,7 @@ next
 * Updated Swedish (SE) localization (some missing html iso characters)
 * Fixed $.validator.addMethod to properly handle empty string vs. undefined for the message argument
 * Fixed two accidental global variables
+* Enhanced min/max/rangeWords (in additional-methods.js) to strip html before counting; good when counting words in a richtext editor
 
 1.5.5
 ---

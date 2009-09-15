@@ -4,9 +4,9 @@ function methodTest( methodName ) {
 	var v = jQuery("#form").validate();
 	var method = $.validator.methods[methodName];
 	var element = $("#firstname")[0];
-	return function(value) {
+	return function(value, param) {
 		element.value = value;
-		return method.call( v, value, element );
+		return method.call( v, value, element, param );
 	};
 }
 
@@ -486,6 +486,24 @@ test("time", function() {
 	ok( !method("24:00"), "Invalid time" );
 	ok( !method("29:59"), "Invalid time" );
 	ok( !method("30:00"), "Invalid time" );
+});
+
+test("minWords", function() {
+	var method = methodTest("minWords");
+	ok( method("hello worlds", 2), "plain text, valid" );
+	ok( method("<b>hello</b> world", 2), "html, valid" );
+	ok( !method("hello", 2), "plain text, invalid" );
+	ok( !method("<b>world</b>", 2), "html, invalid" );
+	ok( !method("world <br/>", 2), "html, invalid" );
+});
+
+test("maxWords", function() {
+	var method = methodTest("maxWords");
+	ok( method("hello", 2), "plain text, valid" );
+	ok( method("<b>world</b>", 2), "html, valid" );
+	ok( method("world <br/>", 2), "html, valid" );
+	ok( !method("hello worlds", 2), "plain text, invalid" );
+	ok( !method("<b>hello</b> world", 2), "html, invalid" );
 });
 
 function testCardTypeByNumber(number, cardname, expected) {
