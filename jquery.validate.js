@@ -256,9 +256,7 @@ $.extend($.validator, {
 		url: "Please enter a valid URL.",
 		date: "Please enter a valid date.",
 		dateISO: "Please enter a valid date (ISO).",
-		dateDE: "Bitte geben Sie ein gültiges Datum ein.",
 		number: "Please enter a valid number.",
-		numberDE: "Bitte geben Sie eine Nummer ein.",
 		digits: "Please enter only digits",
 		creditcard: "Please enter a valid credit card number.",
 		equalTo: "Please enter the same value again.",
@@ -998,21 +996,11 @@ $.extend($.validator, {
 			return this.optional(element) || /^\d{4}[\/-]\d{1,2}[\/-]\d{1,2}$/.test(value);
 		},
 	
-		// http://docs.jquery.com/Plugins/Validation/Methods/dateDE
-		dateDE: function(value, element) {
-			return this.optional(element) || /^\d\d?\.\d\d?\.\d\d\d?\d?$/.test(value);
-		},
-	
 		// http://docs.jquery.com/Plugins/Validation/Methods/number
 		number: function(value, element) {
 			return this.optional(element) || /^-?(?:\d+|\d{1,3}(?:,\d{3})+)(?:\.\d+)?$/.test(value);
 		},
 	
-		// http://docs.jquery.com/Plugins/Validation/Methods/numberDE
-		numberDE: function(value, element) {
-			return this.optional(element) || /^-?(?:\d+|\d{1,3}(?:\.\d{3})+)(?:,\d+)?$/.test(value);
-		},
-		
 		// http://docs.jquery.com/Plugins/Validation/Methods/digits
 		digits: function(value, element) {
 			return this.optional(element) || /^\d+$/.test(value);

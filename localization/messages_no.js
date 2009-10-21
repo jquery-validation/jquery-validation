@@ -1,6 +1,6 @@
 /*
  * Translated default messages for the jQuery validation plugin.
- * Language: NO (Norwegian)
+ * Locale: NO (Norwegian)
  */
 jQuery.extend(jQuery.validator.messages, {
        required: "Dette feltet er obligatorisk.",

@@ -1,7 +1,6 @@
 /*
  * Translated default messages for the jQuery validation plugin.
- * Language: DE
- * Skipped date/dateISO/number.
+ * Locale: DE
  */
 jQuery.extend(jQuery.validator.messages, {
 	required: "Dieses Feld ist ein Pflichtfeld.",
@@ -10,8 +9,8 @@ jQuery.extend(jQuery.validator.messages, {
 	rangelength: jQuery.validator.format("Geben Sie bitte mindestens {0} und maximal {1} Zeichen ein."),
 	email: "Geben Sie bitte eine gültige E-Mail Adresse ein.",
 	url: "Geben Sie bitte eine gültige URL ein.",
-	dateDE: "Bitte geben Sie ein gültiges Datum ein.",
-	numberDE: "Geben Sie bitte eine Nummer ein.",
+	date: "Bitte geben Sie ein gültiges Datum ein.",
+	number: "Geben Sie bitte eine Nummer ein.",
 	digits: "Geben Sie bitte nur Ziffern ein.",
 	equalTo: "Bitte denselben Wert wiederholen.",
 	range: jQuery.validator.format("Geben Sie bitten einen Wert zwischen {0} und {1}."),

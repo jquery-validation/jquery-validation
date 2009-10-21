@@ -1,6 +1,6 @@
 /*
  * Translated default messages for the jQuery validation plugin.
- * Language: NL
+ * Locale: NL
  */
 jQuery.extend(jQuery.validator.messages, {
         required: "Dit is een verplicht veld.",

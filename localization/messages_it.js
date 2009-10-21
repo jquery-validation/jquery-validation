@@ -1,9 +1,6 @@
 /*
- * Traduzione dei messaggi di default per il pugin jQuery validation.
- * Language: IT
- * Traduzione a cura di Davide Falchetto
- * E-mail: d.falchetto@d4solutions.it
- * Web: www.d4solutions.it
+ * Translated default messages for the jQuery validation plugin.
+ * Locale: IT
  */
 jQuery.extend(jQuery.validator.messages, {
        required: "Campo obbligatorio.",

@@ -1,6 +1,6 @@
 /*
  * Translated default messages for the jQuery validation plugin.
- * Language: BG
+ * Locale: BG
  */
 jQuery.extend(jQuery.validator.messages, {
 		 required: "Полето е задължително.",
@@ -9,9 +9,7 @@ jQuery.extend(jQuery.validator.messages, {
 		 url: "Моля, въведете валидно URL.",
 		 date: "Моля, въведете валидна дата.",
 		 dateISO: "Моля, въведете валидна дата (ISO).",
-		 dateDE: "Моля, въведете валидна дата.",
 		 number: "Моля, въведете валиден номер.",
-		 numberDE: "Моля, въведете валиден номер.",
 		 digits: "Моля, въведете само цифри",
 		 creditcard: "Моля, въведете валиден номер на кредитна карта.",
 		 equalTo: "Моля, въведете същата стойност отново.",

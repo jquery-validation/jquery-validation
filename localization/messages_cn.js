@@ -1,7 +1,6 @@
 /*
  * Translated default messages for the jQuery validation plugin.
- * Language: CN
- * Author: Fayland Lam <fayland at gmail dot com>
+ * Locale: CN
  */
 jQuery.extend(jQuery.validator.messages, {
         required: "必选字段",

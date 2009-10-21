@@ -1,7 +1,6 @@
 /*
  * Translated default messages for the jQuery validation plugin.
- * Language: DA
- * Skipped date/dateISO/number.
+ * Locale: DA
  */
 jQuery.extend(jQuery.validator.messages, {
 	required: "Dette felt er påkrævet.",
@@ -10,8 +9,8 @@ jQuery.extend(jQuery.validator.messages, {
 	rangelength: jQuery.validator.format("Indtast mindst {0} og højst {1} tegn."),
 	email: "Indtast en gyldig email-adresse.",
 	url: "Indtast en gyldig URL.",
-	dateDE: "Indtast en gyldig dato.",
-	numberDE: "Indtast et tal.",
+	date: "Indtast en gyldig dato.",
+	number: "Indtast et tal.",
 	digits: "Indtast kun cifre.",
 	equalTo: "Indtast den samme værdi igen.",
 	range: jQuery.validator.format("Angiv en værdi mellem {0} og {1}."),

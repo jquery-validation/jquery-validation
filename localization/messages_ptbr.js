@@ -1,7 +1,6 @@
-/**
+/*
  * Translated default messages for the jQuery validation plugin.
- * Language: PT_BR
- * Translator: Francisco Ernesto Teixeira <fco_ernesto@yahoo.com.br>
+ * Locale: PT_BR
  */
 jQuery.extend(jQuery.validator.messages, {
 	required: "Este campo &eacute; requerido.",
@@ -10,9 +9,7 @@ jQuery.extend(jQuery.validator.messages, {
 	url: "Por favor, forne&ccedil;a uma URL v&aacute;lida.",
 	date: "Por favor, forne&ccedil;a uma data v&aacute;lida.",
 	dateISO: "Por favor, forne&ccedil;a uma data v&aacute;lida (ISO).",
-	dateDE: "Bitte geben Sie ein gültiges Datum ein.",
 	number: "Por favor, forne&ccedil;a um n&uacute;mero v&aacute;lida.",
-	numberDE: "Bitte geben Sie eine Nummer ein.",
 	digits: "Por favor, forne&ccedil;a somente d&iacute;gitos.",
 	creditcard: "Por favor, forne&ccedil;a um cart&atilde;o de cr&eacute;dito v&aacute;lido.",
 	equalTo: "Por favor, forne&ccedil;a o mesmo valor novamente.",
@@ -24,7 +21,3 @@ jQuery.extend(jQuery.validator.messages, {
 	max: jQuery.validator.format("Por favor, forne&ccedil;a um valor menor ou igual a {0}."),
 	min: jQuery.validator.format("Por favor, forne&ccedil;a um valor maior ou igual a {0}.")
 });
-
-jQuery.validator.addMethod("datePTBR", function(value) { 
-  return this.optional(element) || /^\d\d?\/\d\d?\/\d\d\d?\d?$/.test(value); 
-}, "Por favor, forne&ccedil;a uma data v&aacute;lida.");

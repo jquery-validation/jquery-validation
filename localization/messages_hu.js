@@ -1,7 +1,6 @@
 /*
  * Translated default messages for the jQuery validation plugin.
- * Language: HU
- * Skipped dateISO/DE, numberDE
+ * Locale: HU
  */
 jQuery.extend(jQuery.validator.messages, {
 	required: "Kötelező megadni.",

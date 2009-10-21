@@ -1,10 +1,11 @@
-next
+1.6
 ---
 * Added Persian (FA), Finnish (FI) and Bulgarian (BR) localization
 * Updated Swedish (SE) localization (some missing html iso characters)
 * Fixed $.validator.addMethod to properly handle empty string vs. undefined for the message argument
 * Fixed two accidental global variables
 * Enhanced min/max/rangeWords (in additional-methods.js) to strip html before counting; good when counting words in a richtext editor
+* Added localized methods for DE, NL and PT_BR, removing the dateDE and numberDE methods (use messages_de.js and methods_de.js with date and number methods instead)
 
 1.5.5
 ---

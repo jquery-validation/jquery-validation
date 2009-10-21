@@ -1,6 +1,6 @@
 /*
  * Translated default messages for the jQuery validation plugin.
- * Language: FI
+ * Locale: FI
  */
 jQuery.extend(jQuery.validator.messages, {
 	required: "T&auml;m&auml; kentt&auml; on pakollinen.",
@@ -11,9 +11,7 @@ jQuery.extend(jQuery.validator.messages, {
 	url: "Sy&ouml;t&auml; oikea URL osoite.",
 	date: "Sy&ouml;t&auml; oike p&auml;iv&auml;m&auml;&auml;r&auml;.",
 	dateISO: "Sy&ouml;t&auml; oike p&auml;iv&auml;m&auml;&auml;r&auml; (VVVV-MM-DD).",
-	dateFI: "Sy&ouml;t&auml; oike p&auml;iv&auml;m&auml;&auml;r&auml;.",
 	number: "Sy&ouml;t&auml; numero.",
-	numberFI: "Sy&ouml;t&auml; numero.",
 	digits: "Sy&ouml;t&auml; pelk&auml;st&auml;&auml;n numeroita.",
 	equalTo: "Sy&ouml;t&auml; sama arvo uudestaan.",
 	range: jQuery.validator.format("Sy&ouml;t&auml; arvo {0} ja {1} v&auml;lilt&auml;."),

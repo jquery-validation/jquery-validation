@@ -1,10 +1,6 @@
 /*
- * validation plugin of JQuery
- * localize of persian(FA) 
- * Language: FA(Persian)
- * Traduzione a cura di Davide Falchetto
- * E-mail: sinoohe.mkh@gmail.com
- * Web: http://30noohe.wordpress.com
+ * Translated default messages for the jQuery validation plugin.
+ * Locale: FA
  */
 jQuery.extend(jQuery.validator.messages, {
        required: "تکمیل این فیلد اجباری است.",

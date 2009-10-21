@@ -1,6 +1,6 @@
 /*
  * Translated default messages for the jQuery validation plugin.
- * Language: CS
+ * Locale: CS
  */
 jQuery.extend(jQuery.validator.messages, {
 	required: "Tento údaj je povinný.",

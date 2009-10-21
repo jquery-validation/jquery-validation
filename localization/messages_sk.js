@@ -1,7 +1,6 @@
 /*
  * Translated default messages for the jQuery validation plugin.
- * Language: SK
- * Skipped dateISO/DE, numberDE
+ * Locale: SK
  */
 jQuery.extend(jQuery.validator.messages, {
 	required: "Povinné zadať.",

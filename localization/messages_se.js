@@ -1,6 +1,6 @@
 /*
  * Translated default messages for the jQuery validation plugin.
- * Language: SE
+ * Locale: SE
  */
 jQuery.extend(jQuery.validator.messages, {
 	required: "Detta f&auml;lt &auml;r obligatoriskt.",
@@ -11,9 +11,7 @@ jQuery.extend(jQuery.validator.messages, {
 	url: "Ange en korrekt URL.",
 	date: "Ange ett korrekt datum.",
 	dateISO: "Ange ett korrekt datum (&ARING;&ARING;&ARING;&ARING;-MM-DD).",
-	dateSE: "Ange ett korrekt datum.",
 	number: "Ange ett korrekt nummer.",
-	numberSE: "Ange ett korrekt nummer.",
 	digits: "Ange endast siffror.",
 	equalTo: "Ange samma v&auml;rde igen.",
 	range: jQuery.validator.format("Ange ett v&auml;rde mellan {0} och {1}."),

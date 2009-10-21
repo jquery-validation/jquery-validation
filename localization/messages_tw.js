@@ -1,7 +1,6 @@
 /*
  * Translated default messages for the jQuery validation plugin.
- * Language: TW (Taiwan - Traditional Chinese)
- * Author: Mr.BB <Boris Yang>
+ * Locale: TW (Taiwan - Traditional Chinese)
  */
 jQuery.extend(jQuery.validator.messages, {
         required: "必填",
