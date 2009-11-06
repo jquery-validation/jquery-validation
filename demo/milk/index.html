@@ -68,8 +68,6 @@ $(document).ready(function() {
 			dateformat: "Choose your preferred dateformat",
 			terms: " "
 		},
-		onkeyup: false,
-		onfocusout: false,
 		// the errorPlacement has to take the table layout into account
 		errorPlacement: function(error, element) {
 			if ( element.is(":radio") )
@@ -78,9 +76,6 @@ $(document).ready(function() {
 				error.appendTo ( element.next() );
 			else
 				error.appendTo( element.parent().next() );
-		},
-		invalidHandler: function() {
-			alert("invalid")
 		},
 		// specifying a submitHandler prevents the default submit, good for the demo
 		submitHandler: function() {
