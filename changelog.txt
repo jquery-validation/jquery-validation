@@ -6,6 +6,7 @@
 * Fixed two accidental global variables
 * Enhanced min/max/rangeWords (in additional-methods.js) to strip html before counting; good when counting words in a richtext editor
 * Added localized methods for DE, NL and PT_BR, removing the dateDE and numberDE methods (use messages_de.js and methods_de.js with date and number methods instead)
+* Fixed remote form submit synchronization, kudos to Matas Petrikas
 
 1.5.5
 ---

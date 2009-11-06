@@ -454,7 +454,6 @@ $.extend($.validator, {
 			this.errorMap = {};
 			this.toShow = $([]);
 			this.toHide = $([]);
-			this.formSubmitted = false;
 			this.currentElements = $([]);
 		},
 		
@@ -707,8 +706,10 @@ $.extend($.validator, {
 			delete this.pending[element.name];
 			if ( valid && this.pendingRequest == 0 && this.formSubmitted && this.form() ) {
 				$(this.currentForm).submit();
+				this.formSubmitted = false;
 			} else if (!valid && this.pendingRequest == 0 && this.formSubmitted) {
 				$(this.currentForm).triggerHandler("invalid-form", [this]);
+				this.formSubmitted = false;
 			}
 		},
 		
