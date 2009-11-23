@@ -10,6 +10,7 @@
 * Improved interactive select validation, now validating also on click (via option or select, inconsistent across browsers); doesn't work in Safari, which doesn't trigger a click event at all on select elements; fixes http://plugins.jquery.com/node/11520
 * Updated to latest form plugin (2.36), fixing http://plugins.jquery.com/node/11487
 * Bind to blur event for equalTo target to revalidate when that target changes, fixes http://plugins.jquery.com/node/11450
+* Simplified select validation, delegating to jQuery's val() method to get the select value; should fix http://plugins.jquery.com/node/11239
 
 1.5.5
 ---

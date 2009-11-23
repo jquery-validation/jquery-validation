@@ -889,8 +889,9 @@ $.extend($.validator, {
 				return "dependency-mismatch";
 			switch( element.nodeName.toLowerCase() ) {
 			case 'select':
-				var options = $("option:selected", element);
-				return options.length > 0 && ( element.type == "select-multiple" || ($.browser.msie && !(options[0].attributes['value'].specified) ? options[0].text : options[0].value).length > 0);
+				// could be an array for select-multiple or a string, both are fine this way
+				var val = $(element).val();
+				return val && val.length > 0;
 			case 'input':
 				if ( this.checkable(element) )
 					return this.getLength(value, element) > 0;
