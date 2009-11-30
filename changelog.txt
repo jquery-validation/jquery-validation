@@ -12,6 +12,7 @@
 * Bind to blur event for equalTo target to revalidate when that target changes, fixes http://plugins.jquery.com/node/11450
 * Simplified select validation, delegating to jQuery's val() method to get the select value; should fix http://plugins.jquery.com/node/11239
 * Fixed default message for digits (http://plugins.jquery.com/node/9853)
+* Fixed issue with cached remote message (http://plugins.jquery.com/node/11029 and http://plugins.jquery.com/node/9351)
 
 1.5.5
 ---

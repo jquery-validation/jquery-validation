@@ -906,10 +906,10 @@ $.extend($.validator, {
 				return "dependency-mismatch";
 			
 			var previous = this.previousValue(element);
-			
 			if (!this.settings.messages[element.name] )
 				this.settings.messages[element.name] = {};
-			this.settings.messages[element.name].remote = typeof previous.message == "function" ? previous.message(value) : previous.message;
+			previous.originalMessage = this.settings.messages[element.name].remote;
+			this.settings.messages[element.name].remote = previous.message;
 			
 			param = typeof param == "string" && {url:param} || param; 
 			
@@ -926,6 +926,7 @@ $.extend($.validator, {
 					dataType: "json",
 					data: data,
 					success: function(response) {
+						validator.settings.messages[element.name].remote = previous.originalMessage;
 						var valid = response === true;
 						if ( valid ) {
 							var submitted = validator.formSubmitted;
@@ -935,7 +936,8 @@ $.extend($.validator, {
 							validator.showErrors();
 						} else {
 							var errors = {};
-							errors[element.name] = previous.message = response || validator.defaultMessage( element, "remote" );
+							var message = (previous.message = response || validator.defaultMessage( element, "remote" ));
+							errors[element.name] = $.isFunction(message) ? message(value) : message;
 							validator.showErrors(errors);
 						}
 						previous.valid = valid;

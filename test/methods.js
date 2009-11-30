@@ -366,7 +366,7 @@ test("accept", function() {
 });
 
 test("remote", function() {
-	expect(5);
+	expect(7);
 	stop();
 	var e = $("#username");
 	var v = $("#userForm").validate({
@@ -387,14 +387,21 @@ test("remote", function() {
 		}
 	});
 	$().ajaxStop(function() {
-		ok( true, "There needs to be exactly one request." );
-		equals( 1, v.size(), "There must be one error" );
-		equals( "asdf in use", v.errorList[0].message );
 		$().unbind("ajaxStop");
-		start();
+		equals( 1, v.size(), "There must be one error" );
+		equals( "Peter in use", v.errorList[0].message );
+		
+		$().ajaxStop(function() {
+			$().unbind("ajaxStop");
+			equals( 1, v.size(), "There must be one error" );
+			equals( "Peter2 in use", v.errorList[0].message );
+			start();
+		});
+		e.val("Peter2");
+		ok( !v.element(e), "new value, new request" );
 	});
 	ok( !v.element(e), "invalid element, nothing entered yet" );
-	e.val("asdf");
+	e.val("Peter");
 	ok( !v.element(e), "still invalid, because remote validation must block until it returns" );
 });
 
@@ -462,7 +469,6 @@ test("remote extensions", function() {
 	e.val("asdf");
 	ok( !v.element(e), "still invalid, because remote validation must block until it returns" );
 });
-
 
 module("additional methods");
 
