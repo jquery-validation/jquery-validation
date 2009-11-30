@@ -17,6 +17,7 @@
 * Added automatic detection of substitution parameters in messages, removing the need to provide format functions (http://plugins.jquery.com/node/11195)
 * Fixed an issue with :filled/:blank somewhat caused by Sizzle (http://plugins.jquery.com/node/11144)
 * Added an integer method to additional-methods.js (http://plugins.jquery.com/node/9612)
+* Fixed errorsFor method where the for-attribute contains characters that need escaping to be valid inside a selector (http://plugins.jquery.com/node/9611)
 
 1.5.5
 ---
