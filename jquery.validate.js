@@ -165,9 +165,9 @@ $.extend($.fn, {
 // Custom selectors
 $.extend($.expr[":"], {
 	// http://docs.jquery.com/Plugins/Validation/blank
-	blank: function(a) {return !$.trim(a.value);},
+	blank: function(a) {return !$.trim("" + a.value);},
 	// http://docs.jquery.com/Plugins/Validation/filled
-	filled: function(a) {return !!$.trim(a.value);},
+	filled: function(a) {return !!$.trim("" + a.value);},
 	// http://docs.jquery.com/Plugins/Validation/unchecked
 	unchecked: function(a) {return !a.checked;}
 });
@@ -505,7 +505,7 @@ $.extend($.validator, {
 					}
 				} catch(e) {
 					this.settings.debug && window.console && console.log("exception occured when checking element " + element.id
-						 + ", check the '" + rule.method + "' method");
+						 + ", check the '" + rule.method + "' method", e);
 					throw e;
 				}
 			}

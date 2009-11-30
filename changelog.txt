@@ -15,6 +15,7 @@
 * Fixed issue with cached remote message (http://plugins.jquery.com/node/11029 and http://plugins.jquery.com/node/9351)
 * Fixed a missing semicolon in additional-methods.js (http://plugins.jquery.com/node/9233)
 * Added automatic detection of substitution parameters in messages, removing the need to provide format functions (http://plugins.jquery.com/node/11195)
+* Fixed an issue with :filled/:blank somewhat caused by Sizzle (http://plugins.jquery.com/node/11144)
 
 1.5.5
 ---
