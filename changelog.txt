@@ -1,11 +1,11 @@
 1.6
 ---
-* Added Persian (FA), Finnish (FI) and Bulgarian (BR) localization
+* Added Portuguese (PTPT), Persian (FA), Finnish (FI) and Bulgarian (BR) localization
 * Updated Swedish (SE) localization (some missing html iso characters)
 * Fixed $.validator.addMethod to properly handle empty string vs. undefined for the message argument
 * Fixed two accidental global variables
 * Enhanced min/max/rangeWords (in additional-methods.js) to strip html before counting; good when counting words in a richtext editor
-* Added localized methods for DE, NL and PT_BR, removing the dateDE and numberDE methods (use messages_de.js and methods_de.js with date and number methods instead)
+* Added localized methods for DE, NL and PT, removing the dateDE and numberDE methods (use messages_de.js and methods_de.js with date and number methods instead)
 * Fixed remote form submit synchronization, kudos to Matas Petrikas
 * Improved interactive select validation, now validating also on click (via option or select, inconsistent across browsers); doesn't work in Safari, which doesn't trigger a click event at all on select elements; fixes http://plugins.jquery.com/node/11520
 * Updated to latest form plugin (2.36), fixing http://plugins.jquery.com/node/11487
