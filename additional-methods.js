@@ -40,6 +40,10 @@ jQuery.validator.addMethod("ziprange", function(value, element) {
 	return this.optional(element) || /^90[2-5]\d\{2}-\d{4}$/.test(value);
 }, "Your ZIP-code must be in the range 902xx-xxxx to 905-xx-xxxx");
 
+jQuery.validator.addMethod("integer", function(value, element) {
+	return this.optional(element) || /^-?\d+$/.test(value);
+}, "A positive or negative non-decimal number please");
+
 /**
 * Return true, if the value is a valid vehicle identification number (VIN).
 *
