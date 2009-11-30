@@ -419,6 +419,25 @@ test("formatAndAdd2", function() {
 	equals( "element bar is not valid", v.errorList[0].message );
 });
 
+test("formatAndAdd, auto detect substitution string", function() {
+	var v = $("#testForm1clean").validate({
+		rules: {
+			firstname: {
+				required: true,
+				rangelength: [5, 10]
+			}
+		},
+		messages: {
+			firstname: {
+				rangelength: "at least ${0}, up to {1}"
+			}
+		}
+	});
+	$("#firstnamec").val("abc");
+	v.form();
+	equals( "at least 5, up to 10", v.errorList[0].message );
+})
+
 test("error containers, simple", function() {
 	expect(14);
 	var container = $("#simplecontainer");
