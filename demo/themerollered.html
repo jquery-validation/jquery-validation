@@ -115,10 +115,11 @@ $().ready(function() {
 <style type="text/css">
 body { font-size: 62.5%; }
 label { display: inline-block; width: 100px; }
+legend { padding: 0.5em; }
 fieldset fieldset label { display: block; }
 #commentForm { width: 500px; }
 #commentForm label { width: 250px; }
-#commentForm label.error, #commentForm input.submit { margin-left: 253px; }
+#commentForm label.error, #commentForm button.submit { margin-left: 253px; }
 #signupForm { width: 670px; }
 #signupForm label.error {
 	margin-left: 10px;
@@ -135,8 +136,8 @@ fieldset fieldset label { display: block; }
 <body>
 
 <form class="cmxform" id="commentForm" method="get" action="">
-	<fieldset class="ui-widget ui-widget-content">
-		<legend class="ui-widget ui-widget-header">Please provide your name, email address (won't be published) and a comment</legend>
+	<fieldset class="ui-widget ui-widget-content ui-corner-all">
+		<legend class="ui-widget ui-widget-header ui-corner-all">Please provide your name, email address (won't be published) and a comment</legend>
 		<p>
 			<label for="cname">Name (required, at least 2 characters)</label>
 			<input id="cname" name="name" class="required ui-widget-content" minlength="2" />
@@ -153,14 +154,14 @@ fieldset fieldset label { display: block; }
 			<textarea id="ccomment" name="comment" class="required ui-widget-content"></textarea>
 		</p>
 		<p>
-			<input class="submit" type="submit" value="Submit"/>
+			<button class="submit" type="submit">Submit</button>
 		</p>
 	</fieldset>
 </form>
 
 <form class="cmxform" id="signupForm" method="get" action="">
-	<fieldset class="ui-widget ui-widget-content">
-		<legend class="ui-widget ui-widget-header">Validating a complete form</legend>
+	<fieldset class="ui-widget ui-widget-content ui-corner-all">
+		<legend class="ui-widget ui-widget-header ui-corner-all">Validating a complete form</legend>
 		<p>
 			<label for="firstname">Firstname</label>
 			<input id="firstname" name="firstname" />
@@ -193,8 +194,8 @@ fieldset fieldset label { display: block; }
 			<label for="newsletter">I'd like to receive the newsletter</label>
 			<input type="checkbox" class="checkbox" id="newsletter" name="newsletter" />
 		</p>
-		<fieldset id="newsletter_topics">
-			<legend class="ui-widget-header">Topics (select at least two) - note: would be hidden when newsletter isn't selected, but is visible here for the demo</legend>
+		<fieldset id="newsletter_topics" class="ui-widget-content ui-corner-all">
+			<legend class="ui-widget-header ui-corner-all">Topics (select at least two) - note: would be hidden when newsletter isn't selected, but is visible here for the demo</legend>
 			<label for="topic_marketflash">
 				<input type="checkbox" id="topic_marketflash" value="marketflash" name="topic" />
 				Marketflash
@@ -210,7 +211,7 @@ fieldset fieldset label { display: block; }
 			<label for="topic" class="error">Please select at least two topics you'd like to receive.</label>
 		</fieldset>
 		<p>
-			<input class="submit" type="submit" value="Submit"/>
+			<button class="submit" type="submit">Submit</button>
 		</p>
 	</fieldset>
 </form>
