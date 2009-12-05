@@ -1,20 +1,38 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html>
+<html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
 <title>jQuery validation plug-in - main demo</title>
 
-<link rel="stylesheet" type="text/css" media="screen" href="css/screen.css" />
+<link rel="stylesheet" type="text/css" media="screen" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/themes/cupertino/jquery-ui.css" />
+<link rel="stylesheet" type="text/css" media="screen" href="http://jquery-ui.googlecode.com/svn/branches/dev/themes/base/ui.button.css" />
 
 <script src="../lib/jquery.js" type="text/javascript"></script>
 <script src="../jquery.validate.js" type="text/javascript"></script>
 
+<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/jquery-ui.min.js" type="text/javascript"></script>
+<script src="http://jquery-ui.googlecode.com/svn/branches/dev/ui/jquery.ui.button.js" type="text/javascript"></script>
+
+<script type="text/javascript" src="http://jqueryui.com/themeroller/themeswitchertool/"></script>
+
 <script type="text/javascript">
 $.validator.setDefaults({
-	submitHandler: function() { alert("submitted!"); }
+	submitHandler: function() { alert("submitted!"); },
+	highlight: function(input) {
+		$(input).addClass("ui-state-highlight");
+	},
+	unhighlight: function(input) {
+		$(input).removeClass("ui-state-highlight");
+	}
 });
 
 $().ready(function() {
+	$.fn.themeswitcher && $('<div/>').css({
+		position: "absolute",
+		right: 10,
+		top: 10
+	}).appendTo(document.body).themeswitcher();
+	
 	// validate the comment form when it is submitted
 	$("#commentForm").validate();
 	
@@ -88,11 +106,16 @@ $().ready(function() {
 		topicInputs.attr("disabled", !this.checked);
 	});
 	
+	$("#signupForm input:text").addClass("ui-widget-content");
+	
 	$(":submit").button();
 });
 </script>
 
 <style type="text/css">
+body { font-size: 62.5%; }
+label { display: inline-block; width: 100px; }
+fieldset fieldset label { display: block; }
 #commentForm { width: 500px; }
 #commentForm label { width: 250px; }
 #commentForm label.error, #commentForm input.submit { margin-left: 253px; }
@@ -111,28 +134,23 @@ $().ready(function() {
 </head>
 <body>
 
-<h1 id="banner"><a href="http://bassistance.de/jquery-plugins/jquery-plugin-validation/">jQuery Validation Plugin</a> Demo</h1>
-<div id="main">
-
-<p>Default submitHandler is set to display an alert into of submitting the form</p>
-
 <form class="cmxform" id="commentForm" method="get" action="">
-	<fieldset>
-		<legend>Please provide your name, email address (won't be published) and a comment</legend>
+	<fieldset class="ui-widget ui-widget-content">
+		<legend class="ui-widget ui-widget-header">Please provide your name, email address (won't be published) and a comment</legend>
 		<p>
 			<label for="cname">Name (required, at least 2 characters)</label>
-			<input id="cname" name="name" class="required" minlength="2" />
+			<input id="cname" name="name" class="required ui-widget-content" minlength="2" />
 		<p>
 			<label for="cemail">E-Mail (required)</label>
-			<input id="cemail" name="email" class="required email" />
+			<input id="cemail" name="email" class="required email ui-widget-content" />
 		</p>
 		<p>
 			<label for="curl">URL (optional)</label>
-			<input id="curl" name="url" class="url" value="" />
+			<input id="curl" name="url" class="url ui-widget-content" value="" />
 		</p>
 		<p>
 			<label for="ccomment">Your comment (required)</label>
-			<textarea id="ccomment" name="comment" class="required"></textarea>
+			<textarea id="ccomment" name="comment" class="required ui-widget-content"></textarea>
 		</p>
 		<p>
 			<input class="submit" type="submit" value="Submit"/>
@@ -141,8 +159,8 @@ $().ready(function() {
 </form>
 
 <form class="cmxform" id="signupForm" method="get" action="">
-	<fieldset>
-		<legend>Validating a complete form</legend>
+	<fieldset class="ui-widget ui-widget-content">
+		<legend class="ui-widget ui-widget-header">Validating a complete form</legend>
 		<p>
 			<label for="firstname">Firstname</label>
 			<input id="firstname" name="firstname" />
@@ -176,7 +194,7 @@ $().ready(function() {
 			<input type="checkbox" class="checkbox" id="newsletter" name="newsletter" />
 		</p>
 		<fieldset id="newsletter_topics">
-			<legend>Topics (select at least two) - note: would be hidden when newsletter isn't selected, but is visible here for the demo</legend>
+			<legend class="ui-widget-header">Topics (select at least two) - note: would be hidden when newsletter isn't selected, but is visible here for the demo</legend>
 			<label for="topic_marketflash">
 				<input type="checkbox" id="topic_marketflash" value="marketflash" name="topic" />
 				Marketflash
@@ -196,28 +214,6 @@ $().ready(function() {
 		</p>
 	</fieldset>
 </form>
-
-<h3>Syntetic examples</h3>
-<ul>
-	<li><a href="errorcontainer-demo.html">Error message containers in action</a></li>
-	<li><a href="custom-messages-metadata-demo.html">Custom Messages as Metadata</a></li>
-	<li><a href="radio-checkbox-select-demo.html">Radio and checkbox buttons and selects</a></li>
-	<li><a href="ajaxSubmit-intergration-demo.html">Integration with Form Plugin (AJAX submit)</a></li>
-	<li><a href="custom-methods-demo.html">Custom methods and message display.</a></li>
-	<li><a href="dynamic-totals.html">Dynamic forms</a></li>
-</ul>
-<h3>Real-world examples</h3>
-<ul>
-	<li><a href="milk/">Remember The Milk signup form</a></li>
-	<li><a href="marketo/">Marketo signup form</a></li>
-	<li><a href="multipart/">Buy and Sell a House multipart form</a></li>
-	<li><a href="captcha/">Remote captcha validation</a></li>
-</ul>
-
-<h3>Testsuite</h3>
-<ul>
-	<li><a href="../test/">Validation Testsuite</a></li>
-</ul>	
 
 </div>
 
