@@ -106,7 +106,7 @@ $().ready(function() {
 		topicInputs.attr("disabled", !this.checked);
 	});
 	
-	$("#signupForm input:text").addClass("ui-widget-content");
+	$("#signupForm input:not(:submit)").addClass("ui-widget-content");
 	
 	$(":submit").button();
 });
