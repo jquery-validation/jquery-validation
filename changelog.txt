@@ -1,3 +1,7 @@
+1.?
+---
+* Added Lithuanian (LT) localization 
+
 1.6
 ---
 * Added Arabic (AR), Portuguese (PTPT), Persian (FA), Finnish (FI) and Bulgarian (BR) localization
