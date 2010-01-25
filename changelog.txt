@@ -3,6 +3,7 @@
 * Added Lithuanian (LT) localization
 * Added jQuery UI themerolled demo
 * Removed cmxform.js 
+* Fixed four missing semicolons (http://plugins.jquery.com/node/12639) 
 
 1.6
 ---
