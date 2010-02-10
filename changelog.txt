@@ -6,7 +6,9 @@
 * Fixed Spanish (ES) localization (http://plugins.jquery.com/node/12696)
 * Added jQuery UI themerolled demo
 * Removed cmxform.js 
-* Fixed four missing semicolons (http://plugins.jquery.com/node/12639) 
+* Fixed four missing semicolons (http://plugins.jquery.com/node/12639)
+* Renamed phone-method in additional-methods.js to phoneUS
+* Added phoneUK and mobileUK methods to additional-methods.js (http://plugins.jquery.com/node/12359) 
 
 1.6
 ---
