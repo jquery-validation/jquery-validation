@@ -2,6 +2,7 @@
 ---
 * Added Lithuanian (LT) localization
 * Added Greek (EL) localization (http://plugins.jquery.com/node/12319)
+* Added Latvian (LV) localization (http://plugins.jquery.com/node/12349)
 * Fixed Spanish (ES) localization (http://plugins.jquery.com/node/12696)
 * Added jQuery UI themerolled demo
 * Removed cmxform.js 
