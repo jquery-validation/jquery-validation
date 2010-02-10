@@ -9,7 +9,8 @@
 * Removed cmxform.js 
 * Fixed four missing semicolons (http://plugins.jquery.com/node/12639)
 * Renamed phone-method in additional-methods.js to phoneUS
-* Added phoneUK and mobileUK methods to additional-methods.js (http://plugins.jquery.com/node/12359) 
+* Added phoneUK and mobileUK methods to additional-methods.js (http://plugins.jquery.com/node/12359)
+* Deep extend options to avoid modifying multiple forms when using the rules-method on a single element (http://plugins.jquery.com/node/12411)
 
 1.6
 ---

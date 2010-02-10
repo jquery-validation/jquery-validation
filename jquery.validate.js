@@ -174,7 +174,7 @@ $.extend($.expr[":"], {
 
 // constructor for validator
 $.validator = function( options, form ) {
-	this.settings = $.extend( {}, $.validator.defaults, options );
+	this.settings = $.extend( true, {}, $.validator.defaults, options );
 	this.currentForm = form;
 	this.init();
 };
