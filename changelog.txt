@@ -1,6 +1,7 @@
 1.?
 ---
 * Added Lithuanian (LT) localization
+* Added Greek (EL) localization (http://plugins.jquery.com/node/12319)
 * Fixed Spanish (ES) localization (http://plugins.jquery.com/node/12696)
 * Added jQuery UI themerolled demo
 * Removed cmxform.js 
