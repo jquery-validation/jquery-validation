@@ -473,7 +473,7 @@ test("remote extensions", function() {
 module("additional methods");
 
 test("phone (us)", function() {
-	var method = methodTest("phone");
+	var method = methodTest("phoneUS");
 	ok( method( "1(212)-999-2345" ), "Valid us phone number" );
 	ok( method( "212 999 2344" ), "Valid us phone number" );
 	ok( method( "212-999-0983" ), "Valid us phone number" );
