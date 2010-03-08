@@ -300,12 +300,13 @@ $.extend($.validator, {
 			});
 			
 			function delegate(event) {
-				var validator = $.data(this[0].form, "validator");
-				validator.settings["on" + event.type] && validator.settings["on" + event.type].call(validator, this[0] );
+				var validator = $.data(this[0].form, "validator"),
+					eventType = "on" + event.type.replace(/^validate/, "");
+				validator.settings[eventType] && validator.settings[eventType].call(validator, this[0] );
 			}
 			$(this.currentForm)
-				.delegate("focusin focusout keyup", ":text, :password, :file, select, textarea", delegate)
-				.delegate("click", ":radio, :checkbox, select, option", delegate);
+				.validateDelegate(":text, :password, :file, select, textarea", "validatefocusin validatefocusout keyup", delegate)
+				.validateDelegate(":radio, :checkbox, select, option", "click", delegate);
 
 			if (this.settings.invalidHandler)
 				$(this.currentForm).bind("invalid-form.validate", this.settings.invalidHandler);
@@ -1104,8 +1105,8 @@ $.format = $.validator.format;
 // provides triggerEvent(type: String, target: Element) to trigger delegated events
 ;(function($) {
 	$.each({
-		focus: 'focusin',
-		blur: 'focusout'	
+		focus: 'validatefocusin',
+		blur: 'validatefocusout'	
 	}, function( original, fix ){
 		$.event.special[fix] = {
 			setup:function() {
@@ -1125,16 +1126,13 @@ $.format = $.validator.format;
 		};
 	});
 	$.extend($.fn, {
-		delegate: function(type, delegate, handler) {
+		validateDelegate: function(delegate, type, handler) {
 			return this.bind(type, function(event) {
 				var target = $(event.target);
 				if (target.is(delegate)) {
 					return handler.apply(target, arguments);
 				}
 			});
-		},
-		triggerEvent: function(type, target) {
-			return this.triggerHandler(type, [$.event.fix({ type: type, target: target })]);
 		}
 	});
 })(jQuery);

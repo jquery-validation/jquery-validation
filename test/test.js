@@ -574,15 +574,9 @@ test("findLastActive()", function() {
 	ok( !v.findLastActive() );
 	v.form();
 	v.focusInvalid();
-	ok( !v.findLastActive() );
-	try {
-		$("#testForm1 input:last").trigger("focusin");
-		//$("#testForm1").triggerEvent("focusin", $("#testForm1 input:last")[0]);
-		v.focusInvalid();
-		equals( lastInput, v.findLastActive() );
-	} catch(e) {
-		ok( true, "Ignore in IE" );
-	}
+	equals( v.findLastActive(), $("#firstname")[0] );
+	var lastActive = $("#lastname").trigger("validatefocusin")[0];
+	equals( v.findLastActive(), lastActive );
 });
 
 test("validating multiple checkboxes with 'required'", function() {
@@ -877,7 +871,7 @@ test("validate on blur", function() {
 		equals(v.errors().filter(":visible").size(), expected);
 	}
 	function blur(target) {
-		target.trigger("focusout");
+		target.trigger("validatefocusout");
 	}
 	$("#errorFirstname").hide();
 	var e = $("#firstname");
@@ -954,7 +948,7 @@ test("validate on not keyup, only blur", function() {
 	e.trigger("keyup");
 	e.keyup();
 	errors(0);
-	e.trigger("focusout");
+	e.trigger("validatefocusout");
 	errors(1);
 });
 
@@ -968,7 +962,7 @@ test("validate on keyup and blur", function() {
 	e.val("a");
 	e.trigger("keyup");
 	errors(0);
-	e.trigger("focusout");
+	e.trigger("validatefocusout");
 	errors(1);
 });
 
