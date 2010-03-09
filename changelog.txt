@@ -1,4 +1,4 @@
-1.?
+1.7
 ---
 * Added Lithuanian (LT) localization
 * Added Greek (EL) localization (http://plugins.jquery.com/node/12319)
