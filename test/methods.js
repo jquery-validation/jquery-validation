@@ -386,13 +386,13 @@ test("remote", function() {
 			ok( false, "submitHandler may never be called when validating only elements");
 		}
 	});
-	$().ajaxStop(function() {
-		$().unbind("ajaxStop");
+	$(document).ajaxStop(function() {
+		$(document).unbind("ajaxStop");
 		equals( 1, v.size(), "There must be one error" );
 		equals( "Peter in use", v.errorList[0].message );
 		
-		$().ajaxStop(function() {
-			$().unbind("ajaxStop");
+		$(document).ajaxStop(function() {
+			$(document).unbind("ajaxStop");
 			equals( 1, v.size(), "There must be one error" );
 			equals( "Peter2 in use", v.errorList[0].message );
 			start();
@@ -437,7 +437,7 @@ test("remote, customized ajax options", function() {
 
 
 test("remote extensions", function() {
-	expect(6);
+	expect(5);
 	stop();
 	var e = $("#username");
 	var v = $("#userForm").validate({
@@ -456,9 +456,8 @@ test("remote extensions", function() {
 			ok( false, "submitHandler may never be called when validating only elements");
 		}
 	});
-	$().ajaxStop(function() {
-		$().unbind("ajaxStop");
-		ok( true, "There needs to be exactly one request." );
+	$(document).ajaxStop(function() {
+		$(document).unbind("ajaxStop");
 		equals( 1, v.size(), "There must be one error" );
 		equals( v.errorList[0].message, "asdf is already taken, please try something else" );
 		v.element(e);

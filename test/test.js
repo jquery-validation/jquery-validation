@@ -988,6 +988,8 @@ test("validate checkbox on click", function() {
 	}
 	function trigger(element) {
 		element.click();
+		// triggered click event screws up checked-state in 1.4 
+		element.valid();
 	}
 	var e = $("#check2");
 	var v = $("#form").validate({
@@ -1012,6 +1014,8 @@ test("validate multiple checkbox on click", function() {
 	}
 	function trigger(element) {
 		element.click();
+		// triggered click event screws up checked-state in 1.4 
+		element.valid();
 	}
 	var e1 = $("#check1").attr("checked", false);
 	var e2 = $("#check1b");
@@ -1024,7 +1028,6 @@ test("validate multiple checkbox on click", function() {
 		}
 	});
 	trigger(e1);
-	errors(0, "Minlength must be skipped");
 	trigger(e2);
 	errors(0);
 	trigger(e2);
@@ -1042,6 +1045,8 @@ test("validate radio on click", function() {
 	}
 	function trigger(element) {
 		element.click();
+		// triggered click event screws up checked-state in 1.4 
+		element.valid();
 	}
 	var e1 = $("#radio1");
 	var e2 = $("#radio1a");
