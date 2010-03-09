@@ -409,7 +409,12 @@ $.extend($.validator, {
 		focusInvalid: function() {
 			if( this.settings.focusInvalid ) {
 				try {
-					$(this.findLastActive() || this.errorList.length && this.errorList[0].element || []).filter(":visible").focus();
+					$(this.findLastActive() || this.errorList.length && this.errorList[0].element || [])
+					.filter(":visible")
+					.focus()
+					// manually trigger validatefocusin event in IE, where focusin isn't a special event triggered by a triggered focus event
+					// without it, focusin handler isn't called, findLastActive won't have anything to find
+					.trigger("validatefocusin");
 				} catch(e) {
 					// ignore IE throwing errors when focusing hidden elements
 				}
@@ -1101,8 +1106,6 @@ $.format = $.validator.format;
 
 // provides delegate(type: String, delegate: Selector, handler: Callback) plugin for easier event delegation
 // handler is only called when $(event.target).is(delegate), in the scope of the jquery-object for event.target 
-
-// provides triggerEvent(type: String, target: Element) to trigger delegated events
 ;(function($) {
 	$.each({
 		focus: 'validatefocusin',
@@ -1111,12 +1114,11 @@ $.format = $.validator.format;
 		$.event.special[fix] = {
 			setup:function() {
 				if ( $.browser.msie ) return false;
-				this.addEventListener( original, $.event.special[fix].handler, true );
+				this.addEventListener( original, handler, true );
 			},
 			teardown:function() {
 				if ( $.browser.msie ) return false;
-				this.removeEventListener( original,
-				$.event.special[fix].handler, true );
+				this.removeEventListener( original, handler, true );
 			},
 			handler: function(e) {
 				arguments[0] = $.event.fix(e);
@@ -1124,6 +1126,11 @@ $.format = $.validator.format;
 				return $.event.handle.apply(this, arguments);
 			}
 		};
+		function handler(e) {
+			e = $.event.fix(e);
+			e.type = fix;
+			return $.event.handle.call(this, e);
+		}
 	});
 	$.extend($.fn, {
 		validateDelegate: function(delegate, type, handler) {
