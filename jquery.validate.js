@@ -305,7 +305,7 @@ $.extend($.validator, {
 				validator.settings[eventType] && validator.settings[eventType].call(validator, this[0] );
 			}
 			$(this.currentForm)
-				.validateDelegate(":text, :password, :file, select, textarea", "validatefocusin validatefocusout keyup", delegate)
+				.validateDelegate(":text, :password, :file, select, textarea", "focusin focusout keyup", delegate)
 				.validateDelegate(":radio, :checkbox, select, option", "click", delegate);
 
 			if (this.settings.invalidHandler)
@@ -412,9 +412,8 @@ $.extend($.validator, {
 					$(this.findLastActive() || this.errorList.length && this.errorList[0].element || [])
 					.filter(":visible")
 					.focus()
-					// manually trigger validatefocusin event in IE, where focusin isn't a special event triggered by a triggered focus event
-					// without it, focusin handler isn't called, findLastActive won't have anything to find
-					.trigger("validatefocusin");
+					// manually trigger focusin event; without it, focusin handler isn't called, findLastActive won't have anything to find
+					.trigger("focusin");
 				} catch(e) {
 					// ignore IE throwing errors when focusing hidden elements
 				}
@@ -1107,31 +1106,33 @@ $.format = $.validator.format;
 // provides delegate(type: String, delegate: Selector, handler: Callback) plugin for easier event delegation
 // handler is only called when $(event.target).is(delegate), in the scope of the jquery-object for event.target 
 ;(function($) {
-	$.each({
-		focus: 'validatefocusin',
-		blur: 'validatefocusout'	
-	}, function( original, fix ){
-		$.event.special[fix] = {
-			setup:function() {
-				if ( $.browser.msie ) return false;
-				this.addEventListener( original, handler, true );
-			},
-			teardown:function() {
-				if ( $.browser.msie ) return false;
-				this.removeEventListener( original, handler, true );
-			},
-			handler: function(e) {
-				arguments[0] = $.event.fix(e);
-				arguments[0].type = fix;
-				return $.event.handle.apply(this, arguments);
+	// only implement if not provided by jQuery core (since 1.4)
+	// TODO verify if jQuery 1.4's implementation is compatible with older jQuery special-event APIs
+	if (!jQuery.event.special.focusin && !jQuery.event.special.focusout && document.addEventListener) {
+		$.each({
+			focus: 'focusin',
+			blur: 'focusout'	
+		}, function( original, fix ){
+			$.event.special[fix] = {
+				setup:function() {
+					this.addEventListener( original, handler, true );
+				},
+				teardown:function() {
+					this.removeEventListener( original, handler, true );
+				},
+				handler: function(e) {
+					arguments[0] = $.event.fix(e);
+					arguments[0].type = fix;
+					return $.event.handle.apply(this, arguments);
+				}
+			};
+			function handler(e) {
+				e = $.event.fix(e);
+				e.type = fix;
+				return $.event.handle.call(this, e);
 			}
-		};
-		function handler(e) {
-			e = $.event.fix(e);
-			e.type = fix;
-			return $.event.handle.call(this, e);
-		}
-	});
+		});
+	};
 	$.extend($.fn, {
 		validateDelegate: function(delegate, type, handler) {
 			return this.bind(type, function(event) {
