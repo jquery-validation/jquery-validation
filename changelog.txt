@@ -1,3 +1,7 @@
+1.x
+---
+* Improved NL localization (http://plugins.jquery.com/node/14120)
+
 1.7
 ---
 * Added Lithuanian (LT) localization
