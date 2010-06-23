@@ -1,6 +1,7 @@
 1.x
 ---
 * Improved NL localization (http://plugins.jquery.com/node/14120)
+* Added Georgian (GE) localization, thanks Avtandil Kikabidze
 
 1.7
 ---
