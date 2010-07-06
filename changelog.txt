@@ -2,6 +2,7 @@
 ---
 * Improved NL localization (http://plugins.jquery.com/node/14120)
 * Added Georgian (GE) localization, thanks Avtandil Kikabidze
+* Added Serbian (SR) localization, thanks Aleksandar Milovac
 
 1.7
 ---
