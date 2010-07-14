@@ -388,9 +388,21 @@ test("option: focusCleanup true", function() {
 		focusCleanup: true
 	});
 	form.valid();
-	ok( form.is(":has(label.error[for=username]):visible"));
-	$("#username").focus();
-	ok( !form.is(":has(label.error[for=username]:visible)"));
+	ok( form.is(":has(label.error[for=username]:visible)") );
+	$("#username").focus().trigger("focusin");
+	ok( !form.is(":has(label.error[for=username]:visible)") );
+});
+
+test("option: focusCleanup with wrapper", function() {
+	var form = $("#userForm")
+	form.validate({
+		focusCleanup: true,
+		wrapper: "span"
+	});
+	form.valid();
+	ok( form.is(":has(span:visible:has(label.error[for=username]))") );
+	$("#username").focus().trigger("focusin");
+	ok( !form.is(":has(span:visible:has(label.error[for=username]))") );
 });
 
 test("elements() order", function() {
