@@ -373,6 +373,26 @@ test("option: (un)highlight, custom2", function() {
 	ok( !l.is(".invalid") );
 });
 
+test("option: focusCleanup default false", function() {
+	var form = $("#userForm")
+	form.validate();
+	form.valid();
+	ok( form.is(":has(label.error[for=username]:visible)"));
+	$("#username").focus();
+	ok( form.is(":has(label.error[for=username]:visible)"));
+});
+
+test("option: focusCleanup true", function() {
+	var form = $("#userForm")
+	form.validate({
+		focusCleanup: true
+	});
+	form.valid();
+	ok( form.is(":has(label.error[for=username]):visible"));
+	$("#username").focus();
+	ok( !form.is(":has(label.error[for=username]:visible)"));
+});
+
 test("elements() order", function() {
 	var container = $("#orderContainer");
 	var v = $("#elementsOrder").validate({
