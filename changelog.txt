@@ -3,6 +3,7 @@
 * Improved NL localization (http://plugins.jquery.com/node/14120)
 * Added Georgian (GE) localization, thanks Avtandil Kikabidze
 * Added Serbian (SR) localization, thanks Aleksandar Milovac
+* Added ipv4 and ipv6 to additional methods, thanks Natal Ngétal
 
 1.7
 ---
