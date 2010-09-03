@@ -709,25 +709,31 @@ $.extend($.validator, {
 		},
 		
 		startRequest: function(element) {
-			if (!this.pending[element.name]) {
-				this.pendingRequest++;
-				this.pending[element.name] = true;
-			}
+			if (this.pending[element.name]) {
+                                options && options.debug && window.console &&
+                                    console.warn("Ignoring attempt to issue another startRequest on "+element.name);
+                                return;
+                        }
+                        this.pendingRequest++;
+                        this.pending[element.name] = true;
 		},
 		
 		stopRequest: function(element, valid) {
-			this.pendingRequest--;
+                        this.pendingRequest--;
 			// sometimes synchronization fails, make sure pendingRequest is never < 0
-			if (this.pendingRequest < 0)
-				this.pendingRequest = 0;
-			delete this.pending[element.name];
+                        if (this.pendingRequest < 0)
+                                this.pendingRequest = 0;
+
 			if ( valid && this.pendingRequest == 0 && this.formSubmitted && this.form() ) {
-				$(this.currentForm).submit();
-				this.formSubmitted = false;
+                                $(this.currentForm).submit();
+                                this.formSubmitted = false;
 			} else if (!valid && this.pendingRequest == 0 && this.formSubmitted) {
 				$(this.currentForm).triggerHandler("invalid-form", [this]);
 				this.formSubmitted = false;
 			}
+
+                        // Do this only after we're completely done
+			delete this.pending[element.name];
 		},
 		
 		previousValue: function(element) {
@@ -926,14 +932,20 @@ $.extend($.validator, {
 			
 			param = typeof param == "string" && {url:param} || param; 
 			
-			if ( previous.old !== value ) {
-				previous.old = value;
-				var validator = this;
-				this.startRequest(element);
-				var data = {};
-				data[element.name] = value;
-				$.ajax($.extend(true, {
-					url: param,
+                        if( this.pending[element.name] ) {
+				return "pending";
+			}
+			if ( previous.old === value ) {
+                                return previous.valid;
+                        }
+
+                        previous.old = value;
+                        var validator = this;
+                        this.startRequest(element);
+                        var data = {};
+                        data[element.name] = value;
+                        $.ajax($.extend(true, {
+                                    url: param,
 					mode: "abort",
 					port: "validate" + element.name,
 					dataType: "json",
@@ -942,9 +954,7 @@ $.extend($.validator, {
 						validator.settings.messages[element.name].remote = previous.originalMessage;
 						var valid = response === true;
 						if ( valid ) {
-							var submitted = validator.formSubmitted;
 							validator.prepareElement(element);
-							validator.formSubmitted = submitted;
 							validator.successList.push(element);
 							validator.showErrors();
 						} else {
@@ -955,13 +965,9 @@ $.extend($.validator, {
 						}
 						previous.valid = valid;
 						validator.stopRequest(element, valid);
-					}
+                                    }
 				}, param));
-				return "pending";
-			} else if( this.pending[element.name] ) {
-				return "pending";
-			}
-			return previous.valid;
+                        return "pending";
 		},
 
 		// http://docs.jquery.com/Plugins/Validation/Methods/minlength
