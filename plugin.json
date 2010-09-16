@@ -1,0 +1,34 @@
+{
+	"name": "validation",
+    "label": "jQuery Validation Plugin",
+    "license": ["mit", "gpl"],
+    "copyright" : "2010 Jörn Zaefferer",
+    "authors"   : [
+        {
+			name: "Jörn Zaefferer",
+            email: "joern.zaefferer@gmail.com",
+            twitter: "bassistance"
+        }
+    ],
+    "tags"      : ["forms", "official"],
+    "clone"     : "http://github.com/jzaefferer/jquery-validation.git",
+    "repository": "http://github.com/jzaefferer/jquery-validation",
+    "homeurl"   : "http://bassistance.de/jquery-plugins/jquery-plugin-validation/",
+    "docs"      : "http://docs.jquery.com/Plugins/Validation",
+    "examples": [
+        { name: "Overview", description: "Two base demos and links to others", url: "http://jquery.bassistance.de/validate/demo/" },
+        { name: "Marketo Signup Form", description: "Based on a marketo.com sign-up form. The custom validation was replaced with this plugin. ", url: "http://jquery.bassistance.de/validate/demo/marketo/" },
+        { name: "Remember The Milk Signup Form", description: "The sign-up form from rememberthemilk.com (based on an older version). The custom validation was replaced using this plugin.", url: "http://jquery.bassistance.de/validate/demo/milk/" },
+        { name: "Multipart Buy & Sell a house form", description: "Multipart, implemented using the jQuery UI accordion and a custom method to check if an element is on the current page when validated.", url: "http://jquery.bassistance.de/validate/demo/multipart/" },
+        { name: "Using remote validation with captchas", description: "Features remote validation for helping the user to fill out captchas", url: "http://jquery.bassistance.de/validate/demo/captcha/" }
+    ],
+    "issues"       : "http://github.com/jzaefferer/jquery-validation/issues",
+    "dependencies" : {
+        "jquery/jquery": ["1.4.2", "1.3.2"]
+    }
+    "versions": [
+        {   
+        	version     : "1.7.0"
+        }
+    ]
+}
