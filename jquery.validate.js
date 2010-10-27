@@ -602,6 +602,10 @@ $.extend($.validator, {
 			if (this.settings.unhighlight) {
 				for ( var i = 0, elements = this.validElements(); elements[i]; i++ ) {
 					this.settings.unhighlight.call( this, elements[i], this.settings.errorClass, this.settings.validClass );
+					var $next = $(elements[i]).next();
+					if ($next && $next.attr('generated') == 'true') {
+					  $next.remove();
+					}
 				}
 			}
 			this.toHide = this.toHide.not( this.toShow );
