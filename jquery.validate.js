@@ -36,17 +36,19 @@ $.extend($.fn, {
 		
 		if ( validator.settings.onsubmit ) {
 		
-			// allow suppresing validation by adding a cancel class to the submit button
-			this.find("input, button").filter(".cancel").click(function() {
-				validator.cancelSubmit = true;
+			this.click(function(ev) {
+				var target = $(ev.target);
+				if (target.is(':submit')) {
+					// when a submitHandler is used, capture the submitting button
+					if (validator.settings.submitHandler) {
+						validator.submitButton = ev.target;
+					}
+					// allow suppressing validation by adding a cancel class to the submit button
+					if (target.hasClass('cancel')) {
+						validator.cancelSubmit = true;
+				    }
+				}
 			});
-			
-			// when a submitHandler is used, capture the submitting button
-			if (validator.settings.submitHandler) {
-				this.find("input, button").filter(":submit").click(function() {
-					validator.submitButton = this;
-				});
-			}
 		
 			// validate the form on submit
 			this.submit( function( event ) {
