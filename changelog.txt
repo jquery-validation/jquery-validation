@@ -4,6 +4,7 @@
 * Added Georgian (GE) localization, thanks Avtandil Kikabidze
 * Added Serbian (SR) localization, thanks Aleksandar Milovac
 * Added ipv4 and ipv6 to additional methods, thanks Natal Ngétal
+* Added Japanese (JA) localization, thanks Bryan Meyerovich
 
 1.7
 ---
