@@ -5,6 +5,7 @@
 * Added Serbian (SR) localization, thanks Aleksandar Milovac
 * Added ipv4 and ipv6 to additional methods, thanks Natal Ngétal
 * Added Japanese (JA) localization, thanks Bryan Meyerovich
+* Added Catalan (CA) localization, thanks Xavier de Pedro
 
 1.7
 ---
