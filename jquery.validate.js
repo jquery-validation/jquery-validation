@@ -486,7 +486,7 @@ $.extend($.validator, {
 			
 			var rules = $(element).rules();
 			var dependencyMismatch = false;
-			for( method in rules ) {
+			for (var method in rules ) {
 				var rule = { method: method, parameters: rules[method] };
 				try {
 					var result = $.validator.methods[method].call( this, element.value.replace(/\r/g, ""), element, rule.parameters );
@@ -774,7 +774,7 @@ $.extend($.validator, {
 		var rules = {};
 		var $element = $(element);
 		
-		for (method in $.validator.methods) {
+		for (var method in $.validator.methods) {
 			var value = $element.attr(method);
 			if (value) {
 				rules[method] = value;
