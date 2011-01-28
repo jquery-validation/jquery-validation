@@ -926,42 +926,44 @@ $.extend($.validator, {
 			
 			param = typeof param == "string" && {url:param} || param; 
 			
-			if ( previous.old !== value ) {
-				previous.old = value;
-				var validator = this;
-				this.startRequest(element);
-				var data = {};
-				data[element.name] = value;
-				$.ajax($.extend(true, {
-					url: param,
-					mode: "abort",
-					port: "validate" + element.name,
-					dataType: "json",
-					data: data,
-					success: function(response) {
-						validator.settings.messages[element.name].remote = previous.originalMessage;
-						var valid = response === true;
-						if ( valid ) {
-							var submitted = validator.formSubmitted;
-							validator.prepareElement(element);
-							validator.formSubmitted = submitted;
-							validator.successList.push(element);
-							validator.showErrors();
-						} else {
-							var errors = {};
-							var message = (previous.message = response || validator.defaultMessage( element, "remote" ));
-							errors[element.name] = $.isFunction(message) ? message(value) : message;
-							validator.showErrors(errors);
-						}
-						previous.valid = valid;
-						validator.stopRequest(element, valid);
-					}
-				}, param));
-				return "pending";
-			} else if( this.pending[element.name] ) {
+			if ( this.pending[element.name] ) {
 				return "pending";
 			}
-			return previous.valid;
+			if ( previous.old === value ) {
+				return previous.valid;
+			}
+			
+			previous.old = value;
+			var validator = this;
+			this.startRequest(element);
+			var data = {};
+			data[element.name] = value;
+			$.ajax($.extend(true, {
+				url: param,
+				mode: "abort",
+				port: "validate" + element.name,
+				dataType: "json",
+				data: data,
+				success: function(response) {
+					validator.settings.messages[element.name].remote = previous.originalMessage;
+					var valid = response === true;
+					if ( valid ) {
+						var submitted = validator.formSubmitted;
+						validator.prepareElement(element);
+						validator.formSubmitted = submitted;
+						validator.successList.push(element);
+						validator.showErrors();
+					} else {
+						var errors = {};
+						var message = (previous.message = response || validator.defaultMessage( element, "remote" ));
+						errors[element.name] = $.isFunction(message) ? message(value) : message;
+						validator.showErrors(errors);
+					}
+					previous.valid = valid;
+					validator.stopRequest(element, valid);
+				}
+			}, param));
+			return "pending";
 		},
 
 		// http://docs.jquery.com/Plugins/Validation/Methods/minlength

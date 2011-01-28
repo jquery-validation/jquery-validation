@@ -196,7 +196,7 @@ test("valid()", function() {
 	ok( v.valid(), "No errors, must be valid" );
 	v.errorList = errorList;
 	ok( !v.valid(), "One error, must be invalid" );
-	reset();
+	QUnit.reset();
 	v = $('#testForm3').validate({ submitHandler: function() {
 		ok( false, "Submit handler was called" );
 	}});
@@ -411,7 +411,7 @@ test("elements() order", function() {
 		errorLabelContainer: container,
 		wrap: "li"
 	});
-	isSet( v.elements().get(), q("order1", "order2", "order3", "order4", "order5", "order6"), "elements must be in document order" );
+	deepEqual( v.elements().get(), $("#order1, #order2, #order3, #order4, #order5, #order6").get(), "elements must be in document order" );
 	v.form();
 	same( container.children().map(function() {
 		return $(this).attr("for");
@@ -585,7 +585,7 @@ test("option invalidHandler", function() {
 });
 
 test("findByName()", function() {
-	isSet( new $.validator({}, document.getElementById("form")).findByName(document.getElementById("radio1").name), $("#form").find("[name=radio1]") );
+	deepEqual( new $.validator({}, document.getElementById("form")).findByName(document.getElementById("radio1").name).get(), $("#form").find("[name=radio1]").get() );
 });
 
 test("focusInvalid()", function() {
@@ -614,17 +614,17 @@ test("findLastActive()", function() {
 test("validating multiple checkboxes with 'required'", function() {
 	expect(3);
 	var checkboxes = $("#form input[name=check3]").attr("checked", false);
-	equals(5, checkboxes.size());
+	equal(checkboxes.size(), 5);
 	var v = $("#form").validate({
 		rules: {
 			check3: "required"
 		}
 	});
 	v.form();
-	equals(1, v.size());
+	equal(v.size(), 1);
 	checkboxes.filter(":last").attr("checked", true);
 	v.form();
-	equals(0, v.size());
+	equal(v.size(), 0);
 });
 
 test("dynamic form", function() {

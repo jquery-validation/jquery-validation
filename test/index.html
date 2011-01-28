@@ -2,10 +2,10 @@
 <html id="html">
 <head>
 	<title>jQuery - Validation Test Suite</title>
-	<link rel="Stylesheet" media="screen" href="qunit/testsuite.css" />
+	<link rel="Stylesheet" media="screen" href="qunit/qunit.css" />
 	<script type="text/javascript" src="../lib/jquery.js"></script>
 	<script type="text/javascript" src="../lib/jquery.form.js"></script>
-	<script type="text/javascript" src="qunit/testrunner.js"></script>
+	<script type="text/javascript" src="qunit/qunit.js"></script>
 	<script type="text/javascript" src="../lib/jquery.metadata.js"></script>
 	<script type="text/javascript" src="../jquery.validate.js"></script>
 	<script type="text/javascript" src="../additional-methods.js"></script>
@@ -15,9 +15,12 @@
 	<script type="text/javascript" src="methods.js"></script>
 </head>
 <body id="body">
-	<h1><a href="http://bassistance.de/jquery-plugins/jquery-plugin-validation/">jQuery Validation Plugin</a> Test Suite</h1>
-	<h2 id="banner"></h2>
-	<h2 id="userAgent"></h2>
+	<h1 id="qunit-header"><a href="http://bassistance.de/jquery-plugins/jquery-plugin-validation/">jQuery Validation Plugin</a> Test Suite</h1>
+	<h2 id="qunit-banner"></h2>
+	<div id="qunit-testrunner-toolbar"></div>
+	<h2 id="qunit-userAgent"></h2>
+	<ol id="qunit-tests"></ol>
+	<div id="qunit-fixture">test markup</div>
 	
 	<!-- Test HTML -->
 	<div id="other" style="display:none;">
@@ -254,8 +257,6 @@
 			<input id="cardnumber" name="cardnumber" />
 		</form>
 	</div>
-	
-	<ol id="tests"></ol>
 	
 </body>
 </html>
