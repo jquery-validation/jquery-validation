@@ -411,9 +411,11 @@ test("elements() order", function() {
 		errorLabelContainer: container,
 		wrap: "li"
 	});
-	deepEqual( v.elements().get(), $("#order1, #order2, #order3, #order4, #order5, #order6").get(), "elements must be in document order" );
+	deepEqual( v.elements().map(function() {
+		return $(this).attr("id");
+	}).get(), ["order1", "order2", "order3", "order4", "order5", "order6"], "elements must be in document order" );
 	v.form();
-	same( container.children().map(function() {
+	deepEqual( container.children().map(function() {
 		return $(this).attr("for");
 	}).get(), ["order1", "order2", "order3", "order4", "order5", "order6"], "labels in error container must be in document order" );
 });
@@ -595,8 +597,6 @@ test("focusInvalid()", function() {
 	});
 	var v = $("#testForm1").validate();
 	v.form();
-	// have to explicitly show input elements with error class, they are hidden by testsuite styles
-	inputs.show();
 	v.focusInvalid();
 });
 
