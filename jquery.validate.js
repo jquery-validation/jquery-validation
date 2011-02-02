@@ -1101,8 +1101,8 @@ $.format = $.validator.format;
 		// Proxy ajax
 		var ajax = $.ajax;
 		$.ajax = function(settings) {
-			var mode = ( "mode" in settings ? settings : ajaxSettings ).mode,
-				port = ( "port" in settings ? settings : ajaxSettings ).port;
+			var mode = ( "mode" in settings ? settings : $.ajaxSettings ).mode,
+				port = ( "port" in settings ? settings : $.ajaxSettings ).port;
 			if (mode == "abort") {
 				if ( pendingRequests[port] ) {
 					pendingRequests[port].abort();
