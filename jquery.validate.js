@@ -1035,7 +1035,7 @@ $.extend($.validator, {
 			if ( this.optional(element) )
 				return "dependency-mismatch";
 			// accept only digits and dashes
-			if (/[^0-9-]+/.test(value))
+			if (/[^0-9\s-]+/.test(value))
 				return false;
 			var nCheck = 0,
 				nDigit = 0,
