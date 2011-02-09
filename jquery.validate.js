@@ -355,17 +355,25 @@ $.extend($.validator, {
 		showErrors: function(errors) {
 			if(errors) {
 				// add items to error list and map
-				$.extend( this.errorMap, errors );
-				this.errorList = [];
-				for ( var name in errors ) {
-					this.errorList.push({
-						message: errors[name],
-						element: this.findByName(name)[0]
-					});
+				if( $.isArray(errors) ) {
+					$.extend( this.errorMap, errors );
+					this.errorList = this.errorList.concat(errors);
+					for ( var i=0; i<errors.length; i++ ) {
+						this.errorMap[errors[i].element.name] = errors[i].message;
+					}
+				} else {
+					$.extend( this.errorMap, errors );
+					this.errorList = [];
+					for ( var name in errors ) {
+						this.errorList.push({
+							message: errors[name],
+							element: this.findByName(name)[0]
+						});
+					}
 				}
 				// remove items from success list
 				this.successList = $.grep( this.successList, function(element) {
-					return !(element.name in errors);
+					return !(element.name in this.errorMap);
 				});
 			}
 			this.settings.showErrors
@@ -572,7 +580,8 @@ $.extend($.validator, {
 			}			
 			this.errorList.push({
 				message: message,
-				element: element
+				element: element,
+				rule: rule
 			});
 			
 			this.errorMap[element.name] = message;
@@ -924,7 +933,7 @@ $.extend($.validator, {
 			previous.originalMessage = this.settings.messages[element.name].remote;
 			this.settings.messages[element.name].remote = previous.message;
 			
-			param = typeof param == "string" && {url:param} || param; 
+			param = typeof param == "string" && {url:param} || param;
 			
 			if ( this.pending[element.name] ) {
 				return "pending";
@@ -954,9 +963,15 @@ $.extend($.validator, {
 						validator.successList.push(element);
 						validator.showErrors();
 					} else {
-						var errors = {};
 						var message = (previous.message = response || validator.defaultMessage( element, "remote" ));
-						errors[element.name] = $.isFunction(message) ? message(value) : message;
+						var errors = [{
+							element: element,
+							message: $.isFunction(message) ? message(value) : message,
+							rule: {
+								method: 'remote',
+								parameters: param
+							}
+						}];
 						validator.showErrors(errors);
 					}
 					previous.valid = valid;
