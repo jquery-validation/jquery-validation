@@ -1085,14 +1085,17 @@ $.format = $.validator.format;
 // ajax mode: abort
 // usage: $.ajax({ mode: "abort"[, port: "uniqueport"]});
 // if mode:"abort" is used, the previous request on that port (port can be undefined) is aborted via XMLHttpRequest.abort() 
+// ajax mode: abort
+// usage: $.ajax({ mode: "abort"[, port: "uniqueport"]});
+// if mode:"abort" is used, the previous request on that port (port can be undefined) is aborted via XMLHttpRequest.abort() 
 ;(function($) {
 	var ajax = $.ajax;
 	var pendingRequests = {};
 	$.ajax = function(settings) {
-		// create settings for compatibility with ajaxSetup
-		settings = $.extend(settings, $.extend({}, $.ajaxSettings, settings));
-		var port = settings.port;
-		if (settings.mode == "abort") {
+        // get read-only settings for compatibility with ajaxSetup
+		var localSettings = $.extend({}, $.ajaxSettings, settings);
+		var port = localSettings.port;		
+		if (localSettings.mode == "abort") {
 			if ( pendingRequests[port] ) {
 				pendingRequests[port].abort();
 			}
