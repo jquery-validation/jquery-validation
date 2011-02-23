@@ -338,8 +338,11 @@ test("equalTo", function() {
 
 test("creditcard", function() {
 	var method = methodTest("creditcard");
-	ok( method( "446-667-651" ), "Valid creditcard number" );
-	ok( !method( "asdf" ), "Invalid creditcard number" );
+	ok( method( "446667651" ), "Valid creditcard number all numbers" );
+	ok( method( "446-667-651" ), "Valid creditcard number with dashes" );
+	ok( method( "446 667 651" ), "Valid creditcard number with spaces" );
+	ok( !method( "asdf" ), "Invalid characters in creditcard number" );
+	ok( !method( "1234-1234-1234-1234" ), "Fails checksum" );
 });
 
 test("accept", function() {
