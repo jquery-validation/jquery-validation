@@ -414,9 +414,9 @@ test("remote, customized ajax options", function() {
 				required: true,
 				remote: {
 					url: "users.php",
-					type: "post",
+					type: "POST",
 					beforeSend: function(request, settings) {
-						same(settings.type, "post");
+						same(settings.type, "POST");
 						same(settings.data, "username=asdf&email=email.com");
 					},
 					data: {
