@@ -3,7 +3,7 @@
 <head>
 	<title>jQuery - Validation Test Suite</title>
 	<link rel="Stylesheet" media="screen" href="qunit/qunit.css" />
-	<script type="text/javascript" src="../lib/jquery.js"></script>
+	<script type="text/javascript" src="jquery.js"></script>
 	<script type="text/javascript" src="../lib/jquery.form.js"></script>
 	<script type="text/javascript" src="qunit/qunit.js"></script>
 	<script type="text/javascript" src="../lib/jquery.metadata.js"></script>
@@ -15,19 +15,25 @@
 	<script type="text/javascript" src="methods.js"></script>
 </head>
 <body id="body">
-	<h1 id="qunit-header"><a href="http://bassistance.de/jquery-plugins/jquery-plugin-validation/">jQuery Validation Plugin</a> Test Suite</h1>
+	<h1 id="qunit-header">
+		<a href="http://bassistance.de/jquery-plugins/jquery-plugin-validation/">jQuery Validation Plugin</a> Test Suite
+		<a href="?jquery=">jQuery 1.3.2</a>
+		<a href="?jquery=1.4.4">jQuery 1.4.4</a>
+		<a href="?jquery=1.5.1">jQuery 1.5.1</a>
+		</h1>
+	<div>
+	</div>
 	<h2 id="qunit-banner"></h2>
 	<div id="qunit-testrunner-toolbar"></div>
 	<h2 id="qunit-userAgent"></h2>
 	<ol id="qunit-tests"></ol>
-	<div id="qunit-fixture">test markup</div>
 	
 	<!-- Test HTML -->
 	<div id="other" style="display:none;">
 		<input type="password" name="pw1" id="pw1" value="engfeh" />
 		<input type="password" name="pw2" id="pw2" value="" />
 	</div>
-	<div id="main" style="position: absolute; top: -10000px; left: -10000px;">
+	<div id="qunit-fixture">
 		<p id="firstp">See <a id="simon1" href="http://simon.incutio.com/archive/2003/03/25/#getElementsBySelector" rel="bookmark">this blog entry</a> for more information.</p>
 		<p id="ap">
 			Here are some links in a normal paragraph: <a id="google" href="http://www.google.com/" title="Google!">Google</a>, 
