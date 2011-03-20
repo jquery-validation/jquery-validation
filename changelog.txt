@@ -1,4 +1,4 @@
-1.x
+1.8.0
 ---
 * Improved NL localization (http://plugins.jquery.com/node/14120)
 * Added Georgian (GE) localization, thanks Avtandil Kikabidze
@@ -7,6 +7,7 @@
 * Added Japanese (JA) localization, thanks Bryan Meyerovich
 * Added Catalan (CA) localization, thanks Xavier de Pedro
 * Fixed missing var statements within for-in loops
+* Bugfixes for compability with jQuery 1.5.1, while maintaining backwards-compability
 
 1.7
 ---
