@@ -7,6 +7,7 @@
 * Added Japanese (JA) localization, thanks Bryan Meyerovich
 * Added Catalan (CA) localization, thanks Xavier de Pedro
 * Fixed missing var statements within for-in loops
+* Fix for remote validation, where a formatted message got messed up (https://github.com/jzaefferer/jquery-validation/issues/11)
 * Bugfixes for compability with jQuery 1.5.1, while maintaining backwards-compability
 
 1.7
