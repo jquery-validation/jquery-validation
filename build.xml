@@ -78,7 +78,7 @@
 		<echo message="Copying files" />
 		<mkdir dir="${dist.dir}" />
 		<copy overwrite="true" todir="${dist.dir}/">
-			<fileset dir="." excludes="**/.*, dist/, build/, build.xml" />
+			<fileset dir="." excludes="**/.*, .*/, dist/, build/, build.xml" />
 		</copy>
 	</target>
 	
