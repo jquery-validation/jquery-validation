@@ -522,8 +522,17 @@ $.extend($.validator, {
 		// return the custom message for the given element and validation method
 		// specified in the element's "messages" metadata
 		customMetaMessage: function(element, method) {
-			if (!$.metadata)
+			if (!$.metadata){
+				if(!this.settings.meta){
+					return;
+				}
+				//There's no metadata plug-in but there is a meta setting so use jQuery data (e.g. HTML5 data attribute)
+				var elementMetaData = $(element).data(this.settings.meta);
+				if(elementMetaData && elementMetaData.messages && elementMetaData.messages[method]){
+					return elementMetaData.messages[method];
+				}
 				return;
+			}
 
 			var meta = this.settings.meta
 				? $(element).metadata()[this.settings.meta]
