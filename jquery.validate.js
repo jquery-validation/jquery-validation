@@ -788,9 +788,14 @@ $.extend($.validator, {
 	},
 
 	metadataRules: function(element) {
-		if (!$.metadata) return {};
-
 		var meta = $.data(element.form, 'validator').settings.meta;
+		
+		//If we are not using the metadata plugin use the data associated with the element (e.g. in HTML5 data- attribute)
+		if (!$.metadata){
+			return meta ? $(element).data(meta) : {};
+		} 
+		
+		//If we are using the metadata plug-in use it
 		return meta ?
 			$(element).metadata()[meta] :
 			$(element).metadata();
