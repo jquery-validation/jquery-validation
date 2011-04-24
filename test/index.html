@@ -7,6 +7,7 @@
 	<script type="text/javascript" src="../lib/jquery.form.js"></script>
 	<script type="text/javascript" src="qunit/qunit.js"></script>
 	<script type="text/javascript" src="../lib/jquery.metadata.js"></script>
+	<script type="text/javascript" src="../lib/jquery.mockjax.js"></script>
 	<script type="text/javascript" src="../jquery.validate.js"></script>
 	<script type="text/javascript" src="../additional-methods.js"></script>
 	<script type="text/javascript" src="test.js"></script>
@@ -74,7 +75,7 @@
 			<input type="submit" name="submitButton" value="submitButtonValue" />
 		</form>
 		
-		<form method="post" id="signupForm" action="../demo/form.php">
+		<form id="signupForm" action="form.php">
 			<input id="user" name="user" title="Please enter your username (at least 3 characters)" class="{required:true,minlength:3}" />
 			<input type="password" name="password" id="password" class="{required:true,minlength:5}" />
 		</form>

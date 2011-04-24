@@ -1,5 +1,27 @@
 window.sessionStorage && sessionStorage.clear();
 jQuery.validator.defaults.debug = true;
+$.mockjaxSettings.log = $.noop;
+
+$.mockjax({
+	url: "form.php?user=Peter&password=foobar",
+	responseText: 'Hi Peter, welcome back.',
+	responseStatus: 200,
+	responseTime: 1
+});
+$.mockjax({
+	url: "users.php",
+	data: { username: /Peter2?|asdf/},
+	responseText: 'false',
+	responseStatus: 200,
+	responseTime: 1
+});
+$.mockjax({
+	url: "users2.php",
+	data: { username: "asdf"},
+	responseText: '"asdf is already taken, please try something else"',
+	responseStatus: 200,
+	responseTime: 1
+});
 
 module("validator");
 
@@ -582,7 +604,7 @@ test("option invalidHandler", function() {
 			start();
 		}
 	});
-	$("#usernamec").val("asdf").rules("add", { required: true, remote: "users.php" });
+	$("#usernamec").val("asdf").rules("add", { required: true, minlength: 5 });
 	stop();
 	$("#testForm1clean").submit();
 });
@@ -1097,28 +1119,4 @@ test("validate radio on click", function() {
 	errors(0);
 	trigger(e1);
 	errors(0);
-});
-
-module("ajax");
-
-test("check the serverside script works", function() {
-	stop();
-	$.getJSON("users.php", {value: 'asd'}, function(response) {
-		ok( response, "yet available" );
-		$.getJSON("users.php", {username: "asdf"}, function(response) {
-			ok( !response, "already taken" );
-			start();
-		});
-	});
-});
-
-test("check the serverside script works2", function() {
-	stop();
-	$.getJSON("users2.php", {value: 'asd'}, function(response) {
-		ok( response, "yet available" );
-		$.getJSON("users.php", {username: "asdf"}, function(response) {
-			ok( !response, "asdf is already taken, please try something else" );
-			start();
-		});
-	});
 });
