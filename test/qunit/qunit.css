@@ -1,3 +1,13 @@
+/**
+ * QUnit - A JavaScript Unit Testing Framework
+ * 
+ * http://docs.jquery.com/QUnit
+ *
+ * Copyright (c) 2011 John Resig, Jörn Zaefferer
+ * Dual licensed under the MIT (MIT-LICENSE.txt)
+ * or GPL (GPL-LICENSE.txt) licenses.
+ */
+
 /** Font Family and Sizes */
 
 #qunit-tests, #qunit-header, #qunit-banner, #qunit-testrunner-toolbar, #qunit-userAgent, #qunit-testresult {
@@ -74,12 +84,22 @@
 	list-style-position: inside;
 }
 
-#qunit-tests.hidepass li.pass {
+#qunit-tests.hidepass li.pass, #qunit-tests.hidepass li.running  {
 	display: none;
 }
 
 #qunit-tests li strong {
 	cursor: pointer;
+}
+
+#qunit-tests li a {
+	padding: 0.5em;
+	color: #c2ccd1;
+	text-decoration: none;
+}
+#qunit-tests li a:hover,
+#qunit-tests li a:focus {
+	color: #000;
 }
 
 #qunit-tests ol {

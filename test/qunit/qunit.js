@@ -1,4 +1,4 @@
-/*
+/**
  * QUnit - A JavaScript Unit Testing Framework
  * 
  * http://docs.jquery.com/QUnit
@@ -152,7 +152,13 @@ Test.prototype = {
 			}
 
 			// store result when possible
-			QUnit.config.reorder && defined.sessionStorage && sessionStorage.setItem("qunit-" + this.testName, bad);
+			if ( QUnit.config.reorder && defined.sessionStorage ) {
+				if (bad) {
+					sessionStorage.setItem("qunit-" + this.module + "-" + this.testName, bad);
+				} else {
+					sessionStorage.removeItem("qunit-" + this.module + "-" + this.testName);
+				}
+			}
 
 			if (bad == 0) {
 				ol.style.display = "none";
@@ -161,8 +167,13 @@ Test.prototype = {
 			var b = document.createElement("strong");
 			b.innerHTML = this.name + " <b class='counts'>(<b class='failed'>" + bad + "</b>, <b class='passed'>" + good + "</b>, " + this.assertions.length + ")</b>";
 			
+			var a = document.createElement("a");
+			a.innerHTML = "Rerun";
+			a.href = QUnit.url({ filter: getText([b]).replace(/\([^)]+\)$/, "").replace(/(^\s*|\s*$)/g, "") });
+			
 			addEvent(b, "click", function() {
-				var next = b.nextSibling, display = next.style.display;
+				var next = b.nextSibling.nextSibling,
+					display = next.style.display;
 				next.style.display = display === "none" ? "block" : "none";
 			});
 			
@@ -172,7 +183,7 @@ Test.prototype = {
 					target = target.parentNode;
 				}
 				if ( window.location && target.nodeName.toLowerCase() === "strong" ) {
-					window.location = QUnit.url({ filter: getText([target]).replace(/\(.+\)$/, "").replace(/(^\s*|\s*$)/g, "") });
+					window.location = QUnit.url({ filter: getText([target]).replace(/\([^)]+\)$/, "").replace(/(^\s*|\s*$)/g, "") });
 				}
 			});
 
@@ -180,6 +191,7 @@ Test.prototype = {
 			li.className = bad ? "fail" : "pass";
 			li.removeChild( li.firstChild );
 			li.appendChild( b );
+			li.appendChild( a );
 			li.appendChild( ol );
 
 		} else {
@@ -227,7 +239,7 @@ Test.prototype = {
 			});
 		}
 		// defer when previous test run passed, if storage is available
-		var bad = QUnit.config.reorder && defined.sessionStorage && +sessionStorage.getItem("qunit-" + this.testName);
+		var bad = QUnit.config.reorder && defined.sessionStorage && +sessionStorage.getItem("qunit-" + this.module + "-" + this.testName);
 		if (bad) {
 			run();
 		} else {
@@ -412,17 +424,6 @@ var QUnit = {
 				QUnit.start();
 			}, timeout);
 		}
-	},
-
-	url: function( params ) {
-		params = extend( extend( {}, QUnit.urlParams ), params );
-		var querystring = "?",
-			key;
-		for ( key in params ) {
-			querystring += encodeURIComponent( key ) + "=" +
-				encodeURIComponent( params[ key ] ) + "&";
-		}
-		return window.location.pathname + querystring.slice( 0, -1 );
 	}
 };
 
@@ -535,9 +536,9 @@ extend(QUnit, {
 	 */
 	reset: function() {
 		if ( window.jQuery ) {
-			jQuery( "#main, #qunit-fixture" ).html( config.fixture );
+			jQuery( "#qunit-fixture" ).html( config.fixture );
 		} else {
-			var main = id( 'main' ) || id( 'qunit-fixture' );
+			var main = id( 'qunit-fixture' );
 			if ( main ) {
 				main.innerHTML = config.fixture;
 			}
@@ -637,6 +638,17 @@ extend(QUnit, {
 		});
 	},
 	
+	url: function( params ) {
+		params = extend( extend( {}, QUnit.urlParams ), params );
+		var querystring = "?",
+			key;
+		for ( key in params ) {
+			querystring += encodeURIComponent( key ) + "=" +
+				encodeURIComponent( params[ key ] ) + "&";
+		}
+		return window.location.pathname + querystring.slice( 0, -1 );
+	},
+	
 	// Logging callbacks; all receive a single argument with the listed properties
 	// run test/logs.html for any related changes
 	begin: function() {},
@@ -698,7 +710,11 @@ addEvent(window, "load", function() {
 				ol.className = tmp.replace(/ hidepass /, " ");
 			}
 			if ( defined.sessionStorage ) {
-				sessionStorage.setItem("qunit-filter-passed-tests", filter.checked ? "true" : "");
+				if (filter.checked) {
+					sessionStorage.setItem("qunit-filter-passed-tests",  "true");
+				} else {
+					sessionStorage.removeItem("qunit-filter-passed-tests");
+				}
 			}
 		});
 		if ( defined.sessionStorage && sessionStorage.getItem("qunit-filter-passed-tests") ) {
@@ -714,7 +730,7 @@ addEvent(window, "load", function() {
 		toolbar.appendChild( label );
 	}
 
-	var main = id('main') || id('qunit-fixture');
+	var main = id('qunit-fixture');
 	if ( main ) {
 		config.fixture = main.innerHTML;
 	}
@@ -865,16 +881,14 @@ function checkPollution( name ) {
 	var old = config.pollution;
 	saveGlobal();
 	
-	var newGlobals = diff( old, config.pollution );
+	var newGlobals = diff( config.pollution, old );
 	if ( newGlobals.length > 0 ) {
 		ok( false, "Introduced global variable(s): " + newGlobals.join(", ") );
-		config.current.expected++;
 	}
 
-	var deletedGlobals = diff( config.pollution, old );
+	var deletedGlobals = diff( old, config.pollution );
 	if ( deletedGlobals.length > 0 ) {
 		ok( false, "Deleted global variable(s): " + deletedGlobals.join(", ") );
-		config.current.expected++;
 	}
 }
 
