@@ -124,6 +124,23 @@ test("form(): checkboxes: min/required", function() {
 	$('#form6check2').attr("checked", true);
 	ok( v.form(), 'Valid form' );
 });
+
+test("form(): radio buttons: required", function () {
+	expect( 6 );
+	var form = $('#testForm10')[0];
+
+	var v = $(form).validate({ rules: { testForm10Radio: "required"} });
+	ok(!v.form(), 'Invalid Form');
+	equals($('#testForm10Radio1').attr('class'), 'error');
+	equals($('#testForm10Radio2').attr('class'), 'error');
+
+	$('#testForm10Radio2').attr("checked", true);
+	ok(v.form(), 'Valid form');
+
+	equals($('#testForm10Radio1').attr('class'), 'valid');
+	equals($('#testForm10Radio2').attr('class'), 'valid');
+});
+
 test("form(): selects: min/required", function() {
 	expect( 3 );
 	var form = $('#testForm7')[0];
