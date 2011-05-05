@@ -238,12 +238,23 @@ $.extend($.validator, {
 			else if (element.parentNode.name in this.submitted)
 				this.element(element.parentNode);
 		},
-		highlight: function( element, errorClass, validClass ) {
-			$(element).addClass(errorClass).removeClass(validClass);
-		},
-		unhighlight: function( element, errorClass, validClass ) {
-			$(element).removeClass(errorClass).addClass(validClass);
-		}
+        highlight: function (element, errorClass, validClass) {
+            if (element.type === 'radio') {
+                $('input[name=' + element.name + ']').addClass(errorClass).removeClass(validClass);
+            }
+            else {
+                $(element).addClass(errorClass).removeClass(validClass);
+            }
+
+        },
+        unhighlight: function (element, errorClass, validClass) {
+            if (element.type === 'radio') {
+                $('input[name=' + element.name + ']').removeClass(errorClass).addClass(validClass);
+            }
+            else {
+                $(element).removeClass(errorClass).addClass(validClass);
+            }
+        }
 	},
 
 	// http://docs.jquery.com/Plugins/Validation/Validator/setDefaults
