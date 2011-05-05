@@ -654,6 +654,9 @@ $.extend($.validator, {
 					? label.addClass( this.settings.success )
 					: this.settings.success( label );
 			}
+
+			this.settings.errorPosition && this.settings.errorPosition( label, $(element) );
+
 			this.toShow = this.toShow.add(label);
 		},
 
