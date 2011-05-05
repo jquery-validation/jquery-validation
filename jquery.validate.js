@@ -28,6 +28,9 @@ $.extend($.fn, {
 		if ( validator ) {
 			return validator;
 		}
+        
+		// Add novalidate tag if HTML5.
+		this.attr('novalidate', 'novalidate');
 
 		validator = new $.validator( options, this[0] );
 		$.data(this[0], 'validator', validator);
@@ -1046,8 +1049,8 @@ $.extend($.validator, {
 		creditcard: function(value, element) {
 			if ( this.optional(element) )
 				return "dependency-mismatch";
-			// accept only digits and dashes
-			if (/[^0-9-]+/.test(value))
+			// accept only digits, dashes, and spaces
+			if (/[^0-9- ]+/.test(value))
 				return false;
 			var nCheck = 0,
 				nDigit = 0,
