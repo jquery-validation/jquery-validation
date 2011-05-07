@@ -1,6 +1,7 @@
 1.9.0
 ---
 * Added Thai (TH) localization, fixes #85
+* Added Vietnamese (VI) localization, thanks Ngoc
 
 1.8.0
 ---
