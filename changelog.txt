@@ -2,6 +2,8 @@
 ---
 * Added Thai (TH) localization, fixes #85
 * Added Vietnamese (VI) localization, thanks Ngoc
+* Fixed issue #78. Error/Valid styling applies to all radio buttons of same group for required validation.
+* Don't use form.elements as that isn't supported in jQuery 1.6 anymore. Its buggy as hell anyway (IE6-8: form.elements === form).
 
 1.8.0
 ---
