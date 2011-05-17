@@ -306,7 +306,7 @@ $.extend($.validator, {
 				validator.settings[eventType] && validator.settings[eventType].call(validator, this[0] );
 			}
 			$(this.currentForm)
-				.validateDelegate(":text, :password, :file, select, textarea, [type=email], [type=url], [type=search], [type=tel]", "focusin focusout keyup", delegate)
+				.validateDelegate(":text, :password, :file, select, textarea, [type=email], [type=url], [type=search], [type=tel], [type=number]", "focusin focusout keyup", delegate)
 				.validateDelegate(":radio, :checkbox, select, option", "click", delegate);
 
 			if (this.settings.invalidHandler)
