@@ -786,6 +786,10 @@ $.extend($.validator, {
 
 		for (var method in $.validator.methods) {
 			var value = $element.attr(method);
+			if(method === value){
+				//Handles boolean attributes correctly in IE
+				value = true;
+			}
 			if (value) {
 				rules[method] = value;
 			}
