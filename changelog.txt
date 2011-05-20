@@ -1,5 +1,9 @@
 1.9.0
 ---
+* Added Basque (EU) localization
+
+1.8.1
+---
 * Added Thai (TH) localization, fixes #85
 * Added Vietnamese (VI) localization, thanks Ngoc
 * Fixed issue #78. Error/Valid styling applies to all radio buttons of same group for required validation.
