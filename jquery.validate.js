@@ -489,12 +489,13 @@ $.extend($.validator, {
 				element = this.findByName( element.name ).not(this.settings.ignore)[0];
 			}
 
-			var rules = $(element).rules();
+			var $element = $(element);
+			var rules = $element.rules();
 			var dependencyMismatch = false;
 			for (var method in rules ) {
 				var rule = { method: method, parameters: rules[method] };
 				try {
-					var result = $.validator.methods[method].call( this, element.value.replace(/\r/g, ""), element, rule.parameters );
+					var result = $.validator.methods[method].call( this, $element.val().replace(/\r/g, ""), element, rule.parameters );
 
 					// if a method indicates that the field is optional and therefore valid,
 					// don't mark it as valid when there are no other rules
@@ -710,7 +711,7 @@ $.extend($.validator, {
 		},
 
 		optional: function(element) {
-			return !$.validator.methods.required.call(this, $.trim(element.value), element) && "dependency-mismatch";
+			return !$.validator.methods.required.call(this, $.trim($(element).val()), element) && "dependency-mismatch";
 		},
 
 		startRequest: function(element) {
