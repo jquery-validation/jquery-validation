@@ -469,14 +469,17 @@ test("formatAndAdd", function() {
 	expect(4);
 	var v = $("#form").validate();
 	var fakeElement = { form: $("#form")[0], name: "bar" };
-	v.formatAndAdd(fakeElement, {method: "maxlength", parameters: 2})
+	var message = v.getErrorMessage(fakeElement, {method: "maxlength", parameters: 2});
+	v.formatAndAdd(message, fakeElement);
 	equals( "Please enter no more than 2 characters.", v.errorList[0].message );
 	equals( "bar", v.errorList[0].element.name );
 	
-	v.formatAndAdd(fakeElement, {method: "range", parameters:[2,4]})
+	message = v.getErrorMessage(fakeElement, {method: "range", parameters:[2,4]});
+	v.formatAndAdd(message, fakeElement);
 	equals( "Please enter a value between 2 and 4.", v.errorList[1].message );
 	
-	v.formatAndAdd(fakeElement, {method: "range", parameters:[0,4]})
+	message = v.getErrorMessage(fakeElement, {method: "range", parameters:[0,4]})
+	v.formatAndAdd(message, fakeElement);
 	equals( "Please enter a value between 0 and 4.", v.errorList[2].message );
 });
 
@@ -489,7 +492,8 @@ test("formatAndAdd2", function() {
 		equals( 0, param );
 		return "element " + element.name + " is not valid";
 	};
-	v.formatAndAdd(fakeElement, {method: "test1", parameters: 0})
+	var message = v.getErrorMessage(fakeElement, {method: "test1", parameters: 0});
+	v.formatAndAdd(message, fakeElement);
 	equals( "element bar is not valid", v.errorList[0].message );
 });
 
