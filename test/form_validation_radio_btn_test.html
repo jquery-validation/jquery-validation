@@ -1,0 +1,74 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html;charset=ISO-8859-1" /> 
+		<meta http-equiv="X-UA-Compatible" content="IE=8" /> 
+		<meta http-equiv="imagetoolbar" content="no" /> <!-- disable the image menu that appears in IE --> 
+		<title>Form validation - radio box test case</title> 
+		<style type="text/css">
+			label {
+				padding: .3em;
+			}
+			.error {
+				padding: .1em;
+				margin: .1em;
+				background: pink;
+				color: red;
+			}
+		</style>
+	</head>
+	<body>
+		<script type="text/javascript" src="../lib/jquery.js"></script> 
+		<script type="text/javascript" src="../jquery.validate.js"></script> 
+		<!--
+		<script type="text/javascript" src="assets/lib/js/shared.js"></script> 
+		-->
+		<h1>Form validation - radio box test case</h1>
+		<form action="#" method="get" id="myform">
+			<fieldset>
+				<p class="instructions">
+					Choose the colour that is not a primitive of <span style="background:yellow">yellow</span>.
+				</p>
+				<div class="answers">
+					<label style="color:red" ><input name="colour" type="radio" value="red" />red</label>
+					<label style="color:green" ><input name="colour" type="radio" value="green" />green</label>
+					<label style="color:blue" ><input name="colour" type="radio" value="blue" />blue</label>
+				</div>
+			</fieldset>
+			
+			<input type="submit" value="Submit"/>
+		</form>
+		<script type="text/javascript">
+			
+			jQuery.validator.addMethod("correct_colour", 
+				function(value, element, ruleConfig){ // normal function signature is ruleFc(fieldValue, domElement, ruleConfig)
+					//DEBUG
+					console.log('---- correct_colour test ----');
+					console.log('colour = ', value);
+					console.log('element = ', element);
+					console.log('ruleConfig = ', ruleConfig);
+					
+					return value === ruleConfig;
+				}, 
+				'Incorrect colour'
+			);
+			
+			var f = $('#myform').validate({
+				debug: true,
+				rules: {
+					colour: {
+						required: true,
+						correct_colour: 'blue'
+					}
+				},
+				errorPlacement: function(error, element) {
+					error.insertAfter( element.closest('fieldset').find('.answers') );
+				},
+				submitHandler: function(form) {
+					console.log('form submit');
+				}
+			});
+			console.log(f);
+		</script>
+	</body>
+</html>
