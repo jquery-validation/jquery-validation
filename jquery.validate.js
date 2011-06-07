@@ -929,14 +929,15 @@ $.extend($.validator, {
 			previous.originalMessage = this.settings.messages[element.name].remote;
 			this.settings.messages[element.name].remote = previous.message;
 
-			param = typeof param == "string" && {url:param} || param;
+			param = typeof param == "string" && { url: param} || param;
+			params.unwrap = params.unwrap || function (u) { return u; };
 
 			if ( this.pending[element.name] ) {
 				return "pending";
 			}
 			if ( previous.old === value ) {
 				return previous.valid;
-			}
+            }
 
 			previous.old = value;
 			var validator = this;
@@ -949,7 +950,8 @@ $.extend($.validator, {
 				port: "validate" + element.name,
 				dataType: "json",
 				data: data,
-				success: function(response) {
+				success: function (response) {
+				    response = params.unwrap(response);
 					validator.settings.messages[element.name].remote = previous.originalMessage;
 					var valid = response === true;
 					if ( valid ) {
