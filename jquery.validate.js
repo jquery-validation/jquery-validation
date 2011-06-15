@@ -81,6 +81,9 @@ $.extend($.fn, {
 					return handle();
 				} else {
 					validator.focusInvalid();
+                    if ( validator.settings.oninvalid ) {
+                      validator.settings.oninvalid.call(this);
+                    }
 					return false;
 				}
 			});
