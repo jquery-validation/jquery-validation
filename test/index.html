@@ -10,6 +10,7 @@
 	<script type="text/javascript" src="../lib/jquery.mockjax.js"></script>
 	<script type="text/javascript" src="../jquery.validate.js"></script>
 	<script type="text/javascript" src="../additional-methods.js"></script>
+	
 	<script type="text/javascript" src="test.js"></script>
 	<script type="text/javascript" src="rules.js"></script>
 	<script type="text/javascript" src="messages.js"></script>
@@ -79,6 +80,16 @@
 		<form id="signupForm" action="form.php">
 			<input id="user" name="user" title="Please enter your username (at least 3 characters)" class="{required:true,minlength:3}" />
 			<input type="password" name="password" id="password" class="{required:true,minlength:5}" />
+		</form>
+		
+		<form id="emailForm">
+			<input id="email" name="email" type="email" title="Please enter your email" class="{required:true}" />
+			<label id="errorEmail" for="email" class="error">error for email</label>
+		</form>
+
+		<form id="numberForm">
+			<input id="number" name="number" type="number" title="Please enter a number" class="{required:true}" />
+			<label id="errorNumber" for="number" class="error">error for number</label>
 		</form>
 		
 		<form id="testForm2">
