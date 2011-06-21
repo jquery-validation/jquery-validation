@@ -1,7 +1,14 @@
 1.9.0
 ---
+* Added Basque (EU) localization
+* Fixed issue #127 - Finnish translations has one : instead of ;
+
+1.8.1
+---
 * Added Thai (TH) localization, fixes #85
 * Added Vietnamese (VI) localization, thanks Ngoc
+* Fixed issue #78. Error/Valid styling applies to all radio buttons of same group for required validation.
+* Don't use form.elements as that isn't supported in jQuery 1.6 anymore. Its buggy as hell anyway (IE6-8: form.elements === form).
 
 1.8.0
 ---
@@ -23,7 +30,7 @@
 * Added Hebrew (HE) localization (http://plugins.jquery.com/node/12039)
 * Fixed Spanish (ES) localization (http://plugins.jquery.com/node/12696)
 * Added jQuery UI themerolled demo
-* Removed cmxform.js 
+* Removed cmxform.js
 * Fixed four missing semicolons (http://plugins.jquery.com/node/12639)
 * Renamed phone-method in additional-methods.js to phoneUS
 * Added phoneUK and mobileUK methods to additional-methods.js (http://plugins.jquery.com/node/12359)
@@ -78,7 +85,7 @@
 
 1.5.2
 ---
-* Fixed messages in additional-methods.js for maxWords, minWords, and rangeWords to include call to $.format 
+* Fixed messages in additional-methods.js for maxWords, minWords, and rangeWords to include call to $.format
 * Fixed value passed to methods to exclude carriage return (\r), same as jQuery's val() does
 * Added slovak (sk) localization
 * Added demo for intergration with jQuery UI tabs
@@ -98,7 +105,7 @@
 * Fixed basic validation to pass the untrimmed input value as the first parameter to validation methods, changed required accordingly; breaks existing custom method that rely on the trimming
 * Added norwegian (no), italian (it), hungarian (hu) and romanian (ro) localization
 * Fixed #3195: Two flaws in swedish localization
-* Fixed #3503: Extended rules("add") to accept messages propery: use to specify add custom messages to an element via rules("add", { messages: { required: "Required! " } }); 
+* Fixed #3503: Extended rules("add") to accept messages propery: use to specify add custom messages to an element via rules("add", { messages: { required: "Required! " } });
 * Fixed #3356: Regression from #2908 when using meta-option
 * Fixed #3370: Added ignoreTitle option, set to skip reading messages from the title attribute, helps to avoid issues with Google Toolbar; default is false for compability
 * Fixed #3516: Trigger invalid-form event even when remote validation is involved
@@ -127,8 +134,8 @@
 * Added spanish (es), russian (ru), portuguese brazilian (ptbr), turkish (tr), and polish (pl) localization
 * Added removeAttrs plugin to facilate adding and removing multiple attributes
 * Added groups option to display a single message for multiple elements, via groups: { arbitraryGroupName: "fieldName1 fieldName2[, fieldNameN" }
-* Enhanced rules() for adding and removing (static) rules: rules("add", "method1[, methodN]"/{method1:param[, method_n:param]}) and rules("remove"[, "method1[, method_n]") 
-* Enhanced rules-option, accepts space-seperated string-list of methods, eg. {birthdate: "required date"}  
+* Enhanced rules() for adding and removing (static) rules: rules("add", "method1[, methodN]"/{method1:param[, method_n:param]}) and rules("remove"[, "method1[, method_n]")
+* Enhanced rules-option, accepts space-seperated string-list of methods, eg. {birthdate: "required date"}
 * Fixed checkbox group validation with inline rules: As long as the rules are specified on the first element, the group is now properly validated on click
 * Fixed #2473, ignoring all rules with an explicit parameter of boolean-false, eg. required:false is the same as not specifying required at all (it was handled as required:true so far)
 * Fixed #2424, with a modified patch from #2473: Methods returning a dependency-mismatch don't stop other rules from being evaluated anymore; still, success isn't applied for optional fields

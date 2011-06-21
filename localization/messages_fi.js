@@ -7,7 +7,7 @@ jQuery.extend(jQuery.validator.messages, {
 	maxlength: jQuery.validator.format("Voit sy&ouml;tt&auml;&auml; enint&auml;&auml;n {0} merkki&auml;."),
 	minlength: jQuery.validator.format("V&auml;hint&auml;&auml;n {0} merkki&auml;."),
 	rangelength: jQuery.validator.format("Sy&ouml;t&auml; v&auml;hint&auml;&auml;n {0} ja enint&auml;&auml;n {1} merkki&auml;."),
-	email: "Sy&ouml:t&auml; oikea s&auml;hk&ouml;postiosoite.",
+	email: "Sy&ouml;t&auml; oikea s&auml;hk&ouml;postiosoite.",
 	url: "Sy&ouml;t&auml; oikea URL osoite.",
 	date: "Sy&ouml;t&auml; oike p&auml;iv&auml;m&auml;&auml;r&auml;.",
 	dateISO: "Sy&ouml;t&auml; oike p&auml;iv&auml;m&auml;&auml;r&auml; (VVVV-MM-DD).",
