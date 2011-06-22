@@ -434,7 +434,7 @@ test("option: focusCleanup true", function() {
 });
 
 
-test("input<email>: validates on lose focus", function() {
+test("input[type=email]: validates on lose focus", function() {
     var form = $("#emailForm");
     form.validate({
         focusCleanup:true
@@ -446,7 +446,7 @@ test("input<email>: validates on lose focus", function() {
     ok( !form.is(":has(label.error[for=email]:visible)"));
 });
 
-test("input<email>: validates on keyup", function() {
+test("input[type=email]: validates on keyup", function() {
     var form = $("#emailForm");
     form.validate({
         focusCleanup:true
@@ -457,7 +457,7 @@ test("input<email>: validates on keyup", function() {
     ok( !form.is(":has(label.error[for=email]:visible)"));
 });
 
-test("input<number>: validates on lose focus", function() {
+test("input[type=number]: validates on lose focus", function() {
     var form = $("#numberForm");
     form.validate({
         focusCleanup:true
@@ -469,7 +469,7 @@ test("input<number>: validates on lose focus", function() {
     ok( !form.is(":has(label.error[for=number]:visible)"));
 });
 
-test("input<number>: validates on keyup", function() {
+test("input[type=number]: validates on keyup", function() {
     var form = $("#numberForm");
     form.validate({
         focusCleanup:true
@@ -480,19 +480,19 @@ test("input<number>: validates on keyup", function() {
     ok( !form.is(":has(label.error[for=number]:visible)"));
 });
 
-test("input<url>: validates on lose focus", function() {
+test("input[type=url]: validates on lose focus", function() {
     var form = $("#urlForm");
     form.validate({
         focusCleanup:true
     });
     form.valid();
     ok( form.is(":has(label.error[for=url]:visible)"));
-    $("#urlr").val("5");
+    $("#url").val("5");
     $("#url").focus().trigger("focusin");
     ok( !form.is(":has(label.error[for=url]:visible)"));
 });
 
-test("input<url>: validates on keyup", function() {
+test("input[type=url]: validates on keyup", function () {
     var form = $("#urlForm");
     form.validate({
         focusCleanup:true
@@ -501,6 +501,52 @@ test("input<url>: validates on keyup", function() {
     ok( form.is(":has(label.error[for=url]:visible)"));
     $("#url").val("5").trigger("keyup");
     ok( !form.is(":has(label.error[for=url]:visible)"));
+});
+
+test("input[type=search]: validates on lose focus", function() {
+    var form = $("#searchForm");
+    form.validate({
+        focusCleanup:true
+    });
+    form.valid();
+    ok( form.is(":has(label.error[for=search]:visible)"));
+    $("#search").val("5");
+    $("#search").focus().trigger("focusin");
+    ok( !form.is(":has(label.error[for=search]:visible)"));
+});
+
+test("input[type=search]: validates on keyup", function () {
+    var form = $("#searchForm");
+    form.validate({
+        focusCleanup:true
+    });
+    form.valid();
+    ok( form.is(":has(label.error[for=search]:visible)"));
+    $("#search").val("5").trigger("keyup");
+    ok( !form.is(":has(label.error[for=search]:visible)"));
+});
+
+test("input[type=tel]: validates on lose focus", function() {
+    var form = $("#telForm");
+    form.validate({
+        focusCleanup:true
+    });
+    form.valid();
+    ok( form.is(":has(label.error[for=tel]:visible)"));
+    $("#tel").val("5");
+    $("#tel").focus().trigger("focusin");
+    ok( !form.is(":has(label.error[for=tel]:visible)"));
+});
+
+test("input[type=tel]: validates on keyup", function () {
+    var form = $("#telForm");
+    form.validate({
+        focusCleanup:true
+    });
+    form.valid();
+    ok( form.is(":has(label.error[for=tel]:visible)"));
+    $("#tel").val("5").trigger("keyup");
+    ok( !form.is(":has(label.error[for=tel]:visible)"));
 });
 
 test("input: email lose focus", function() {
