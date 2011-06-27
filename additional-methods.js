@@ -319,3 +319,67 @@ jQuery.validator.addMethod("pattern", function(value, element, param) {
     return param.test(value);
 }, "Invalid format.");
 
+
+/*
+* Lets you say "at least X inputs that match selector Y must be filled."
+*
+* The end result is that neither of these inputs:
+*
+*  <input class="productinfo" name="partnumber">
+*  <input class="productinfo" name="description">
+*
+*  ...will validate unless at least one of them is filled.
+*
+* partnumber:  {require_from_group: [1,".productinfo"]},
+* description: {require_from_group: [1,".productinfo"]}
+*
+*/
+jQuery.validator.addMethod("require_from_group", function(value, element, options) {
+  var selector = options[1];
+  var validOrNot = $(selector, element.form).filter(function() {
+    return $(this).val();
+  }).length >= options[0];
+
+  if(!$(element).data('being_validated')) {
+    var fields = $(selector, element.form);
+    fields.data('being_validated', true);
+    fields.valid();
+    fields.data('being_validated', false);
+  }
+  return validOrNot;
+}, jQuery.format("Please fill at least {0} of these fields."));
+
+/*
+* Lets you say "either at least X inputs that match selector Y must be filled,
+* OR they must all be skipped (left blank)."
+*
+* The end result, is that none of these inputs:
+*
+*  <input class="productinfo" name="partnumber">
+*  <input class="productinfo" name="description">
+*  <input class="productinfo" name="color">
+*
+*  ...will validate unless either at least two of them are filled,
+*  OR none of them are.
+*
+* partnumber:  {skip_or_fill_minimum: [2,".productinfo"]},
+* description: {skip_or_fill_minimum: [2,".productinfo"]},
+* color:       {skip_or_fill_minimum: [2,".productinfo"]}
+*
+*/
+jQuery.validator.addMethod("skip_or_fill_minimum", function(value, element, options) {
+  numberRequired = options[0];
+  selector = options[1];
+  var numberFilled = $(selector, element.form).filter(function() {
+    return $(this).val();
+  }).length;
+  var valid = numberFilled >= numberRequired || numberFilled === 0;
+
+  if(!$(element).data('being_validated')) {
+    var fields = $(selector, element.form);
+    fields.data('being_validated', true);
+    fields.valid();
+    fields.data('being_validated', false);
+  }
+  return valid;
+}, jQuery.format("Please either skip these fields or fill at least {0} of them."));
