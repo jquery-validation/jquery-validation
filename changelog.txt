@@ -3,6 +3,7 @@
 * Added Basque (EU) localization
 * Added Slovenian (SL) localization
 * Fixed issue #127 - Finnish translations has one : instead of ;
+* Fixed Russian localization, minor syntax issue
 * Added in support for HTML 5 input types, fixes #97
 
 1.8.1
