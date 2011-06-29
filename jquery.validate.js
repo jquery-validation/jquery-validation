@@ -951,7 +951,13 @@ $.extend($.validator, {
 				data: data,
 				success: function(response) {
 					validator.settings.messages[element.name].remote = previous.originalMessage;
-					var valid = response === true;
+					
+					if (typeof response === "boolean") {
+						var valid = response === true;
+					} else {
+						var valid = response.valid === true;
+					}
+					
 					if ( valid ) {
 						var submitted = validator.formSubmitted;
 						validator.prepareElement(element);
@@ -964,6 +970,7 @@ $.extend($.validator, {
 						errors[element.name] = previous.message = $.isFunction(message) ? message(value) : message;
 						validator.showErrors(errors);
 					}
+					
 					previous.valid = valid;
 					validator.stopRequest(element, valid);
 				}
