@@ -8,6 +8,7 @@
 * Improved HTML5 support by setting novalidate attribute on the form, and reading the type attribute.
 * Fixed showLabel() removing all classes from error element. Remove only settings.validClass. Fixes #151.
 * Added 'pattern' to additional-methods to validate against arbitraty regular expressions.
+* Improved email method to not allow the dot at the end (valid by RFC, but unwanted here). Fixes #143
 
 1.8.1
 ---
