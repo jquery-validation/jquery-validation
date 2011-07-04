@@ -84,6 +84,7 @@ test("email", function() {
 	ok(!method( "name.@domain.tld" ), "Invalid email" );
 	ok(!method( "name,@domain.tld" ), "Invalid email" );
 	ok(!method( "name;@domain.tld" ), "Invalid email" );
+	ok(!method( "name;@domain.tld." ), "Invalid email" );
 });
 
 test("email2 (tld optional)", function() {
