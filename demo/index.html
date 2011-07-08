@@ -17,7 +17,7 @@ $.validator.setDefaults({
 $().ready(function() {
 	// validate the comment form when it is submitted
 	$("#commentForm").validate();
-	
+
 	// validate signup form on keyup and submit
 	$("#signupForm").validate({
 		rules: {
@@ -66,7 +66,7 @@ $().ready(function() {
 			agree: "Please accept our policy"
 		}
 	});
-	
+
 	// propose username by combining first- and lastname
 	$("#username").focus(function() {
 		var firstname = $("#firstname").val();
@@ -75,7 +75,7 @@ $().ready(function() {
 			this.value = firstname + "." + lastname;
 		}
 	});
-	
+
 	//code to hide topic selection, disable for demo
 	var newsletter = $("#newsletter");
 	// newsletter topics are optional, hide at first
@@ -163,7 +163,7 @@ $().ready(function() {
 		</p>
 		<p>
 			<label for="email">Email</label>
-			<input id="email" name="email" />
+			<input id="email" name="email" type="email" />
 		</p>
 		<p>
 			<label for="agree">Please agree to our policy</label>
@@ -216,7 +216,7 @@ $().ready(function() {
 <h3>Testsuite</h3>
 <ul>
 	<li><a href="../test/">Validation Testsuite</a></li>
-</ul>	
+</ul>
 
 </div>
 
