@@ -9,7 +9,7 @@ jQuery.extend(jQuery.validator.messages, {
 	url: "Por favor, forne&ccedil;a uma URL v&aacute;lida.",
 	date: "Por favor, forne&ccedil;a uma data v&aacute;lida.",
 	dateISO: "Por favor, forne&ccedil;a uma data v&aacute;lida (ISO).",
-	number: "Por favor, forne&ccedil;a um n&uacute;mero v&aacute;lida.",
+	number: "Por favor, forne&ccedil;a um n&uacute;mero v&aacute;lido.",
 	digits: "Por favor, forne&ccedil;a somente d&iacute;gitos.",
 	creditcard: "Por favor, forne&ccedil;a um cart&atilde;o de cr&eacute;dito v&aacute;lido.",
 	equalTo: "Por favor, forne&ccedil;a o mesmo valor novamente.",
