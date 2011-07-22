@@ -290,7 +290,7 @@ jQuery.validator.addMethod("ipv6", function(value, element, param) {
 *
 *  ...will validate unless at least one of them is filled.
 *
-* partnumber:  {require_from_group: [1,".productinfo"]}
+* partnumber:  {require_from_group: [1,".productinfo"]},
 * description: {require_from_group: [1,".productinfo"]}
 *
 */
@@ -322,8 +322,8 @@ jQuery.validator.addMethod("require_from_group", function(value, element, option
 *  ...will validate unless either at least two of them are filled,
 *  OR none of them are.
 *
-* partnumber:  {skip_or_fill_minimum: [2,".productinfo"]}
-* description: {skip_or_fill_minimum: [2,".productinfo"]}
+* partnumber:  {skip_or_fill_minimum: [2,".productinfo"]},
+* description: {skip_or_fill_minimum: [2,".productinfo"]},
 * color:       {skip_or_fill_minimum: [2,".productinfo"]}
 *
 */
