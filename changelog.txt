@@ -4,7 +4,8 @@
 * Added Slovenian (SL) localization
 * Fixed issue #127 - Finnish translations has one : instead of ;
 * Fixed Russian localization, minor syntax issue
-* Added in support for HTML 5 input types, fixes #97
+* Added in support for HTML5 input types, fixes #97
+* Improved HTML5 support by setting novalidate attribute on the form, and reading the type attribute.
 * Fixed showLabel() removing all classes from error element. Remove only settings.validClass. Fixes #151.
 * Added 'pattern' to additional-methods to validate against arbitraty regular expressions.
 
