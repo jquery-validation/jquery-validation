@@ -311,13 +311,13 @@ $.extend($.validator, {
 				validator.settings[eventType] && validator.settings[eventType].call(validator, this[0] );
 			}
 			$(this.currentForm)
-			       .validateDelegate(":text, :password, :file, select, textarea, " +
+			       .validateDelegate("[type='text'], [type='password'], [type='file'], select, textarea, " +
 						"[type='number'], [type='search'] ,[type='tel'], [type='url'], " +
 						"[type='email'], [type='datetime'], [type='date'], [type='month'], " +
 						"[type='week'], [type='time'], [type='datetime-local'], " +
 						"[type='range'], [type='color'] ",
 						"focusin focusout keyup", delegate)
-				.validateDelegate(":radio, :checkbox, select, option", "click", delegate);
+				.validateDelegate("[type='radio'], [type='checkbox'], select, option", "click", delegate);
 
 			if (this.settings.invalidHandler)
 				$(this.currentForm).bind("invalid-form.validate", this.settings.invalidHandler);
