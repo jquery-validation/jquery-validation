@@ -489,6 +489,8 @@ $.extend($.validator, {
 		check: function( element ) {
 			element = this.clean( element );
 
+			var originalElement = element,
+				originalValue = element.value;
 			// if radio/checkbox, validate first element in group instead
 			if (this.checkable(element)) {
 				element = this.findByName( element.name ).not(this.settings.ignore)[0];
@@ -499,8 +501,8 @@ $.extend($.validator, {
 			for (var method in rules ) {
 				var rule = { method: method, parameters: rules[method] };
 				try {
-					var result = $.validator.methods[method].call( this, element.value.replace(/\r/g, ""), element, rule.parameters );
-
+					var result = $.validator.methods[method].call( this, originalValue.replace(/\r/g, ""), originalElement, rule.parameters );
+					
 					// if a method indicates that the field is optional and therefore valid,
 					// don't mark it as valid when there are no other rules
 					if ( result == "dependency-mismatch" ) {
@@ -515,11 +517,12 @@ $.extend($.validator, {
 					}
 
 					if( !result ) {
-						this.formatAndAdd( element, rule );
+						var message = this.getErrorMessage( element, rule );
+						this.formatAndAdd( message, originalElement);
 						return false;
 					}
 				} catch(e) {
-					this.settings.debug && window.console && console.log("exception occured when checking element " + element.id
+					this.settings.debug && window.console && console.log("exception occured when checking element " + originalElement.id
 						 + ", check the '" + rule.method + "' method", e);
 					throw e;
 				}
@@ -527,7 +530,7 @@ $.extend($.validator, {
 			if (dependencyMismatch)
 				return;
 			if ( this.objectLength(rules) )
-				this.successList.push(element);
+				this.successList.push(originalElement);
 			return true;
 		},
 
@@ -572,7 +575,7 @@ $.extend($.validator, {
 			);
 		},
 
-		formatAndAdd: function( element, rule ) {
+		getErrorMessage: function( element, rule ){
 			var message = this.defaultMessage( element, rule.method ),
 				theregex = /\$?\{(\d+)\}/g;
 			if ( typeof message == "function" ) {
@@ -580,13 +583,17 @@ $.extend($.validator, {
 			} else if (theregex.test(message)) {
 				message = jQuery.format(message.replace(theregex, '{$1}'), rule.parameters);
 			}
+			return message;
+		},
+		
+		formatAndAdd: function( message, errorMsgElementContainer ) {
 			this.errorList.push({
 				message: message,
-				element: element
+				element: errorMsgElementContainer
 			});
 
-			this.errorMap[element.name] = message;
-			this.submitted[element.name] = message;
+			this.errorMap[errorMsgElementContainer.name] = message;
+			this.submitted[errorMsgElementContainer.name] = message;
 		},
 
 		addWrapper: function(toToggle) {
