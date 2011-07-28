@@ -343,10 +343,12 @@ $.extend($.validator, {
 		},
 
 		// http://docs.jquery.com/Plugins/Validation/Validator/element
-		element: function( element ) {
+		element: function( element, shouldReset ) {
 			element = this.clean( element );
 			this.lastElement = element;
-			this.prepareElement( element );
+			if (typeof shouldReset == "undefined" || shouldReset == true) {
+				this.prepareElement( element );
+			}
 			this.currentElements = $(element);
 			var result = this.check( element );
 			if ( result ) {
