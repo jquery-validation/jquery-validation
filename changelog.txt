@@ -5,6 +5,7 @@
 * Fixed issue #127 - Finnish translations has one : instead of ;
 * Fixed Russian localization, minor syntax issue
 * Added in support for HTML 5 input types, fixes #97
+* Fixed showLabel() removing all classes from error element. Remove only settings.validClass. Fixes #151.
 
 1.8.1
 ---
