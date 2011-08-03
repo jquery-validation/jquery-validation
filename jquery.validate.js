@@ -207,6 +207,7 @@ $.extend($.validator, {
 		messages: {},
 		groups: {},
 		rules: {},
+		lazy: {},
 		errorClass: "error",
 		validClass: "valid",
 		errorElement: "label",
@@ -231,7 +232,7 @@ $.extend($.validator, {
 			}
 		},
 		onkeyup: function(element, event) {
-			if ( element.name in this.submitted || element == this.lastElement ) {
+			if (!this.lazy(element) && (element.name in this.submitted || element == this.lastElement)) {
 				this.element(element);
 			}
 		},
@@ -684,6 +685,10 @@ $.extend($.validator, {
 
 		checkable: function( element ) {
 			return /radio|checkbox/i.test(element.type);
+		},
+
+		lazy: function(element) {
+			return element.name in this.settings.lazy || $(element).hasClass('lazy');
 		},
 
 		findByName: function( name ) {
