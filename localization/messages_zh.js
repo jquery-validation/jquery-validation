@@ -5,7 +5,7 @@
 jQuery.extend(jQuery.validator.messages, {
         required: "必填欄位",
         remote: "請修正此欄位",
-        email: "請輸入正確格式的電子郵件",
+        email: "請輸入正確的電子郵件",
         url: "請輸入正確的網址",
         date: "請輸入正確的日期",
         dateISO: "請輸入正確的日期(ISO).",
@@ -17,7 +17,7 @@ jQuery.extend(jQuery.validator.messages, {
         maxlength: jQuery.validator.format("請輸入最長為 {0} 的字串"),
         minlength: jQuery.validator.format("請輸入最短為 {0} 的字串"),
         rangelength: jQuery.validator.format("請輸入長度介於 {0} 和 {1} 之間的字串"),
-        range: jQuery.validator.format("請輸入介於 {0} 和 {1} 之間的值"),
-        max: jQuery.validator.format("請輸入最大為 {0} 的值"),
-        min: jQuery.validator.format("請輸入最小為 {0} 的值")
+        range: jQuery.validator.format("請輸入介於 {0} 和 {1} 之間的數字"),
+        max: jQuery.validator.format("請輸入最大為 {0} 的數字"),
+        min: jQuery.validator.format("請輸入最小為 {0} 的數字")
 });
