@@ -347,7 +347,7 @@ $.extend($.validator, {
 
 		// http://docs.jquery.com/Plugins/Validation/Validator/element
 		element: function( element ) {
-			element = this.clean( element );
+			element = this.validationTargetFor( this.clean( element ) );
 			this.lastElement = element;
 			this.prepareElement( element );
 			this.currentElements = $(element);
@@ -490,12 +490,7 @@ $.extend($.validator, {
 		},
 
 		check: function( element ) {
-			element = this.clean( element );
-
-			// if radio/checkbox, validate first element in group instead
-			if (this.checkable(element)) {
-				element = this.findByName( element.name ).not(this.settings.ignore)[0];
-			}
+			element = this.validationTargetFor( this.clean( element ) );
 
 			var rules = $(element).rules();
 			var dependencyMismatch = false;
@@ -674,6 +669,14 @@ $.extend($.validator, {
 
 		idOrName: function(element) {
 			return this.groups[element.name] || (this.checkable(element) ? element.name : element.id || element.name);
+		},
+
+		validationTargetFor: function(element) {
+			// if radio/checkbox, validate first element in group instead
+			if (this.checkable(element)) {
+				element = this.findByName( element.name ).not(this.settings.ignore)[0];
+			}
+			return element;
 		},
 
 		checkable: function( element ) {
