@@ -12,6 +12,7 @@
 * Fixed swedish and norwedian translations, min/max messages got switched. Fixes #181
 * Fixed #184 - resetForm: should unset lastElement
 * Fixed #71 - improve existing time method and add time12h method for 12h am/pm time format
+* Fixed #177 - Fix validation of a single radio or checkbox input
 
 1.8.1
 ---
