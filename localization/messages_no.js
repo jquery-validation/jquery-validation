@@ -17,7 +17,7 @@ jQuery.extend(jQuery.validator.messages, {
        digits: "Skriv kun tall.",
        equalTo: "Skriv samme verdi igjen.",
        range: jQuery.validator.format("Angi en verdi mellom {0} og {1}."),
-       max: jQuery.validator.format("Angi en verdi som er st&oslash;rre eller lik {0}."),
-       min: jQuery.validator.format("Angi en verdi som er mindre eller lik {0}."),
+       max: jQuery.validator.format("Angi en verdi som er mindre eller lik {0}."),
+       min: jQuery.validator.format("Angi en verdi som er st&oslash;rre eller lik {0}."),
        creditcard: "Angi et gyldig kredittkortnummer."
 });
