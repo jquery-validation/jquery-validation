@@ -9,6 +9,7 @@
 * Fixed showLabel() removing all classes from error element. Remove only settings.validClass. Fixes #151.
 * Added 'pattern' to additional-methods to validate against arbitraty regular expressions.
 * Improved email method to not allow the dot at the end (valid by RFC, but unwanted here). Fixes #143
+* Fixed swedish and norwedian translations, min/max messages got switched. Fixes #181
 
 1.8.1
 ---
