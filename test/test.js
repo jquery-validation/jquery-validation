@@ -1,4 +1,27 @@
+window.sessionStorage && sessionStorage.clear();
 jQuery.validator.defaults.debug = true;
+$.mockjaxSettings.log = $.noop;
+
+$.mockjax({
+	url: "form.php?user=Peter&password=foobar",
+	responseText: 'Hi Peter, welcome back.',
+	responseStatus: 200,
+	responseTime: 1
+});
+$.mockjax({
+	url: "users.php",
+	data: { username: /Peter2?|asdf/},
+	responseText: 'false',
+	responseStatus: 200,
+	responseTime: 1
+});
+$.mockjax({
+	url: "users2.php",
+	data: { username: "asdf"},
+	responseText: '"asdf is already taken, please try something else"',
+	responseStatus: 200,
+	responseTime: 1
+});
 
 module("validator");
 
@@ -101,6 +124,23 @@ test("form(): checkboxes: min/required", function() {
 	$('#form6check2').attr("checked", true);
 	ok( v.form(), 'Valid form' );
 });
+
+test("form(): radio buttons: required", function () {
+	expect( 6 );
+	var form = $('#testForm10')[0];
+
+	var v = $(form).validate({ rules: { testForm10Radio: "required"} });
+	ok(!v.form(), 'Invalid Form');
+	equals($('#testForm10Radio1').attr('class'), 'error');
+	equals($('#testForm10Radio2').attr('class'), 'error');
+
+	$('#testForm10Radio2').attr("checked", true);
+	ok(v.form(), 'Valid form');
+
+	equals($('#testForm10Radio1').attr('class'), 'valid');
+	equals($('#testForm10Radio2').attr('class'), 'valid');
+});
+
 test("form(): selects: min/required", function() {
 	expect( 3 );
 	var form = $('#testForm7')[0];
@@ -196,7 +236,7 @@ test("valid()", function() {
 	ok( v.valid(), "No errors, must be valid" );
 	v.errorList = errorList;
 	ok( !v.valid(), "One error, must be invalid" );
-	reset();
+	QUnit.reset();
 	v = $('#testForm3').validate({ submitHandler: function() {
 		ok( false, "Submit handler was called" );
 	}});
@@ -411,9 +451,11 @@ test("elements() order", function() {
 		errorLabelContainer: container,
 		wrap: "li"
 	});
-	isSet( v.elements().get(), q("order1", "order2", "order3", "order4", "order5", "order6"), "elements must be in document order" );
+	deepEqual( v.elements().map(function() {
+		return $(this).attr("id");
+	}).get(), ["order1", "order2", "order3", "order4", "order5", "order6"], "elements must be in document order" );
 	v.form();
-	same( container.children().map(function() {
+	deepEqual( container.children().map(function() {
 		return $(this).attr("for");
 	}).get(), ["order1", "order2", "order3", "order4", "order5", "order6"], "labels in error container must be in document order" );
 });
@@ -579,24 +621,24 @@ test("option invalidHandler", function() {
 			start();
 		}
 	});
-	$("#usernamec").val("asdf").rules("add", { required: true, remote: "users.php" });
+	$("#usernamec").val("asdf").rules("add", { required: true, minlength: 5 });
 	stop();
 	$("#testForm1clean").submit();
 });
 
 test("findByName()", function() {
-	isSet( new $.validator({}, document.getElementById("form")).findByName(document.getElementById("radio1").name), $("#form").find("[name=radio1]") );
+	deepEqual( new $.validator({}, document.getElementById("form")).findByName(document.getElementById("radio1").name).get(), $("#form").find("[name=radio1]").get() );
 });
 
 test("focusInvalid()", function() {
-	expect(1);
+	// TODO when using custom focusin, this is triggered just once
+	// TODO when using 1.4 focusin, triggered twice; fix once not testing against 1.3 anymore
+	// expect(1);
 	var inputs = $("#testForm1 input").focus(function() {
 		equals( inputs[0], this, "focused first element" );
 	});
 	var v = $("#testForm1").validate();
 	v.form();
-	// have to explicitly show input elements with error class, they are hidden by testsuite styles
-	inputs.show();
 	v.focusInvalid();
 });
 
@@ -614,17 +656,17 @@ test("findLastActive()", function() {
 test("validating multiple checkboxes with 'required'", function() {
 	expect(3);
 	var checkboxes = $("#form input[name=check3]").attr("checked", false);
-	equals(5, checkboxes.size());
+	equal(checkboxes.size(), 5);
 	var v = $("#form").validate({
 		rules: {
 			check3: "required"
 		}
 	});
 	v.form();
-	equals(1, v.size());
+	equal(v.size(), 1);
 	checkboxes.filter(":last").attr("checked", true);
 	v.form();
-	equals(0, v.size());
+	equal(v.size(), 0);
 });
 
 test("dynamic form", function() {
@@ -1094,28 +1136,4 @@ test("validate radio on click", function() {
 	errors(0);
 	trigger(e1);
 	errors(0);
-});
-
-module("ajax");
-
-test("check the serverside script works", function() {
-	stop();
-	$.getJSON("users.php", {value: 'asd'}, function(response) {
-		ok( response, "yet available" );
-		$.getJSON("users.php", {username: "asdf"}, function(response) {
-			ok( !response, "already taken" );
-			start();
-		});
-	});
-});
-
-test("check the serverside script works2", function() {
-	stop();
-	$.getJSON("users2.php", {value: 'asd'}, function(response) {
-		ok( response, "yet available" );
-		$.getJSON("users.php", {username: "asdf"}, function(response) {
-			ok( !response, "asdf is already taken, please try something else" );
-			start();
-		});
-	});
 });

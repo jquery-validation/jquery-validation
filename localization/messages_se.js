@@ -15,7 +15,7 @@ jQuery.extend(jQuery.validator.messages, {
 	digits: "Ange endast siffror.",
 	equalTo: "Ange samma v&auml;rde igen.",
 	range: jQuery.validator.format("Ange ett v&auml;rde mellan {0} och {1}."),
-	max: jQuery.validator.format("Ange ett v&auml;rde som &auml;r st&ouml;rre eller lika med {0}."),
-	min: jQuery.validator.format("Ange ett v&auml;rde som &auml;r mindre eller lika med {0}."),
+	max: jQuery.validator.format("Ange ett v&auml;rde som &auml;r mindre eller lika med {0}."),
+	min: jQuery.validator.format("Ange ett v&auml;rde som &auml;r st&ouml;rre eller lika med {0}."),
 	creditcard: "Ange ett korrekt kreditkortsnummer."
 });

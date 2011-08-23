@@ -1,5 +1,5 @@
 (function($) {
-	
+
 function methodTest( methodName ) {
 	var v = jQuery("#form").validate();
 	var method = $.validator.methods[methodName];
@@ -84,6 +84,7 @@ test("email", function() {
 	ok(!method( "name.@domain.tld" ), "Invalid email" );
 	ok(!method( "name,@domain.tld" ), "Invalid email" );
 	ok(!method( "name;@domain.tld" ), "Invalid email" );
+	ok(!method( "name;@domain.tld." ), "Invalid email" );
 });
 
 test("email2 (tld optional)", function() {
@@ -121,7 +122,7 @@ test("number", function() {
 	ok(!method( "123.0.0,0" ), "Invalid number" );
 	ok(!method( "x123" ), "Invalid number" );
 	ok(!method( "100.100,0,0" ), "Invalid number" );
-	
+
 	ok( method( "" ), "Blank is valid" );
 	ok( method( "123" ), "Valid decimal" );
 	ok( method( "123000" ), "Valid decimal" );
@@ -149,7 +150,7 @@ test("numberDE", function() {
 	ok(!method( "123,0,0.0" ), "Invalid numberDE" );
 	ok(!method( "x123" ), "Invalid numberDE" );
 	ok(!method( "100,100.0.0" ), "Invalid numberDE" );
-	
+
 	ok( method( "" ), "Blank is valid" );
 	ok( method( "123" ), "Valid decimalDE" );
 	ok( method( "123000" ), "Valid decimalDE" );
@@ -200,25 +201,25 @@ test("required", function() {
 	ok( method.call( v, e[0].value, e[0]), "Valid text input" );
 	ok(!method.call( v, e[1].value, e[1]), "Invalid text input" );
 	ok(!method.call( v, e[1].value, e[2]), "Invalid text input" );
-	
+
 	ok(!method.call( v, e[2].value, e[3]), "Invalid select" );
 	ok( method.call( v, e[3].value, e[4]), "Valid select" );
-	
+
 	e = $('#area1, #area2, #pw1, #pw2');
 	ok( method.call( v, e[0].value, e[0]), "Valid textarea" );
 	ok(!method.call( v, e[1].value, e[1]), "Invalid textarea" );
 	ok( method.call( v, e[2].value, e[2]), "Valid password input" );
 	ok(!method.call( v, e[3].value, e[3]), "Invalid password input" );
-	
+
 	e = $('#radio1, #radio2, #radio3');
 	ok(!method.call( v, e[0].value, e[0]), "Invalid radio" );
 	ok( method.call( v, e[1].value, e[1]), "Valid radio" );
 	ok( method.call( v, e[2].value, e[2]), "Valid radio" );
-	
+
 	e = $('#check1, #check2');
 	ok( method.call( v, e[0].value, e[0]), "Valid checkbox" );
 	ok(!method.call( v, e[1].value, e[1]), "Invalid checkbox" );
-	
+
 	e = $('#select1, #select2, #select3, #select4');
 	ok(!method.call( v, e[0].value, e[0]), "Invalid select" );
 	ok( method.call( v, e[1].value, e[1]), "Valid select" );
@@ -253,12 +254,12 @@ test("minlength", function() {
 	ok(!method.call( v, e[1].value, e[1], param), "Invalid text input" );
 	ok(!method.call( v, e[2].value, e[2], param), "Invalid text input" );
 	ok( method.call( v, e[3].value, e[3], param), "Valid text input" );
-	
+
 	e = $('#check1, #check2, #check3');
 	ok(!method.call( v, e[0].value, e[0], param), "Valid checkbox" );
 	ok( method.call( v, e[1].value, e[1], param), "Valid checkbox" );
 	ok( method.call( v, e[2].value, e[2], param), "Invalid checkbox" );
-	
+
 	e = $('#select1, #select2, #select3, #select4, #select5');
 	ok(method.call( v, e[0].value, e[0], param), "Valid select " + e[0].id );
 	ok(!method.call( v, e[1].value, e[1], param), "Invalid select " + e[1].id );
@@ -275,12 +276,12 @@ test("maxlength", function() {
 	ok( method.call( v, e[0].value, e[0], param), "Valid text input" );
 	ok( method.call( v, e[1].value, e[1], param), "Valid text input" );
 	ok(!method.call( v, e[2].value, e[2], param), "Invalid text input" );
-	
+
 	e = $('#check1, #check2, #check3');
 	ok( method.call( v, e[0].value, e[0], param), "Valid checkbox" );
 	ok( method.call( v, e[1].value, e[1], param), "Invalid checkbox" );
 	ok(!method.call( v, e[2].value, e[2], param), "Invalid checkbox" );
-	
+
 	e = $('#select1, #select2, #select3, #select4');
 	ok( method.call( v, e[0].value, e[0], param), "Valid select" );
 	ok( method.call( v, e[1].value, e[1], param), "Valid select" );
@@ -349,7 +350,7 @@ test("accept", function() {
 	ok( method( "picture.jpeg" ), "Valid default accept type" );
 	ok( method( "picture.png" ), "Valid default accept type" );
 	ok( !method( "picture.pgn" ), "Invalid default accept type" );
-	
+
 	var v = jQuery("#form").validate(),
 		method = function(value, param) {
 		return $.validator.methods.accept.call(v, value, $('#text1')[0], param)
@@ -359,7 +360,7 @@ test("accept", function() {
 	ok( method( "picture.pdf", "pdf|doc"), "Valid custom accept type" );
 	ok( !method( "picture.pdf", "doc"), "Invalid custom accept type" );
 	ok( !method( "picture.doc", "pdf"), "Invalid custom accept type" );
-	
+
 	ok( method( "picture.pdf", "doc,pdf"), "Valid custom accept type, comma seperated" );
 	ok( method( "picture.pdf", "pdf,doc"), "Valid custom accept type, comma seperated" );
 	ok( !method( "picture.pdf", "gop,top"), "Invalid custom accept type, comma seperated" );
@@ -390,7 +391,7 @@ test("remote", function() {
 		$(document).unbind("ajaxStop");
 		equals( 1, v.size(), "There must be one error" );
 		equals( "Peter in use", v.errorList[0].message );
-		
+
 		$(document).ajaxStop(function() {
 			$(document).unbind("ajaxStop");
 			equals( 1, v.size(), "There must be one error" );
@@ -414,9 +415,9 @@ test("remote, customized ajax options", function() {
 				required: true,
 				remote: {
 					url: "users.php",
-					type: "post",
+					type: "POST",
 					beforeSend: function(request, settings) {
-						same(settings.type, "post");
+						same(settings.type, "POST");
 						same(settings.data, "username=asdf&email=email.com");
 					},
 					data: {
@@ -515,6 +516,12 @@ test("maxWords", function() {
 	ok( !method("<b>hello</b> world", 2), "html, invalid" );
 });
 
+test("pattern", function() {
+	var method = methodTest("pattern");
+	ok( method( "AR1004", /^AR\d{4}$/ ), "Correct format for the given RegExp" );
+	ok( !method( "BR1004", /^AR\d{4}$/ ), "Invalid format for the given RegExp" );
+});
+
 function testCardTypeByNumber(number, cardname, expected) {
 	$("#cardnumber").val(number);
 	var actual = $("#ccform").valid();
@@ -532,12 +539,12 @@ test('creditcardtypes, all', function() {
 			}
 		}
 	});
-		
+
 	testCardTypeByNumber("4111-1111-1111-1111", "VISA", true)
 	testCardTypeByNumber("5111-1111-1111-1118", "MasterCard", true)
 	testCardTypeByNumber("6111-1111-1111-1116", "Discover", true)
 	testCardTypeByNumber("3400-0000-0000-009", "AMEX", true);
-	
+
 	testCardTypeByNumber("4111-1111-1111-1110", "VISA", false)
 	testCardTypeByNumber("5432-1111-1111-1111", "MasterCard", false)
 	testCardTypeByNumber("6611-6611-6611-6611", "Discover", false)
@@ -556,7 +563,7 @@ test('creditcardtypes, visa', function() {
 			}
 		}
 	});
-		
+
 	testCardTypeByNumber("4111-1111-1111-1111", "VISA", true)
 	testCardTypeByNumber("5111-1111-1111-1118", "MasterCard", false)
 	testCardTypeByNumber("6111-1111-1111-1116", "Discover", false)
@@ -574,7 +581,7 @@ test('creditcardtypes, mastercard', function() {
 			}
 		}
 	});
-		
+
 	testCardTypeByNumber("5111-1111-1111-1118", "MasterCard", true)
 	testCardTypeByNumber("6111-1111-1111-1116", "Discover", false)
 	testCardTypeByNumber("3400-0000-0000-009", "AMEX", false);
@@ -582,3 +589,4 @@ test('creditcardtypes, mastercard', function() {
 });
 
 })(jQuery);
+

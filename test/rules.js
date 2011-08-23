@@ -92,7 +92,7 @@ test("rules(), gurantee that required is at front", function() {
 	equals( "required maxlength minlength", flatRules("#v2-i6") );
 	equals( "required maxlength", flatRules("#co_name") );
 	
-	reset();
+	QUnit.reset();
 	jQuery.validator.autoCreateRanges = true;
 	v = $("#v2").validate();
 	equals( "required rangelength", flatRules("#v2-i6") );

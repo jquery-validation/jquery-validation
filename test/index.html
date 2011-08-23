@@ -2,11 +2,12 @@
 <html id="html">
 <head>
 	<title>jQuery - Validation Test Suite</title>
-	<link rel="Stylesheet" media="screen" href="qunit/testsuite.css" />
-	<script type="text/javascript" src="../lib/jquery.js"></script>
+	<link rel="Stylesheet" media="screen" href="qunit/qunit.css" />
+	<script type="text/javascript" src="jquery.js"></script>
 	<script type="text/javascript" src="../lib/jquery.form.js"></script>
-	<script type="text/javascript" src="qunit/testrunner.js"></script>
+	<script type="text/javascript" src="qunit/qunit.js"></script>
 	<script type="text/javascript" src="../lib/jquery.metadata.js"></script>
+	<script type="text/javascript" src="../lib/jquery.mockjax.js"></script>
 	<script type="text/javascript" src="../jquery.validate.js"></script>
 	<script type="text/javascript" src="../additional-methods.js"></script>
 	<script type="text/javascript" src="test.js"></script>
@@ -15,16 +16,28 @@
 	<script type="text/javascript" src="methods.js"></script>
 </head>
 <body id="body">
-	<h1><a href="http://bassistance.de/jquery-plugins/jquery-plugin-validation/">jQuery Validation Plugin</a> Test Suite</h1>
-	<h2 id="banner"></h2>
-	<h2 id="userAgent"></h2>
+	<h1 id="qunit-header">
+		<a href="http://bassistance.de/jquery-plugins/jquery-plugin-validation/">jQuery Validation Plugin</a> Test Suite
+		<a href="?jquery=1.3.2">jQuery 1.3.2</a>
+		<a href="?jquery=1.4.2">jQuery 1.4.2</a>
+		<a href="?jquery=1.4.4">jQuery 1.4.4</a>
+		<a href="?jquery=1.5.2">jQuery 1.5.2</a>
+		<a href="?jquery=1.6.1">jQuery 1.6.1</a>
+		<a href="?jquery=git">jQuery Latest (git)</a>
+		</h1>
+	<div>
+	</div>
+	<h2 id="qunit-banner"></h2>
+	<div id="qunit-testrunner-toolbar"></div>
+	<h2 id="qunit-userAgent"></h2>
+	<ol id="qunit-tests"></ol>
 	
 	<!-- Test HTML -->
 	<div id="other" style="display:none;">
 		<input type="password" name="pw1" id="pw1" value="engfeh" />
 		<input type="password" name="pw2" id="pw2" value="" />
 	</div>
-	<div id="main" style="position: absolute; top: -10000px; left: -10000px;">
+	<div id="qunit-fixture">
 		<p id="firstp">See <a id="simon1" href="http://simon.incutio.com/archive/2003/03/25/#getElementsBySelector" rel="bookmark">this blog entry</a> for more information.</p>
 		<p id="ap">
 			Here are some links in a normal paragraph: <a id="google" href="http://www.google.com/" title="Google!">Google</a>, 
@@ -44,10 +57,10 @@
 		<ol id="empty"></ol>
 		
 		<form id="testForm1">
-			<input class="{required:true,minlength:2}" title="buga" name="firstname" id="firstname" />
+			<input type="text" class="{required:true,minlength:2}" title="buga" name="firstname" id="firstname" />
 			<label id="errorFirstname" for="firstname" class="error">error for firstname</label>
-			<input class="{required:true}" title="buga" name="lastname" id="lastname" />
-			<input class="{required:true}" title="something" name="something" id="something" value="something" />
+			<input type="text" class="{required:true}" title="buga" name="lastname" id="lastname" />
+			<input type="text" class="{required:true}" title="something" name="something" id="something" value="something" />
 		</form>
 		
 		<form id="testForm1clean">
@@ -58,11 +71,11 @@
 		</form>
 		
 		<form id="userForm">
-			<input class="{required:true}" name="username" id="username" />
+			<input type="text" class="{required:true}" name="username" id="username" />
 			<input type="submit" name="submitButton" value="submitButtonValue" />
 		</form>
 		
-		<form method="post" id="signupForm" action="../demo/form.php">
+		<form id="signupForm" action="form.php">
 			<input id="user" name="user" title="Please enter your username (at least 3 characters)" class="{required:true,minlength:3}" />
 			<input type="password" name="password" id="password" class="{required:true,minlength:5}" />
 		</form>
@@ -126,6 +139,11 @@
 			<input id="testEmail9" class="{required:true,email:true,messages:{required:'required',email:'email'}}" />
 		</form>
 		
+		<form id="testForm10">
+			<input type="radio" name="testForm10Radio" value="1" id="testForm10Radio1" />
+			<input type="radio" name="testForm10Radio" value="2" id="testForm10Radio2" />
+		</form>
+
 		<div id="simplecontainer">
 			<h3></h3>
 		</div>
@@ -254,8 +272,6 @@
 			<input id="cardnumber" name="cardnumber" />
 		</form>
 	</div>
-	
-	<ol id="tests"></ol>
 	
 </body>
 </html>
