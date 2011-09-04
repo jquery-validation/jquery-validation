@@ -37,16 +37,14 @@ $.extend($.fn, {
 
 		if ( validator.settings.onsubmit ) {
 
-			var inputsAndButtons = this.find("input, button");
-
 			// allow suppresing validation by adding a cancel class to the submit button
-			inputsAndButtons.filter(".cancel").click(function () {
+			this.find("input, button").filter(".cancel").click(function() {
 				validator.cancelSubmit = true;
 			});
 
 			// when a submitHandler is used, capture the submitting button
 			if (validator.settings.submitHandler) {
-				inputsAndButtons.filter(":submit").click(function () {
+				this.find("input, button").filter(":submit").click(function() {
 					validator.submitButton = this;
 				});
 			}
@@ -214,7 +212,7 @@ $.extend($.validator, {
 		errorContainer: $( [] ),
 		errorLabelContainer: $( [] ),
 		onsubmit: true,
-		ignore: ":hidden",
+		ignore: [":hidden"],
 		ignoreTitle: false,
 		onfocusin: function(element) {
 			this.lastActive = element;
@@ -349,7 +347,7 @@ $.extend($.validator, {
 
 		// http://docs.jquery.com/Plugins/Validation/Validator/element
 		element: function( element ) {
-			element = this.validationTargetFor( this.clean( element ) );
+			element = this.clean( element );
 			this.lastElement = element;
 			this.prepareElement( element );
 			this.currentElements = $(element);
@@ -394,7 +392,6 @@ $.extend($.validator, {
 			if ( $.fn.resetForm )
 				$( this.currentForm ).resetForm();
 			this.submitted = {};
-			this.lastElement = null;
 			this.prepareForm();
 			this.hideErrors();
 			this.elements().removeClass( this.settings.errorClass );
@@ -493,7 +490,12 @@ $.extend($.validator, {
 		},
 
 		check: function( element ) {
-			element = this.validationTargetFor( this.clean( element ) );
+			element = this.clean( element );
+
+			// if radio/checkbox, validate first element in group instead
+			if (this.checkable(element)) {
+				element = this.findByName( element.name ).not(this.settings.ignore)[0];
+			}
 
 			var rules = $(element).rules();
 			var dependencyMismatch = false;
@@ -674,14 +676,6 @@ $.extend($.validator, {
 			return this.groups[element.name] || (this.checkable(element) ? element.name : element.id || element.name);
 		},
 
-		validationTargetFor: function(element) {
-			// if radio/checkbox, validate first element in group instead
-			if (this.checkable(element)) {
-				element = this.findByName( element.name ).not(this.settings.ignore)[0];
-			}
-			return element;
-		},
-
 		checkable: function( element ) {
 			return /radio|checkbox/i.test(element.type);
 		},
@@ -794,13 +788,7 @@ $.extend($.validator, {
 		var $element = $(element);
 
 		for (var method in $.validator.methods) {
-			var value;
-			// If .prop exists (jQuery >= 1.6), use it to get true/false for required
-			if (method === 'required' && typeof $.fn.prop === 'function') {
-				value = $element.prop(method);
-			} else {
-				value = $element.attr(method);
-			}
+			var value = $element.attr(method);
 			if (value) {
 				rules[method] = value;
 			} else if ($element[0].getAttribute("type") === method) {
