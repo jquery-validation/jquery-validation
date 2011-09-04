@@ -1159,3 +1159,30 @@ test("validate radio on click", function() {
 	trigger(e1);
 	errors(0);
 });
+
+test("ignore hidden elements", function(){
+    var form = $('#userForm');
+    var validate = form.validate({
+        rules:{
+            "username": "required"
+        }
+    });
+    form.get(0).reset();
+    ok(! validate.form(), "form should be initially invalid");
+    $('#userForm [name=username]').hide();
+    ok(validate.form(), "hidden elements should be ignored by default");
+});
+
+test("ignore hidden elements at start", function(){
+    var form = $('#userForm');
+    var validate = form.validate({
+        rules:{
+            "username": "required"
+        }
+    });
+    form.get(0).reset();
+    $('#userForm [name=username]').hide();
+    ok(validate.form(), "hidden elements should be ignored by default");
+    $('#userForm [name=username]').show();
+    ok(! validate.form(), "form should be invalid when required element is visible");
+});

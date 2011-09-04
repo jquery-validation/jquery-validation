@@ -13,6 +13,7 @@
 * Fixed #184 - resetForm: should unset lastElement
 * Fixed #71 - improve existing time method and add time12h method for 12h am/pm time format
 * Fixed #177 - Fix validation of a single radio or checkbox input
+* Fixed #189 - :hidden elements are now ignored by default
 
 1.8.1
 ---
