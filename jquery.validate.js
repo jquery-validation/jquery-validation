@@ -790,7 +790,13 @@ $.extend($.validator, {
 		var $element = $(element);
 
 		for (var method in $.validator.methods) {
-			var value = $element.attr(method);
+			var value;
+			//If .prop exists (>=1.6), use it to get true/false for required
+			if (method==='required' && typeof $.fn.prop === 'function') {
+				value = $element.prop(method);
+			} else {
+				value = $element.attr(method);
+			}
 			if (value) {
 				rules[method] = value;
 			} else if ($element[0].getAttribute("type") === method) {

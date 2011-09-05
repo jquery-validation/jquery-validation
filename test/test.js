@@ -1137,3 +1137,15 @@ test("validate radio on click", function() {
 	trigger(e1);
 	errors(0);
 });
+
+test("valid() HTML5 required", function() {
+	var form = $("#testForm11");
+	form.validate();
+	ok ( !form.valid(), "Form isn't valid yet" );
+	var input = $("#testForm11text1");
+	ok ( !input.valid(), "Input isn't valid either" );
+	input.val("Hello world");
+	ok ( form.valid(), "Form is now valid" );
+	ok ( input.valid(), "Input is valid, too" );
+});
+
