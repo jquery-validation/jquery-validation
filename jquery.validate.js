@@ -791,6 +791,10 @@ $.extend($.validator, {
 
 		for (var method in $.validator.methods) {
 			var value = $element.attr(method);
+			// In attributes any value for 'required' attribute _ALWAYS_ will be 'required' as string type.
+			// For correct working we need setup only boolean true value else this method as attribute is useless
+			if (method === "required" && value)
+				value = true;
 			if (value) {
 				rules[method] = value;
 			} else if ($element[0].getAttribute("type") === method) {
