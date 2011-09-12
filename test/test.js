@@ -1113,6 +1113,28 @@ test("validate multiple checkbox on click", function() {
 	errors(1);
 });
 
+test("correct checkbox receives the error", function(){
+	function trigger(element) {
+		element.click();
+		// triggered click event screws up checked-state in 1.4 
+		element.valid();
+	}
+	var e1 = $("#check1").attr("checked", false);
+	var e2 = $("#check1b").attr("checked", false);
+    var v = $("#form").find('[type=checkbox]').attr('checked', false).end().validate({
+        rules:{
+            check: {
+                    required: true,
+                    minlength: 2
+            }
+        }
+    });
+    equals(false, v.form());
+    trigger(e1);
+    equals(false, v.form());
+    ok(v.errorList[0].element.id === v.currentElements[0].id, "the proper checkbox has the error AND is present in currentElements");
+});
+
 test("validate radio on click", function() {
 	function errors(expected, message) {
 		equals(expected, v.size(), message );
