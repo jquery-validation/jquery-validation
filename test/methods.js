@@ -492,10 +492,24 @@ test("time", function() {
 	var method = methodTest("time");
 	ok( method("00:00"), "Valid time, lower bound" );
 	ok( method("23:59"), "Valid time, upper bound" );
+	ok( !method("00:60"), "Invalid time" );
 	ok( !method("24:60"), "Invalid time" );
 	ok( !method("24:00"), "Invalid time" );
 	ok( !method("29:59"), "Invalid time" );
 	ok( !method("30:00"), "Invalid time" );
+});
+
+test("time12h", function() {
+	var method = methodTest("time12h");
+	ok( method("12:00 AM"), "Valid time, lower bound, am" );
+	ok( method("11:59 AM"), "Valid time, upper bound, am" );
+	ok( method("12:00 PM"), "Valid time, lower bound, pm" );
+	ok( method("11:59 PM"), "Valid time, upper bound, pm" );
+	ok( method("11:59 am"), "Valid time, also accept lowercase" );
+	ok( method("11:59 pm"), "Valid time, also accept lowercase" );
+	ok( !method("12:00"), "Invalid time" );
+	ok( !method("12:61 am"), "Invalid time" );
+	ok( !method("13:00 am"), "Invalid time" );
 });
 
 test("minWords", function() {
