@@ -19,7 +19,7 @@ test("rules(), ignore method:false", function() {
 test("rules() HTML5 required (no value)", function() {
 	var element = $('#testForm11text1');
 	var v = $('#testForm11').validate();
-	same( element.rules(), { required: true } );
+	same( element.rules(), { required: $.fn.prop ? "required" : true } );
 });
 
 test("rules() - internal - select", function() {
