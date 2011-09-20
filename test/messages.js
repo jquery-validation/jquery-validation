@@ -60,3 +60,17 @@ test("read messages from metadata, with meta option specified, but no metadata i
 	});
 	ok(!form.valid(), "not valid");
 });
+
+test('edge case for disabled first checkable', function(){
+    var form = $('#form');
+    var fst = form.find('[name=check3]').removeAttr('checked').filter(':first').attr('disabled', 'disabled').get(0);
+    var v = form.validate({
+        'rules': {
+            'check3': 'required'
+        }
+    });
+    ok(!form.valid(), 'form is initially invalid');
+    ok(v.errorList[0].element != fst, 'error gets placed and it is not on the first element');
+    ok($(v.errorList[0].element).hasClass('error'), 'the element is also highlighed');
+});
+
