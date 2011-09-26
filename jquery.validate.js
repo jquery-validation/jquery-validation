@@ -216,7 +216,7 @@ $.extend($.validator, {
 		onsubmit: true,
 		ignore: ":hidden",
 		ignoreTitle: false,
-		onfocusin: function(element) {
+		onfocusin: function(element, event) {
 			this.lastActive = element;
 
 			// hide error label and remove error class on focus if enabled
@@ -225,17 +225,17 @@ $.extend($.validator, {
 				this.addWrapper(this.errorsFor(element)).hide();
 			}
 		},
-		onfocusout: function(element) {
+		onfocusout: function(element, event) {
 			if ( !this.checkable(element) && (element.name in this.submitted || !this.optional(element)) ) {
 				this.element(element);
 			}
 		},
-		onkeyup: function(element) {
+		onkeyup: function(element, event) {
 			if ( element.name in this.submitted || element == this.lastElement ) {
 				this.element(element);
 			}
 		},
-		onclick: function(element) {
+		onclick: function(element, event) {
 			// click on selects, radiobuttons and checkboxes
 			if ( element.name in this.submitted )
 				this.element(element);
@@ -313,7 +313,7 @@ $.extend($.validator, {
 			function delegate(event) {
 				var validator = $.data(this[0].form, "validator"),
 					eventType = "on" + event.type.replace(/^validate/, "");
-				validator.settings[eventType] && validator.settings[eventType].call(validator, this[0] );
+				validator.settings[eventType] && validator.settings[eventType].call(validator, this[0], event);
 			}
 			$(this.currentForm)
 			       .validateDelegate("[type='text'], [type='password'], [type='file'], select, textarea, " +
