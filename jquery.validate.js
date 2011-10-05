@@ -1062,8 +1062,8 @@ $.extend($.validator, {
 		creditcard: function(value, element) {
 			if ( this.optional(element) )
 				return "dependency-mismatch";
-			// accept only digits and dashes
-			if (/[^0-9-]+/.test(value))
+			// accept only spaces, digits and dashes
+			if (/[^0-9 -]+/.test(value))
 				return false;
 			var nCheck = 0,
 				nDigit = 0,
