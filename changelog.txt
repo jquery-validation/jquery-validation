@@ -1,3 +1,7 @@
+2.0.0
+-----
+* Fixed #219 - Fix valid() on elements with dependency-callback or dependency-expression.
+
 1.9.0
 ---
 * Added Basque (EU) localization
