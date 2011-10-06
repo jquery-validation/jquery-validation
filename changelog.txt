@@ -15,6 +15,7 @@
 * Fixed #177 - Fix validation of a single radio or checkbox input
 * Fixed #189 - :hidden elements are now ignored by default
 * Fixed #194 - Required as attribute fails if jQuery>=1.6 - Use .prop instead of .attr
+* Fixed #47, #39, #32 - Allowed credit card numbers to contain spaces as well as dashes (spaces are commonly input by users).
 
 1.8.1
 ---
