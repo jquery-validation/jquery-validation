@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 <project name="jquery-validation" default="release" basedir=".">
-	
+
 	<taskdef resource="net/sf/antcontrib/antcontrib.properties">
 		<classpath>
 			<pathelement location="build/ant-contrib-0.6.jar"/>
 		</classpath>
 	</taskdef>
-	
+
 	<property file="ant.properties" />
 
 	<loadfile failonerror="no" srcFile="version.txt" property="release.version">
@@ -17,17 +17,17 @@
 	<property name="dist.dir" value="dist/${release.filename}/" />
 
 	<property description="Google Closure" name="closure-jar" value="build/google-compiler-20110320.jar" />
-	
+
 	<target name="release" depends="clean, copy, minify, replace-version, prepend-header, zip" description="Release builder">
 	</target>
-	
+
 	<target name="replace-version">
 		<replaceregexp match="@VERSION" replace="${release.version}" flags="g" byline="true">
 		    <fileset dir="${dist.dir}/" includes="*.js"/>
 		</replaceregexp>
 		<echo message="Replaced all @VERSION to ${release.version}." />
 	</target>
-	
+
 	<target name="prepend-header">
 		<copy todir="${dist.dir}/headers/">
 			<fileset dir="${dist.dir}/" includes="*.js" excludes="*.min.js" />
@@ -48,7 +48,7 @@
 		<copy todir="${dist.dir}" overwrite="true">
 			<fileset dir="${dist.dir}/headered/" includes="*.js" />
 		</copy>
-		
+
 		<delete dir="${dist.dir}/headers/" />
 		<delete dir="${dist.dir}/headered/" />
 	</target>
@@ -73,7 +73,7 @@
 			<mapper type="glob" from="*.js" to="${dist.dir}/*.min.js" />
 		</apply>
 	</target>
-	
+
 	<target description="Copy needed folders" name="copy">
 		<echo message="Copying files" />
 		<mkdir dir="${dist.dir}" />
@@ -81,12 +81,11 @@
 			<fileset dir="." excludes="**/.*, .*/, dist/, build/, build.xml" />
 		</copy>
 	</target>
-	
+
 	 <target name="clean">
-	 	<delete dir="${dist.dir}" />
-	 	<delete file="${dist.dir}/../${release.filename}.zip" />
+	 	<delete dir="dist" />
     </target>
-	
+
 	<target name="whitespace">
 		<replaceregexp match="[\t ]+$" replace="" flags="g" byline="true">
 		    <fileset dir="${src.dir}" includes="*.js"/>
@@ -94,5 +93,5 @@
 		</replaceregexp>
 		<echo message="All trailing spaces removed." />
 	</target>
-	
+
 </project>
