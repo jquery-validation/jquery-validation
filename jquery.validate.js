@@ -353,8 +353,8 @@ $.extend($.validator, {
 			this.lastElement = element;
 			this.prepareElement( element );
 			this.currentElements = $(element);
-			var result = this.check( element );
-			if ( result ) {
+			var result = this.check( element ) !== false;
+			if (result) {
 				delete this.invalid[element.name];
 			} else {
 				this.invalid[element.name] = true;
