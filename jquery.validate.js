@@ -766,9 +766,7 @@ $.extend($.validator, {
 		url: {url: true},
 		date: {date: true},
 		dateISO: {dateISO: true},
-		dateDE: {dateDE: true},
 		number: {number: true},
-		numberDE: {numberDE: true},
 		digits: {digits: true},
 		creditcard: {creditcard: true}
 	},
