@@ -63,7 +63,7 @@ $.extend($.fn, {
 							// insert a hidden input as a replacement for the missing submit button
 							var hidden = $("<input type='hidden'/>").attr("name", validator.submitButton.name).val(validator.submitButton.value).appendTo(validator.currentForm);
 						}
-						validator.settings.submitHandler.call( validator, validator.currentForm );
+						validator.settings.submitHandler.call( validator, validator.currentForm, event );
 						if (validator.submitButton) {
 							// and clean up afterwards; thanks to no-block-scope, hidden can be referenced
 							hidden.remove();
