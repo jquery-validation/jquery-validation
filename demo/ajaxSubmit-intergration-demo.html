@@ -15,7 +15,7 @@
 	jQuery(function() {
 		// show a simple loading indicator
 		var loader = jQuery('<div id="loader"><img src="images/loading.gif" alt="loading..." /></div>')
-			.css({position: "relative", top: "1em", left: "25em"})
+			.css({position: "relative", top: "1em", left: "25em", display: "inline"})
 			.appendTo("body")
 			.hide();
 		jQuery().ajaxStart(function() {
@@ -25,7 +25,7 @@
 		}).ajaxError(function(a, b, e) {
 			throw e;
 		});
-		
+
 		var v = jQuery("#form").validate({
 			submitHandler: function(form) {
 				jQuery(form).ajaxSubmit({
@@ -33,7 +33,7 @@
 				});
 			}
 		});
-		
+
 		jQuery("#reset").click(function() {
 			v.resetForm();
 		});
