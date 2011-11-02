@@ -220,41 +220,47 @@ $.extend($.validator, {
 			this.lastActive = element;
 
 			// hide error label and remove error class on focus if enabled
-			if ( this.settings.focusCleanup && !this.blockFocusCleanup ) {
+			if ( this.settings.rules[element.name].onfocusin !== false && this.settings.focusCleanup && !this.blockFocusCleanup ) {
 				this.settings.unhighlight && this.settings.unhighlight.call( this, element, this.settings.errorClass, this.settings.validClass );
 				this.addWrapper(this.errorsFor(element)).hide();
 			}
 		},
 		onfocusout: function(element, event) {
-			if ( !this.checkable(element) && (element.name in this.submitted || !this.optional(element)) ) {
+			if ( this.settings.rules[element.name].onfocusout !== false && !this.checkable(element) && (element.name in this.submitted || !this.optional(element)) ) {
 				this.element(element);
 			}
 		},
 		onkeyup: function(element, event) {
-			if ( element.name in this.submitted || element == this.lastElement ) {
+			if ( this.settings.rules[element.name].onkeyup !== false && element.name in this.submitted || element == this.lastElement ) {
 				this.element(element);
 			}
 		},
 		onclick: function(element, event) {
-			// click on selects, radiobuttons and checkboxes
-			if ( element.name in this.submitted )
-				this.element(element);
-			// or option elements, check parent select in that case
-			else if (element.parentNode.name in this.submitted)
-				this.element(element.parentNode);
+			if(this.settings.rules[element.name].onclick !== false) {
+				// click on selects, radiobuttons and checkboxes
+				if ( element.name in this.submitted )
+					this.element(element);
+				// or option elements, check parent select in that case
+				else if (element.parentNode.name in this.submitted)
+					this.element(element.parentNode);
+			}
 		},
 		highlight: function(element, errorClass, validClass) {
-			if (element.type === 'radio') {
-				this.findByName(element.name).addClass(errorClass).removeClass(validClass);
-			} else {
-				$(element).addClass(errorClass).removeClass(validClass);
+			if(this.settings.rules[element.name].highlight !== false) {
+				if (element.type === 'radio') {
+					this.findByName(element.name).addClass(errorClass).removeClass(validClass);
+				} else {
+					$(element).addClass(errorClass).removeClass(validClass);
+				}
 			}
 		},
 		unhighlight: function(element, errorClass, validClass) {
-			if (element.type === 'radio') {
-				this.findByName(element.name).removeClass(errorClass).addClass(validClass);
-			} else {
-				$(element).removeClass(errorClass).addClass(validClass);
+			if(this.settings.rules[element.name].unhighlight !== false) {
+				if (element.type === 'radio') {
+					this.findByName(element.name).removeClass(errorClass).addClass(validClass);
+				} else {
+					$(element).removeClass(errorClass).addClass(validClass);
+				}
 			}
 		}
 	},
