@@ -116,22 +116,28 @@ fieldset fieldset label { display: block; }
 <script type="text/javascript">
 $.validator.setDefaults({
 	submitHandler: function() { alert("submitted!"); },
-	highlight: function(input) {
-		$(input).addClass("ui-state-highlight");
-	},
-	unhighlight: function(input) {
-		$(input).removeClass("ui-state-highlight");
-	},
 	showErrors: function(map, list) {
+		// there's probably a way to simplify this
+		var focussed = document.activeElement;
+		if (focussed && $(focussed).is("input, textarea")) {
+			$(this.currentForm).tooltip("close", { currentTarget: focussed }, true)
+		}
 		this.currentElements.removeAttr("title").removeClass("ui-state-highlight");
 		$.each(list, function(index, error) {
 			$(error.element).attr("title", error.message).addClass("ui-state-highlight");
 		});
+		if (focussed && $(focussed).is("input, textarea")) {
+			$(this.currentForm).tooltip("open", { target: focussed });
+		}
 	}
 });
 
 (function() {
-	$("#commentForm, #signupForm").tooltip();
+	// use custom tooltip; disable animations for now to work around lack of refresh method on tooltip
+	$("#commentForm, #signupForm").tooltip({
+		show: false,
+		hide: false
+	});
 
 	// validate the comment form when it is submitted
 	$("#commentForm").validate();
@@ -211,7 +217,6 @@ $.validator.setDefaults({
 	$(":submit").button();
 })();
 </script>
-
 <script src="http://jqueryui.com/themeroller/themeswitchertool/"></script>
 <script>
 $.fn.themeswitcher && $('<div/>').css({
