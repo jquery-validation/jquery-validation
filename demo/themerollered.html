@@ -34,18 +34,18 @@ fieldset fieldset label { display: block; }
 		<legend class="ui-widget ui-widget-header ui-corner-all">Please provide your name, email address (won't be published) and a comment</legend>
 		<p>
 			<label for="cname">Name (required, at least 2 characters)</label>
-			<input id="cname" name="name" class="required ui-widget-content" minlength="2" />
+			<input id="cname" name="name" class="ui-widget-content" minlength="2" required type="text" />
 		<p>
 			<label for="cemail">E-Mail (required)</label>
-			<input id="cemail" name="email" class="required email ui-widget-content" />
+			<input id="cemail" name="email" class="ui-widget-content" type="email" required />
 		</p>
 		<p>
 			<label for="curl">URL (optional)</label>
-			<input id="curl" name="url" class="url ui-widget-content" value="" />
+			<input id="curl" name="url" class="ui-widget-content" value="" type="url" />
 		</p>
 		<p>
 			<label for="ccomment">Your comment (required)</label>
-			<textarea id="ccomment" name="comment" class="required ui-widget-content"></textarea>
+			<textarea id="ccomment" name="comment" class="ui-widget-content" required></textarea>
 		</p>
 		<p>
 			<button class="submit" type="submit">Submit</button>
@@ -58,15 +58,15 @@ fieldset fieldset label { display: block; }
 		<legend class="ui-widget ui-widget-header ui-corner-all">Validating a complete form</legend>
 		<p>
 			<label for="firstname">Firstname</label>
-			<input id="firstname" name="firstname" />
+			<input id="firstname" name="firstname" type="text" />
 		</p>
 		<p>
 			<label for="lastname">Lastname</label>
-			<input id="lastname" name="lastname" />
+			<input id="lastname" name="lastname" type="text" />
 		</p>
 		<p>
 			<label for="username">Username</label>
-			<input id="username" name="username" />
+			<input id="username" name="username" type="text" />
 		</p>
 		<p>
 			<label for="password">Password</label>
@@ -78,7 +78,7 @@ fieldset fieldset label { display: block; }
 		</p>
 		<p>
 			<label for="email">Email</label>
-			<input id="email" name="email" />
+			<input id="email" name="email" type="email" />
 		</p>
 		<p>
 			<label for="agree">Please agree to our policy</label>
