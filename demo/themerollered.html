@@ -121,10 +121,18 @@ $.validator.setDefaults({
 	},
 	unhighlight: function(input) {
 		$(input).removeClass("ui-state-highlight");
+	},
+	showErrors: function(map, list) {
+		this.currentElements.removeAttr("title").removeClass("ui-state-highlight");
+		$.each(list, function(index, error) {
+			$(error.element).attr("title", error.message).addClass("ui-state-highlight");
+		});
 	}
 });
 
 (function() {
+	$("#commentForm, #signupForm").tooltip();
+
 	// validate the comment form when it is submitted
 	$("#commentForm").validate();
 
