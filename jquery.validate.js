@@ -350,6 +350,11 @@ $.extend($.validator, {
 		// http://docs.jquery.com/Plugins/Validation/Validator/element
 		element: function( element ) {
 			element = this.validationTargetFor( this.clean( element ) );
+
+			if (!element) {
+				return true;
+			}
+
 			this.lastElement = element;
 			this.prepareElement( element );
 			this.currentElements = $(element);
