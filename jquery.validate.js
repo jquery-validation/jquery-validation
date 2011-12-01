@@ -61,7 +61,7 @@ $.extend($.fn, {
 							// insert a hidden input as a replacement for the missing submit button
 							var hidden = $("<input type='hidden'/>").attr("name", validator.submitButton.name).val(validator.submitButton.value).appendTo(validator.currentForm);
 						}
-						validator.settings.submitHandler.call( validator, validator.currentForm );
+						validator.settings.submitHandler.call( validator, validator.currentForm, event );
 						if (validator.submitButton) {
 							// and clean up afterwards; thanks to no-block-scope, hidden can be referenced
 							hidden.remove();
@@ -351,8 +351,8 @@ $.extend($.validator, {
 			this.lastElement = element;
 			this.prepareElement( element );
 			this.currentElements = $(element);
-			var result = this.check( element );
-			if ( result ) {
+			var result = this.check( element ) !== false;
+			if (result) {
 				delete this.invalid[element.name];
 			} else {
 				this.invalid[element.name] = true;
@@ -763,9 +763,7 @@ $.extend($.validator, {
 		url: {url: true},
 		date: {date: true},
 		dateISO: {dateISO: true},
-		dateDE: {dateDE: true},
 		number: {number: true},
-		numberDE: {numberDE: true},
 		digits: {digits: true},
 		creditcard: {creditcard: true}
 	},
@@ -1059,8 +1057,8 @@ $.extend($.validator, {
 		creditcard: function(value, element) {
 			if ( this.optional(element) )
 				return "dependency-mismatch";
-			// accept only digits and dashes
-			if (/[^0-9-]+/.test(value))
+			// accept only spaces, digits and dashes
+			if (/[^0-9 -]+/.test(value))
 				return false;
 			var nCheck = 0,
 				nDigit = 0,

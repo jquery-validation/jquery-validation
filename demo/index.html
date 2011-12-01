@@ -6,7 +6,7 @@
 
 <link rel="stylesheet" type="text/css" media="screen" href="css/screen.css" />
 
-<script src="../lib/jquery.js" type="text/javascript"></script>
+<script src="../lib/jquery-1.6.1.js" type="text/javascript"></script>
 <script src="../jquery.validate.js" type="text/javascript"></script>
 
 <script type="text/javascript">
@@ -119,10 +119,10 @@ $().ready(function() {
 		<legend>Please provide your name, email address (won't be published) and a comment</legend>
 		<p>
 			<label for="cname">Name (required, at least 2 characters)</label>
-			<input id="cname" name="name" class="required" minlength="2" />
+			<input id="cname" name="name" minlength="2" type="text" required />
 		<p>
 			<label for="cemail">E-Mail (required)</label>
-			<input id="cemail" type="email" name="email" class="required" />
+			<input id="cemail" type="email" name="email" required />
 		</p>
 		<p>
 			<label for="curl">URL (optional)</label>
@@ -130,7 +130,7 @@ $().ready(function() {
 		</p>
 		<p>
 			<label for="ccomment">Your comment (required)</label>
-			<textarea id="ccomment" name="comment" class="required"></textarea>
+			<textarea id="ccomment" name="comment" required></textarea>
 		</p>
 		<p>
 			<input class="submit" type="submit" value="Submit"/>
@@ -143,15 +143,15 @@ $().ready(function() {
 		<legend>Validating a complete form</legend>
 		<p>
 			<label for="firstname">Firstname</label>
-			<input id="firstname" name="firstname" />
+			<input id="firstname" name="firstname" type="text" />
 		</p>
 		<p>
 			<label for="lastname">Lastname</label>
-			<input id="lastname" name="lastname" />
+			<input id="lastname" name="lastname" type="text" />
 		</p>
 		<p>
 			<label for="username">Username</label>
-			<input id="username" name="username" />
+			<input id="username" name="username" type="text" />
 		</p>
 		<p>
 			<label for="password">Password</label>
@@ -220,11 +220,6 @@ $().ready(function() {
 
 </div>
 
-<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
-</script>
-<script type="text/javascript">
-_uacct = "UA-2623402-1";
-urchinTracker();
-</script>
+
 </body>
 </html>

@@ -19,5 +19,5 @@ jQuery.extend(jQuery.validator.messages, {
   rangelength: jQuery.format("{0} 文字から {1} 文字までの値を入力してください。"),
   range: jQuery.format("{0} から {1} までの値を入力してください。"),
   max: jQuery.format("{0} 以下の値を入力してください。"),
-  min: jQuery.format("{1} 以上の値を入力してください。")
+  min: jQuery.format("{0} 以上の値を入力してください。")
 });
