@@ -445,6 +445,21 @@ test("option: focusCleanup with wrapper", function() {
 	ok( !form.is(":has(span:visible:has(label.error[for=username]))") );
 });
 
+test("option: errorClass with multiple classes", function() {
+	var form = $("#userForm")
+	form.validate({
+		focusCleanup: true,
+		wrapper: "span",
+		errorClass: "error error1"
+	});
+	form.valid();
+	ok( form.is(":has(span:visible:has(label.error[for=username]))") );
+	ok( form.is(":has(span:visible:has(label.error1[for=username]))") );
+	$("#username").focus().trigger("focusin");
+	ok( !form.is(":has(span:visible:has(label.error[for=username]))") );
+	ok( !form.is(":has(span:visible:has(label.error1[for=username]))") );
+});
+
 test("elements() order", function() {
 	var container = $("#orderContainer");
 	var v = $("#elementsOrder").validate({
