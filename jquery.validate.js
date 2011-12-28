@@ -1084,8 +1084,17 @@ $.extend($.validator, {
 
 		// http://docs.jquery.com/Plugins/Validation/Methods/accept
 		accept: function(value, element, param) {
-			param = typeof param == "string" ? param.replace(/,/g, '|') : "png|jpe?g|gif";
-			return this.optional(element) || value.match(new RegExp(".(" + param + ")$", "i"));
+		        var re_pre = ".(";
+			var re_post = ")$";
+		        var default_param = "png|jpe?g|gif";
+		        if ( $(element).attr("type") == "file" ) {
+			    re_pre = "(";
+			    default_param = "image/*";
+			    value = element.files[0].type
+			    re_post = ")";
+			}
+			param = typeof param == "string" ? param.replace(/,/g, '|') : default_param;
+			return this.optional(element) || value.match(new RegExp(re_pre + param + re_post, "i"));
 		},
 
 		// http://docs.jquery.com/Plugins/Validation/Methods/equalTo
