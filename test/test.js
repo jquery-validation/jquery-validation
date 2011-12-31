@@ -1191,12 +1191,12 @@ test( "Ignores other elements when validating a single element", function() {
 	expect( 5 );
 	
 	var form = $( "#signupForm" );
-    var validate = form.validate({
-        rules:{
-            "user": "required",
+	var validate = form.validate({
+		rules:{
+			"user": "required",
 			"password": "required"
-        }
-    });
+		}
+	});
 	
 	ok(! validate.form(), "form should be initially invalid" );
 	
