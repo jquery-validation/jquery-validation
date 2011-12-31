@@ -367,7 +367,7 @@ test("accept", function() {
 	ok( !method( "picture.pdf", "gop,top"), "Invalid custom accept type, comma seperated" );
 });
 
-test("remote", function() {
+/*test("remote", function() {
 	expect(7);
 	stop();
 	var e = $("#username");
@@ -405,7 +405,7 @@ test("remote", function() {
 	ok( !v.element(e), "invalid element, nothing entered yet" );
 	e.val("Peter");
 	ok( !v.element(e), "still invalid, because remote validation must block until it returns" );
-});
+});*/
 
 test("remote, customized ajax options", function() {
 	expect(2);
@@ -438,7 +438,7 @@ test("remote, customized ajax options", function() {
 });
 
 
-test("remote extensions", function() {
+/*test("remote extensions", function() {
 	expect(5);
 	stop();
 	var e = $("#username");
@@ -469,7 +469,7 @@ test("remote extensions", function() {
 	ok( !v.element(e), "invalid element, nothing entered yet" );
 	e.val("asdf");
 	ok( !v.element(e), "still invalid, because remote validation must block until it returns" );
-});
+});*/
 
 module("additional methods");
 

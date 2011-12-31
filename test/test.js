@@ -98,7 +98,7 @@ test("addMethod2", function() {
 	var rule = $.validator.methods.complicatedPassword,
 		e = $('#text1')[0];
 	e.value = "";
-	ok( v.element(e) === undefined, "Rule is optional, valid" );
+	ok( v.element(e), "Rule is optional, valid" );
 	equals( 0, v.size() );
 	e.value = "ko";
 	ok( !v.element(e), "Invalid, doesn't contain one of the required characters" );
