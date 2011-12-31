@@ -1186,3 +1186,29 @@ test("ignore hidden elements at start", function(){
     $('#userForm [name=username]').show();
     ok(! validate.form(), "form should be invalid when required element is visible");
 });
+
+test( "Ignores other elements when validating a single element", function() {
+	expect( 5 );
+	
+	var form = $( "#signupForm" );
+    var validate = form.validate({
+        rules:{
+            "username": "required",
+			"password": "required"
+        }
+    });
+	
+	ok(! validate.form(), "form should be initially invalid" );
+	
+	var usernameInput = $( "#signupForm [name=user]" );
+	var passwordInput = $( "#signupForm [name=password]" );
+	
+	ok( usernameInput.hasClass( "error" ), "Username field initially has validation error" );
+	ok( passwordInput.hasClass( "error" ), "Password field initially has validation error" );
+	
+	validate.element( usernameInput[0] );
+	
+	ok( usernameInput.hasClass( "error" ) , "Username field has a validation error at the end" );
+	ok( passwordInput.hasClass( "error" ) , "Password field has a validation error at the end" );
+	
+});
