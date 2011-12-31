@@ -1,4 +1,6 @@
-window.sessionStorage && sessionStorage.clear();
+if (! $.browser.mozilla ) {
+	window.sessionStorage && sessionStorage.clear();
+}
 jQuery.validator.defaults.debug = true;
 $.mockjaxSettings.log = $.noop;
 
