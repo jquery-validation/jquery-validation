@@ -1193,7 +1193,7 @@ test( "Ignores other elements when validating a single element", function() {
 	var form = $( "#signupForm" );
     var validate = form.validate({
         rules:{
-            "username": "required",
+            "user": "required",
 			"password": "required"
         }
     });
