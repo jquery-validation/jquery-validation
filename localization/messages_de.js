@@ -16,5 +16,5 @@ jQuery.extend(jQuery.validator.messages, {
 	range: jQuery.validator.format("Geben Sie bitten einen Wert zwischen {0} und {1}."),
 	max: jQuery.validator.format("Geben Sie bitte einen Wert kleiner oder gleich {0} ein."),
 	min: jQuery.validator.format("Geben Sie bitte einen Wert größer oder gleich {0} ein."),
-	creditcard: "Geben Sie bitte ein gültige Kreditkarten-Nummer ein."
+	creditcard: "Geben Sie bitte eine gültige Kreditkarten-Nummer ein."
 });
