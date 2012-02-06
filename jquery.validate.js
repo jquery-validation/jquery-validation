@@ -500,7 +500,20 @@ $.extend($.validator, {
 			for (var method in rules ) {
 				var rule = { method: method, parameters: rules[method] };
 				try {
-					var result = $.validator.methods[method].call( this, element.value.replace(/\r/g, ""), element, rule.parameters );
+					var elementValue = element.value.replace(/\r/g, "");
+					if (element.tagName.toLowerCase() == "select" && element.getAttribute("multiple")) {
+						var elementValueArray = [];
+						for (var i = 0; i < element.options.length; i++) {
+							var option = element.options[i];
+							if (option.selected) {
+								elementValueArray.push(option.value.replace(/\r/g, ""));
+							}
+						}
+
+						elementValue = elementValueArray.join(",");
+					}
+					
+					var result = $.validator.methods[method].call( this, elementValue, element, rule.parameters );
 
 					// if a method indicates that the field is optional and therefore valid,
 					// don't mark it as valid when there are no other rules
