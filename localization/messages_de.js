@@ -13,7 +13,7 @@ jQuery.extend(jQuery.validator.messages, {
 	number: "Geben Sie bitte eine Nummer ein.",
 	digits: "Geben Sie bitte nur Ziffern ein.",
 	equalTo: "Bitte denselben Wert wiederholen.",
-	range: jQuery.validator.format("Geben Sie bitten einen Wert zwischen {0} und {1}."),
+	range: jQuery.validator.format("Geben Sie bitte einen Wert zwischen {0} und {1} ein."),
 	max: jQuery.validator.format("Geben Sie bitte einen Wert kleiner oder gleich {0} ein."),
 	min: jQuery.validator.format("Geben Sie bitte einen Wert größer oder gleich {0} ein."),
 	creditcard: "Geben Sie bitte eine gültige Kreditkarten-Nummer ein."
