@@ -295,6 +295,12 @@ jQuery.validator.addMethod("ipv6", function(value, element, param) {
   * @cat Plugins/Validate/Methods
   */
 jQuery.validator.addMethod("pattern", function(value, element, param) {
-    return this.optional(element) || param.test(value);
+    if (this.optional(element)) {
+        return true
+    }
+    if (typeof param === 'string') {
+        param = new RegExp('^(?:' + param + ')$');
+    }
+    return param.test(value);
 }, "Invalid format.");
 
