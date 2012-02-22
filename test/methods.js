@@ -354,8 +354,8 @@ test("accept", function() {
 
 	var v = jQuery("#form").validate(),
 		method = function(value, param) {
-		return $.validator.methods.accept.call(v, value, $('#text1')[0], param)
-	};
+			return $.validator.methods.accept.call(v, value, $('#text1')[0], param);
+		};
 	ok( method( "picture.doc", "doc"), "Valid custom accept type" );
 	ok( method( "picture.pdf", "doc|pdf"), "Valid custom accept type" );
 	ok( method( "picture.pdf", "pdf|doc"), "Valid custom accept type" );
@@ -390,21 +390,21 @@ test("remote", function() {
 	});
 	$(document).ajaxStop(function() {
 		$(document).unbind("ajaxStop");
-		equals( 1, v.size(), "There must be one error" );
-		equals( "Peter in use", v.errorList[0].message );
+		equal( 1, v.size(), "There must be one error" );
+		equal( "Peter in use", v.errorList[0].message );
 
 		$(document).ajaxStop(function() {
 			$(document).unbind("ajaxStop");
-			equals( 1, v.size(), "There must be one error" );
-			equals( "Peter2 in use", v.errorList[0].message );
+			equal( 1, v.size(), "There must be one error" );
+			equal( "Peter2 in use", v.errorList[0].message );
 			start();
 		});
 		e.val("Peter2");
-		ok( !v.element(e), "new value, new request" );
+		strictEqual( v.element(e), true, "new value, new request; dependency-mismatch considered as valid though" );
 	});
-	ok( !v.element(e), "invalid element, nothing entered yet" );
+	strictEqual( v.element(e), false, "invalid element, nothing entered yet" );
 	e.val("Peter");
-	ok( !v.element(e), "still invalid, because remote validation must block until it returns" );
+	strictEqual( v.element(e), true, "still invalid, because remote validation must block until it returns; dependency-mismatch considered as valid though" );
 });
 
 test("remote, customized ajax options", function() {
@@ -418,8 +418,8 @@ test("remote, customized ajax options", function() {
 					url: "users.php",
 					type: "POST",
 					beforeSend: function(request, settings) {
-						same(settings.type, "POST");
-						same(settings.data, "username=asdf&email=email.com");
+						deepEqual(settings.type, "POST");
+						deepEqual(settings.data, "username=asdf&email=email.com");
 					},
 					data: {
 						email: function() {
@@ -460,15 +460,15 @@ test("remote extensions", function() {
 	});
 	$(document).ajaxStop(function() {
 		$(document).unbind("ajaxStop");
-		equals( 1, v.size(), "There must be one error" );
-		equals( v.errorList[0].message, "asdf is already taken, please try something else" );
+		equal( 1, v.size(), "There must be one error" );
+		equal( v.errorList[0].message, "asdf is already taken, please try something else" );
 		v.element(e);
-		equals( v.errorList[0].message, "asdf is already taken, please try something else", "message doesn't change on revalidation" );
+		equal( v.errorList[0].message, "asdf is already taken, please try something else", "message doesn't change on revalidation" );
 		start();
 	});
-	ok( !v.element(e), "invalid element, nothing entered yet" );
+	strictEqual( v.element(e), false, "invalid element, nothing entered yet" );
 	e.val("asdf");
-	ok( !v.element(e), "still invalid, because remote validation must block until it returns" );
+	strictEqual( v.element(e), true, "still invalid, because remote validation must block until it returns; dependency-mismatch considered as valid though" );
 });
 
 module("additional methods");
@@ -541,7 +541,7 @@ test("pattern", function() {
 function testCardTypeByNumber(number, cardname, expected) {
 	$("#cardnumber").val(number);
 	var actual = $("#ccform").valid();
-	equals(actual, expected, $.format("Expect card number {0} to validate to {1}, actually validated to ", number, expected));
+	equal(actual, expected, $.format("Expect card number {0} to validate to {1}, actually validated to ", number, expected));
 }
 
 test('creditcardtypes, all', function() {
