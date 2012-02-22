@@ -3,7 +3,7 @@ module("rules");
 test("rules() - internal - input", function() {
 	var element = $('#firstname');
 	var v = $('#testForm1').validate();
-	same( element.rules(), { required: true, minlength: 2 } );
+	deepEqual( element.rules(), { required: true, minlength: 2 } );
 });
 
 test("rules(), ignore method:false", function() {
@@ -13,19 +13,19 @@ test("rules(), ignore method:false", function() {
 			firstname: { required: false, minlength: 2 }
 		}
 	});
-	same( element.rules(), { minlength: 2 } );
+	deepEqual( element.rules(), { minlength: 2 } );
 });
 
 test("rules() HTML5 required (no value)", function() {
 	var element = $('#testForm11text1');
 	var v = $('#testForm11').validate();
-	same( element.rules(), { required: true } );
+	deepEqual( element.rules(), { required: true } );
 });
 
 test("rules() - internal - select", function() {
 	var element = $('#meal');
 	var v = $('#testForm3').validate();
-	same( element.rules(), {required: true} );
+	deepEqual( element.rules(), {required: true} );
 });
 
 test("rules() - external", function() {
@@ -35,7 +35,7 @@ test("rules() - external", function() {
 			action: {date: true, min: 5}
 		}
 	});
-	same( element.rules(), {date: true, min: 5} );
+	deepEqual( element.rules(), {date: true, min: 5} );
 });
 
 test("rules() - external - complete form", function() {
@@ -62,7 +62,7 @@ test("rules() - external - complete form", function() {
 test("rules() - internal - input", function() {
 	var element = $('#form8input');
 	var v = $('#testForm8').validate();
-	same( element.rules(), {required: true, number: true, rangelength: [2, 8]});
+	deepEqual( element.rules(), {required: true, number: true, rangelength: [2, 8]});
 });
 
 test("rules(), merge min/max to range, minlength/maxlength to rangelength", function() {
@@ -79,9 +79,9 @@ test("rules(), merge min/max to range, minlength/maxlength to rangelength", func
 			}
 		}
 	});
-	same( $("#firstnamec").rules(), {range: [5, 12]});
+	deepEqual( $("#firstnamec").rules(), {range: [5, 12]});
 
-	same( $("#lastnamec").rules(), {rangelength: [2, 8]} );
+	deepEqual( $("#lastnamec").rules(), {rangelength: [2, 8]} );
 	jQuery.validator.autoCreateRanges = false;
 });
 
@@ -94,14 +94,14 @@ test("rules(), gurantee that required is at front", function() {
 		jQuery.each($(element).rules(), function(key, value) { result.push(key) });
 		return result.join(" ");
 	}
-	equals( "required minlength", flatRules("#firstname") );
-	equals( "required maxlength minlength", flatRules("#v2-i6") );
-	equals( "required maxlength", flatRules("#co_name") );
+	equal( "required minlength", flatRules("#firstname") );
+	equal( "required maxlength minlength", flatRules("#v2-i6") );
+	equal( "required maxlength", flatRules("#co_name") );
 
 	QUnit.reset();
 	jQuery.validator.autoCreateRanges = true;
 	v = $("#v2").validate();
-	equals( "required rangelength", flatRules("#v2-i6") );
+	equal( "required rangelength", flatRules("#v2-i6") );
 
 	$("#subformRequired").validate({
 		rules: {
@@ -109,7 +109,7 @@ test("rules(), gurantee that required is at front", function() {
 		}
 	});
 	$("#co_name").removeClass();
-	equals( "required maxlength", flatRules("#co_name") );
+	equal( "required maxlength", flatRules("#co_name") );
 	jQuery.validator.autoCreateRanges = false;
 });
 
@@ -119,13 +119,13 @@ test("rules(), evaluate dynamic parameters", function() {
 		rules: {
 			firstname: {
 				min: function(element) {
-					equals( $("#firstnamec")[0], element );
+					equal( $("#firstnamec")[0], element );
 					return 12;
 				}
 			}
 		}
 	});
-	same( $("#firstnamec").rules(), {min:12});
+	deepEqual( $("#firstnamec").rules(), {min:12});
 });
 
 test("rules(), class and attribute combinations", function() {
@@ -145,16 +145,16 @@ test("rules(), class and attribute combinations", function() {
 			}
 		}
 	});
-	same( $("#v2-i1").rules(), { required: true });
-	same( $("#v2-i2").rules(), { required: true, email: true });
-	same( $("#v2-i3").rules(), { url: true });
-	same( $("#v2-i4").rules(), { required: true, minlength: 2 });
-	same( $("#v2-i5").rules(), { required: true, minlength: 2, maxlength: 5, customMethod1: "123" });
+	deepEqual( $("#v2-i1").rules(), { required: true });
+	deepEqual( $("#v2-i2").rules(), { required: true, email: true });
+	deepEqual( $("#v2-i3").rules(), { url: true });
+	deepEqual( $("#v2-i4").rules(), { required: true, minlength: 2 });
+	deepEqual( $("#v2-i5").rules(), { required: true, minlength: 2, maxlength: 5, customMethod1: "123" });
 	jQuery.validator.autoCreateRanges = true;
-	same( $("#v2-i5").rules(), { required: true, customMethod1: "123", rangelength: [2, 5] });
-	same( $("#v2-i6").rules(), { required: true, customMethod2: true, rangelength: [2, 5] });
+	deepEqual( $("#v2-i5").rules(), { required: true, customMethod1: "123", rangelength: [2, 5] });
+	deepEqual( $("#v2-i6").rules(), { required: true, customMethod2: true, rangelength: [2, 5] });
 	jQuery.validator.autoCreateRanges = false;
-	same( $("#v2-i7").rules(), { required: true, minlength: 2, customMethod: true });
+	deepEqual( $("#v2-i7").rules(), { required: true, minlength: 2, customMethod: true });
 
 	delete $.validator.methods.customMethod1;
 	delete $.validator.messages.customMethod1;
@@ -185,12 +185,12 @@ test("rules(), dependency checks", function() {
 	});
 
 	var rules = $("#firstnamec").rules();
-	equals( 0, v.objectLength(rules) );
+	equal( 0, v.objectLength(rules) );
 
 	$("#firstnamec").val('ab');
-	same( $("#firstnamec").rules(), {min:5});
+	deepEqual( $("#firstnamec").rules(), {min:5});
 
-	same( $("#lastnamec").rules(), {max:12, email:true});
+	deepEqual( $("#lastnamec").rules(), {max:12, email:true});
 });
 
 test("rules(), add and remove", function() {
@@ -199,16 +199,16 @@ test("rules(), add and remove", function() {
 	}, "");
 	$("#v2").validate();
 	var removedAttrs = $("#v2-i5").removeClass("required").removeAttrs("minlength maxlength");
-	same( $("#v2-i5").rules(), { customMethod1: "123" });
+	deepEqual( $("#v2-i5").rules(), { customMethod1: "123" });
 
 	$("#v2-i5").addClass("required").attr(removedAttrs);
-	same( $("#v2-i5").rules(), { required: true, minlength: 2, maxlength: 5, customMethod1: "123" });
+	deepEqual( $("#v2-i5").rules(), { required: true, minlength: 2, maxlength: 5, customMethod1: "123" });
 
 	$("#v2-i5").addClass("email").attr({min: 5});
-	same( $("#v2-i5").rules(), { required: true, email: true, minlength: 2, maxlength: 5, min: 5, customMethod1: "123" });
+	deepEqual( $("#v2-i5").rules(), { required: true, email: true, minlength: 2, maxlength: 5, min: 5, customMethod1: "123" });
 
 	$("#v2-i5").removeClass("required email").removeAttrs("minlength maxlength customMethod1 min");
-	same( $("#v2-i5").rules(), {});
+	deepEqual( $("#v2-i5").rules(), {});
 
 	delete $.validator.methods.customMethod1;
 	delete $.validator.messages.customMethod1;
@@ -220,35 +220,35 @@ test("rules(), add and remove static rules", function() {
 			firstname: "required date"
 		}
 	});
-	same( $("#firstnamec").rules(), { required: true, date: true } );
+	deepEqual( $("#firstnamec").rules(), { required: true, date: true } );
 
 	$("#firstnamec").rules("remove", "date")
-	same( $("#firstnamec").rules(), { required: true } );
+	deepEqual( $("#firstnamec").rules(), { required: true } );
 	$("#firstnamec").rules("add", "email");
-	same( $("#firstnamec").rules(), { required: true, email: true } );
+	deepEqual( $("#firstnamec").rules(), { required: true, email: true } );
 
 	$("#firstnamec").rules("remove", "required");
-	same( $("#firstnamec").rules(), { email: true } );
+	deepEqual( $("#firstnamec").rules(), { email: true } );
 
-	same( $("#firstnamec").rules("remove"), { email: true } );
-	same( $("#firstnamec").rules(), { } );
+	deepEqual( $("#firstnamec").rules("remove"), { email: true } );
+	deepEqual( $("#firstnamec").rules(), { } );
 
 	$("#firstnamec").rules("add", "required email");
-	same( $("#firstnamec").rules(), { required: true, email: true } );
+	deepEqual( $("#firstnamec").rules(), { required: true, email: true } );
 
 
-	same( $("#lastnamec").rules(), {} );
+	deepEqual( $("#lastnamec").rules(), {} );
 	$("#lastnamec").rules("add", "required");
 	$("#lastnamec").rules("add", {
 		minlength: 2
 	});
-	same( $("#lastnamec").rules(), { required: true, minlength: 2 } );
+	deepEqual( $("#lastnamec").rules(), { required: true, minlength: 2 } );
 
 
 	var removedRules = $("#lastnamec").rules("remove", "required email");
-	same( $("#lastnamec").rules(), { minlength: 2 } );
+	deepEqual( $("#lastnamec").rules(), { minlength: 2 } );
 	$("#lastnamec").rules("add", removedRules);
-	same( $("#lastnamec").rules(), { required: true, minlength: 2 } );
+	deepEqual( $("#lastnamec").rules(), { required: true, minlength: 2 } );
 });
 
 test("rules(), add messages", function() {
@@ -260,7 +260,7 @@ test("rules(), add messages", function() {
 	});
 	$("#testForm1clean").valid();
 	$("#firstnamec").valid();
-	same( v.settings.messages.firstname, undefined );
+	deepEqual( v.settings.messages.firstname, undefined );
 
 	$("#firstnamec").rules("add", {
 		messages: {
@@ -269,5 +269,5 @@ test("rules(), add messages", function() {
 	});
 
 	$("#firstnamec").valid();
-	same( v.errorList[0] && v.errorList[0].message, "required" );
+	deepEqual( v.errorList[0] && v.errorList[0].message, "required" );
 });
