@@ -16,6 +16,25 @@ config.init({
     'dist/jquery.validate.min.js': ['<banner>', 'dist/jquery.validate.js'],
     'dist/additional-methods.min.js': ['<banner>', 'dist/additional-methods.js']
   },
+  zip: {
+    dist: {
+      src: [
+        'dist/additional-methods.js',
+        'dist/additional-methods.min.js',
+        'dist/jquery.validate.js',
+        'dist/jquery.validate.min.js',
+        'README.md',
+        'changelog.txt',
+        'grunt.js',
+        'package.json',
+        'demo/**/*',
+        'lib/**/*',
+        'localization/**/*',
+        'test/**/*'
+      ],
+      dest: 'dist/<%= pkg.name %>-<%= pkg.version %>.zip'
+    }
+  },
   qunit: {
     files: ['test/index.html']
   },
@@ -43,17 +62,16 @@ config.init({
   }
 });
 
-task.registerTask('zip', 'Create a zip file for release', function() {
-  var folder = config('pkg').name + '-' + config('pkg').version;
-  var target = 'dist/' + folder + '.zip';
-  log.writeln('Zipping into ' + target);
+task.registerBasicTask('zip', 'Create a zip file for release', function(data) {
+  var files = file.expand(data.src);
+  log.writeln("Creating zip file " + data.dest);
 
   var done = this.async();
 
   var zipstream = require('zipstream');
   var fs = require('fs');
 
-  var out = fs.createWriteStream(target);
+  var out = fs.createWriteStream(data.dest);
   var zip = zipstream.createZip({ level: 1 });
 
   zip.pipe(out);
@@ -67,29 +85,9 @@ task.registerTask('zip', 'Create a zip file for release', function() {
       return;
     }
     var file = files.shift();
-    log.writeln('Zipping ' + file.file);
-    zip.addFile(fs.createReadStream(file.file), { name: folder + '/' + file.name }, addFile);
+    log.verbose.writeln('Zipping ' + file);
+    zip.addFile(fs.createReadStream(file), { name: file }, addFile);
   }
-
-  // TODO use the concat results instead of copying the original source files
-  // or don't use grunt's banner support, replace @VERSION instead
-  var files = [{
-    file: 'dist/additional-methods.min.js',
-    name: 'additional-methods.min.js'
-  },
-  {
-    file: 'dist/jquery.validate.min.js',
-    name: 'jquery.validate.min.js'
-  }];
-  file.recurse('.', function(name) {
-    if (/^(:?node_modules|dist|\.|build)/.test(name)) {
-      return;
-    }
-    files.push({
-      file: name,
-      name: name
-    });
-  });
   addFile();
 });
 
