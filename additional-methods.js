@@ -197,6 +197,19 @@ return this.optional(element) || phone_number.length > 9 &&
 phone_number.match(/^((0|\+44)7(5|6|7|8|9){1}\d{2}\s?\d{6})$/);
 }, 'Please specify a valid mobile number');
 
+//Matches UK landline + mobile, accepting only 01-3 for landline or 07 for mobile to exclude many premium numbers
+jQuery.validator.addMethod('phonesUK', function(phone_number, element) {
+phone_number = phone_number.replace(/\s+|-/g,'');
+return this.optional(element) || phone_number.length > 9 &&
+phone_number.match(/^(0[1-3]{1}[0-9]{8,9})$/) || phone_number.match(/^(07[5-9]{1}[0-9]{7,8})$/)
+}, 'Please specify a valid uk phone number');
+
+//Based on http://snipplr.com/view/3152/postcode-validation/
+jQuery.validator.addMethod('postcodeUK', function(postcode, element) {
+postcode = (postcode.toUpperCase()).replace(/\s+/g,''); 
+return this.optional(element) || postcode.match(/^([^qv]{1}[^ijz]{0,1}[0-9]{1,2})([0-9]{1}[^cikmov]{2})$/) || postcode.match(/^([^qv]{1}[0-9]{1}[abcdefghjkstuw]{1})([0-9]{1}[^cikmov]{2})$/) || postcode.match(/^([^qv]{1}[^ijz][0-9]{1}[abehmnprvwxy])([0-9]{1}[^cikmov]{2})$/) || postcode.match(/^(gir)(0aa)$/) || postcode.match(/^(bfpo)([0-9]{1,4})$/) || postcode.match(/^(bfpo)(c\/o[0-9]{1,3})$/)
+}, 'Please specify a valid postcode');
+
 // TODO check if value starts with <, otherwise don't try stripping anything
 jQuery.validator.addMethod("strippedminlength", function(value, element, param) {
 	return jQuery(value).text().length >= param;
