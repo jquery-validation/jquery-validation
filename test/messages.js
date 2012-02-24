@@ -4,7 +4,7 @@ test("predefined message not overwritten by addMethod(a, b, undefined)", functio
 	var message = "my custom message";
 	$.validator.messages.custom = message;
 	$.validator.addMethod("custom", function() {});
-	same(message, $.validator.messages.custom);
+	deepEqual(message, $.validator.messages.custom);
 	delete $.validator.messages.custom;
 	delete $.validator.methods.custom;
 });
@@ -26,13 +26,13 @@ test("group error messages", function() {
 		}
 	});
 	ok( !form.valid() );
-	equals( 1, form.find(".errorContainer *").length );
-	equals( "Please enter a valid date.", form.find(".errorContainer label.error").text() );
+	equal( 1, form.find(".errorContainer *").length );
+	equal( "Please enter a valid date.", form.find(".errorContainer label.error").text() );
 
 	$("#fromDate").val("12/03/2006");
 	$("#toDate").val("12/01/2006");
 	ok( !form.valid() );
-	equals( "Please specify a correct date range.", form.find(".errorContainer label.error").text() );
+	equal( "Please specify a correct date range.", form.find(".errorContainer label.error").text() );
 
 	$("#toDate").val("12/04/2006");
 	ok( form.valid() );
@@ -44,9 +44,9 @@ test("read messages from metadata", function() {
 	form.validate();
 	var e = $("#testEmail9")
 	e.valid();
-	equals( form.find("label").text(), "required" );
+	equal( form.find("label").text(), "required" );
 	e.val("bla").valid();
-	equals( form.find("label").text(), "email" );
+	equal( form.find("label").text(), "email" );
 });
 
 
