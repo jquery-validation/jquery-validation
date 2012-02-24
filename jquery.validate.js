@@ -599,7 +599,7 @@ $.extend($.validator, {
 			if ( typeof message === "function" ) {
 				message = message.call(this, rule.parameters, element);
 			} else if (theregex.test(message)) {
-				message = jQuery.format(message.replace(theregex, '{$1}'), rule.parameters);
+				message = $.validator.format(message.replace(theregex, '{$1}'), rule.parameters);
 			}
 			this.errorList.push({
 				message: message,
