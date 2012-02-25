@@ -188,28 +188,28 @@ jQuery.validator.addMethod("phoneUS", function(phone_number, element) {
 }, "Please specify a valid phone number");
 
 jQuery.validator.addMethod('phoneUK', function(phone_number, element) {
-phone_number = phone_number.replace(/\s+|-/g,'');
-return this.optional(element) || phone_number.length > 9 &&
-phone_number.match(/^(\(?(0|\+44)[1-9]{1}\d{1,4}?\)?\s?\d{3,4}\s?\d{3,4})$/);
+	phone_number = phone_number.replace(/\s+|-/g,'');
+	return this.optional(element) || phone_number.length > 9 &&
+		phone_number.match(/^(\(?(0|\+44)[1-9]{1}\d{1,4}?\)?\s?\d{3,4}\s?\d{3,4})$/);
 }, 'Please specify a valid phone number');
 
 jQuery.validator.addMethod('mobileUK', function(phone_number, element) {
-phone_number = phone_number.replace(/\s+|-/g,'');
-return this.optional(element) || phone_number.length > 9 &&
-phone_number.match(/^((0|\+44)7(5|6|7|8|9){1}\d{2}\s?\d{6})$/);
+	phone_number = phone_number.replace(/\s+|-/g,'');
+	return this.optional(element) || phone_number.length > 9 &&
+		phone_number.match(/^((0|\+44)7(5|6|7|8|9){1}\d{2}\s?\d{6})$/);
 }, 'Please specify a valid mobile number');
 
 //Matches UK landline + mobile, accepting only 01-3 for landline or 07 for mobile to exclude many premium numbers
 jQuery.validator.addMethod('phonesUK', function(phone_number, element) {
-phone_number = phone_number.replace(/\s+|-/g,'');
-return this.optional(element) || phone_number.length > 9 &&
-phone_number.match(/^(0[1-3]{1}[0-9]{8,9})$/) || phone_number.match(/^(07[5-9]{1}[0-9]{7,8})$/)
+	phone_number = phone_number.replace(/\s+|-/g,'');
+	return this.optional(element) || phone_number.length > 9 &&
+		phone_number.match(/^(0[1-3]{1}[0-9]{8,9})$/) || phone_number.match(/^(07[5-9]{1}[0-9]{7,8})$/)
 }, 'Please specify a valid uk phone number');
 
 //Matches UK postcode. based on http://snipplr.com/view/3152/postcode-validation/
 jQuery.validator.addMethod('postcodeUK', function(postcode, element) {
-postcode = (postcode.toUpperCase()).replace(/\s+/g,''); 
-return this.optional(element) || postcode.match(/^([^QZ]{1}[^IJZ]{0,1}[0-9]{1,2})([0-9]{1}[^CIKMOV]{2})$/) || postcode.match(/^([^QV]{1}[0-9]{1}[ABCDEFGHJKSTUW]{1})([0-9]{1}[^CIKMOV]{2})$/) || postcode.match(/^([^QV]{1}[^IJZ][0-9]{1}[ABEHMNPRVWXY])([0-9]{1}[^CIKMOV]{2})$/) || postcode.match(/^(GIR)(0AA)$/) || postcode.match(/^(BFPO)([0-9]{1,4})$/) || postcode.match(/^(BFPO)(C\/O[0-9]{1,3})$/)
+	postcode = (postcode.toUpperCase()).replace(/\s+/g,''); 
+	return this.optional(element) || postcode.match(/^([^QZ]{1}[^IJZ]{0,1}[0-9]{1,2})([0-9]{1}[^CIKMOV]{2})$/) || postcode.match(/^([^QV]{1}[0-9]{1}[ABCDEFGHJKSTUW]{1})([0-9]{1}[^CIKMOV]{2})$/) || postcode.match(/^([^QV]{1}[^IJZ][0-9]{1}[ABEHMNPRVWXY])([0-9]{1}[^CIKMOV]{2})$/) || postcode.match(/^(GIR)(0AA)$/) || postcode.match(/^(BFPO)([0-9]{1,4})$/) || postcode.match(/^(BFPO)(C\/O[0-9]{1,3})$/)
 }, 'Please specify a valid postcode');
 
 // TODO check if value starts with <, otherwise don't try stripping anything
