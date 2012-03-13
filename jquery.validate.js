@@ -490,7 +490,8 @@ $.extend($.validator, {
 		},
 
 		errors: function() {
-			return $( this.settings.errorElement + "." + this.settings.errorClass, this.errorContext );
+			// use the first class name in the errorClass as selector
+			return $( this.settings.errorElement + "." + this.settings.errorClass.split(" ")[0], this.errorContext );
 		},
 
 		reset: function() {
