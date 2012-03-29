@@ -39,16 +39,14 @@ $.extend($.fn, {
 
 		if ( validator.settings.onsubmit ) {
 
-			var inputsAndButtons = this.find("input, button");
-
 			// allow suppresing validation by adding a cancel class to the submit button
-			inputsAndButtons.filter(".cancel").click(function () {
+			this.find("input.cancel, button.cancel").click(function () {
 				validator.cancelSubmit = true;
 			});
 
 			// when a submitHandler is used, capture the submitting button
 			if (validator.settings.submitHandler) {
-				inputsAndButtons.filter(":submit").click(function () {
+				this.find(":submit").click(function () {
 					validator.submitButton = this;
 				});
 			}
@@ -467,8 +465,7 @@ $.extend($.validator, {
 
 			// select all valid inputs inside the form (no submit or reset buttons)
 			return $(this.currentForm)
-			.find("input, select, textarea")
-			.not(":submit, :reset, :image, [disabled]")
+			.find(":input:not(:submit, :reset, :image, [disabled],button)")
 			.not( this.settings.ignore )
 			.filter(function() {
 				if ( !this.name && validator.settings.debug && window.console ) {
