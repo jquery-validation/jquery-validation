@@ -527,8 +527,15 @@ test("maxWords", function() {
 	ok( method("hello", 2), "plain text, valid" );
 	ok( method("<b>world</b>", 2), "html, valid" );
 	ok( method("world <br/>", 2), "html, valid" );
-	ok( !method("hello worlds", 2), "plain text, invalid" );
-	ok( !method("<b>hello</b> world", 2), "html, invalid" );
+	
+	// Updating unit tests to support correct definition of maxWords (implied
+	// by the default error message). See #284
+	ok( method("hello worlds", 2), "plain text, valid" );
+	ok( method("<b>hello</b> world", 2), "html, valid" );
+	ok( method("hello world <br/>", 2), "html, valid" );
+	
+	ok( !method("hello world bar", 2), "plain text, invalid" );
+	ok( !method("<b>hello</b> world bar", 2), "html, invalid" );
 });
 
 test("pattern", function() {
