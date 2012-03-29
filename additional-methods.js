@@ -20,7 +20,7 @@
 		.replace(/[0-9.(),;:!?%#$'"_+=\/-]*/g,'');
 	}
 	jQuery.validator.addMethod("maxWords", function(value, element, params) {
-	    return this.optional(element) || stripHtml(value).match(/\b\w+\b/g).length < params;
+	    return this.optional(element) || stripHtml(value).match(/\b\w+\b/g).length <= params;
 	}, jQuery.validator.format("Please enter {0} words or less."));
 
 	jQuery.validator.addMethod("minWords", function(value, element, params) {

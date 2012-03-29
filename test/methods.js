@@ -527,8 +527,23 @@ test("maxWords", function() {
 	ok( method("hello", 2), "plain text, valid" );
 	ok( method("<b>world</b>", 2), "html, valid" );
 	ok( method("world <br/>", 2), "html, valid" );
-	ok( !method("hello worlds", 2), "plain text, invalid" );
-	ok( !method("<b>hello</b> world", 2), "html, invalid" );
+	ok( method("hello worlds", 2), "plain text, invalid" );
+	ok( method("<b>hello</b> world", 2), "html, invalid" );
+	ok( !method("hello my world", 2), "plain text, invalid" );
+	ok( !method("<b>hello</b> my world", 2), "html, invalid" );
+});
+
+test("maxWords form correct count", function() {
+	var f = $('#maxWordsForm');
+	f.validate({
+		rules: {
+			maxWordsTest: {
+				maxWords: 2
+			}
+		}
+	});
+	f.find("input").val('one two');
+	ok( f.valid(), "correct number" );
 });
 
 test("pattern", function() {
