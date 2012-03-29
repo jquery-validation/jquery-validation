@@ -490,7 +490,8 @@ $.extend($.validator, {
 		},
 
 		errors: function() {
-			return $( this.settings.errorElement + "." + this.settings.errorClass, this.errorContext );
+			var errorClass = this.settings.errorClass.replace(' ', '.');
+			return $( this.settings.errorElement + "." + errorClass, this.errorContext );
 		},
 
 		reset: function() {
