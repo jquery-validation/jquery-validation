@@ -257,7 +257,6 @@ test("submitHandler keeps submitting button", function() {
 	});
 	$("#username").val("bla");
 	var button = $("#userForm :submit")[0]
-	//$(button).triggerHandler("click");
   var event = $.Event("click");
   event.preventDefault();
   $.event.trigger(event, null, button);
