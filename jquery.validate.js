@@ -261,6 +261,10 @@ $.extend($.validator, {
 			} else {
 				$(element).removeClass(errorClass).addClass(validClass);
 			}
+		},
+    postvalidate: function() {
+		    //Let users extend this function if they wish to execute something after each check
+		    return true;
 		}
 	},
 
@@ -650,6 +654,7 @@ $.extend($.validator, {
 			this.toHide = this.toHide.not( this.toShow );
 			this.hideErrors();
 			this.addWrapper( this.toShow ).show();
+      this.settings.postvalidate();
 		},
 
 		validElements: function() {
