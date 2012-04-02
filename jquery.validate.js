@@ -957,6 +957,9 @@ $.extend($.validator, {
 
 	// http://docs.jquery.com/Plugins/Validation/Validator/addMethod
 	addMethod: function(name, method, message) {
+		if($.validator.methods[name]) {
+	            $.validator.methods["old_" + name] = $.validator.methods[name];
+	        }
 		$.validator.methods[name] = method;
 		$.validator.messages[name] = message !== undefined ? message : $.validator.messages[name];
 		if (method.length < 3) {
