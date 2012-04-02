@@ -212,6 +212,25 @@ jQuery.validator.addMethod('postcodeUK', function(postcode, element) {
 	return this.optional(element) || postcode.match(/^([^QZ]{1}[^IJZ]{0,1}[0-9]{1,2})([0-9]{1}[^CIKMOV]{2})$/) || postcode.match(/^([^QV]{1}[0-9]{1}[ABCDEFGHJKSTUW]{1})([0-9]{1}[^CIKMOV]{2})$/) || postcode.match(/^([^QV]{1}[^IJZ][0-9]{1}[ABEHMNPRVWXY])([0-9]{1}[^CIKMOV]{2})$/) || postcode.match(/^(GIR)(0AA)$/) || postcode.match(/^(BFPO)([0-9]{1,4})$/) || postcode.match(/^(BFPO)(C\/O[0-9]{1,3})$/)
 }, 'Please specify a valid postcode');
 
+
+//Matches Standard UK Bank Account numbers.
+jQuery.validator.addMethod('bankacUK', function(bankac, element) {
+return this.optional(element) || bankac.match(/(\d){7,8}$/);
+}, 'Must be a valid bank account number.');
+
+//Matches Standard UK Bank Sort Codes.
+jQuery.validator.addMethod('banksortUK', function(banksort, element) {
+return this.optional(element) || banksort.length == 8 &&
+banksort.match(/(\d){2}-(\d){2}-(\d){2}$/);
+}, 'Must be a valid sort code (00-00-00).');
+
+//Matches UK National Insurance Numbers
+jQuery.validator.addMethod('natinsUK', function(natins, element) {
+return this.optional(element) || natins.length >= 9 &&
+natins.match(/[a-zA-Z]{2}[\s]?[0-9]{2}[\s]?[0-9]{2}[\s]?[0-9]{2}[\s]?[a-zA-Z]{1}$/);
+}, 'Must be a valid national insurance number (AB123456C or AB 12 34 56 C).');
+
+
 // TODO check if value starts with <, otherwise don't try stripping anything
 jQuery.validator.addMethod("strippedminlength", function(value, element, param) {
 	return jQuery(value).text().length >= param;
