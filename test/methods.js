@@ -131,6 +131,7 @@ test("number", function() {
 	ok( method( "123.000" ), "Valid decimal" );
 	ok( method( "123,000.00" ), "Valid decimal" );
 	ok( method( "-123,000.00" ), "Valid decimal" );
+	ok( method( ".100" ), "Valid decimal" );
 	ok(!method( "1230,000.00" ), "Invalid decimal" );
 	ok(!method( "123.0.0,0" ), "Invalid decimal" );
 	ok(!method( "x123" ), "Invalid decimal" );
