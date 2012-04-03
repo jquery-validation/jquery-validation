@@ -831,9 +831,19 @@ $.extend($.validator, {
 			// If .prop exists (jQuery >= 1.6), use it to get true/false for required
 			if (method === 'required') {
 				if (typeof $.fn.prop === 'function') {
-					value = !!$element.prop(method); // force non-HTML5 browsers to return bool
+					value = $element.prop(method);
+					if (undefined == value) {
+						// Firefox 3.6 will always return undefined on this attribute using .prop or .attr
+						// so fallback to native js
+						value = $element.get(0).getAttribute('required');
+					}
+					value = !!value; // force non-HTML5 browsers to return bool
 				} else {
-					value = !!$element.attr(method); // force jQuery >= 1.5 to return bool
+					value = $element.attr(method);
+					if (undefined == value) {
+						value = $element.get(0).getAttribute('required');
+					}
+					value = !!value; // force jQuery >= 1.5 to return bool
 				}
 			} else {
 				value = $element.attr(method);
