@@ -763,7 +763,7 @@ $.extend($.validator, {
 
 		optional: function(element) {
 			var val = this.elementValue(element);
-			return !$.validator.methods.required.call(this, val, element) && "dependency-mismatch";
+			return !$(element).rules().required && !$.validator.methods.required.call(this, val, element) && "dependency-mismatch";
 		},
 
 		startRequest: function(element) {
