@@ -1,4 +1,4 @@
-/**
+/*!
  * jQuery Validation Plugin @VERSION
  *
  * http://bassistance.de/jquery-plugins/jquery-plugin-validation/
@@ -20,21 +20,21 @@
 		.replace(/[0-9.(),;:!?%#$'"_+=\/-]*/g,'');
 	}
 	jQuery.validator.addMethod("maxWords", function(value, element, params) {
-	    return this.optional(element) || stripHtml(value).match(/\b\w+\b/g).length <= params;
+		return this.optional(element) || stripHtml(value).match(/\b\w+\b/g).length <= params;
 	}, jQuery.validator.format("Please enter {0} words or less."));
 
 	jQuery.validator.addMethod("minWords", function(value, element, params) {
-	    return this.optional(element) || stripHtml(value).match(/\b\w+\b/g).length >= params;
+		return this.optional(element) || stripHtml(value).match(/\b\w+\b/g).length >= params;
 	}, jQuery.validator.format("Please enter at least {0} words."));
 
 	jQuery.validator.addMethod("rangeWords", function(value, element, params) {
-	    return this.optional(element) || stripHtml(value).match(/\b\w+\b/g).length >= params[0] && value.match(/bw+b/g).length < params[1];
+		return this.optional(element) || stripHtml(value).match(/\b\w+\b/g).length >= params[0] && value.match(/bw+b/g).length < params[1];
 	}, jQuery.validator.format("Please enter between {0} and {1} words."));
 
 })();
 
 jQuery.validator.addMethod("letterswithbasicpunc", function(value, element) {
-	return this.optional(element) || /^[a-z-.,()'\"\s]+$/i.test(value);
+	return this.optional(element) || /^[a-z\-.,()'\"\s]+$/i.test(value);
 }, "Letters or punctuation only please");
 
 jQuery.validator.addMethod("alphanumeric", function(value, element) {
@@ -50,7 +50,7 @@ jQuery.validator.addMethod("nowhitespace", function(value, element) {
 }, "No white space please");
 
 jQuery.validator.addMethod("ziprange", function(value, element) {
-	return this.optional(element) || /^90[2-5]\d\{2}-\d{4}$/.test(value);
+	return this.optional(element) || /^90[2-5]\d\{2\}-\d{4}$/.test(value);
 }, "Your ZIP-code must be in the range 902xx-xxxx to 905-xx-xxxx");
 
 jQuery.validator.addMethod("integer", function(value, element) {
@@ -58,103 +58,98 @@ jQuery.validator.addMethod("integer", function(value, element) {
 }, "A positive or negative non-decimal number please");
 
 /**
-* Return true, if the value is a valid vehicle identification number (VIN).
-*
-* Works with all kind of text inputs.
-*
-* @example <input type="text" size="20" name="VehicleID" class="{required:true,vinUS:true}" />
-* @desc Declares a required input element whose value must be a valid vehicle identification number.
-*
-* @name jQuery.validator.methods.vinUS
-* @type Boolean
-* @cat Plugins/Validate/Methods
-*/
-jQuery.validator.addMethod(
-	"vinUS",
-	function(v){
-		if (v.length != 17)
-			return false;
-		var i, n, d, f, cd, cdv;
-		var LL    = ["A","B","C","D","E","F","G","H","J","K","L","M","N","P","R","S","T","U","V","W","X","Y","Z"];
-		var VL    = [1,2,3,4,5,6,7,8,1,2,3,4,5,7,9,2,3,4,5,6,7,8,9];
-		var FL    = [8,7,6,5,4,3,2,10,0,9,8,7,6,5,4,3,2];
-		var rs    = 0;
-		for(i = 0; i < 17; i++){
-		    f = FL[i];
-		    d = v.slice(i,i+1);
-		    if(i == 8){
-		        cdv = d;
-		    }
-		    if(!isNaN(d)){
-		        d *= f;
-		    }
-		    else{
-		        for(n = 0; n < LL.length; n++){
-		            if(d.toUpperCase() === LL[n]){
-		                d = VL[n];
-		                d *= f;
-		                if(isNaN(cdv) && n == 8){
-		                    cdv = LL[n];
-		                }
-		                break;
-		            }
-		        }
-		    }
-		    rs += d;
-		}
-		cd = rs % 11;
-		if(cd == 10){cd = "X";}
-		if(cd == cdv){return true;}
+ * Return true, if the value is a valid vehicle identification number (VIN).
+ *
+ * Works with all kind of text inputs.
+ *
+ * @example <input type="text" size="20" name="VehicleID" class="{required:true,vinUS:true}" />
+ * @desc Declares a required input element whose value must be a valid vehicle identification number.
+ *
+ * @name jQuery.validator.methods.vinUS
+ * @type Boolean
+ * @cat Plugins/Validate/Methods
+ */
+jQuery.validator.addMethod("vinUS", function(v) {
+	if (v.length != 17) {
 		return false;
-	},
-	"The specified vehicle identification number (VIN) is invalid."
-);
+	}
+	var i, n, d, f, cd, cdv;
+	var LL = ["A","B","C","D","E","F","G","H","J","K","L","M","N","P","R","S","T","U","V","W","X","Y","Z"];
+	var VL = [1,2,3,4,5,6,7,8,1,2,3,4,5,7,9,2,3,4,5,6,7,8,9];
+	var FL = [8,7,6,5,4,3,2,10,0,9,8,7,6,5,4,3,2];
+	var rs = 0;
+	for(i = 0; i < 17; i++){
+		f = FL[i];
+		d = v.slice(i,i+1);
+		if (i == 8) {
+			cdv = d;
+		}
+		if (!isNaN(d)) {
+			d *= f;
+		} else {
+			for (n = 0; n < LL.length; n++) {
+				if (d.toUpperCase() === LL[n]) {
+					d = VL[n];
+					d *= f;
+					if (isNaN(cdv) && n == 8) {
+						cdv = LL[n];
+					}
+					break;
+				}
+			}
+		}
+		rs += d;
+	}
+	cd = rs % 11;
+	if (cd == 10) {
+		cd = "X";
+	}
+	if (cd == cdv) {
+		return true;
+	}
+	return false;
+}, "The specified vehicle identification number (VIN) is invalid.");
 
 /**
-  * Return true, if the value is a valid date, also making this formal check dd/mm/yyyy.
-  *
-  * @example jQuery.validator.methods.date("01/01/1900")
-  * @result true
-  *
-  * @example jQuery.validator.methods.date("01/13/1990")
-  * @result false
-  *
-  * @example jQuery.validator.methods.date("01.01.1900")
-  * @result false
-  *
-  * @example <input name="pippo" class="{dateITA:true}" />
-  * @desc Declares an optional input element whose value must be a valid date.
-  *
-  * @name jQuery.validator.methods.dateITA
-  * @type Boolean
-  * @cat Plugins/Validate/Methods
-  */
-jQuery.validator.addMethod(
-	"dateITA",
-	function(value, element) {
-		var check = false;
-		var re = /^\d{1,2}\/\d{1,2}\/\d{4}$/;
-		if( re.test(value)){
-			var adata = value.split('/');
-			var gg = parseInt(adata[0],10);
-			var mm = parseInt(adata[1],10);
-			var aaaa = parseInt(adata[2],10);
-			var xdata = new Date(aaaa,mm-1,gg);
-			if ( ( xdata.getFullYear() == aaaa ) && ( xdata.getMonth () == mm - 1 ) && ( xdata.getDate() == gg ) )
-				check = true;
-			else
-				check = false;
-		} else
+ * Return true, if the value is a valid date, also making this formal check dd/mm/yyyy.
+ *
+ * @example jQuery.validator.methods.date("01/01/1900")
+ * @result true
+ *
+ * @example jQuery.validator.methods.date("01/13/1990")
+ * @result false
+ *
+ * @example jQuery.validator.methods.date("01.01.1900")
+ * @result false
+ *
+ * @example <input name="pippo" class="{dateITA:true}" />
+ * @desc Declares an optional input element whose value must be a valid date.
+ *
+ * @name jQuery.validator.methods.dateITA
+ * @type Boolean
+ * @cat Plugins/Validate/Methods
+ */
+jQuery.validator.addMethod("dateITA", function(value, element) {
+	var check = false;
+	var re = /^\d{1,2}\/\d{1,2}\/\d{4}$/;
+	if( re.test(value)){
+		var adata = value.split('/');
+		var gg = parseInt(adata[0],10);
+		var mm = parseInt(adata[1],10);
+		var aaaa = parseInt(adata[2],10);
+		var xdata = new Date(aaaa,mm-1,gg);
+		if ( ( xdata.getFullYear() == aaaa ) && ( xdata.getMonth () == mm - 1 ) && ( xdata.getDate() == gg ) )
+			check = true;
+		else
 			check = false;
-		return this.optional(element) || check;
-	},
-	"Please enter a correct date"
-);
+	} else
+		check = false;
+	return this.optional(element) || check;
+}, "Please enter a correct date");
 
 jQuery.validator.addMethod("dateNL", function(value, element) {
-		return this.optional(element) || /^\d\d?[\.\/-]\d\d?[\.\/-]\d\d\d?\d?$/.test(value);
-	}, "Vul hier een geldige datum in."
-);
+	return this.optional(element) || /^\d\d?[\.\/-]\d\d?[\.\/-]\d\d\d?\d?$/.test(value);
+}, "Vul hier een geldige datum in.");
 
 jQuery.validator.addMethod("time", function(value, element) {
 	return this.optional(element) || /^([01]\d|2[0-3])(:[0-5]\d){0,2}$/.test(value);
@@ -182,7 +177,7 @@ jQuery.validator.addMethod("time12h", function(value, element) {
  * 212 123 4567
  */
 jQuery.validator.addMethod("phoneUS", function(phone_number, element) {
-    phone_number = phone_number.replace(/\s+/g, "");
+	phone_number = phone_number.replace(/\s+/g, "");
 	return this.optional(element) || phone_number.length > 9 &&
 		phone_number.match(/^(1-?)?(\([2-9]\d{2}\)|[2-9]\d{2})-?[2-9]\d{2}-?\d{4}$/);
 }, "Please specify a valid phone number");
@@ -203,13 +198,13 @@ jQuery.validator.addMethod('mobileUK', function(phone_number, element) {
 jQuery.validator.addMethod('phonesUK', function(phone_number, element) {
 	phone_number = phone_number.replace(/\s+|-/g,'');
 	return this.optional(element) || phone_number.length > 9 &&
-		phone_number.match(/^(0[1-3]{1}[0-9]{8,9})$/) || phone_number.match(/^(07[5-9]{1}[0-9]{7,8})$/)
+		phone_number.match(/^(0[1-3]{1}[0-9]{8,9})$/) || phone_number.match(/^(07[5-9]{1}[0-9]{7,8})$/);
 }, 'Please specify a valid uk phone number');
 
 //Matches UK postcode. based on http://snipplr.com/view/3152/postcode-validation/
 jQuery.validator.addMethod('postcodeUK', function(postcode, element) {
 	postcode = (postcode.toUpperCase()).replace(/\s+/g,'');
-	return this.optional(element) || postcode.match(/^([^QZ]{1}[^IJZ]{0,1}[0-9]{1,2})([0-9]{1}[^CIKMOV]{2})$/) || postcode.match(/^([^QV]{1}[0-9]{1}[ABCDEFGHJKSTUW]{1})([0-9]{1}[^CIKMOV]{2})$/) || postcode.match(/^([^QV]{1}[^IJZ][0-9]{1}[ABEHMNPRVWXY])([0-9]{1}[^CIKMOV]{2})$/) || postcode.match(/^(GIR)(0AA)$/) || postcode.match(/^(BFPO)([0-9]{1,4})$/) || postcode.match(/^(BFPO)(C\/O[0-9]{1,3})$/)
+	return this.optional(element) || postcode.match(/^([^QZ]{1}[^IJZ]{0,1}[0-9]{1,2})([0-9]{1}[^CIKMOV]{2})$/) || postcode.match(/^([^QV]{1}[0-9]{1}[ABCDEFGHJKSTUW]{1})([0-9]{1}[^CIKMOV]{2})$/) || postcode.match(/^([^QV]{1}[^IJZ][0-9]{1}[ABEHMNPRVWXY])([0-9]{1}[^CIKMOV]{2})$/) || postcode.match(/^(GIR)(0AA)$/) || postcode.match(/^(BFPO)([0-9]{1,4})$/) || postcode.match(/^(BFPO)(C\/O[0-9]{1,3})$/);
 }, 'Please specify a valid postcode');
 
 // TODO check if value starts with <, otherwise don't try stripping anything
@@ -231,9 +226,9 @@ jQuery.validator.addMethod("url2", function(value, element, param) {
 // Redistributed under the the Apache License 2.0 at http://www.apache.org/licenses/LICENSE-2.0
 // Valid Types: mastercard, visa, amex, dinersclub, enroute, discover, jcb, unknown, all (overrides all other settings)
 jQuery.validator.addMethod("creditcardtypes", function(value, element, param) {
-
-	if (/[^0-9-]+/.test(value))
+	if (/[^0-9-]+/.test(value)) {
 		return false;
+	}
 
 	value = value.replace(/\D/g, "");
 
@@ -289,97 +284,97 @@ jQuery.validator.addMethod("creditcardtypes", function(value, element, param) {
 }, "Please enter a valid credit card number.");
 
 jQuery.validator.addMethod("ipv4", function(value, element, param) {
-    return this.optional(element) || /^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/i.test(value);
+		return this.optional(element) || /^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/i.test(value);
 }, "Please enter a valid IP v4 address.");
 
 jQuery.validator.addMethod("ipv6", function(value, element, param) {
-    return this.optional(element) || /^((([0-9A-Fa-f]{1,4}:){7}[0-9A-Fa-f]{1,4})|(([0-9A-Fa-f]{1,4}:){6}:[0-9A-Fa-f]{1,4})|(([0-9A-Fa-f]{1,4}:){5}:([0-9A-Fa-f]{1,4}:)?[0-9A-Fa-f]{1,4})|(([0-9A-Fa-f]{1,4}:){4}:([0-9A-Fa-f]{1,4}:){0,2}[0-9A-Fa-f]{1,4})|(([0-9A-Fa-f]{1,4}:){3}:([0-9A-Fa-f]{1,4}:){0,3}[0-9A-Fa-f]{1,4})|(([0-9A-Fa-f]{1,4}:){2}:([0-9A-Fa-f]{1,4}:){0,4}[0-9A-Fa-f]{1,4})|(([0-9A-Fa-f]{1,4}:){6}((\b((25[0-5])|(1\d{2})|(2[0-4]\d)|(\d{1,2}))\b)\.){3}(\b((25[0-5])|(1\d{2})|(2[0-4]\d)|(\d{1,2}))\b))|(([0-9A-Fa-f]{1,4}:){0,5}:((\b((25[0-5])|(1\d{2})|(2[0-4]\d)|(\d{1,2}))\b)\.){3}(\b((25[0-5])|(1\d{2})|(2[0-4]\d)|(\d{1,2}))\b))|(::([0-9A-Fa-f]{1,4}:){0,5}((\b((25[0-5])|(1\d{2})|(2[0-4]\d)|(\d{1,2}))\b)\.){3}(\b((25[0-5])|(1\d{2})|(2[0-4]\d)|(\d{1,2}))\b))|([0-9A-Fa-f]{1,4}::([0-9A-Fa-f]{1,4}:){0,5}[0-9A-Fa-f]{1,4})|(::([0-9A-Fa-f]{1,4}:){0,6}[0-9A-Fa-f]{1,4})|(([0-9A-Fa-f]{1,4}:){1,7}:))$/i.test(value);
+		return this.optional(element) || /^((([0-9A-Fa-f]{1,4}:){7}[0-9A-Fa-f]{1,4})|(([0-9A-Fa-f]{1,4}:){6}:[0-9A-Fa-f]{1,4})|(([0-9A-Fa-f]{1,4}:){5}:([0-9A-Fa-f]{1,4}:)?[0-9A-Fa-f]{1,4})|(([0-9A-Fa-f]{1,4}:){4}:([0-9A-Fa-f]{1,4}:){0,2}[0-9A-Fa-f]{1,4})|(([0-9A-Fa-f]{1,4}:){3}:([0-9A-Fa-f]{1,4}:){0,3}[0-9A-Fa-f]{1,4})|(([0-9A-Fa-f]{1,4}:){2}:([0-9A-Fa-f]{1,4}:){0,4}[0-9A-Fa-f]{1,4})|(([0-9A-Fa-f]{1,4}:){6}((\b((25[0-5])|(1\d{2})|(2[0-4]\d)|(\d{1,2}))\b)\.){3}(\b((25[0-5])|(1\d{2})|(2[0-4]\d)|(\d{1,2}))\b))|(([0-9A-Fa-f]{1,4}:){0,5}:((\b((25[0-5])|(1\d{2})|(2[0-4]\d)|(\d{1,2}))\b)\.){3}(\b((25[0-5])|(1\d{2})|(2[0-4]\d)|(\d{1,2}))\b))|(::([0-9A-Fa-f]{1,4}:){0,5}((\b((25[0-5])|(1\d{2})|(2[0-4]\d)|(\d{1,2}))\b)\.){3}(\b((25[0-5])|(1\d{2})|(2[0-4]\d)|(\d{1,2}))\b))|([0-9A-Fa-f]{1,4}::([0-9A-Fa-f]{1,4}:){0,5}[0-9A-Fa-f]{1,4})|(::([0-9A-Fa-f]{1,4}:){0,6}[0-9A-Fa-f]{1,4})|(([0-9A-Fa-f]{1,4}:){1,7}:))$/i.test(value);
 }, "Please enter a valid IP v6 address.");
 
 /**
-  * Return true if the field value matches the given format RegExp
-  *
-  * @example jQuery.validator.methods.pattern("AR1004",element,/^AR\d{4}$/)
-  * @result true
-  *
-  * @example jQuery.validator.methods.pattern("BR1004",element,/^AR\d{4}$/)
-  * @result false
-  *
-  * @name jQuery.validator.methods.pattern
-  * @type Boolean
-  * @cat Plugins/Validate/Methods
-  */
+* Return true if the field value matches the given format RegExp
+*
+* @example jQuery.validator.methods.pattern("AR1004",element,/^AR\d{4}$/)
+* @result true
+*
+* @example jQuery.validator.methods.pattern("BR1004",element,/^AR\d{4}$/)
+* @result false
+*
+* @name jQuery.validator.methods.pattern
+* @type Boolean
+* @cat Plugins/Validate/Methods
+*/
 jQuery.validator.addMethod("pattern", function(value, element, param) {
-    if (this.optional(element)) {
-        return true;
-    }
-    if (typeof param === 'string') {
-        param = new RegExp('^(?:' + param + ')$');
-    }
-    return param.test(value);
+	if (this.optional(element)) {
+		return true;
+	}
+	if (typeof param === 'string') {
+		param = new RegExp('^(?:' + param + ')$');
+	}
+	return param.test(value);
 }, "Invalid format.");
 
 
 /*
-* Lets you say "at least X inputs that match selector Y must be filled."
-*
-* The end result is that neither of these inputs:
-*
-*  <input class="productinfo" name="partnumber">
-*  <input class="productinfo" name="description">
-*
-*  ...will validate unless at least one of them is filled.
-*
-* partnumber:  {require_from_group: [1,".productinfo"]},
-* description: {require_from_group: [1,".productinfo"]}
-*
-*/
+ * Lets you say "at least X inputs that match selector Y must be filled."
+ *
+ * The end result is that neither of these inputs:
+ *
+ *  <input class="productinfo" name="partnumber">
+ *  <input class="productinfo" name="description">
+ *
+ *  ...will validate unless at least one of them is filled.
+ *
+ * partnumber:  {require_from_group: [1,".productinfo"]},
+ * description: {require_from_group: [1,".productinfo"]}
+ *
+ */
 jQuery.validator.addMethod("require_from_group", function(value, element, options) {
-  var selector = options[1];
-  var validOrNot = $(selector, element.form).filter(function() {
-    return $(this).val();
-  }).length >= options[0];
+	var selector = options[1];
+	var validOrNot = $(selector, element.form).filter(function() {
+		return $(this).val();
+	}).length >= options[0];
 
-  if(!$(element).data('being_validated')) {
-    var fields = $(selector, element.form);
-    fields.data('being_validated', true);
-    fields.valid();
-    fields.data('being_validated', false);
-  }
-  return validOrNot;
+	if(!$(element).data('being_validated')) {
+		var fields = $(selector, element.form);
+		fields.data('being_validated', true);
+		fields.valid();
+		fields.data('being_validated', false);
+	}
+	return validOrNot;
 }, jQuery.format("Please fill at least {0} of these fields."));
 
 /*
-* Lets you say "either at least X inputs that match selector Y must be filled,
-* OR they must all be skipped (left blank)."
-*
-* The end result, is that none of these inputs:
-*
-*  <input class="productinfo" name="partnumber">
-*  <input class="productinfo" name="description">
-*  <input class="productinfo" name="color">
-*
-*  ...will validate unless either at least two of them are filled,
-*  OR none of them are.
-*
-* partnumber:  {skip_or_fill_minimum: [2,".productinfo"]},
-* description: {skip_or_fill_minimum: [2,".productinfo"]},
-* color:       {skip_or_fill_minimum: [2,".productinfo"]}
-*
-*/
+ * Lets you say "either at least X inputs that match selector Y must be filled,
+ * OR they must all be skipped (left blank)."
+ *
+ * The end result, is that none of these inputs:
+ *
+ *  <input class="productinfo" name="partnumber">
+ *  <input class="productinfo" name="description">
+ *  <input class="productinfo" name="color">
+ *
+ *  ...will validate unless either at least two of them are filled,
+ *  OR none of them are.
+ *
+ * partnumber:  {skip_or_fill_minimum: [2,".productinfo"]},
+ *  description: {skip_or_fill_minimum: [2,".productinfo"]},
+ * color:       {skip_or_fill_minimum: [2,".productinfo"]}
+ *
+ */
 jQuery.validator.addMethod("skip_or_fill_minimum", function(value, element, options) {
-  numberRequired = options[0];
-  selector = options[1];
-  var numberFilled = $(selector, element.form).filter(function() {
-    return $(this).val();
-  }).length;
-  var valid = numberFilled >= numberRequired || numberFilled === 0;
+	numberRequired = options[0];
+	selector = options[1];
+	var numberFilled = $(selector, element.form).filter(function() {
+		return $(this).val();
+	}).length;
+	var valid = numberFilled >= numberRequired || numberFilled === 0;
 
-  if(!$(element).data('being_validated')) {
-    var fields = $(selector, element.form);
-    fields.data('being_validated', true);
-    fields.valid();
-    fields.data('being_validated', false);
-  }
-  return valid;
+	if(!$(element).data('being_validated')) {
+		var fields = $(selector, element.form);
+		fields.data('being_validated', true);
+		fields.valid();
+		fields.data('being_validated', false);
+	}
+	return valid;
 }, jQuery.format("Please either skip these fields or fill at least {0} of them."));
