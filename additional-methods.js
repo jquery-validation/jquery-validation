@@ -33,7 +33,13 @@
 
 })();
 
-//Not equal to an array of options
+//Not equal to - usually for password change forms
+jQuery.validator.addMethod("notEqual", function(value, element, param) {
+ return this.optional(element) || value != $(param).val();
+}, "Please use a different value.");
+
+
+//Not equal to an array of options - suitable for selects...?
 jQuery.validator.addMethod("notEqualToArray", function(value, element, param) {
     return this.optional(element) || $.inArray(value, param) == -1;
 }, jQuery.validator.format("Please choose another option."));
