@@ -724,7 +724,7 @@ $.extend($.validator, {
 		},
 
 		optional: function(element) {
-			return !$.validator.methods.required.call(this, $.trim(element.value), element) && "dependency-mismatch";
+			return !$.validator.methods.required.call(this, $.trim(element.value), element);
 		},
 
 		startRequest: function(element) {
