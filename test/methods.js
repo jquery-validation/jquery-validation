@@ -612,7 +612,7 @@ function fillFormWithValuesAndExpect(formSelector, inputValues, expected) {
 		$(formSelector + ' input:eq(' + i + ')').val(inputValues[i]);
 	}
 	var actual = $(formSelector).valid();
-	equals(actual, expected, $.format("Filled inputs of form '{0}' with {1} values ({2})", formSelector, inputValues.length, inputValues.toString()));
+	equal(actual, expected, $.format("Filled inputs of form '{0}' with {1} values ({2})", formSelector, inputValues.length, inputValues.toString()));
 
 }
 
