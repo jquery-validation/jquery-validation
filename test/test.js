@@ -32,7 +32,7 @@ test("Constructor", function() {
 	equal( v1.elements().length, 3, "validator elements" );
 });
 
-test("validate() without elements, with non-form elements", function() {
+test("validate() without elements, with non-form elements", 0, function() {
 	$("#doesn'texist").validate();
 });
 
