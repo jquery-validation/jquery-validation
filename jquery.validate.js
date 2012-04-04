@@ -1145,8 +1145,14 @@ $.extend($.validator, {
 
 		// http://docs.jquery.com/Plugins/Validation/Methods/accept
 		accept: function(value, element, param) {
-			param = typeof param === "string" ? param.replace(/,/g, '|') : "png|jpe?g|gif";
-			return this.optional(element) || value.match(new RegExp(".(" + param + ")$", "i"));
+			var typeParam = typeof param === "string" ? param.replace(/,/g, '|') : "png|jpe?g|gif";
+
+			if ( $(element).attr("type") === "file" ) {
+				// We have a file input, grab the mimtype from the specified file
+				value = element.files[0].type;
+			}
+
+			return this.optional(element) || value.match(new RegExp(".?(" + typeParam + ")$", "i"));
 		},
 
 		// http://docs.jquery.com/Plugins/Validation/Methods/equalTo
