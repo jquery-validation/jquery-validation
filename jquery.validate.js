@@ -1140,10 +1140,10 @@ $.extend($.validator, {
 
 			if ( $(element).attr("type") === "file" ) {
 				// We have a file input, grab the mimtype from the specified file
-				typeParam = element.files[0].type;
+				value = element.files[0].type;
 			}
 
-			return this.optional(element) || value.match(new RegExp(".(" + typeParam + ")$", "i"));
+			return this.optional(element) || value.match(new RegExp(".?(" + typeParam + ")$", "i"));
 		},
 
 		// http://docs.jquery.com/Plugins/Validation/Methods/equalTo
