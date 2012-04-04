@@ -1136,18 +1136,14 @@ $.extend($.validator, {
 
 		// http://docs.jquery.com/Plugins/Validation/Methods/accept
 		accept: function(value, element, param) {
-			var re_pre = ".(", re_post = ")$", default_param = "png|jpe?g|gif";
+			var typeParam = typeof param === "string" ? param.replace(/,/g, '|') : "png|jpe?g|gif";
 
 			if ( $(element).attr("type") === "file" ) {
 				// We have a file input, grab the mimtype from the specified file
-				re_pre = "(";
-				default_param = "image/*";
-				value = element.files[0].type;
-				re_post = ")";
+				typeParam = element.files[0].type;
 			}
 
-			param = typeof param == "string" ? param.replace(/,/g, '|') : default_param;
-			return this.optional(element) || value.match(new RegExp(re_pre + param + re_post, "i"));
+			return this.optional(element) || value.match(new RegExp(".(" + typeParam + ")$", "i"));
 		},
 
 		// http://docs.jquery.com/Plugins/Validation/Methods/equalTo
