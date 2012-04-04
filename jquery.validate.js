@@ -837,9 +837,14 @@ $.extend($.validator, {
 
 		for (var method in $.validator.methods) {
 			var value;
-			// If .prop exists (jQuery >= 1.6), use it to get true/false for required
-			if (method === 'required' && typeof $.fn.prop === 'function') {
-				value = $element.prop(method);
+			if (method === 'required') {
+				value = $element.get(0).getAttribute(method);
+				// Some browsers return an empty string for the reqired attribute
+				// and non-HTML5 browsers might have required="" markup
+				if (value === "") {
+					value = true;
+				}
+				value = !!value; //force non-HTML5 browsers to return bool
 			} else {
 				value = $element.attr(method);
 			}
