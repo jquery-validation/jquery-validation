@@ -332,6 +332,11 @@ jQuery.validator.addMethod("pattern", function(value, element, param) {
 jQuery.validator.addMethod("require_from_group", function(value, element, options) {
 	var selector = options[1];
 	var validOrNot = $(selector, element.form).filter(function() {
+		
+		if( jQuery(this).attr('type') == 'checkbox' || jQuery(this).attr('type') == 'radio' ) {
+			return jQuery(this).is(':checked');
+		}
+		
 		return $(this).val();
 	}).length >= options[0];
 
