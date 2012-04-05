@@ -359,6 +359,11 @@ $.extend($.validator, {
 		// http://docs.jquery.com/Plugins/Validation/Validator/element
 		element: function( element ) {
 			element = this.validationTargetFor( this.clean( element ) );
+
+			if (!element) {
+				return true;
+			}
+
 			this.lastElement = element;
 			this.prepareElement( element );
 			this.currentElements = $(element);
@@ -716,9 +721,9 @@ $.extend($.validator, {
 		validationTargetFor: function(element) {
 			// if radio/checkbox, validate first element in group instead
 			if (this.checkable(element)) {
-				element = this.findByName( element.name ).not(this.settings.ignore)[0];
+				element = this.findByName( element.name );
 			}
-			return element;
+			return $(element).not(this.settings.ignore)[0];
 		},
 
 		checkable: function( element ) {
