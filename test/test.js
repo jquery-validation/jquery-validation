@@ -1177,6 +1177,20 @@ test("validate radio on click", function() {
 	errors(0);
 });
 
+test("validate input with no type attribute, defaulting to text", function() {
+	function errors(expected, message) {
+		equal(expected, v.size(), message );
+	}
+	var v = $("#testForm12").validate();
+	var e = $("#testForm12text");
+	errors(0);
+	e.valid();
+	errors(1);
+	e.val('test');
+	e.trigger('keyup');
+	errors(0);
+});
+
 test("ignore hidden elements", function(){
     var form = $('#userForm');
     var validate = form.validate({
