@@ -22,6 +22,12 @@ $.mockjax({
 	responseStatus: 200,
 	responseTime: 1
 });
+$.mockjax({
+	url: "echo.php",
+	response: function(data) {
+		this.responseText = JSON.stringify(data.data);
+	}
+});
 
 module("validator");
 

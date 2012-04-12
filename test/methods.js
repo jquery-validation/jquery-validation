@@ -472,6 +472,34 @@ test("remote extensions", function() {
 	strictEqual( v.element(e), true, "still invalid, because remote validation must block until it returns; dependency-mismatch considered as valid though" );
 });
 
+test("remote radio correct value sent", function() {
+	expect(1);
+	stop();
+	var e = $("#testForm10Radio2");
+	e.attr('checked', 'checked');
+	var v = $("#testForm10").validate({
+		rules: {
+			testForm10Radio: {
+				required: true,
+				remote: {
+					url: "echo.php",
+					dataType: "json",
+					success: function(data) {
+						equal( data['testForm10Radio'], '2', ' correct radio value sent' );
+						start();
+					}
+				}
+			},
+		}
+	});
+	$(document).ajaxStop(function() {
+		$(document).unbind("ajaxStop");
+		start();
+	});
+
+	v.element(e);
+});
+
 module("additional methods");
 
 test("phone (us)", function() {
