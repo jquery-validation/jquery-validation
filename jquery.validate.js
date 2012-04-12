@@ -323,7 +323,7 @@ $.extend($.validator, {
 				}
 			}
 			$(this.currentForm)
-				.validateDelegate(":text, [type='text'], [type='password'], [type='file'], select, textarea, " +
+				.validateDelegate(":text, [type='password'], [type='file'], select, textarea, " +
 					"[type='number'], [type='search'] ,[type='tel'], [type='url'], " +
 					"[type='email'], [type='datetime'], [type='date'], [type='month'], " +
 					"[type='week'], [type='time'], [type='datetime-local'], " +

@@ -1177,7 +1177,7 @@ test("validate radio on click", function() {
 	errors(0);
 });
 
-test("validate empty text attributes", function() {
+test("validate input with no type attribute, defaulting to text", function() {
 	function errors(expected, message) {
 		equal(expected, v.size(), message );
 	}
