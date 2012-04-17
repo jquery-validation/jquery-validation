@@ -336,9 +336,10 @@ jQuery.validator.addMethod("pattern", function(value, element, param) {
  *
  */
 jQuery.validator.addMethod("require_from_group", function(value, element, options) {
+	var validator = this;
 	var selector = options[1];
 	var validOrNot = $(selector, element.form).filter(function() {
-		return $(this).val();
+		return validator.elementValue(this);
 	}).length >= options[0];
 
 	if(!$(element).data('being_validated')) {
