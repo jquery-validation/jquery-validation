@@ -700,13 +700,18 @@ test('require_from_group', function() {
 	$("#productInfo").validate({
 		rules: {
 			partnumber:  {require_from_group: [2,".productInfo"]},
-			description: {require_from_group: [2,".productInfo"]}
+			description: {require_from_group: [2,".productInfo"]},
+			discount: {require_from_group: [2,".productInfo"]}
 		}
 	});
 
 	fillFormWithValuesAndExpect('#productInfo', [], false);
 	fillFormWithValuesAndExpect('#productInfo', [123], false);
+	$('#productInfo input[type="checkbox"]').attr('checked', 'checked');
+	fillFormWithValuesAndExpect('#productInfo', [123], true);
+	$('#productInfo input[type="checkbox"]').removeAttr('checked');
 	fillFormWithValuesAndExpect('#productInfo', [123, 'widget'], true);
+	fillFormWithValuesAndExpect('#productInfo', [123, 'widget', 'red'], true);
 	fillFormWithValuesAndExpect('#productInfo', [123, 'widget', 'red'], true);
 });
 
