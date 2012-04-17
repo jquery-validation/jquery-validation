@@ -167,6 +167,23 @@ test("form(): with equalTo", function() {
 	ok( v.form(), 'Valid form' );
 });
 
+test("form(): with equalTo and onfocusout=false", function() {
+	expect( 4 );
+	var form = $('#testForm5')[0];
+	var v = $(form).validate({
+		onfocusout: false,
+		showErrors: function() {
+			ok(true, 'showErrors should only be called twice');
+			this.defaultShowErrors();
+		}
+	});
+	$('#x1, #x2').val("hi");
+	ok( v.form(), 'Valid form' );
+	$('#x2').val('not equal').blur();
+	ok( !v.form(), 'Invalid form' );
+});
+
+
 test("check(): simple", function() {
 	expect( 3 );
 	var element = $('#firstname')[0];
