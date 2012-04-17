@@ -39,7 +39,7 @@ jQuery.validator.addMethod("letterswithbasicpunc", function(value, element) {
 
 jQuery.validator.addMethod("alphanumeric", function(value, element) {
 	return this.optional(element) || /^\w+$/i.test(value);
-}, "Letters, numbers, spaces or underscores only please");
+}, "Letters, numbers, and underscores only please");
 
 jQuery.validator.addMethod("lettersonly", function(value, element) {
 	return this.optional(element) || /^[a-z]+$/i.test(value);
