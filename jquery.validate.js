@@ -1159,7 +1159,7 @@ $.extend($.validator, {
 					$(element).valid();
 				});
 			}
-			return value == target.val();
+			return value === target.val();
 		}
 
 	}
