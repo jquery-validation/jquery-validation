@@ -472,9 +472,8 @@ test("remote extensions", function() {
 	strictEqual( v.element(e), true, "still invalid, because remote validation must block until it returns; dependency-mismatch considered as valid though" );
 });
 
-test("remote radio correct value sent", function() {
+asyncTest("remote radio correct value sent", function() {
 	expect(1);
-	stop();
 	var e = $("#testForm10Radio2");
 	e.attr('checked', 'checked');
 	var v = $("#testForm10").validate({
@@ -491,10 +490,6 @@ test("remote radio correct value sent", function() {
 				}
 			},
 		}
-	});
-	$(document).ajaxStop(function() {
-		$(document).unbind("ajaxStop");
-		start();
 	});
 
 	v.element(e);

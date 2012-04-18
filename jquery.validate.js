@@ -513,11 +513,11 @@ $.extend($.validator, {
 			var type = $(element).attr('type'),
 				val = $(element).val();
 
-			if( type === 'radio' || type === 'checkbox' ) {
+			if ( type === 'radio' || type === 'checkbox' ) {
 				return $('input[name="' + $(element).attr('name') + '"]:checked').val();
 			}
 
-			if( typeof val === 'string' ) {
+			if ( typeof val === 'string' ) {
 				return val.replace(/\r/g, "");
 			}
 			return val;
