@@ -534,6 +534,15 @@ test("maxWords", function() {
 	ok( !method("<b>hello</b> my world", 2), "html, invalid" );
 });
 
+test("rangeWords", function() {
+	var method = methodTest("rangeWords");
+	ok( method("hello", [0, 2]), "plain text, valid" );
+	ok( method("hello worlds", [0, 2]), "plain text, valid" );
+	ok( method("<b>hello</b> world", [0, 2]), "html, valid" );
+	ok( !method("hello worlds what is up", [0, 2]), "plain text, invalid" );
+	ok( !method("<b>Hello</b> <b>world</b> <b>hello</b>", [0, 2]), "html, invalid" );
+});
+
 test("pattern", function() {
 	var method = methodTest("pattern");
 	ok( method( "AR1004", "AR\\d{4}" ), "Correct format for the given RegExp" );
