@@ -121,6 +121,16 @@ jQuery.validator.addMethod(
 	"The specified vehicle identification number (VIN) is invalid."
 );
 
+//UK VIN or car registration plate (modern format)
+jQuery.validator.addMethod("vinUK", function(value, element) {
+	return this.optional(element) || /^[a-zA-Z][a-zA-Z]*?[0-9]{0,3} [a-zA-Z]{3}/i.test(value);
+}, "Please enter a valid UK VIN.");
+
+//Northern Ireland VIN or car registration plate
+jQuery.validator.addMethod("vinNI", function(value, element) {
+	return this.optional(element) || /^[a-zA-Z]{3} [0-9]{4}/i.test(value);
+}, "Please enter a valid NI VIN.");
+
 /**
   * Return true, if the value is a valid date, also making this formal check dd/mm/yyyy.
   *
