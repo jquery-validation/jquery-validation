@@ -386,10 +386,9 @@ jQuery.validator.addMethod("require_from_group", function(value, element, option
     }
     return validOrNot;
     // {0} below is the 0th item in the options field
-}, jQuery.format("Please choose a memorial."));
+}, jQuery.format("Please enter at least {0} from this group."));
 
-/* Example Class Rule for Require from Group
-jQuery.validator.addClassRules("choose-mem", {
-    require_from_group: [1,".choose-mem"]
+// Example Class Rule for Require from Group
+jQuery.validator.addClassRules("group", {
+    require_from_group: [1,".group"]
 });
-*/
