@@ -15,7 +15,7 @@ jQuery.extend(jQuery.validator.messages, {
 	digits: "Sy&ouml;t&auml; pelk&auml;st&auml;&auml;n numeroita.",
 	equalTo: "Sy&ouml;t&auml; sama arvo uudestaan.",
 	range: jQuery.validator.format("Sy&ouml;t&auml; arvo {0} ja {1} v&auml;lilt&auml;."),
-	max: jQuery.validator.format("Sy&ouml;t&auml; arvo joka on yht&auml; suuri tai suurempi kuin {0}."),
-	min: jQuery.validator.format("Sy&ouml;t&auml; arvo joka on pienempi tai yht&auml; suuri kuin {0}."),
+	max: jQuery.validator.format("Sy&ouml;t&auml; arvo joka on pienempi tai yht&auml; suuri kuin {0}."),
+	min: jQuery.validator.format("Sy&ouml;t&auml; arvo joka on yht&auml; suuri tai suurempi kuin {0}."),
 	creditcard: "Sy&ouml;t&auml; voimassa oleva luottokorttinumero."
 });
