@@ -21,6 +21,7 @@
 			// update underlying textarea before submit validation
 			tinyMCE.triggerSave();
 		}).validate({
+			ignore: "",
 			rules: {
 				title: "required",
 				content: "required"
