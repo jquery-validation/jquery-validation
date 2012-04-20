@@ -35,7 +35,7 @@
 
 //Not equal to - usually for password change forms
 jQuery.validator.addMethod("notEqual", function(value, element, param) {
- return this.optional(element) || value != $(param).val();
+ return this.optional(element) || this.elementValue(element) !== this.elementValue(param);
 }, "Please use a different value.");
 
 
