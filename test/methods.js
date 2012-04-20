@@ -304,20 +304,22 @@ test("min", function() {
 	var v = jQuery("#form").validate();
 	var method = $.validator.methods.min,
 		param = 8,
-		e = $('#value1, #value2, #value3');
+		e = $('#value1, #value2, #value3, #value4');
 	ok(!method.call( v, e[0].value, e[0], param), "Invalid text input" );
 	ok( method.call( v, e[1].value, e[1], param), "Valid text input" );
 	ok( method.call( v, e[2].value, e[2], param), "Valid text input" );
+	ok( method.call( v, e[3].value, e[3], param), "Valid text input" );
 });
 
 test("max", function() {
 	var v = jQuery("#form").validate();
 	var method = $.validator.methods.max,
 		param = 12,
-		e = $('#value1, #value2, #value3');
+		e = $('#value1, #value2, #value3, #value4');
 	ok( method.call( v, e[0].value, e[0], param), "Valid text input" );
 	ok( method.call( v, e[1].value, e[1], param), "Valid text input" );
 	ok(!method.call( v, e[2].value, e[2], param), "Invalid text input" );
+	ok( !method.call( v, e[3].value, e[3], param), "Invalid text input" );
 });
 
 test("range", function() {
