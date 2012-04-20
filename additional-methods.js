@@ -378,3 +378,49 @@ jQuery.validator.addMethod("skip_or_fill_minimum", function(value, element, opti
 	}
 	return valid;
 }, jQuery.format("Please either skip these fields or fill at least {0} of them."));
+
+
+/**
+ * The acceptMime method follows the HTML spec to restrict selected files
+ * to a desired mime type. This behavior is only a hint, and some browsers do not support it.
+ * 
+ * This behavior is not compatible with the current "accept" rule, since you would be comparing
+ * filenames to mimetypes, which will fail.
+ *
+ * This method can also be used to match mime types manually entered, and does not preserve
+ * the old accept behavior.
+ * 
+ * SPEC: http://dev.w3.org/html5/spec/states-of-the-type-attribute.html#attr-input-accept
+ */
+jQuery.validator.addMethod('accept_mime', function(value, element, param) {
+	// Split mime on commas incase we have multiple types we can accept
+	var typeParam = typeof param === "string" ? param.replace(/,/g, '|') : "image/*",
+		optionalValue = this.optional(element), 
+		i, file;
+
+	// Element is optional
+	if(optionalValue) {
+		return optionalValue;
+	}
+
+	if($(element).attr("type") === "file") {
+		// If we are using a wildcard, make it regex friendly
+		typeParam = typeParam.replace("*", ".*");
+
+		// Check if the element has a FileList before checking each file
+		if(element.files && element.files.length) {
+			for(i = 0; i < element.files.length; i++) {
+				file = element.files[i];
+
+				// Grab the mimtype from the loaded file, verify it matches
+				if(!file.type.match(new RegExp( ".?(" + typeParam + ")$", "i"))) {
+					return false;
+				}
+			}
+		} 
+	}
+
+	// Either return true because we've validated each file, or because the 
+	// browser does not support element.files and the FileList feature
+	return true;
+}, jQuery.format("Please select files with the required extension"));
