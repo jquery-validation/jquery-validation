@@ -345,8 +345,8 @@ test("creditcard", function() {
 	ok( !method( "asdf" ), "Invalid creditcard number" );
 });
 
-test("accept", function() {
-	var method = methodTest("accept");
+test("extension", function() {
+	var method = methodTest("extension");
 	ok( method( "picture.gif" ), "Valid default accept type" );
 	ok( method( "picture.jpg" ), "Valid default accept type" );
 	ok( method( "picture.jpeg" ), "Valid default accept type" );
@@ -355,7 +355,7 @@ test("accept", function() {
 
 	var v = jQuery("#form").validate(),
 		method = function(value, param) {
-			return $.validator.methods.accept.call(v, value, $('#text1')[0], param);
+			return $.validator.methods.extension.call(v, value, $('#text1')[0], param);
 		};
 	ok( method( "picture.doc", "doc"), "Valid custom accept type" );
 	ok( method( "picture.pdf", "doc|pdf"), "Valid custom accept type" );
