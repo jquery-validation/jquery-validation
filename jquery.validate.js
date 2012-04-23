@@ -280,7 +280,6 @@ $.extend($.validator, {
 		digits: "Please enter only digits.",
 		creditcard: "Please enter a valid credit card number.",
 		equalTo: "Please enter the same value again.",
-		accept: "Please enter a value with a valid extension.",
 		maxlength: $.validator.format("Please enter no more than {0} characters."),
 		minlength: $.validator.format("Please enter at least {0} characters."),
 		rangelength: $.validator.format("Please enter a value between {0} and {1} characters long."),
@@ -1147,12 +1146,6 @@ $.extend($.validator, {
 			}
 
 			return (nCheck % 10) === 0;
-		},
-
-		// http://docs.jquery.com/Plugins/Validation/Methods/accept
-		accept: function(value, element, param) {
-			param = typeof param === "string" ? param.replace(/,/g, '|') : "png|jpe?g|gif";
-			return this.optional(element) || value.match(new RegExp(".(" + param + ")$", "i"));
 		},
 
 		// http://docs.jquery.com/Plugins/Validation/Methods/equalTo
