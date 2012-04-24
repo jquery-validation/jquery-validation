@@ -495,6 +495,54 @@ asyncTest("remote radio correct value sent", function() {
 	v.element(e);
 });
 
+asyncTest("remote correct number of invalids", function() {
+	expect(4);
+	var e = $("#username");
+	var v = $("#userForm").validate({
+		rules: {
+			username: {
+				required: true,
+				remote: {
+					url: "echo.php",
+					dataType: 'json',
+					dataFilter: function(data) {
+						var json = JSON.parse(data);
+						if(json.username == 'asdf') {
+							return "\"asdf is already taken\"";
+						}
+						return true;
+					}
+				}
+			}
+		},
+		messages: {
+			username: {
+				required: "Please"
+			}
+		},
+		submitHandler: function() {
+			ok( false, "submitHandler may never be called when validating only elements");
+		}
+	});
+	$(document).ajaxStop(function() {
+		$(document).unbind("ajaxStop");
+		equal( 1, v.numberOfInvalids(), "There must be one error" );
+
+		e.val("max");
+
+		$(document).ajaxStop(function() {
+			equal( 0, v.numberOfInvalids(), "There must not be any errors" );
+			start();
+		});
+
+		v.element(e);
+	});
+	strictEqual( v.element(e), false, "invalid element, nothing entered yet" );
+	e.val("asdf");
+  strictEqual( v.numberOfInvalids(), 1, "still invalid, because remote validation must block until it returns; dependency-mismatch considered as valid though" );
+  v.element(e);
+});
+
 module("additional methods");
 
 test("phone (us)", function() {
