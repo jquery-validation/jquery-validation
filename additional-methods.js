@@ -17,7 +17,7 @@
 		// remove html tags and space chars
 		return value.replace(/<.[^<>]*?>/g, ' ').replace(/&nbsp;|&#160;/gi, ' ')
 		// remove numbers and punctuation
-		.replace(/[0-9.(),;:!?%#$'"_+=\/-]*/g,'');
+		.replace(/[.(),;:!?%#$'"_+=\/-]*/g,'');
 	}
 	jQuery.validator.addMethod("maxWords", function(value, element, params) {
 		return this.optional(element) || stripHtml(value).match(/\b\w+\b/g).length <= params;
