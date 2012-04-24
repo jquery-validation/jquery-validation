@@ -601,8 +601,8 @@ test("maxWords", function() {
 	ok( method("world <br/>", 2), "html, valid" );
 	ok( method("hello worlds", 2), "plain text, valid" );
 	ok( method("<b>hello</b> world", 2), "html, valid" );
-	ok( !method("hello my world", 2), "plain text, invalid" );
-	ok( !method("<b>hello</b> my world", 2), "html, invalid" );
+	ok( !method("hello 123 world", 2), "plain text, invalid" );
+	ok( !method("<b>hello</b> 123 world", 2), "html, invalid" );
 });
 
 test("rangeWords", function() {

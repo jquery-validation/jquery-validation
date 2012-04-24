@@ -16,8 +16,8 @@
 	function stripHtml(value) {
 		// remove html tags and space chars
 		return value.replace(/<.[^<>]*?>/g, ' ').replace(/&nbsp;|&#160;/gi, ' ')
-		// remove numbers and punctuation
-		.replace(/[0-9.(),;:!?%#$'"_+=\/-]*/g,'');
+		// remove punctuation
+		.replace(/[.(),;:!?%#$'"_+=\/-]*/g,'');
 	}
 	jQuery.validator.addMethod("maxWords", function(value, element, params) {
 		return this.optional(element) || stripHtml(value).match(/\b\w+\b/g).length <= params;
@@ -385,7 +385,7 @@ jQuery.validator.addMethod("skip_or_fill_minimum", function(value, element, opti
 jQuery.validator.addMethod("accept", function(value, element, param) {
 	// Split mime on commas incase we have multiple types we can accept
 	var typeParam = typeof param === "string" ? param.replace(/,/g, '|') : "image/*",
-	optionalValue = this.optional(element), 
+	optionalValue = this.optional(element),
 	i, file;
 
 	// Element is optional
@@ -407,10 +407,10 @@ jQuery.validator.addMethod("accept", function(value, element, param) {
 					return false;
 				}
 			}
-		} 
+		}
 	}
 
-	// Either return true because we've validated each file, or because the 
+	// Either return true because we've validated each file, or because the
 	// browser does not support element.files and the FileList feature
 	return true;
 }, jQuery.format("Please enter a value with a valid mimetype."));
