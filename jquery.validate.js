@@ -1038,11 +1038,13 @@ $.extend($.validator, {
 						validator.prepareElement(element);
 						validator.formSubmitted = submitted;
 						validator.successList.push(element);
+						delete validator.invalid[element.name];
 						validator.showErrors();
 					} else {
 						var errors = {};
 						var message = response || validator.defaultMessage( element, "remote" );
 						errors[element.name] = previous.message = $.isFunction(message) ? message(value) : message;
+						validator.invalid[element.name] = true;
 						validator.showErrors(errors);
 					}
 					previous.valid = valid;
