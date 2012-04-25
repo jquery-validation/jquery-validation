@@ -732,11 +732,7 @@ $.extend($.validator, {
 		},
 
 		findByName: function( name ) {
-			// select by name and filter by form for performance over form.find("[name=...]")
-			var form = this.currentForm;
-			return $(document.getElementsByName(name)).map(function(index, element) {
-				return element.form === form && element.name === name && element  || null;
-			});
+			return $(this.currentForm).find('[name="' + name + '"]');
 		},
 
 		getLength: function(value, element) {
