@@ -495,6 +495,48 @@ asyncTest("remote radio correct value sent", function() {
 	v.element(e);
 });
 
+asyncTest("remote reset clear old value", function() {
+	expect(1);
+
+	var e = $("#username");
+	var v = $("#userForm").validate({
+		rules: {
+			username: {
+				required: true,
+				remote: {
+					url: "echo.php",
+					dataFilter: function(data) {
+						return true;
+					}
+				}
+			}
+		}
+	});
+	$(document).ajaxStop(function() {
+		var waitTimeout;
+
+		$(document).unbind("ajaxStop");
+
+
+		$(document).ajaxStop(function() {
+			clearTimeout(waitTimeout);
+			ok( true, "Remote request sent to server" );
+			start();
+		});
+
+
+		v.resetForm();
+		e.val("asdf");
+		waitTimeout = setTimeout(function() {
+			ok( false, "Remote server did not get request");
+			start();
+		}, 200);
+		v.element(e);
+	});
+	e.val("asdf");
+	v.element(e);
+});
+
 module("additional methods");
 
 test("phone (us)", function() {
