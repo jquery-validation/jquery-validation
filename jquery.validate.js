@@ -694,7 +694,12 @@ $.extend($.validator, {
 					if ( this.settings.errorPlacement ) {
 						this.settings.errorPlacement(label, $(element) );
 					} else {
-					label.insertAfter(element);
+						if ( $(element).is(':radio') ) {
+							var radioElements = this.findByName( $(element).attr('name') );
+							label.insertAfter(radioElements.filter(':last'));
+						} else {
+							label.insertAfter(element);
+						}
 					}
 				}
 			}
