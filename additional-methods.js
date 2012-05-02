@@ -131,6 +131,11 @@ jQuery.validator.addMethod("vinNI", function(value, element) {
 	return this.optional(element) || /^[a-zA-Z]{3} [0-9]{4}/i.test(value);
 }, "Please enter a valid NI VIN.");
 
+//Republic of Ireland VIN or car registration plate - WIP
+/*jQuery.validator.addMethod("vinROI", function(value, element) {
+	return this.optional(element) || /^[a-zA-Z]{3} [0-9]{4}/i.test(value);
+}, "Please enter a valid NI VIN.");
+*/
 /**
   * Return true, if the value is a valid date, also making this formal check dd/mm/yyyy.
   *
@@ -227,11 +232,12 @@ jQuery.validator.addMethod('phonesUK', function(phone_number, element) {
 		phone_number.match(/^(0[1-3]{1}[0-9]{8,9})$/) || phone_number.match(/^(07[5-9]{1}[0-9]{7,8})$/)
 }, 'Please specify a valid uk phone number');
 
-//Matches UK postcode. based on http://snipplr.com/view/3152/postcode-validation/
 jQuery.validator.addMethod('postcodeUK', function(postcode, element) {
-	postcode = (postcode.toUpperCase()).replace(/\s+/g,'');
-	return this.optional(element) || postcode.match(/^([^QZ]{1}[^IJZ]{0,1}[0-9]{1,2})([0-9]{1}[^CIKMOV]{2})$/) || postcode.match(/^([^QV]{1}[0-9]{1}[ABCDEFGHJKSTUW]{1})([0-9]{1}[^CIKMOV]{2})$/) || postcode.match(/^([^QV]{1}[^IJZ][0-9]{1}[ABEHMNPRVWXY])([0-9]{1}[^CIKMOV]{2})$/) || postcode.match(/^(GIR)(0AA)$/) || postcode.match(/^(BFPO)([0-9]{1,4})$/) || postcode.match(/^(BFPO)(C\/O[0-9]{1,3})$/)
-}, 'Please specify a valid postcode');
+postcode = (postcode.toUpperCase());
+return this.optional(element) || postcode.length >= 5 &&
+postcode.match(/[A-Z]{1,2}[0-9R][0-9A-Z]? [0-9][ABD-HJLNP-UW-Z]{2}/) || postcode.match(/^(GIR)(0AA)$/) || postcode.match(/^(BFPO)([0-9]{1,4})$/) || postcode.match(/^(BFPO)(C\/O[0-9]{1,3})$/;
+}, 'Please specify a valid postcode.');
+
 
 
 //Matches Standard UK Bank Account numbers.
