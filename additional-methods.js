@@ -235,7 +235,7 @@ jQuery.validator.addMethod('phonesUK', function(phone_number, element) {
 jQuery.validator.addMethod('postcodeUK', function(postcode, element) {
 postcode = (postcode.toUpperCase());
 return this.optional(element) || postcode.length >= 5 &&
-postcode.match(/[A-Z]{1,2}[0-9R][0-9A-Z]? [0-9][ABD-HJLNP-UW-Z]{2}/) || postcode.match(/^(GIR)(0AA)$/) || postcode.match(/^(BFPO)([0-9]{1,4})$/) || postcode.match(/^(BFPO)(C\/O[0-9]{1,3})$/;
+postcode.match(/[A-Z]{1,2}[0-9R][0-9A-Z]?[ ]?[0-9][ABD-HJLNP-UW-Z]{2}/) || postcode.match(/^(GIR)(0AA)$/) || postcode.match(/^(BFPO)([0-9]{1,4})$/) || postcode.match(/^(BFPO)(C\/O[0-9]{1,3})$/;
 }, 'Please specify a valid postcode.');
 
 
