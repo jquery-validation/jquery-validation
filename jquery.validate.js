@@ -1030,7 +1030,7 @@ $.extend($.validator, {
 				data: data,
 				success: function(response) {
 					validator.settings.messages[element.name].remote = previous.originalMessage;
-					var valid = response === true;
+					var valid = response === true || response === "true";
 					if ( valid ) {
 						var submitted = validator.formSubmitted;
 						validator.prepareElement(element);
