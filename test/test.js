@@ -26,7 +26,8 @@ $.mockjax({
 	url: "echo.php",
 	response: function(data) {
 		this.responseText = JSON.stringify(data.data);
-	}
+	},
+	responseTime: 100
 });
 
 module("validator");
