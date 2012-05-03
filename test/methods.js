@@ -510,7 +510,7 @@ asyncTest("remote correct number of invalids", function() {
 						if(json.username == 'asdf') {
 							return "\"asdf is already taken\"";
 						}
-						return true;
+						return "\"true\"";
 					}
 				}
 			}

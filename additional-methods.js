@@ -370,10 +370,12 @@ jQuery.validator.addMethod("require_from_group", function(value, element, option
  *
  */
 jQuery.validator.addMethod("skip_or_fill_minimum", function(value, element, options) {
+	var validator = this;
+
 	numberRequired = options[0];
 	selector = options[1];
 	var numberFilled = $(selector, element.form).filter(function() {
-		return $(this).val();
+		return validator.elementValue(this);
 	}).length;
 	var valid = numberFilled >= numberRequired || numberFilled === 0;
 
