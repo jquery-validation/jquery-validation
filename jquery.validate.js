@@ -410,7 +410,7 @@ $.extend($.validator, {
 			this.lastElement = null;
 			this.prepareForm();
 			this.hideErrors();
-			this.elements().removeClass( this.settings.errorClass );
+			this.elements().removeClass( this.settings.errorClass ).removeData( "previousValue" );
 		},
 
 		numberOfInvalids: function() {

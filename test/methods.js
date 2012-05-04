@@ -495,8 +495,9 @@ asyncTest("remote radio correct value sent", function() {
 	v.element(e);
 });
 
-asyncTest("remote correct number of invalids", function() {
-	expect(4);
+asyncTest("remote reset clear old value", function() {
+	expect(1);
+
 	var e = $("#username");
 	var v = $("#userForm").validate({
 		rules: {
@@ -504,7 +505,6 @@ asyncTest("remote correct number of invalids", function() {
 				required: true,
 				remote: {
 					url: "echo.php",
-					dataType: 'json',
 					dataFilter: function(data) {
 						var json = JSON.parse(data);
 						if(json.username == 'asdf') {
@@ -514,33 +514,31 @@ asyncTest("remote correct number of invalids", function() {
 					}
 				}
 			}
-		},
-		messages: {
-			username: {
-				required: "Please"
-			}
-		},
-		submitHandler: function() {
-			ok( false, "submitHandler may never be called when validating only elements");
 		}
 	});
 	$(document).ajaxStop(function() {
-		$(document).unbind("ajaxStop");
-		equal( 1, v.numberOfInvalids(), "There must be one error" );
+		var waitTimeout;
 
-		e.val("max");
+		$(document).unbind("ajaxStop");
+
 
 		$(document).ajaxStop(function() {
-			equal( 0, v.numberOfInvalids(), "There must not be any errors" );
+			clearTimeout(waitTimeout);
+			ok( true, "Remote request sent to server" );
 			start();
 		});
 
+
+		v.resetForm();
+		e.val("asdf");
+		waitTimeout = setTimeout(function() {
+			ok( false, "Remote server did not get request");
+			start();
+		}, 200);
 		v.element(e);
 	});
-	strictEqual( v.element(e), false, "invalid element, nothing entered yet" );
 	e.val("asdf");
-  strictEqual( v.numberOfInvalids(), 1, "still invalid, because remote validation must block until it returns; dependency-mismatch considered as valid though" );
-  v.element(e);
+	v.element(e);
 });
 
 module("additional methods");
