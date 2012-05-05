@@ -552,6 +552,15 @@ test("phone (us)", function() {
 	ok(!method( "212 123 4567" ), "Invalid us phone number" );
 });
 
+test("mobileUK", function() {
+	var method = methodTest("mobileUK");
+	ok( method( "07434234323" ), "Valid UK Mobile Number" );
+	ok( method( "07011111111" ), "Valid UK Mobile Number" );
+	ok( method( "+447011111111" ), "Valid UK Mobile Number" );
+	ok( !method( "07334234323" ), "Invalid UK Mobile Number" );
+	ok( !method( "11111111111" ), "Invalid UK Mobile Number" );
+});
+
 test("dateITA", function() {
 	var method = methodTest("dateITA");
 	ok( method( "01/01/1900" ), "Valid date ITA" );
