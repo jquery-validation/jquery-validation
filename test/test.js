@@ -874,6 +874,17 @@ test("success isn't called for optional elements", function() {
 	equal( 0, $("#testForm1 label").size() );
 });
 
+test("success callback with element", function() {
+	expect(1);
+	var v = $("#userForm").validate({
+		success: function( label, element ) {
+			equal( element, $('#username').get(0) );
+		}
+	});
+	$("#username").val("hi");
+	v.form();
+});
+
 test("all rules are evaluated even if one returns a dependency-mistmatch", function() {
 	expect(6);
 	equal( "", $("#firstname").removeClass().val() );

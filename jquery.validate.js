@@ -703,7 +703,7 @@ $.extend($.validator, {
 				if ( typeof this.settings.success === "string" ) {
 					label.addClass( this.settings.success );
 				} else {
-					this.settings.success( label );
+					this.settings.success( label, element );
 				}
 			}
 			this.toShow = this.toShow.add(label);
