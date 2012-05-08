@@ -211,6 +211,7 @@ $.extend($.validator, {
 		errorClass: "error",
 		validClass: "valid",
 		errorElement: "label",
+		reuseErrorElement: false,
 		focusInvalid: true,
 		errorContainer: $( [] ),
 		errorLabelContainer: $( [] ),
@@ -676,7 +677,7 @@ $.extend($.validator, {
 				label.removeClass( this.settings.validClass ).addClass( this.settings.errorClass );
 
 				// check if we have a generated label, replace the message then
-				if ( label.attr("generated") ) {
+				if ( label.attr("generated") || this.settings.reuseErrorElement ) {
 					label.html(message);
 				}
 			} else {
