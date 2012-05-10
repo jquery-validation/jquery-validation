@@ -213,6 +213,12 @@ jQuery.validator.addMethod('postcodeUK', function(postcode, element) {
 	return this.optional(element) || postcode.match(/^([^QZ]{1}[^IJZ]{0,1}[0-9]{1,2})([0-9]{1}[^CIKMOV]{2})$/) || postcode.match(/^([^QV]{1}[0-9]{1}[ABCDEFGHJKSTUW]{1})([0-9]{1}[^CIKMOV]{2})$/) || postcode.match(/^([^QV]{1}[^IJZ][0-9]{1}[ABEHMNPRVWXY])([0-9]{1}[^CIKMOV]{2})$/) || postcode.match(/^(GIR)(0AA)$/) || postcode.match(/^(BFPO)([0-9]{1,4})$/) || postcode.match(/^(BFPO)(C\/O[0-9]{1,3})$/);
 }, 'Please specify a valid postcode');
 
+// Matches UK currency or numbers, eg £123.45, £12,345.67, 123.45
+jQuery.validator.addMethod('currency', function(value, element) {
+	var result = value.match(/^\xA3?\d{1,3}?([,]\d{3}|\d)*?([.]\d{1,2})?$/);
+	return result;
+}, 'Please specify an amount in GBP');
+
 // TODO check if value starts with <, otherwise don't try stripping anything
 jQuery.validator.addMethod("strippedminlength", function(value, element, param) {
 	return jQuery(value).text().length >= param;
