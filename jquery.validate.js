@@ -581,6 +581,12 @@ $.extend($.validator, {
 			return meta && meta.messages && meta.messages[method];
 		},
 
+		// return the custom message for the given element and validation method
+		// specified in the element's HTML5 data attribute
+		customDataMessage: function(element, method) {
+			return $(element).data('val-' + method.toLowerCase());
+		},
+
 		// return the custom message for the given element name and validation method
 		customMessage: function( name, method ) {
 			var m = this.settings.messages[name];
@@ -600,6 +606,7 @@ $.extend($.validator, {
 		defaultMessage: function( element, method) {
 			return this.findDefined(
 				this.customMessage( element.name, method ),
+				this.customDataMessage( element, method ),
 				this.customMetaMessage( element, method ),
 				// title is never undefined, so handle empty string as undefined
 				!this.settings.ignoreTitle && element.title || undefined,
