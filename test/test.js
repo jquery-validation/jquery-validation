@@ -1252,3 +1252,15 @@ test("ignore hidden elements at start", function(){
     $('#userForm [name=username]').show();
     ok(! validate.form(), "form should be invalid when required element is visible");
 });
+
+test("Specify error messages through data attributes", function() {
+	var form = $('#dataMessages');
+	var name = $('#dataMessagesName');
+	var v = form.validate();
+
+	form.get(0).reset();
+	name.valid();
+
+	var label = $('#dataMessages label');
+	equal( label.text(), "You must enter a value here", "Correct error label" );
+});
