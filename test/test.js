@@ -713,7 +713,7 @@ test("validating multiple checkboxes with 'required'", function() {
 test("dynamic form", function() {
 	var counter = 0;
 	function add() {
-		$("<input class='{required:true}' name='list" + counter++ + "' />").appendTo("#testForm2");
+		$("<input data-rule-required='true' name='list" + counter++ + "' />").appendTo("#testForm2");
 	}
 	function errors(expected, message) {
 		equal(expected, v.size(), message );
@@ -856,7 +856,7 @@ test("successlist", function() {
 
 test("success isn't called for optional elements", function() {
 	expect(4);
-	equal( "", $("#firstname").removeClass().val() );
+	equal( "", $("#firstname").removeAttr("data-rule-required").removeAttr("data-rule-minlength").val() );
 	$("#something").remove();
 	$("#lastname").remove();
 	$("#errorFirstname").remove();
@@ -888,7 +888,7 @@ test("success callback with element", function() {
 
 test("all rules are evaluated even if one returns a dependency-mistmatch", function() {
 	expect(6);
-	equal( "", $("#firstname").removeClass().val() );
+	equal( "", $("#firstname").removeAttr("data-rule-required").removeAttr("data-rule-minlength").val() );
 	$("#lastname").remove();
 	$("#errorFirstname").remove();
 	$.validator.addMethod("custom1", function() {
@@ -1251,4 +1251,16 @@ test("ignore hidden elements at start", function(){
     ok(validate.form(), "hidden elements should be ignored by default");
     $('#userForm [name=username]').show();
     ok(! validate.form(), "form should be invalid when required element is visible");
+});
+
+test("Specify error messages through data attributes", function() {
+	var form = $('#dataMessages');
+	var name = $('#dataMessagesName');
+	var v = form.validate();
+
+	form.get(0).reset();
+	name.valid();
+
+	var label = $('#dataMessages label');
+	equal( label.text(), "You must enter a value here", "Correct error label" );
 });

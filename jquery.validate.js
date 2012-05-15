@@ -148,9 +148,9 @@ $.extend($.fn, {
 		var data = $.validator.normalizeRules(
 		$.extend(
 			{},
-			$.validator.metadataRules(element),
 			$.validator.classRules(element),
 			$.validator.attributeRules(element),
+			$.validator.dataRules(element),
 			$.validator.staticRules(element)
 		), element);
 
@@ -572,13 +572,9 @@ $.extend($.validator, {
 		},
 
 		// return the custom message for the given element and validation method
-		// specified in the element's "messages" metadata
-		customMetaMessage: function(element, method) {
-			if (!$.metadata) {
-				return;
-			}
-			var meta = this.settings.meta ? $(element).metadata()[this.settings.meta] : $(element).metadata();
-			return meta && meta.messages && meta.messages[method];
+		// specified in the element's HTML5 data attribute
+		customDataMessage: function(element, method) {
+			return $(element).data('msg-' + method.toLowerCase()) || (element.attributes && $(element).attr('data-msg-' + method.toLowerCase()));
 		},
 
 		// return the custom message for the given element name and validation method
@@ -600,7 +596,7 @@ $.extend($.validator, {
 		defaultMessage: function( element, method) {
 			return this.findDefined(
 				this.customMessage( element.name, method ),
-				this.customMetaMessage( element, method ),
+				this.customDataMessage( element, method ),
 				// title is never undefined, so handle empty string as undefined
 				!this.settings.ignoreTitle && element.title || undefined,
 				$.validator.messages[method],
@@ -870,15 +866,29 @@ $.extend($.validator, {
 		return rules;
 	},
 
-	metadataRules: function(element) {
-		if (!$.metadata) {
-			return {};
+	dataRules: function(element) {
+		var rules = {}, $element = $(element), value;
+
+		for (var method in $.validator.methods) {
+			value = $element.data('rule-' + method) || $element.attr('data-rule-' + method)
+
+			if (value) {
+				if(value == "true" || value == "false") {
+					rules[method] = value === "true"
+				} else {
+					rules[method] = value;
+				}
+			} else if ($element[0].getAttribute("type") === method) {
+				rules[method] = true;
+			}
 		}
 
-		var meta = $.data(element.form, 'validator').settings.meta;
-		return meta ?
-			$(element).metadata()[meta] :
-			$(element).metadata();
+		// maxlength may be returned as -1, 2147483647 (IE) and 524288 (safari) for text inputs
+		if (rules.maxlength && /-1|2147483647|524288/.test(rules.maxlength)) {
+			delete rules.maxlength;
+		}
+
+		return rules;
 	},
 
 	staticRules: function(element) {
@@ -928,8 +938,14 @@ $.extend($.validator, {
 			}
 		});
 		$.each(['rangelength', 'range'], function() {
+			var parts;
 			if (rules[this]) {
-				rules[this] = [Number(rules[this][0]), Number(rules[this][1])];
+				if($.isArray(rules[this])) {
+					rules[this] = [Number(rules[this][0]), Number(rules[this][1])];
+				} else if(typeof rules[this] === 'string') {
+					parts = rules[this].split(/[\s,]+/);
+					rules[this] = [Number(parts[0]), Number(parts[1])];
+				}
 			}
 		});
 

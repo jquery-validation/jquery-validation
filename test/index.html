@@ -6,7 +6,6 @@
 	<script type="text/javascript" src="jquery.js"></script>
 	<script type="text/javascript" src="../lib/jquery.form.js"></script>
 	<script type="text/javascript" src="qunit/qunit.js"></script>
-	<script type="text/javascript" src="../lib/jquery.metadata.js"></script>
 	<script type="text/javascript" src="../lib/jquery.mockjax.js"></script>
 	<script type="text/javascript" src="../jquery.validate.js"></script>
 	<script type="text/javascript" src="../additional-methods.js"></script>
@@ -57,10 +56,10 @@
 		<ol id="empty"></ol>
 
 		<form id="testForm1">
-			<input type="text" class="{required:true,minlength:2}" title="buga" name="firstname" id="firstname" />
+			<input type="text" data-rule-required="true" data-rule-minlength="2" title="buga" name="firstname" id="firstname" />
 			<label id="errorFirstname" for="firstname" class="error">error for firstname</label>
-			<input type="text" class="{required:true}" title="buga" name="lastname" id="lastname" />
-			<input type="text" class="{required:true}" title="something" name="something" id="something" value="something" />
+			<input type="text" data-rule-required="true" title="buga" name="lastname" id="lastname" />
+			<input type="text" data-rule-required="true" title="something" name="something" id="something" value="something" />
 		</form>
 
 		<form id="testForm1clean">
@@ -71,22 +70,22 @@
 		</form>
 
 		<form id="userForm">
-			<input type="text" class="{required:true}" name="username" id="username" />
+			<input type="text" data-rule-required="true" name="username" id="username" />
 			<input type="submit" name="submitButton" value="submitButtonValue" />
 		</form>
 
 		<form id="signupForm" action="form.php">
-			<input id="user" name="user" title="Please enter your username (at least 3 characters)" class="{required:true,minlength:3}" />
-			<input type="password" name="password" id="password" class="{required:true,minlength:5}" />
+			<input id="user" name="user" title="Please enter your username (at least 3 characters)" data-rule-required="true" data-rule-minlength="3" />
+			<input type="password" name="password" id="password" data-rule-required="true" data-rule-minlength="5" />
 		</form>
 
 		<form id="testForm2">
-			<input class="{required:true}" type="radio" name="agree" id="agb" />
+			<input data-rule-required="true" type="radio" name="agree" id="agb" />
 			<label for="agree" id="agreeLabel" class="xerror">error for agb</label>
 		</form>
 
 		<form id="testForm3">
-			<select class="{required:true}" name="meal" id="meal" >
+			<select data-rule-required="true" name="meal" id="meal" >
 				<option value="">Please select...</option>
 				<option value="1">Food</option>
 				<option value="2">Milk</option>
@@ -101,22 +100,22 @@
 		</div>
 
 		<form id="testForm4">
-			<input class="{foo:true}" name="f1" id="f1" />
-			<input class="{bar:true}" name="f2" id="f2" />
+			<input data-rule-foo="true" name="f1" id="f1" />
+			<input data-rule-bar="true" name="f2" id="f2" />
 		</form>
 
 		<form id="testForm5">
-			<input class="{equalTo:'#x2'}" value="x" name="x1" id="x1" />
-			<input class="{equalTo:'#x1'}" value="y" name="x2" id="x2" />
+			<input data-rule-equalto="#x2" value="x" name="x1" id="x1" />
+			<input data-rule-equalto="#x1" value="y" name="x2" id="x2" />
 		</form>
 
 		<form id="testForm6">
-			<input class="{required:true,minlength:2}" type="checkbox" name="check" id="form6check1" />
+			<input data-rule-required="true" data-rule-minlength="2" type="checkbox" name="check" id="form6check1" />
 			<input type="checkbox" name="check" id="form6check2" />
 		</form>
 
 		<form id="testForm7">
-			<select class="{required:true,minlength:2}" name="selectf7" id="selectf7" multiple="multiple">
+			<select data-rule-required="true" data-rule-minlength="2" name="selectf7" id="selectf7" multiple="multiple">
 				<option id="optionxa" value="0">0</option>
 				<option id="optionxb" value="1">1</option>
 				<option id="optionxc" value="2">2</option>
@@ -131,12 +130,12 @@
 		</form>
 
 		<form id="testForm8">
-			<input id="form8input" class="{required:true,number:true,rangelength:[2,8]}" name="abc" />
+			<input id="form8input" data-rule-required="true" data-rule-number="true" data-rule-rangelength="2,8" name="abc" />
 			<input type="radio" name="radio1"/>
 		</form>
 
 		<form id="testForm9">
-			<input id="testEmail9" class="{required:true,email:true,messages:{required:'required',email:'email'}}" />
+			<input id="testEmail9" data-rule-required="true" data-rule-email="true" data-msg-required="required" data-msg-email="email" />
 		</form>
 
 		<form id="testForm10">
@@ -151,7 +150,11 @@
 
 		<form id="testForm12">
 			<!-- empty "type" attribute -->
-			<input name="testForm12text" id="testForm12text" class="{required:true}" />
+			<input name="testForm12text" id="testForm12text" data-rule-required="true" />
+		</form>
+
+		<form id="dataMessages">
+			<input name="dataMessagesName" id="dataMessagesName" class="required" data-msg-required="You must enter a value here" />
 		</form>
 
 		<div id="simplecontainer">
@@ -252,7 +255,7 @@
 			<input id="v2-i3" name="v2-i3" class="url" />
 			<input id="v2-i4" name="v2-i4" class="required" minlength="2" />
 			<input id="v2-i5" name="v2-i5" class="required" minlength="2" maxlength="5" customMethod1="123" />
-			<input id="v2-i6" name="v2-i6" class="required customMethod2 {maxlength: 5}" minlength="2" />
+			<input id="v2-i6" name="v2-i6" class="required customMethod2" data-rule-maxlength="5" data-rule-minlength="2" />
 			<input id="v2-i7" name="v2-i7" />
 		</form>
 

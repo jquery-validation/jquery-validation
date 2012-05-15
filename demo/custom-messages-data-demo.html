@@ -8,7 +8,6 @@
 
 <script src="../lib/jquery.js" type="text/javascript"></script>
 <script src="../jquery.validate.js" type="text/javascript"></script>
-<script src="../lib/jquery.metadata.js" type="text/javascript"></script>
 
 <script type="text/javascript">
 $(document).ready(function() {
@@ -47,7 +46,7 @@ form input.submit { margin-left: 253px; }
 		<p>
 
 			<label for="cemail">E-Mail *</label>
-			<input id="cemail" name="email" class="{validate:{required:true, email:true, messages:{required:'Please enter your email address', email:'Please enter a valid email address'}}}"/>
+			<input id="cemail" name="email" data-rule-required="true" data-rule-email="true" data-msg-required="Please enter your email address" data-msg-email="Please enter a valid email address" />
 		</p>
 		<p>
 			<input class="submit" type="submit" value="Submit"/>
@@ -61,7 +60,7 @@ form input.submit { margin-left: 253px; }
 		<p>
 
 			<label for="cemail">E-Mail *</label>
-			<input id="cemail" name="email" class="{required:true, email:true, messages:{required:'Please enter your email address', email:'Please enter a valid email address'}}"/>
+			<input id="cemail" name="email" data-rule-required="true" data-rule-email="true" data-msg-required="Please enter your email address" data-msg-email="Please enter a valid email address" />
 		</p>
 		<p>
 			<input class="submit" type="submit" value="Submit"/>
@@ -75,7 +74,7 @@ form input.submit { margin-left: 253px; }
 		<p>
 
 			<label for="cemail">E-Mail *</label>
-			<input id="cemail" name="email" class="{required:true, email:true, messages:{email:'Please enter a valid email address'}}"/>
+			<input id="cemail" name="email" data-rule-required="true" data-rule-email="true" data-msg-email="Please enter a valid email address" />
 		</p>
 		<p>
 			<input class="submit" type="submit" value="Submit"/>
