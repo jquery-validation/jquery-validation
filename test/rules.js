@@ -95,7 +95,7 @@ test("rules(), gurantee that required is at front", function() {
 		return result.join(" ");
 	}
 	equal( "required minlength", flatRules("#firstname") );
-	equal( "required maxlength minlength", flatRules("#v2-i6") );
+	equal( "required minlength maxlength", flatRules("#v2-i6") );
 	equal( "required maxlength", flatRules("#co_name") );
 
 	QUnit.reset();
