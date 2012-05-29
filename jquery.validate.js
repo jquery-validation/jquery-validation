@@ -683,7 +683,7 @@ $.extend($.validator, {
 				label.removeClass( this.settings.validClass ).addClass( this.settings.errorClass );
 
 				// check if we have a generated label, replace the message then
-				if ( label.attr("generated") ) {
+				if ( label.attr("generated") || label.hasClass(this.settings.errorClass) ) {
 					label.html(message);
 				}
 			} else {
