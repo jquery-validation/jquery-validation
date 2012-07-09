@@ -942,7 +942,7 @@ test("option: subformRequired", function() {
 		if ($("#bill_to_co").is(":checked"))
 			return $(element).parents("#subform").length;
 		return !this.optional(element);
-	}, "");
+	}, "billing is required");
 	var v = $("#subformRequired").validate();
 	v.form();
 	equal( 1, v.size() );

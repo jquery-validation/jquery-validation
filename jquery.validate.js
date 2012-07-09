@@ -146,13 +146,27 @@ $.extend($.fn, {
 		}
 
 		var data = $.validator.normalizeRules(
-		$.extend(
-			{},
-			$.validator.metadataRules(element),
-			$.validator.classRules(element),
-			$.validator.attributeRules(element),
-			$.validator.staticRules(element)
-		), element);
+			$.extend(
+				{},
+				$.validator.metadataRules(element),
+				$.validator.staticRules(element)
+			), element);
+
+		if (!$.validator.disableAutoAddClassRules) {
+			data = $.extend(
+				data,
+				$.validator.classRules(element)
+			);
+		}
+
+		if (!$.validator.disableAutoAddAttributeRules) {
+			data = $.extend(
+				data,
+				$.validator.attributeRules(element)
+			);
+		}
+
+		data = $.validator.normalizeRules(data, element);
 
 		// make sure required is at front
 		if (data.required) {
@@ -291,6 +305,8 @@ $.extend($.validator, {
 	},
 
 	autoCreateRanges: false,
+	disableAutoAddClassRules : false,
+	disableAutoAddAttributeRules : false,
 
 	prototype: {
 
@@ -384,10 +400,12 @@ $.extend($.validator, {
 				$.extend( this.errorMap, errors );
 				this.errorList = [];
 				for ( var name in errors ) {
-					this.errorList.push({
-						message: errors[name],
-						element: this.findByName(name)[0]
-					});
+          if (errors[name]) {
+            this.errorList.push({
+              message: errors[name],
+              element: this.findByName(name)[0]
+            });
+          }
 				}
 				// remove items from success list
 				this.successList = $.grep( this.successList, function(element) {
@@ -623,10 +641,12 @@ $.extend($.validator, {
 			} else if (theregex.test(message)) {
 				message = $.validator.format(message.replace(theregex, '{$1}'), rule.parameters);
 			}
-			this.errorList.push({
-				message: message,
-				element: element
-			});
+      if (message) {
+        this.errorList.push({
+          message: message,
+          element: element
+        });
+      }
 
 			this.errorMap[element.name] = message;
 			this.submitted[element.name] = message;

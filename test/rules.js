@@ -271,3 +271,25 @@ test("rules(), add messages", function() {
 	$("#firstnamec").valid();
 	deepEqual( v.errorList[0] && v.errorList[0].message, "required" );
 });
+
+test("rules(), disableAutoAddAttributeRules", function() {
+	var v = $("#v2").validate({});
+	same( $("#v2-i4").rules(), { required: true, minlength: 2 });
+  
+  jQuery.validator.disableAutoAddAttributeRules = true;
+	var v = $("#v2").validate();
+	same( $("#v2-i4").rules(), { required: true });
+  
+  jQuery.validator.disableAutoAddAttributeRules = false;
+});
+
+test("rules(), disableAutoAddClassRules", function() {
+	var v = $("#elementsOrder").validate({});
+	same( $("#order2").rules(), { required: true });
+  
+  jQuery.validator.disableAutoAddClassRules = true;
+	var v = $("#elementsOrder").validate({});
+	same( $("#order2").rules(), {});
+  
+  jQuery.validator.disableAutoAddClassRules = false;
+});
