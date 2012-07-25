@@ -202,6 +202,14 @@ $.validator.format = function(source, params) {
 	return source;
 };
 
+$.validator.delay = (function(){
+	var timer = 0;
+	return function(callback, ms){
+		clearTimeout (timer);
+		timer = setTimeout(callback, ms);
+	};
+})();
+
 $.extend($.validator, {
 
 	defaults: {
@@ -217,6 +225,7 @@ $.extend($.validator, {
 		onsubmit: true,
 		ignore: ":hidden",
 		ignoreTitle: false,
+		keypressDelay: 350,
 		onfocusin: function(element, event) {
 			this.lastActive = element;
 
@@ -236,9 +245,21 @@ $.extend($.validator, {
 		onkeyup: function(element, event) {
 			if ( event.which == 9 && this.elementValue(element) === '' ) {
 				return;
-			} else if ( element.name in this.submitted || element === this.lastActive ) {
-				this.element(element);
-			}
+			if("remote" in $(element).rules()) {
+				var submitted = this.submitted;
+				var lastActive = this.lastActive;
+				var validator = this;
+				
+				$.validator.delay(function() {
+					if ( element.name in submitted || element == lastActive ) {
+						validator.element(element);
+					}
+				}, this.settings.keypressDelay);
+			} else {
+				if(element.name in this.submited ||element == this.lastActive) {
+					this.element(element);
+				}
+			}			
 		},
 		onclick: function(element, event) {
 			// click on selects, radiobuttons and checkboxes
