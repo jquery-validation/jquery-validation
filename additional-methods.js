@@ -185,26 +185,26 @@ jQuery.validator.addMethod("time12h", function(value, element) {
 jQuery.validator.addMethod("phoneUS", function(phone_number, element) {
 	phone_number = phone_number.replace(/\s+/g, "");
 	return this.optional(element) || phone_number.length > 9 &&
-		phone_number.match(/^(1-?)?(\([2-9]\d{2}\)|[2-9]\d{2})-?[2-9]\d{2}-?\d{4}$/);
+		phone_number.match(/^(\+?1-?)?(\([2-9]\d{2}\)|[2-9]\d{2})-?[2-9]\d{2}-?\d{4}$/);
 }, "Please specify a valid phone number");
 
 jQuery.validator.addMethod('phoneUK', function(phone_number, element) {
 	phone_number = phone_number.replace(/\s+|-/g,'');
 	return this.optional(element) || phone_number.length > 9 &&
-		phone_number.match(/^(\(?(0|\+44)[1-9]{1}\d{1,4}?\)?\s?\d{3,4}\s?\d{3,4})$/);
+		phone_number.match(/^(\(?(\+44\s?|0)[1-9]\d{1,4}?\)?\s?\d{3,4}\s?\d{3,4})$/);
 }, 'Please specify a valid phone number');
 
 jQuery.validator.addMethod('mobileUK', function(phone_number, element) {
 	phone_number = phone_number.replace(/\s+|-/g,'');
 	return this.optional(element) || phone_number.length > 9 &&
-		phone_number.match(/^((0|\+44)7(0|4|5|6|7|8|9){1}\d{2}\s?\d{6})$/);
+		phone_number.match(/^((\+44\s?|0)7[456789]\d{2}\s?\d{3}\s?\d{3})$/);
 }, 'Please specify a valid mobile number');
 
 //Matches UK landline + mobile, accepting only 01-3 for landline or 07 for mobile to exclude many premium numbers
 jQuery.validator.addMethod('phonesUK', function(phone_number, element) {
 	phone_number = phone_number.replace(/\s+|-/g,'');
 	return this.optional(element) || phone_number.length > 9 &&
-		phone_number.match(/^(0[1-3]{1}[0-9]{8,9})$/) || phone_number.match(/^(07[5-9]{1}[0-9]{7,8})$/);
+		phone_number.match(/^((\+44\s?|0)[1-3][0-9]{8,9})$/) || phone_number.match(/^((\+44\s?|0)7[5-9][0-9]{8})$/);
 }, 'Please specify a valid uk phone number');
 
 //Matches UK postcode. based on http://snipplr.com/view/3152/postcode-validation/
@@ -259,19 +259,19 @@ jQuery.validator.addMethod("creditcardtypes", function(value, element, param) {
 	if (param.all)
 		validTypes = 0x0001 | 0x0002 | 0x0004 | 0x0008 | 0x0010 | 0x0020 | 0x0040 | 0x0080;
 
-	if (validTypes & 0x0001 && /^(51|52|53|54|55)/.test(value)) { //mastercard
+	if (validTypes & 0x0001 && /^(5[12345])/.test(value)) { //mastercard
 		return value.length == 16;
 	}
 	if (validTypes & 0x0002 && /^(4)/.test(value)) { //visa
 		return value.length == 16;
 	}
-	if (validTypes & 0x0004 && /^(34|37)/.test(value)) { //amex
+	if (validTypes & 0x0004 && /^(3[47])/.test(value)) { //amex
 		return value.length == 15;
 	}
-	if (validTypes & 0x0008 && /^(300|301|302|303|304|305|36|38)/.test(value)) { //dinersclub
+	if (validTypes & 0x0008 && /^(3(0[012345]|[68]))/.test(value)) { //dinersclub
 		return value.length == 14;
 	}
-	if (validTypes & 0x0010 && /^(2014|2149)/.test(value)) { //enroute
+	if (validTypes & 0x0010 && /^(2(014|149)/.test(value)) { //enroute
 		return value.length == 15;
 	}
 	if (validTypes & 0x0020 && /^(6011)/.test(value)) { //discover
