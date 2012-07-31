@@ -197,15 +197,19 @@ jQuery.validator.addMethod('phoneUK', function(phone_number, element) {
 jQuery.validator.addMethod('mobileUK', function(phone_number, element) {
 	phone_number = phone_number.replace(/\s+|-/g,'');
 	return this.optional(element) || phone_number.length > 9 &&
-		phone_number.match(/^((\+44\s?|0)7([45789]\d{2}|624)\s?\d{3}\s?\d{3})$/);
+		phone_number.match(/^(?:(?:(?:00\s?|\+)44\s?|0)7(?:[45789]\d{2}|624)\s?\d{3}\s?\d{3})$/);
 }, 'Please specify a valid mobile number');
 
 //Matches UK landline + mobile, accepting only 01-3 for landline or 07 for mobile to exclude many premium numbers
 jQuery.validator.addMethod('phonesUK', function(phone_number, element) {
 	phone_number = phone_number.replace(/\s+|-/g,'');
 	return this.optional(element) || phone_number.length > 9 &&
-		phone_number.match(/^((\+44\s?|0)[1-3][0-9]{8,9})$/) || phone_number.match(/^((\+44\s?|0)7[5-9][0-9]{8})$/);
+		phone_number.match(/^(?:(?:(?:00\s?|\+)44\s?|0)[1-3][0-9]{8,9})$/) || phone_number.match(/^(?:(?:(?:00\s?|\+)44\s?|0)7[5-9][0-9]{8})$/);
 }, 'Please specify a valid uk phone number');
+// On the above three UK functions, do the following server side processing:
+//  Compare with ^((?:00\s?|\+)(44)\s?)?\(?0?(?:\)\s?)?([1-9]\d{1,4}\)?[\d\s]+)
+//  Extract $2 and set $prefix to '+44<space>' if $2 is 44 otherwise set $ prefix to '0'
+//  Extract $3 and remove spaces and parentheses. Phone number is combined $1 and $2.
 
 //Matches UK postcode. based on http://snipplr.com/view/3152/postcode-validation/
 jQuery.validator.addMethod('postcodeUK', function(postcode, element) {
