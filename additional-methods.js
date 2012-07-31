@@ -208,8 +208,8 @@ jQuery.validator.addMethod('phonesUK', function(phone_number, element) {
 }, 'Please specify a valid uk phone number');
 // On the above three UK functions, do the following server side processing:
 //  Compare with ^((?:00\s?|\+)(44)\s?)?\(?0?(?:\)\s?)?([1-9]\d{1,4}\)?[\d\s]+)
-//  Extract $2 and set $prefix to '+44<space>' if $2 is 44 otherwise set $prefix to '0'
-//  Extract $3 and remove spaces and parentheses. Phone number is combined $1 and $2.
+//  Extract $2 and set $prefix to '+44<space>' if $2 is '44' otherwise set $prefix to '0'
+//  Extract $3 and remove spaces and parentheses. Phone number is combined $2 and $3.
 
 //Matches UK postcode. based on http://snipplr.com/view/3152/postcode-validation/
 jQuery.validator.addMethod('postcodeUK', function(postcode, element) {
