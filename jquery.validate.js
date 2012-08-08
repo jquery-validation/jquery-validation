@@ -44,7 +44,7 @@ $.extend($.fn, {
 					validator.submitButton = ev.target;
 				}
 				// allow suppressing validation by adding a cancel class to the submit button
-				if ( $(ev.target).hasClass('cancel') ) {
+				if ( $(ev.target).is(validator.settings.cancel) ) {
 					validator.cancelSubmit = true;
 				}
 			});
@@ -216,6 +216,7 @@ $.extend($.validator, {
 		errorLabelContainer: $( [] ),
 		onsubmit: true,
 		ignore: ":hidden",
+		cancel: ".cancel",
 		ignoreTitle: false,
 		onfocusin: function(element, event) {
 			this.lastActive = element;
