@@ -1033,7 +1033,7 @@ $.extend($.validator, {
 				url: param,
 				mode: "abort",
 				port: "validate" + element.name,
-				dataType: "json",
+				dataType: "text",
 				data: data,
 				success: function(response) {
 					validator.settings.messages[element.name].remote = previous.originalMessage;
