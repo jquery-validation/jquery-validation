@@ -1,6 +1,6 @@
 /*
  * Translated default messages for the jQuery validation plugin.
- * Locale: EE
+ * Locale: ET (Estonian; eesti, eesti keel)
  */
 jQuery.extend(jQuery.validator.messages, {
 	required: "See väli peab olema täidetud.",

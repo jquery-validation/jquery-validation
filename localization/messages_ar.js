@@ -1,6 +1,6 @@
 /*
- * Translated default messages for the jQuery validation plugin into arabic.
- * Locale: AR
+ * Translated default messages for the jQuery validation plugin.
+ * Locale: AR (Arabic; العربية)
  */
 jQuery.extend(jQuery.validator.messages, {
         required: "هذا الحقل إلزامي",

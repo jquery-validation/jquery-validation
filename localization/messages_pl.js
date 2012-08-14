@@ -1,6 +1,6 @@
 /*
  * Translated default messages for the jQuery validation plugin.
- * Locale: PL
+ * Locale: PL (Polish; język polski, polszczyzna)
  */
 jQuery.extend(jQuery.validator.messages, {
 	required: "To pole jest wymagane.",

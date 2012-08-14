@@ -1,6 +1,6 @@
 /*
  * Translated default messages for the jQuery validation plugin.
- * Locale: sv
+ * Locale: SV (Swedish; Svenska)
  */
 jQuery.extend(jQuery.validator.messages, {
 	required: "Detta f&auml;lt &auml;r obligatoriskt.",

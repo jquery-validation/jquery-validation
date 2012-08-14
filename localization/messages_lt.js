@@ -1,6 +1,6 @@
 /*
- * Translated default messages for the jQuery validation plugin in lithuanian.
- * Locale: LT
+ * Translated default messages for the jQuery validation plugin.
+ * Locale: LT (Lithuanian; lietuvių kalba)
  */
 jQuery.extend(jQuery.validator.messages, {
        required: "Šis laukas yra privalomas.",

@@ -1,6 +1,6 @@
 /*
  * Translated default messages for the jQuery validation plugin.
- * Locale: FI
+ * Locale: FI (Finnish; suomi, suomen kieli)
  */
 jQuery.extend(jQuery.validator.messages, {
 	required: "T&auml;m&auml; kentt&auml; on pakollinen.",

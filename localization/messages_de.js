@@ -1,6 +1,6 @@
 /*
  * Translated default messages for the jQuery validation plugin.
- * Locale: DE
+ * Locale: DE (German, Deutsch)
  */
 jQuery.extend(jQuery.validator.messages, {
 	required: "Dieses Feld ist ein Pflichtfeld.",
