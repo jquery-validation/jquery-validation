@@ -1,6 +1,6 @@
 /*
  * Translated default messages for the jQuery validation plugin.
- * Locale: LV
+ * Locale: LV (Latvian; latviešu valoda)
  */
 jQuery.extend(jQuery.validator.messages, {
         required: "Šis lauks ir obligāts.",

@@ -1,6 +1,6 @@
 /*
  * Translated default messages for the jQuery validation plugin.
- * Locale: CA
+ * Locale: CA (Catalan; català)
  */
 jQuery.extend(jQuery.validator.messages, {
   required: "Aquest camp és obligatori.",

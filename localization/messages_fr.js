@@ -1,6 +1,6 @@
 /*
  * Translated default messages for the jQuery validation plugin.
- * Locale: FR
+ * Locale: FR (French; français)
  */
 jQuery.extend(jQuery.validator.messages, {
 	required: "Ce champ est obligatoire.",

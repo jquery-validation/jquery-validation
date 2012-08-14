@@ -1,6 +1,6 @@
 /*
  * Translated default messages for the jQuery validation plugin.
- * Language: SL
+ * Language: SL (Slovenian; slovenski jezik)
  */
 jQuery.extend(jQuery.validator.messages, {
 	required: "To polje je obvezno.",

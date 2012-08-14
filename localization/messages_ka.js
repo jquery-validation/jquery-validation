@@ -1,6 +1,6 @@
 /*
  * Translated default messages for the jQuery validation plugin.
- * Locale: GE
+ * Locale: KA (Georgian; ქართული)
  */
 jQuery.extend(jQuery.validator.messages, {
         required: "ამ ველის შევსება აუცილებელია.",

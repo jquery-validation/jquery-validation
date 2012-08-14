@@ -1,6 +1,6 @@
 /*
  * Translated default messages for the jQuery validation plugin.
- * Locale: DA
+ * Locale: DA (Danish; dansk)
  */
 jQuery.extend(jQuery.validator.messages, {
 	required: "Dette felt er påkrævet.",

@@ -1,6 +1,6 @@
 /*
  * Translated default messages for the jQuery validation plugin.
- * Locale: TR
+ * Locale: TR (Turkish; Türkçe)
  */
 jQuery.extend(jQuery.validator.messages, {
 	required: "Bu alanın doldurulması zorunludur.",

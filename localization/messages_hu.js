@@ -1,6 +1,6 @@
 /*
  * Translated default messages for the jQuery validation plugin.
- * Locale: HU
+ * Locale: HU (Hungarian; Magyar)
  */
 jQuery.extend(jQuery.validator.messages, {
 	required: "Kötelező megadni.",
