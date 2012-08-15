@@ -307,7 +307,10 @@ $.extend($.validator, {
 
 			var groups = (this.groups = {});
 			$.each(this.settings.groups, function(key, value) {
-				$.each(value.split(/\s/), function(index, name) {
+				if(typeof value === 'string') {
+					value = value.split(/\s/);
+				}
+				$.each(value, function(index, name) {
 					groups[name] = key;
 				});
 			});
