@@ -1,6 +1,7 @@
 2.0.0
 -----
 * Fixed #219 - Fix valid() on elements with dependency-callback or dependency-expression.
+* Add Language Name for each file, rename the language code according to the standard ISO 639 for Estonian, Georgian, Ukrainian and Chinese (http://en.wikipedia.org/wiki/List_of_ISO_639-1_codes)
 
 1.9.0
 ---
