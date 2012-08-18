@@ -1,6 +1,7 @@
 /*
  * Translated default messages for the jQuery validation plugin.
- * Locale: PT_BR
+ * Locale: PT (Portuguese; português)
+ * Region: BR (Brazil)
  */
 jQuery.extend(jQuery.validator.messages, {
 	required: "Este campo &eacute; requerido.",
