@@ -217,6 +217,7 @@ $.extend($.validator, {
 		onsubmit: true,
 		ignore: ":hidden",
 		ignoreTitle: false,
+        errorMessageTemplate: "{0}",
 		onfocusin: function(element, event) {
 			this.lastActive = element;
 
@@ -684,14 +685,14 @@ $.extend($.validator, {
 
 				// check if we have a generated label, replace the message then
 				if ( label.attr("generated") ) {
-					label.html(message);
+					label.html(this.formatErrorMessage(message));
 				}
 			} else {
 				// create label
 				label = $("<" + this.settings.errorElement + "/>")
 					.attr({"for":  this.idOrName(element), generated: true})
 					.addClass(this.settings.errorClass)
-					.html(message || "");
+					.html(this.formatErrorMessage(message));
 				if ( this.settings.wrapper ) {
 					// make sure the element is visible, even in IE
 					// actually showing the wrapped element is handled elsewhere
@@ -715,6 +716,13 @@ $.extend($.validator, {
 			}
 			this.toShow = this.toShow.add(label);
 		},
+
+        formatErrorMessage: function( message ) {
+            if (message !== undefined) {
+                return $.validator.format( this.settings.errorMessageTemplate, message );
+            }
+            else return "";
+        },
 
 		errorsFor: function(element) {
 			var name = this.idOrName(element);

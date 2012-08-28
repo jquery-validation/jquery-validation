@@ -287,6 +287,30 @@ test("submitHandler keeps submitting button", function() {
 	$("#userForm").submit();
 });
 
+ 
+test("formatErrorMessage() - undefined handling" ,function() {
+    expect( 1 );
+    var v = $('#testForm1').validate();
+    v.formatErrorMessage(undefined);
+    ok(true, "No exception raised");
+});
+
+test("formatErrorMessage() - pattern replacement (default)" ,function() {
+    expect( 1 );
+    var v = $('#testForm1').validate();
+    var errorMessage = "some error message";
+    equal(errorMessage, v.formatErrorMessage(errorMessage));
+});
+
+test("formatErrorMessage() - pattern replacement (custom)" ,function() {
+    expect( 1 );
+    var errorTemplate = "aaa {0} bbb"
+    var v = $('#testForm1').validate({ errorMessageTemplate: errorTemplate });
+    var errorMessage = "ccc";
+    equal("aaa ccc bbb", v.formatErrorMessage(errorMessage));
+});
+
+
 test("showErrors()", function() {
 	expect( 4 );
 	var errorLabel = $('#errorFirstname').hide();
@@ -361,6 +385,25 @@ test("showErrors() - custom handler", function() {
 		}
 	});
 	v.form();
+});
+
+test("showErrors(), errorMessageTemplate replacement", function() {
+       $("#userForm").validate({
+               rules: {
+                       username: {
+                               minlength: 3
+                       }
+               },
+               messages: {
+                       username: {
+                               minlength: "too short"
+                       }
+               },
+        errorMessageTemplate: "<a>{0}</a>"
+       });
+       $("#username").val("ab");
+       ok( !$("#username").valid() );
+       equal( "<a>too short</a>", $("label.error[for=username]").html() );
 });
 
 test("option: (un)highlight, default", function() {
