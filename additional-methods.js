@@ -158,7 +158,7 @@ jQuery.validator.addMethod("dateNL", function(value, element) {
 }, "Vul hier een geldige datum in.");
 
 jQuery.validator.addMethod("time", function(value, element) {
-	return this.optional(element) || /^([0-1][0-9]|2[0-3]):([0-5][0-9])$/.test(value);
+	return this.optional(element) || /^([0-1]\d|2[0-3]):([0-5]\d)$/.test(value);
 }, "Please enter a valid time, between 00:00 and 23:59");
 jQuery.validator.addMethod("time12h", function(value, element) {
 	return this.optional(element) || /^((0?[1-9]|1[012])(:[0-5]\d){0,2}(\ [AP]M))$/i.test(value);
@@ -204,7 +204,7 @@ jQuery.validator.addMethod('mobileUK', function(phone_number, element) {
 jQuery.validator.addMethod('phonesUK', function(phone_number, element) {
 	phone_number = phone_number.replace(/\s+|-/g,'');
 	return this.optional(element) || phone_number.length > 9 &&
-		phone_number.match(/^(?:(?:(?:00\s?|\+)44\s?|0)[1-3][0-9]{8,9})$/) || phone_number.match(/^(?:(?:(?:00\s?|\+)44\s?|0)7(?:[45789]\d{2}|624)\d{6})$/);
+		phone_number.match(/^(?:(?:(?:00\s?|\+)44\s?|0)[1-3]\d{8,9})$/) || phone_number.match(/^(?:(?:(?:00\s?|\+)44\s?|0)7(?:[45789]\d{2}|624)\d{6})$/);
 }, 'Please specify a valid uk phone number');
 // On the above three UK functions, do the following server side processing:
 //  Compare with ^((?:00\s?|\+)(44)\s?)?\(?0?(?:\)\s?)?([1-9]\d{1,4}\)?[\d\s]+)
@@ -214,7 +214,7 @@ jQuery.validator.addMethod('phonesUK', function(phone_number, element) {
 //Matches UK postcode. based on http://snipplr.com/view/3152/postcode-validation/
 jQuery.validator.addMethod('postcodeUK', function(postcode, element) {
 	postcode = (postcode.toUpperCase()).replace(/\s+/g,'');
-	return this.optional(element) || postcode.match(/^([^QZ]{1}[^IJZ]{0,1}[0-9]{1,2})([0-9]{1}[^CIKMOV]{2})$/) || postcode.match(/^([^QV]{1}[0-9]{1}[ABCDEFGHJKSTUW]{1})([0-9]{1}[^CIKMOV]{2})$/) || postcode.match(/^([^QV]{1}[^IJZ][0-9]{1}[ABEHMNPRVWXY])([0-9]{1}[^CIKMOV]{2})$/) || postcode.match(/^(GIR)(0AA)$/) || postcode.match(/^(BFPO)([0-9]{1,4})$/) || postcode.match(/^(BFPO)(C\/O[0-9]{1,3})$/);
+	return this.optional(element) || postcode.match(/^([^QZ]{1}[^IJZ]{0,1}\d{1,2})(\d{1}[^CIKMOV]{2})$/) || postcode.match(/^([^QV]{1}\d{1}[ABCDEFGHJKSTUW]{1})(\d{1}[^CIKMOV]{2})$/) || postcode.match(/^([^QV]{1}[^IJZ]\d{1}[ABEHMNPRVWXY])(\d{1}[^CIKMOV]{2})$/) || postcode.match(/^(GIR)(0AA)$/) || postcode.match(/^(BFPO)(\d{1,4})$/) || postcode.match(/^(BFPO)(C\/O\d{1,3})$/);
 }, 'Please specify a valid postcode');
 
 // TODO check if value starts with <, otherwise don't try stripping anything
@@ -294,7 +294,7 @@ jQuery.validator.addMethod("creditcardtypes", function(value, element, param) {
 }, "Please enter a valid credit card number.");
 
 jQuery.validator.addMethod("ipv4", function(value, element, param) {
-		return this.optional(element) || /^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/i.test(value);
+		return this.optional(element) || /^(25[0-5]|2[0-4]\d|[01]?\d\d?)\.(25[0-5]|2[0-4]\d|[01]?\d\d?)\.(25[0-5]|2[0-4]\d|[01]?\d\d?)\.(25[0-5]|2[0-4]\d|[01]?\d\d?)$/i.test(value);
 }, "Please enter a valid IP v4 address.");
 
 jQuery.validator.addMethod("ipv6", function(value, element, param) {
