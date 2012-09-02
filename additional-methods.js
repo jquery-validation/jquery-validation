@@ -214,7 +214,7 @@ jQuery.validator.addMethod('phonesUK', function(phone_number, element) {
 //Matches UK postcode. based on http://snipplr.com/view/3152/postcode-validation/
 jQuery.validator.addMethod('postcodeUK', function(postcode, element) {
 	postcode = (postcode.toUpperCase()).replace(/\s+/g,'');
-	return this.optional(element) || postcode.match(/^([^QZ]{1}[^IJZ]{0,1}\d{1,2})(\d{1}[^CIKMOV]{2})$/) || postcode.match(/^([^QV]{1}\d{1}[ABCDEFGHJKSTUW]{1})(\d{1}[^CIKMOV]{2})$/) || postcode.match(/^([^QV]{1}[^IJZ]\d{1}[ABEHMNPRVWXY])(\d{1}[^CIKMOV]{2})$/) || postcode.match(/^(GIR)(0AA)$/) || postcode.match(/^(BFPO)(\d{1,4})$/) || postcode.match(/^(BFPO)(C\/O\d{1,3})$/);
+	return this.optional(element) || postcode.match(/^([^QZ][^IJZ]{0,1}\d{1,2})(\d[^CIKMOV]{2})$/) || postcode.match(/^([^QV]\d[ABCDEFGHJKSTUW])(\d[^CIKMOV]{2})$/) || postcode.match(/^([^QV][^IJZ]\d[ABEHMNPRVWXY])(\d[^CIKMOV]{2})$/) || postcode.match(/^(GIR)(0AA)$/) || postcode.match(/^(BFPO)(\d{1,4})$/) || postcode.match(/^(BFPO)(C\/O\d{1,3})$/);
 }, 'Please specify a valid postcode');
 
 // TODO check if value starts with <, otherwise don't try stripping anything
