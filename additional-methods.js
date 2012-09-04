@@ -171,10 +171,8 @@ jQuery.validator.addMethod("time12h", function(value, element) {
  * allows '-' or ' ' as a separator and allows parens around area code
  * some people may want to put a '1' in front of their number
  *
- * 1(212)-999-2345
- * or
- * 212 999 2344
- * or
+ * 1(212)-999-2345 or
+ * 212 999 2344 or
  * 212-999-0983
  *
  * but not
@@ -204,7 +202,7 @@ jQuery.validator.addMethod('mobileUK', function(phone_number, element) {
 jQuery.validator.addMethod('phonesUK', function(phone_number, element) {
 	phone_number = phone_number.replace(/\s+|-/g,'');
 	return this.optional(element) || phone_number.length > 9 &&
-		phone_number.match(/^(?:(?:(?:00\s?|\+)44\s?|0)[1-3]\d{8,9})$/) || phone_number.match(/^(?:(?:(?:00\s?|\+)44\s?|0)7(?:[45789]\d{2}|624)\d{6})$/);
+		phone_number.match(/^(?:(?:(?:00\s?|\+)44\s?|0)(1\d{8,9}|[23]\d{9}|7(?:[45789]\d{2}|624)\d{6}))$/);
 }, 'Please specify a valid uk phone number');
 // On the above three UK functions, do the following server side processing:
 //  Compare with ^((?:00\s?|\+)(44)\s?)?\(?0?(?:\)\s?)?([1-9]\d{1,4}\)?[\d\s]+)
