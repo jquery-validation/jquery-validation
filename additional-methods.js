@@ -208,6 +208,8 @@ jQuery.validator.addMethod('phonesUK', function(phone_number, element) {
 //  Compare with ^((?:00\s?|\+)(44)\s?)?\(?0?(?:\)\s?)?([1-9]\d{1,4}\)?[\d\s]+)
 //  Extract $2 and set $prefix to '+44<space>' if $2 is '44' otherwise set $prefix to '0'
 //  Extract $3 and remove spaces and parentheses. Phone number is combined $2 and $3.
+// A number of very detailed GB telephone number RegEx patterns can also be found at:
+// http://www.aa-asterisk.org.uk/index.php/Regular_Expressions_for_Validating_and_Formatting_UK_Telephone_Numbers
 
 //Matches UK postcode. based on http://snipplr.com/view/3152/postcode-validation/
 jQuery.validator.addMethod('postcodeUK', function(postcode, element) {
