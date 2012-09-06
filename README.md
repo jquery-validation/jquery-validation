@@ -3,6 +3,13 @@
 
 The jQuery Validation Plugin provides drop-in validation for your existing forms, while making all kinds of customizations to fit your application really easy.
 
+## [Help the project](http://pledgie.com/campaigns/18159)
+
+This project is looking for help! [You can donate to the ongoing pledgie campaign](http://pledgie.com/campaigns/18159)
+and help spread the word. If you've used the plugin, or plan to use, consider a donation - any amount will help.
+
+You can find the plan for how to spend the money on the [pledgie page](http://pledgie.com/campaigns/18159).
+
 ## Getting Started
 
 Include jQuery and the plugin on a page. Then select a form to validate and call the `validate` method.
