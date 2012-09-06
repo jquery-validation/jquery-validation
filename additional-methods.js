@@ -158,7 +158,7 @@ jQuery.validator.addMethod("dateNL", function(value, element) {
 }, "Vul hier een geldige datum in.");
 
 jQuery.validator.addMethod("time", function(value, element) {
-	return this.optional(element) || /^([0-1][0-9]|2[0-3]):([0-5][0-9])$/.test(value);
+	return this.optional(element) || /^([0-1]\d|2[0-3]):([0-5]\d)$/.test(value);
 }, "Please enter a valid time, between 00:00 and 23:59");
 jQuery.validator.addMethod("time12h", function(value, element) {
 	return this.optional(element) || /^((0?[1-9]|1[012])(:[0-5]\d){0,2}(\ [AP]M))$/i.test(value);
@@ -171,10 +171,8 @@ jQuery.validator.addMethod("time12h", function(value, element) {
  * allows '-' or ' ' as a separator and allows parens around area code
  * some people may want to put a '1' in front of their number
  *
- * 1(212)-999-2345
- * or
- * 212 999 2344
- * or
+ * 1(212)-999-2345 or
+ * 212 999 2344 or
  * 212-999-0983
  *
  * but not
@@ -185,32 +183,36 @@ jQuery.validator.addMethod("time12h", function(value, element) {
 jQuery.validator.addMethod("phoneUS", function(phone_number, element) {
 	phone_number = phone_number.replace(/\s+/g, "");
 	return this.optional(element) || phone_number.length > 9 &&
-		phone_number.match(/^(1-?)?(\([2-9]\d{2}\)|[2-9]\d{2})-?[2-9]\d{2}-?\d{4}$/);
+		phone_number.match(/^(\+?1-?)?(\([2-9]\d{2}\)|[2-9]\d{2})-?[2-9]\d{2}-?\d{4}$/);
 }, "Please specify a valid phone number");
 
 jQuery.validator.addMethod('phoneUK', function(phone_number, element) {
-	phone_number = phone_number.replace(/\s+|-/g,'');
+	phone_number = phone_number.replace(/\(|\)|\s+|-/g,'');
 	return this.optional(element) || phone_number.length > 9 &&
-		phone_number.match(/^(\(?(0|\+44)[1-9]{1}\d{1,4}?\)?\s?\d{3,4}\s?\d{3,4})$/);
+		phone_number.match(/^(?:(?:(?:00\s?|\+)44\s?)|(?:\(?0))(?:(?:\d{5}\)?\s?\d{4,5})|(?:\d{4}\)?\s?(?:\d{5}|\d{3}\s?\d{3}))|(?:\d{3}\)?\s?\d{3}\s?\d{3,4})|(?:\d{2}\)?\s?\d{4}\s?\d{4}))$/);
 }, 'Please specify a valid phone number');
 
 jQuery.validator.addMethod('mobileUK', function(phone_number, element) {
 	phone_number = phone_number.replace(/\s+|-/g,'');
 	return this.optional(element) || phone_number.length > 9 &&
-		phone_number.match(/^((0|\+44)7(0|4|5|6|7|8|9){1}\d{2}\s?\d{6})$/);
+		phone_number.match(/^(?:(?:(?:00\s?|\+)44\s?|0)7(?:[45789]\d{2}|624)\s?\d{3}\s?\d{3})$/);
 }, 'Please specify a valid mobile number');
 
 //Matches UK landline + mobile, accepting only 01-3 for landline or 07 for mobile to exclude many premium numbers
 jQuery.validator.addMethod('phonesUK', function(phone_number, element) {
 	phone_number = phone_number.replace(/\s+|-/g,'');
 	return this.optional(element) || phone_number.length > 9 &&
-		phone_number.match(/^(0[1-3]{1}[0-9]{8,9})$/) || phone_number.match(/^(07[5-9]{1}[0-9]{7,8})$/);
+		phone_number.match(/^(?:(?:(?:00\s?|\+)44\s?|0)(?:1\d{8,9}|[23]\d{9}|7(?:[45789]\d{8}|624\d{6})))$/);
 }, 'Please specify a valid uk phone number');
+// On the above three UK functions, do the following server side processing:
+//  Compare with ^((?:00\s?|\+)(44)\s?)?\(?0?(?:\)\s?)?([1-9]\d{1,4}\)?[\d\s]+)
+//  Extract $2 and set $prefix to '+44<space>' if $2 is '44' otherwise set $prefix to '0'
+//  Extract $3 and remove spaces and parentheses. Phone number is combined $2 and $3.
 
 //Matches UK postcode. based on http://snipplr.com/view/3152/postcode-validation/
 jQuery.validator.addMethod('postcodeUK', function(postcode, element) {
 	postcode = (postcode.toUpperCase()).replace(/\s+/g,'');
-	return this.optional(element) || postcode.match(/^([^QZ]{1}[^IJZ]{0,1}[0-9]{1,2})([0-9]{1}[^CIKMOV]{2})$/) || postcode.match(/^([^QV]{1}[0-9]{1}[ABCDEFGHJKSTUW]{1})([0-9]{1}[^CIKMOV]{2})$/) || postcode.match(/^([^QV]{1}[^IJZ][0-9]{1}[ABEHMNPRVWXY])([0-9]{1}[^CIKMOV]{2})$/) || postcode.match(/^(GIR)(0AA)$/) || postcode.match(/^(BFPO)([0-9]{1,4})$/) || postcode.match(/^(BFPO)(C\/O[0-9]{1,3})$/);
+	return this.optional(element) || postcode.match(/^([^QZ][^IJZ]{0,1}\d{1,2})(\d[^CIKMOV]{2})$/) || postcode.match(/^([^QV]\d[ABCDEFGHJKSTUW])(\d[^CIKMOV]{2})$/) || postcode.match(/^([^QV][^IJZ]\d[ABEHMNPRVWXY])(\d[^CIKMOV]{2})$/) || postcode.match(/^(GIR)(0AA)$/) || postcode.match(/^(BFPO)(\d{1,4})$/) || postcode.match(/^(BFPO)(C\/O\d{1,3})$/);
 }, 'Please specify a valid postcode');
 
 // TODO check if value starts with <, otherwise don't try stripping anything
@@ -259,19 +261,19 @@ jQuery.validator.addMethod("creditcardtypes", function(value, element, param) {
 	if (param.all)
 		validTypes = 0x0001 | 0x0002 | 0x0004 | 0x0008 | 0x0010 | 0x0020 | 0x0040 | 0x0080;
 
-	if (validTypes & 0x0001 && /^(51|52|53|54|55)/.test(value)) { //mastercard
+	if (validTypes & 0x0001 && /^(5[12345])/.test(value)) { //mastercard
 		return value.length == 16;
 	}
 	if (validTypes & 0x0002 && /^(4)/.test(value)) { //visa
 		return value.length == 16;
 	}
-	if (validTypes & 0x0004 && /^(34|37)/.test(value)) { //amex
+	if (validTypes & 0x0004 && /^(3[47])/.test(value)) { //amex
 		return value.length == 15;
 	}
-	if (validTypes & 0x0008 && /^(300|301|302|303|304|305|36|38)/.test(value)) { //dinersclub
+	if (validTypes & 0x0008 && /^(3(0[012345]|[68]))/.test(value)) { //dinersclub
 		return value.length == 14;
 	}
-	if (validTypes & 0x0010 && /^(2014|2149)/.test(value)) { //enroute
+	if (validTypes & 0x0010 && /^(2(014|149))/.test(value)) { //enroute
 		return value.length == 15;
 	}
 	if (validTypes & 0x0020 && /^(6011)/.test(value)) { //discover
@@ -290,7 +292,7 @@ jQuery.validator.addMethod("creditcardtypes", function(value, element, param) {
 }, "Please enter a valid credit card number.");
 
 jQuery.validator.addMethod("ipv4", function(value, element, param) {
-		return this.optional(element) || /^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/i.test(value);
+		return this.optional(element) || /^(25[0-5]|2[0-4]\d|[01]?\d\d?)\.(25[0-5]|2[0-4]\d|[01]?\d\d?)\.(25[0-5]|2[0-4]\d|[01]?\d\d?)\.(25[0-5]|2[0-4]\d|[01]?\d\d?)$/i.test(value);
 }, "Please enter a valid IP v4 address.");
 
 jQuery.validator.addMethod("ipv6", function(value, element, param) {
