@@ -234,7 +234,7 @@ $.extend($.validator, {
 			}
 		},
 		onkeyup: function(element, event) {
-			if ( event.which == 9 && this.elementValue(element) === '' ) {
+			if ( event.which === 9 && this.elementValue(element) === '' ) {
 				return;
 			} else if ( element.name in this.submitted || element === this.lastActive ) {
 				this.element(element);
