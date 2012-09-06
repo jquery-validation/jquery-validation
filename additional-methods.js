@@ -273,7 +273,7 @@ jQuery.validator.addMethod("creditcardtypes", function(value, element, param) {
 	if (validTypes & 0x0008 && /^(3(0[012345]|[68]))/.test(value)) { //dinersclub
 		return value.length == 14;
 	}
-	if (validTypes & 0x0010 && /^(2(014|149)/.test(value)) { //enroute
+	if (validTypes & 0x0010 && /^(2(014|149))/.test(value)) { //enroute
 		return value.length == 15;
 	}
 	if (validTypes & 0x0020 && /^(6011)/.test(value)) { //discover
