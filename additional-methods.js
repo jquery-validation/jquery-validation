@@ -1,5 +1,5 @@
 /*!
- * jQuery Validation Plugin @VERSION
+ * jQuery Validation Plugin 1.10.0
  *
  * http://bassistance.de/jquery-plugins/jquery-plugin-validation/
  * http://docs.jquery.com/Plugins/Validation
