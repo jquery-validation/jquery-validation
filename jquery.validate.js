@@ -250,6 +250,11 @@ $.extend($.validator, {
 				this.element(element.parentNode);
 			}
 		},
+		onchange: function(element, event) {
+			if ( element.name in this.invalid ) {
+				this.element(element);
+			}
+		},
 		highlight: function(element, errorClass, validClass) {
 			if (element.type === 'radio') {
 				this.findByName(element.name).addClass(errorClass).removeClass(validClass);
@@ -329,8 +334,8 @@ $.extend($.validator, {
 					"[type='email'], [type='datetime'], [type='date'], [type='month'], " +
 					"[type='week'], [type='time'], [type='datetime-local'], " +
 					"[type='range'], [type='color'] ",
-					"focusin focusout keyup", delegate)
-				.validateDelegate("[type='radio'], [type='checkbox'], select, option", "click", delegate);
+					"focusin focusout keyup change", delegate)
+				.validateDelegate("[type='radio'], [type='checkbox'], select, option", "click change", delegate);
 
 			if (this.settings.invalidHandler) {
 				$(this.currentForm).bind("invalid-form.validate", this.settings.invalidHandler);
