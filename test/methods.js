@@ -572,9 +572,22 @@ test("dateITA", function() {
 	ok( method( "01/01/1900" ), "Valid date ITA" );
 	ok(!method( "01/13/1990" ), "Invalid date ITA" );
 	ok(!method( "01.01.1900" ), "Invalid date ITA" );
+	ok(!method( "01/01/199" ), "Invalid date ITA" );
 });
 
-test("time", function() {
+test("dateNL", function() {
+	var method = methodTest("dateNL");
+	ok( method( "01-01-1900" ), "Valid date NL" );
+	ok( method( "01.01.1900" ), "Valid date NL" );
+	ok( method( "1-01-1900" ), "Valid date NL" );
+	ok( method( "10-10-1900" ), "Valid date NL" );
+	ok(!method( "0-01-1900" ), "Invalid date NL" );
+	ok(!method( "00-01-1900" ), "Invalid date NL" );
+	ok(!method( "35-01-1990" ), "Invalid date NL" );
+	ok(!method( "01.01.190" ), "Invalid date NL" );
+});
+
+	test("time", function() {
 	var method = methodTest("time");
 	ok( method("00:00"), "Valid time, lower bound" );
 	ok( method("23:59"), "Valid time, upper bound" );
@@ -584,19 +597,29 @@ test("time", function() {
 	ok( !method("24:00"), "Invalid time" );
 	ok( !method("29:59"), "Invalid time" );
 	ok( !method("30:00"), "Invalid time" );
+	ok( !method("120:00"), "Invalid time" );
+	ok( !method("12:001"), "Invalid time" );
+	ok( !method("12:00a"), "Invalid time" );
 });
 
 test("time12h", function() {
 	var method = methodTest("time12h");
 	ok( method("12:00 AM"), "Valid time, lower bound, am" );
 	ok( method("11:59 AM"), "Valid time, upper bound, am" );
+	ok( method("12:00AM"), "Valid time, no space, am" );
+	ok( method("12:00PM"), "Valid time, no space, pm" );
 	ok( method("12:00 PM"), "Valid time, lower bound, pm" );
 	ok( method("11:59 PM"), "Valid time, upper bound, pm" );
 	ok( method("11:59 am"), "Valid time, also accept lowercase" );
 	ok( method("11:59 pm"), "Valid time, also accept lowercase" );
+	ok( method("1:59 pm"), "Valid time, single hour, no leading 0" );
+	ok( method("01:59 pm"), "Valid time, single hour, leading 0" );
 	ok( !method("12:00"), "Invalid time" );
 	ok( !method("12:61 am"), "Invalid time" );
 	ok( !method("13:00 am"), "Invalid time" );
+	ok( !method("00:00 am"), "Invalid time" );
+	ok( !method("13:00 am"), "Invalid time" );
+	ok( !method("00:00 am"), "Invalid time" );
 });
 
 test("minWords", function() {
@@ -695,14 +718,14 @@ test('creditcardtypes, mastercard', function() {
 		}
 	});
 
-	testCardTypeByNumber("5111-1111-1111-1118", "MasterCard", true)
-	testCardTypeByNumber("6111-1111-1111-1116", "Discover", false)
+	testCardTypeByNumber("5111-1111-1111-1118", "MasterCard", true);
+	testCardTypeByNumber("6111-1111-1111-1116", "Discover", false);
 	testCardTypeByNumber("3400-0000-0000-009", "AMEX", false);
 	testCardTypeByNumber("4111-1111-1111-1111", "VISA", false);
 });
 
 function fillFormWithValuesAndExpect(formSelector, inputValues, expected) {
-	for (i=0; i < inputValues.length; i++) {
+	for (var i=0; i < inputValues.length; i++) {
 		$(formSelector + ' input:eq(' + i + ')').val(inputValues[i]);
 	}
 	var actual = $(formSelector).valid();
