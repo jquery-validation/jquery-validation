@@ -154,15 +154,15 @@ jQuery.validator.addMethod("dateITA", function(value, element) {
 }, "Please enter a correct date");
 
 jQuery.validator.addMethod("dateNL", function(value, element) {
-	return this.optional(element) || /^\d\d?[\.\/-]\d\d?[\.\/-]\d\d\d?\d?$/.test(value);
+	return this.optional(element) || /^(0?[1-9]|[12]\d|3[01])[\.\/-](0?[1-9]|1[012])[\.\/-]([12]\d)?(\d\d)$/.test(value);
 }, "Vul hier een geldige datum in.");
 
 jQuery.validator.addMethod("time", function(value, element) {
-	return this.optional(element) || /^([0-1]\d|2[0-3]):([0-5]\d)$/.test(value);
+	return this.optional(element) || /^([01]\d|2[0-3])(:[0-5]\d){1,2}$/.test(value);
 }, "Please enter a valid time, between 00:00 and 23:59");
 jQuery.validator.addMethod("time12h", function(value, element) {
-	return this.optional(element) || /^((0?[1-9]|1[012])(:[0-5]\d){0,2}(\ [AP]M))$/i.test(value);
-}, "Please enter a valid time, between 00:00 am and 12:00 pm");
+	return this.optional(element) || /^((0?[1-9]|1[012])(:[0-5]\d){1,2}( ?[AP]M))$/i.test(value);
+}, "Please enter a valid time in 12-hour format");
 
 /**
  * matches US phone number format
@@ -376,8 +376,8 @@ jQuery.validator.addMethod("require_from_group", function(value, element, option
 jQuery.validator.addMethod("skip_or_fill_minimum", function(value, element, options) {
 	var validator = this;
 
-	numberRequired = options[0];
-	selector = options[1];
+	var numberRequired = options[0];
+	var selector = options[1];
 	var numberFilled = $(selector, element.form).filter(function() {
 		return validator.elementValue(this);
 	}).length;
