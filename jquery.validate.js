@@ -862,6 +862,11 @@ $.extend($.validator, {
 				value = $element.attr(method);
 			}
 
+			// HTML5 uses min and max to restrict dates, do not apply number validation
+			if($element[0].getAttribute("type") === "date" && (method === "min" || method === "max") ) {
+				continue;
+			}
+
 			if (value) {
 				rules[method] = value;
 			} else if ($element[0].getAttribute("type") === method) {
