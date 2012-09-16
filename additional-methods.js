@@ -161,8 +161,8 @@ jQuery.validator.addMethod("time", function(value, element) {
 	return this.optional(element) || /^([01]\d|2[0-3])(:[0-5]\d){1,2}$/.test(value);
 }, "Please enter a valid time, between 00:00 and 23:59");
 jQuery.validator.addMethod("time12h", function(value, element) {
-	return this.optional(element) || /^((0?[1-9]|1[012])(:[0-5]\d){1,2}( ?[AP]M))$/i.test(value);
-}, "Please enter a valid time in 12-hour format");
+	return this.optional(element) || /^((0?[1-9]|1[012])(:[0-5]\d){1,2}(\ ?[AP]M))$/i.test(value);
+}, "Please enter a valid time in 12-hour am/pm format");
 
 /**
  * matches US phone number format
@@ -189,27 +189,28 @@ jQuery.validator.addMethod("phoneUS", function(phone_number, element) {
 jQuery.validator.addMethod('phoneUK', function(phone_number, element) {
 	phone_number = phone_number.replace(/\(|\)|\s+|-/g,'');
 	return this.optional(element) || phone_number.length > 9 &&
-		phone_number.match(/^(?:(?:(?:00\s?|\+)44\s?)|(?:\(?0))(?:(?:\d{5}\)?\s?\d{4,5})|(?:\d{4}\)?\s?(?:\d{5}|\d{3}\s?\d{3}))|(?:\d{3}\)?\s?\d{3}\s?\d{3,4})|(?:\d{2}\)?\s?\d{4}\s?\d{4}))$/);
+		phone_number.match(/^(?:(?:(?:00\s?|\+)44\s?)|(?:\(?0))(?:\d{2}\)?\s?\d{4}\s?\d{4}|\d{3}\)?\s?\d{3}\s?\d{3,4}|\d{4}\)?\s?(?:\d{5}|\d{3}\s?\d{3})|\d{5}\)?\s?\d{4,5})$/);
 }, 'Please specify a valid phone number');
 
 jQuery.validator.addMethod('mobileUK', function(phone_number, element) {
-	phone_number = phone_number.replace(/\s+|-/g,'');
+	phone_number = phone_number.replace(/\(|\)|\s+|-/g,'');
 	return this.optional(element) || phone_number.length > 9 &&
 		phone_number.match(/^(?:(?:(?:00\s?|\+)44\s?|0)7(?:[45789]\d{2}|624)\s?\d{3}\s?\d{3})$/);
 }, 'Please specify a valid mobile number');
 
 //Matches UK landline + mobile, accepting only 01-3 for landline or 07 for mobile to exclude many premium numbers
 jQuery.validator.addMethod('phonesUK', function(phone_number, element) {
-	phone_number = phone_number.replace(/\s+|-/g,'');
+	phone_number = phone_number.replace(/\(|\)|\s+|-/g,'');
 	return this.optional(element) || phone_number.length > 9 &&
 		phone_number.match(/^(?:(?:(?:00\s?|\+)44\s?|0)(?:1\d{8,9}|[23]\d{9}|7(?:[45789]\d{8}|624\d{6})))$/);
 }, 'Please specify a valid uk phone number');
 // On the above three UK functions, do the following server side processing:
-//  Compare with ^((?:00\s?|\+)(44)\s?)?\(?0?(?:\)\s?)?([1-9]\d{1,4}\)?[\d\s]+)
-//  Extract $2 and set $prefix to '+44<space>' if $2 is '44' otherwise set $prefix to '0'
-//  Extract $3 and remove spaces and parentheses. Phone number is combined $2 and $3.
+//  Compare original input with this RegEx pattern:
+//   ^\(?(?:(?:00\)?[\s\-]?\(?|\+)(44)\)?[\s\-]?\(?(?:0\)?[\s\-]?\(?)?|0)([1-9]\d{1,4}\)?[\s\d\-]+)$
+//  Extract $1 and set $prefix to '+44<space>' if $1 is '44', otherwise set $prefix to '0'
+//  Extract $2 and remove hyphens, spaces and parentheses. Phone number is combined $prefix and $2.
 // A number of very detailed GB telephone number RegEx patterns can also be found at:
-// http://www.aa-asterisk.org.uk/index.php/Regular_Expressions_for_Validating_and_Formatting_UK_Telephone_Numbers
+// http://www.aa-asterisk.org.uk/index.php/Regular_Expressions_for_Validating_and_Formatting_GB_Telephone_Numbers
 
 //Matches UK postcode. based on http://snipplr.com/view/3152/postcode-validation/
 jQuery.validator.addMethod('postcodeUK', function(postcode, element) {
@@ -382,9 +383,9 @@ jQuery.validator.addMethod("require_from_group", function(value, element, option
  *
  */
 jQuery.validator.addMethod("skip_or_fill_minimum", function(value, element, options) {
-	var validator = this;
-	var numberRequired = options[0];
-	var selector = options[1];
+	var validator = this,
+		numberRequired = options[0],
+		selector = options[1];
 	var numberFilled = $(selector, element.form).filter(function() {
 		return validator.elementValue(this);
 	}).length;

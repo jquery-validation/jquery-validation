@@ -232,18 +232,18 @@ test("required with dependencies", function() {
 	var v = jQuery("#form").validate(),
 		method = $.validator.methods.required,
 		e = $('#hidden2, #select1, #area2, #radio1, #check2');
-	ok( method.call( v, e[0].value, e[0], "asffsaa"), "Valid text input due to dependency not met" );
-	ok(!method.call( v, e[0].value, e[0], "input"), "Invalid text input" );
+	ok( method.call( v, e[0].value, e[0], "asffsaa" ), "Valid text input due to depencie not met" );
+	ok(!method.call( v, e[0].value, e[0], "input" ), "Invalid text input" );
 	ok( method.call( v, e[0].value, e[0], function() { return false; }), "Valid text input due to dependency not met" );
 	ok(!method.call( v, e[0].value, e[0], function() { return true; }), "Invalid text input" );
-	ok( method.call( v, e[1].value, e[1], "asfsfa"), "Valid select due to dependency not met" );
-	ok(!method.call( v, e[1].value, e[1], "input"), "Invalid select" );
-	ok( method.call( v, e[2].value, e[2], "asfsafsfa"), "Valid textarea due to dependency not met" );
-	ok(!method.call( v, e[2].value, e[2], "input"), "Invalid textarea" );
-	ok( method.call( v, e[3].value, e[3], "asfsafsfa"), "Valid radio due to dependency not met" );
-	ok(!method.call( v, e[3].value, e[3], "input"), "Invalid radio" );
-	ok( method.call( v, e[4].value, e[4], "asfsafsfa"), "Valid checkbox due to dependency not met" );
-	ok(!method.call( v, e[4].value, e[4], "input"), "Invalid checkbox" );
+	ok( method.call( v, e[1].value, e[1], "asfsfa" ), "Valid select due to dependency not met" );
+	ok(!method.call( v, e[1].value, e[1], "input" ), "Invalid select" );
+	ok( method.call( v, e[2].value, e[2], "asfsafsfa" ), "Valid textarea due to dependency not met" );
+	ok(!method.call( v, e[2].value, e[2], "input" ), "Invalid textarea" );
+	ok( method.call( v, e[3].value, e[3], "asfsafsfa" ), "Valid radio due to dependency not met" );
+	ok(!method.call( v, e[3].value, e[3], "input" ), "Invalid radio" );
+	ok( method.call( v, e[4].value, e[4], "asfsafsfa" ), "Valid checkbox due to dependency not met" );
+	ok(!method.call( v, e[4].value, e[4], "input" ), "Invalid checkbox" );
 });
 
 test("minlength", function() {
@@ -334,15 +334,15 @@ test("equalTo", function() {
 	var v = jQuery("#form").validate();
 	var method = $.validator.methods.equalTo,
 		e = $('#text1, #text2');
-	ok( method.call( v, "Test", e[0], "#text1"), "Text input" );
-	ok( method.call( v, "T", e[1], "#text2"), "Another one" );
+	ok( method.call( v, "Test", e[0], "#text1" ), "Text input" );
+	ok( method.call( v, "T", e[1], "#text2" ), "Another one" );
 });
 
 test("creditcard", function() {
 	var method = methodTest("creditcard");
 	ok( method( "446-667-651" ), "Valid creditcard number" );
 	ok( method( "446 667 651" ), "Valid creditcard number" );
-	ok( !method( "asdf" ), "Invalid creditcard number" );
+	ok(!method( "asdf" ), "Invalid creditcard number" );
 });
 
 test("extension", function() {
@@ -351,21 +351,21 @@ test("extension", function() {
 	ok( method( "picture.jpg" ), "Valid default accept type" );
 	ok( method( "picture.jpeg" ), "Valid default accept type" );
 	ok( method( "picture.png" ), "Valid default accept type" );
-	ok( !method( "picture.pgn" ), "Invalid default accept type" );
+	ok(!method( "picture.pgn" ), "Invalid default accept type" );
 
 	var v = jQuery("#form").validate();
 	method = function(value, param) {
 		return $.validator.methods.extension.call(v, value, $('#text1')[0], param);
 	};
-	ok( method( "picture.doc", "doc"), "Valid custom accept type" );
-	ok( method( "picture.pdf", "doc|pdf"), "Valid custom accept type" );
-	ok( method( "picture.pdf", "pdf|doc"), "Valid custom accept type" );
-	ok( !method( "picture.pdf", "doc"), "Invalid custom accept type" );
-	ok( !method( "picture.doc", "pdf"), "Invalid custom accept type" );
+	ok( method( "picture.doc", "doc" ), "Valid custom accept type" );
+	ok( method( "picture.pdf", "doc|pdf" ), "Valid custom accept type" );
+	ok( method( "picture.pdf", "pdf|doc" ), "Valid custom accept type" );
+	ok(!method( "picture.pdf", "doc" ), "Invalid custom accept type" );
+	ok(!method( "picture.doc", "pdf" ), "Invalid custom accept type" );
 
-	ok( method( "picture.pdf", "doc,pdf"), "Valid custom accept type, comma seperated" );
-	ok( method( "picture.pdf", "pdf,doc"), "Valid custom accept type, comma seperated" );
-	ok( !method( "picture.pdf", "gop,top"), "Invalid custom accept type, comma seperated" );
+	ok( method( "picture.pdf", "doc,pdf" ), "Valid custom accept type, comma seperated" );
+	ok( method( "picture.pdf", "pdf,doc" ), "Valid custom accept type, comma seperated" );
+	ok(!method( "picture.pdf", "gop,top" ), "Invalid custom accept type, comma seperated" );
 });
 
 test("remote", function() {
@@ -557,15 +557,15 @@ test("mobileUK", function() {
 	var method = methodTest("mobileUK");
 	ok( method( "07734234323" ), "Valid UK Mobile Number" );
 	ok( method( "+447734234323" ), "Valid UK Mobile Number" );
-	ok( !method( "07034234323" ), "Invalid UK Mobile Number" );
-	ok( !method( "0753423432" ), "Invalid UK Mobile Number" );
-	ok( !method( "07604234323" ), "Invalid UK Mobile Number" );
-	ok( !method( "077342343234" ), "Invalid UK Mobile Number" );
-	ok( !method( "044342343234" ), "Invalid UK Mobile Number" );
-	ok( !method( "+44753423432" ), "Invalid UK Mobile Number" );
-	ok( !method( "+447604234323" ), "Invalid UK Mobile Number" );
-	ok( !method( "+4477342343234" ), "Invalid UK Mobile Number" );
-	ok( !method( "+4444342343234" ), "Invalid UK Mobile Number" );
+	ok(!method( "07034234323" ), "Invalid UK Mobile Number" );
+	ok(!method( "0753423432" ), "Invalid UK Mobile Number" );
+	ok(!method( "07604234323" ), "Invalid UK Mobile Number" );
+	ok(!method( "077342343234" ), "Invalid UK Mobile Number" );
+	ok(!method( "044342343234" ), "Invalid UK Mobile Number" );
+	ok(!method( "+44753423432" ), "Invalid UK Mobile Number" );
+	ok(!method( "+447604234323" ), "Invalid UK Mobile Number" );
+	ok(!method( "+4477342343234" ), "Invalid UK Mobile Number" );
+	ok(!method( "+4444342343234" ), "Invalid UK Mobile Number" );
 });
 
 test("dateITA", function() {
@@ -592,73 +592,74 @@ test("dateNL", function() {
 
 test("time", function() {
 	var method = methodTest("time");
-	ok( method("00:00"), "Valid time, lower bound" );
-	ok( method("23:59"), "Valid time, upper bound" );
-	ok( !method("12"), "Invalid time" );
-	ok( !method("00:60"), "Invalid time" );
-	ok( !method("24:60"), "Invalid time" );
-	ok( !method("24:00"), "Invalid time" );
-	ok( !method("29:59"), "Invalid time" );
-	ok( !method("30:00"), "Invalid time" );
-	ok( !method("120:00"), "Invalid time" );
-	ok( !method("12:001"), "Invalid time" );
-	ok( !method("12:00a"), "Invalid time" );
+	ok( method( "00:00" ), "Valid time, lower bound" );
+	ok( method( "23:59" ), "Valid time, upper bound" );
+	ok(!method( "12" ), "Invalid time" );
+	ok(!method( "29:59" ), "Invalid time" );
+	ok(!method( "00:60" ), "Invalid time" );
+	ok(!method( "24:60" ), "Invalid time" );
+	ok(!method( "24:00" ), "Invalid time" );
+	ok(!method( "30:00" ), "Invalid time" );
+	ok(!method( "29:59" ), "Invalid time" );
+	ok(!method( "120:00" ), "Invalid time" );
+	ok(!method( "12:001" ), "Invalid time" );
+	ok(!method( "12:00a" ), "Invalid time" );
 });
 
 test("time12h", function() {
 	var method = methodTest("time12h");
-	ok( method("12:00 AM"), "Valid time, lower bound, am" );
-	ok( method("11:59 AM"), "Valid time, upper bound, am" );
-	ok( method("12:00AM"), "Valid time, no space, am" );
-	ok( method("12:00PM"), "Valid time, no space, pm" );
-	ok( method("12:00 PM"), "Valid time, lower bound, pm" );
-	ok( method("11:59 PM"), "Valid time, upper bound, pm" );
-	ok( method("11:59 am"), "Valid time, also accept lowercase" );
-	ok( method("11:59 pm"), "Valid time, also accept lowercase" );
-	ok( method("1:59 pm"), "Valid time, single hour, no leading 0" );
-	ok( method("01:59 pm"), "Valid time, single hour, leading 0" );
-	ok( !method("12:00"), "Invalid time" );
-	ok( !method("9"), "Invalid time" );
-	ok( !method("9 am"), "Invalid time" );
-	ok( !method("12:61 am"), "Invalid time" );
-	ok( !method("13:00 am"), "Invalid time" );
-	ok( !method("00:00 am"), "Invalid time" );
+	ok( method( "12:00 AM" ), "Valid time, lower bound, am" );
+	ok( method( "11:59 AM" ), "Valid time, upper bound, am" );
+	ok( method( "12:00AM" ), "Valid time, no space, am" );
+	ok( method( "12:00PM" ), "Valid time, no space, pm" );
+	ok( method( "12:00 PM" ), "Valid time, lower bound, pm" );
+	ok( method( "11:59 PM" ), "Valid time, upper bound, pm" );
+	ok( method( "11:59 am" ), "Valid time, also accept lowercase" );
+	ok( method( "11:59 pm" ), "Valid time, also accept lowercase" );
+	ok( method( "1:59 pm" ), "Valid time, single hour, no leading 0" );
+	ok( method( "01:59 pm" ), "Valid time, single hour, leading 0" );
+	ok(!method( "12:00" ), "Invalid time" );
+	ok(!method( "9" ), "Invalid time" );
+	ok(!method( "9 am"), "Invalid time" );
+	ok(!method( "12:61 am" ), "Invalid time" );
+	ok(!method( "13:00 am" ), "Invalid time" );
+	ok(!method( "00:00 am" ), "Invalid time" );
 });
 
 test("minWords", function() {
 	var method = methodTest("minWords");
-	ok( method("hello worlds", 2), "plain text, valid" );
-	ok( method("<em>hello</em> world", 2), "html, valid" );
-	ok( !method("hello", 2), "plain text, invalid" );
-	ok( !method("<em>world</em>", 2), "html, invalid" );
-	ok( !method("world <br/>", 2), "html, invalid" );
+	ok( method( "hello worlds", 2 ), "plain text, valid" );
+	ok( method( "<b>hello</b> world", 2 ), "html, valid" );
+	ok(!method( "hello", 2 ), "plain text, invalid" );
+	ok(!method( "<b>world</b>", 2 ), "html, invalid" );
+	ok(!method( "world <br/>", 2 ), "html, invalid" );
 });
 
 test("maxWords", function() {
 	var method = methodTest("maxWords");
-	ok( method("hello", 2), "plain text, valid" );
-	ok( method("<em>world</em>", 2), "html, valid" );
-	ok( method("world <br/>", 2), "html, valid" );
-	ok( method("hello worlds", 2), "plain text, valid" );
-	ok( method("<em>hello</em> world", 2), "html, valid" );
-	ok( !method("hello 123 world", 2), "plain text, invalid" );
-	ok( !method("<em>hello</em> 123 world", 2), "html, invalid" );
+	ok( method( "hello", 2 ), "plain text, valid" );
+	ok( method( "<b>world</b>", 2 ), "html, valid" );
+	ok( method( "world <br/>", 2 ), "html, valid" );
+	ok( method( "hello worlds", 2 ), "plain text, valid" );
+	ok( method( "<b>hello</b> world", 2 ), "html, valid" );
+	ok(!method( "hello 123 world", 2 ), "plain text, invalid" );
+	ok(!method( "<b>hello</b> 123 world", 2 ), "html, invalid" );
 });
 
 test("rangeWords", function() {
 	var method = methodTest("rangeWords");
-	ok( method("hello", [0, 2]), "plain text, valid" );
-	ok( method("hello worlds", [0, 2]), "plain text, valid" );
-	ok( method("<em>hello</em> world", [0, 2]), "html, valid" );
-	ok( !method("hello worlds what is up", [0, 2]), "plain text, invalid" );
-	ok( !method("<em>Hello</em> <em>world</em> <em>hello</em>", [0, 2]), "html, invalid" );
+	ok( method( "hello", [0, 2] ), "plain text, valid" );
+	ok( method( "hello worlds", [0, 2] ), "plain text, valid" );
+	ok( method( "<b>hello</b> world", [0, 2] ), "html, valid" );
+	ok(!method( "hello worlds what is up", [0, 2] ), "plain text, invalid" );
+	ok(!method( "<b>Hello</b> <b>world</b> <b>hello</b>", [0, 2] ), "html, invalid" );
 });
 
 test("pattern", function() {
 	var method = methodTest("pattern");
 	ok( method( "AR1004", "AR\\d{4}" ), "Correct format for the given RegExp" );
 	ok( method( "AR1004", /^AR\d{4}$/ ), "Correct format for the given RegExp" );
-	ok( !method( "BR1004", /^AR\d{4}$/ ), "Invalid format for the given RegExp" );
+	ok(!method( "BR1004", /^AR\d{4}$/ ), "Invalid format for the given RegExp" );
 });
 
 function testCardTypeByNumber(number, cardname, expected) {
@@ -679,15 +680,15 @@ test('creditcardtypes, all', function() {
 		}
 	});
 
-	testCardTypeByNumber("4111-1111-1111-1111", "VISA", true);
-	testCardTypeByNumber("5111-1111-1111-1118", "MasterCard", true);
-	testCardTypeByNumber("6111-1111-1111-1116", "Discover", true);
-	testCardTypeByNumber("3400-0000-0000-009", "AMEX", true);
+	testCardTypeByNumber( "4111-1111-1111-1111", "VISA", true );
+	testCardTypeByNumber( "5111-1111-1111-1118", "MasterCard", true );
+	testCardTypeByNumber( "6111-1111-1111-1116", "Discover", true );
+	testCardTypeByNumber( "3400-0000-0000-009", "AMEX", true );
 
-	testCardTypeByNumber("4111-1111-1111-1110", "VISA", false);
-	testCardTypeByNumber("5432-1111-1111-1111", "MasterCard", false);
-	testCardTypeByNumber("6611-6611-6611-6611", "Discover", false);
-	testCardTypeByNumber("3777-7777-7777-7777", "AMEX", false);
+	testCardTypeByNumber( "4111-1111-1111-1110", "VISA", false );
+	testCardTypeByNumber( "5432-1111-1111-1111", "MasterCard", false );
+	testCardTypeByNumber( "6611-6611-6611-6611", "Discover", false );
+	testCardTypeByNumber( "3777-7777-7777-7777", "AMEX", false );
 });
 
 test('creditcardtypes, visa', function() {
@@ -702,10 +703,10 @@ test('creditcardtypes, visa', function() {
 		}
 	});
 
-	testCardTypeByNumber("4111-1111-1111-1111", "VISA", true);
-	testCardTypeByNumber("5111-1111-1111-1118", "MasterCard", false);
-	testCardTypeByNumber("6111-1111-1111-1116", "Discover", false);
-	testCardTypeByNumber("3400-0000-0000-009", "AMEX", false);
+	testCardTypeByNumber( "4111-1111-1111-1111", "VISA", true );
+	testCardTypeByNumber( "5111-1111-1111-1118", "MasterCard", false );
+	testCardTypeByNumber( "6111-1111-1111-1116", "Discover", false );
+	testCardTypeByNumber( "3400-0000-0000-009", "AMEX", false );
 });
 
 test('creditcardtypes, mastercard', function() {
@@ -720,10 +721,10 @@ test('creditcardtypes, mastercard', function() {
 		}
 	});
 
-	testCardTypeByNumber("5111-1111-1111-1118", "MasterCard", true);
-	testCardTypeByNumber("6111-1111-1111-1116", "Discover", false);
-	testCardTypeByNumber("3400-0000-0000-009", "AMEX", false);
-	testCardTypeByNumber("4111-1111-1111-1111", "VISA", false);
+	testCardTypeByNumber( "5111-1111-1111-1118", "MasterCard", true );
+	testCardTypeByNumber( "6111-1111-1111-1116", "Discover", false );
+	testCardTypeByNumber( "3400-0000-0000-009", "AMEX", false );
+	testCardTypeByNumber( "4111-1111-1111-1111", "VISA", false );
 });
 
 function fillFormWithValuesAndExpect(formSelector, inputValues, expected) {
