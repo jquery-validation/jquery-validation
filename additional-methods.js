@@ -205,9 +205,10 @@ jQuery.validator.addMethod('phonesUK', function(phone_number, element) {
 		phone_number.match(/^(?:(?:(?:00\s?|\+)44\s?|0)(?:1\d{8,9}|[23]\d{9}|7(?:[45789]\d{8}|624\d{6})))$/);
 }, 'Please specify a valid uk phone number');
 // On the above three UK functions, do the following server side processing:
-//  Compare with ^((?:00\s?|\+)(44)\s?)?\(?0?(?:\)\s?)?([1-9]\d{1,4}\)?[\d\s]+)
-//  Extract $2 and set $prefix to '+44<space>' if $2 is '44' otherwise set $prefix to '0'
-//  Extract $3 and remove spaces and parentheses. Phone number is combined $2 and $3.
+//  Compare original input with this RegEx pattern:
+//   ^(?:\(?(?:00\)?[\s-]?\(?|\+)(44)\)?[\s-]?(?:\(?0\)?[\s-]?)?\(?|\(?0)([1-9]\d{1,4}\)?[\s-\d]+)$
+//  Extract $1 and set $prefix to '+44<space>' if $1 is '44', otherwise set $prefix to '0'
+//  Extract $2 and remove spaces and parentheses. Phone number is combined $prefix and $2.
 // A number of very detailed GB telephone number RegEx patterns can also be found at:
 // http://www.aa-asterisk.org.uk/index.php/Regular_Expressions_for_Validating_and_Formatting_UK_Telephone_Numbers
 
