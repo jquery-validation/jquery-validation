@@ -579,12 +579,15 @@ test("dateNL", function() {
 	var method = methodTest("dateNL");
 	ok( method( "01-01-1900" ), "Valid date NL" );
 	ok( method( "01.01.1900" ), "Valid date NL" );
+	ok( method( "01/01/1900" ), "Valid date NL" );
+	ok( method( "01-01-00" ), "Valid date NL" );
 	ok( method( "1-01-1900" ), "Valid date NL" );
 	ok( method( "10-10-1900" ), "Valid date NL" );
 	ok(!method( "0-01-1900" ), "Invalid date NL" );
 	ok(!method( "00-01-1900" ), "Invalid date NL" );
 	ok(!method( "35-01-1990" ), "Invalid date NL" );
 	ok(!method( "01.01.190" ), "Invalid date NL" );
+	ok(!method( "01-01-3000" ), "Invalid date NL" );
 });
 
 	test("time", function() {
@@ -615,6 +618,8 @@ test("time12h", function() {
 	ok( method("1:59 pm"), "Valid time, single hour, no leading 0" );
 	ok( method("01:59 pm"), "Valid time, single hour, leading 0" );
 	ok( !method("12:00"), "Invalid time" );
+	ok( !method("9"), "Invalid time" );
+	ok( !method("9 am"), "Invalid time" );
 	ok( !method("12:61 am"), "Invalid time" );
 	ok( !method("13:00 am"), "Invalid time" );
 	ok( !method("00:00 am"), "Invalid time" );
