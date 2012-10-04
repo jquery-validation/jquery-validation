@@ -1017,9 +1017,6 @@ $.extend($.validator, {
 
 			param = typeof param === "string" && {url:param} || param;
 
-			if ( this.pending[element.name] ) {
-				return "pending";
-			}
 			if ( previous.old === value ) {
 				return previous.valid;
 			}
