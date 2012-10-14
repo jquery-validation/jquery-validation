@@ -85,15 +85,18 @@ $(document).ready(function() {
 		success: function(label) {
 			// set &nbsp; as text for IE
 			label.html("&nbsp;").addClass("checked");
+		},
+		highlight: function(element, errorClass) {
+			$(element).parent().next().find("." + errorClass).removeClass("checked");
 		}
 	});
-	
+
 	// propose username by combining first- and lastname
 	$("#username").focus(function() {
 		var firstname = $("#firstname").val();
 		var lastname = $("#lastname").val();
 		if(firstname && lastname && !this.value) {
-			this.value = firstname + "." + lastname;
+			this.value = (firstname + "." + lastname).toLowerCase();
 		}
 	});
 
@@ -220,7 +223,7 @@ $(document).ready(function() {
 	$.get("users.phps", function(response) {
 		serverscript = $("<pre>").hide().html( response ).appendTo("body");
 	})
-	
+
 });
 </script>
 
