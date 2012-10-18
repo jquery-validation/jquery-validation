@@ -282,6 +282,7 @@ $.extend($.validator, {
 		digits: "Please enter only digits.",
 		creditcard: "Please enter a valid credit card number.",
 		equalTo: "Please enter the same value again.",
+		regexp: "Please enter a value with a proper pattern.",
 		maxlength: $.validator.format("Please enter no more than {0} characters."),
 		minlength: $.validator.format("Please enter at least {0} characters."),
 		rangelength: $.validator.format("Please enter a value between {0} and {1} characters long."),
@@ -1072,6 +1073,21 @@ $.extend($.validator, {
 		rangelength: function(value, element, param) {
 			var length = $.isArray( value ) ? value.length : this.getLength($.trim(value), element);
 			return this.optional(element) || ( length >= param[0] && length <= param[1] );
+		},
+
+		regexp: function( value, element, param ) {
+			if (typeof param == 'string') {
+				parts = param.split("/");
+				modifiers = parts[parts.length - 1];
+				if (!/[img]+/.test(modifiers)) {
+					modifiers = '';
+				}
+				param = param.replace(/(.*\/)[img]+/, "$1");
+				param = param.replace(/^\//, '');
+				param = param.replace(/\/$/, '');
+				param = new RegExp(param, modifiers);
+			}
+			return this.optional(element) || param.test(value);
 		},
 
 		// http://docs.jquery.com/Plugins/Validation/Methods/min
