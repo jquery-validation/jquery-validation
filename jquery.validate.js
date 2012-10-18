@@ -1079,10 +1079,10 @@ $.extend($.validator, {
 			if (typeof param == 'string') {
 				parts = param.split("/");
 				modifiers = parts[parts.length - 1];
-				if (!/[img]+/.test(modifiers)) {
+				if (!/^[img]+$/.test(modifiers)) {
 					modifiers = '';
 				}
-				param = param.replace(/(.*\/)[img]+/, "$1");
+				param = param.replace(/(.*\/)[img]+$/, "$1");
 				param = param.replace(/^\//, '');
 				param = param.replace(/\/$/, '');
 				param = new RegExp(param, modifiers);
