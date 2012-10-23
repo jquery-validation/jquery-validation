@@ -41,7 +41,11 @@ grunt.initConfig({
 		files: ['test/index.html']
 	},
 	lint: {
-		files: ['jquery.validate.js']
+		files: [
+				'jquery.validate.js',
+				'additional-methods.js',
+				'localization/*.js'
+		]
 	},
 	jshint: {
 		options: {
