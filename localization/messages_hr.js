@@ -2,7 +2,8 @@
  * Translated default messages for the jQuery validation plugin.
  * Locale: HR (Croatia; hrvatski jezik)
  */
-jQuery.extend(jQuery.validator.messages, {
+(function ($) {
+	$.extend($.validator.messages, {
 		required: "Ovo polje je obavezno.",
 		remote: "Ovo polje treba popraviti.",
 		email: "Unesite ispravnu e-mail adresu.",
@@ -20,4 +21,5 @@ jQuery.extend(jQuery.validator.messages, {
 		range: $.validator.format("Unesite vrijednost između {0} i {1}."),
 		max: $.validator.format("Unesite vrijednost manju ili jednaku {0}."),
 		min: $.validator.format("Unesite vrijednost veću ili jednaku {0}.")
-});
+	});
+}(jQuery));

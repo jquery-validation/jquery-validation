@@ -3,8 +3,9 @@
  * Locale: ZH (Chinese; 中文 (Zhōngwén), 汉语, 漢語)
  * Region: TW (Taiwan)
  */
-jQuery.extend(jQuery.validator.messages, {
-        required: "必填",
+(function ($) {
+	$.extend($.validator.messages, {
+		required: "必填",
 		remote: "請修正此欄位",
 		email: "請輸入正確的電子信箱",
 		url: "請輸入合法的URL",
@@ -15,10 +16,11 @@ jQuery.extend(jQuery.validator.messages, {
 		creditcard: "請輸入合法的信用卡號碼",
 		equalTo: "請重複輸入一次",
 		accept: "請輸入有效的後缀字串",
-		maxlength: jQuery.validator.format("請輸入長度不大於{0} 的字串"),
-		minlength: jQuery.validator.format("請輸入長度不小於 {0} 的字串"),
-		rangelength: jQuery.validator.format("請輸入長度介於 {0} 和 {1} 之間的字串"),
-		range: jQuery.validator.format("請輸入介於 {0} 和 {1} 之間的數值"),
-		max: jQuery.validator.format("請輸入不大於 {0} 的數值"),
-		min: jQuery.validator.format("請輸入不小於 {0} 的數值")
-});
+		maxlength: $.validator.format("請輸入長度不大於{0} 的字串"),
+		minlength: $.validator.format("請輸入長度不小於 {0} 的字串"),
+		rangelength: $.validator.format("請輸入長度介於 {0} 和 {1} 之間的字串"),
+		range: $.validator.format("請輸入介於 {0} 和 {1} 之間的數值"),
+		max: $.validator.format("請輸入不大於 {0} 的數值"),
+		min: $.validator.format("請輸入不小於 {0} 的數值")
+	});
+}(jQuery));
