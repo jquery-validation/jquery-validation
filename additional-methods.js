@@ -17,7 +17,7 @@
 		// remove html tags and space chars
 		return value.replace(/<.[^<>]*?>/g, ' ').replace(/&nbsp;|&#160;/gi, ' ')
 		// remove punctuation
-		.replace(/[.(),;:!?%#$'"_+=\/-]*/g,'');
+		.replace(/[.(),;:!?%#$'"_+=\/\-]*/g,'');
 	}
 	jQuery.validator.addMethod("maxWords", function(value, element, params) {
 		return this.optional(element) || stripHtml(value).match(/\b\w+\b/g).length <= params;
@@ -33,7 +33,7 @@
 		return this.optional(element) || valueStripped.match(regex).length >= params[0] && valueStripped.match(regex).length <= params[1];
 	}, jQuery.validator.format("Please enter between {0} and {1} words."));
 
-})();
+}());
 
 jQuery.validator.addMethod("letterswithbasicpunc", function(value, element) {
 	return this.optional(element) || /^[a-z\-.,()'\"\s]+$/i.test(value);
@@ -56,7 +56,7 @@ jQuery.validator.addMethod("ziprange", function(value, element) {
 }, "Your ZIP-code must be in the range 902xx-xxxx to 905-xx-xxxx");
 
 jQuery.validator.addMethod("zipcodeUS", function(value, element) {
-	return this.optional(element) || /\d{5}-\d{4}$|^\d{5}$/.test(value)
+	return this.optional(element) || /\d{5}-\d{4}$|^\d{5}$/.test(value);
 }, "The specified US ZIP Code is invalid");
 
 jQuery.validator.addMethod("integer", function(value, element) {
@@ -76,7 +76,7 @@ jQuery.validator.addMethod("integer", function(value, element) {
  * @cat Plugins/Validate/Methods
  */
 jQuery.validator.addMethod("vinUS", function(v) {
-	if (v.length != 17) {
+	if (v.length !== 17) {
 		return false;
 	}
 	var i, n, d, f, cd, cdv;
@@ -87,7 +87,7 @@ jQuery.validator.addMethod("vinUS", function(v) {
 	for(i = 0; i < 17; i++){
 		f = FL[i];
 		d = v.slice(i,i+1);
-		if (i == 8) {
+		if (i === 8) {
 			cdv = d;
 		}
 		if (!isNaN(d)) {
@@ -97,7 +97,7 @@ jQuery.validator.addMethod("vinUS", function(v) {
 				if (d.toUpperCase() === LL[n]) {
 					d = VL[n];
 					d *= f;
-					if (isNaN(cdv) && n == 8) {
+					if (isNaN(cdv) && n === 8) {
 						cdv = LL[n];
 					}
 					break;
@@ -107,10 +107,10 @@ jQuery.validator.addMethod("vinUS", function(v) {
 		rs += d;
 	}
 	cd = rs % 11;
-	if (cd == 10) {
+	if (cd === 10) {
 		cd = "X";
 	}
-	if (cd == cdv) {
+	if (cd === cdv) {
 		return true;
 	}
 	return false;
@@ -144,17 +144,19 @@ jQuery.validator.addMethod("dateITA", function(value, element) {
 		var mm = parseInt(adata[1],10);
 		var aaaa = parseInt(adata[2],10);
 		var xdata = new Date(aaaa,mm-1,gg);
-		if ( ( xdata.getFullYear() == aaaa ) && ( xdata.getMonth () == mm - 1 ) && ( xdata.getDate() == gg ) )
+		if ( ( xdata.getFullYear() === aaaa ) && ( xdata.getMonth() === mm - 1 ) && ( xdata.getDate() === gg ) ){
 			check = true;
-		else
+		} else {
 			check = false;
-	} else
+		}
+	} else {
 		check = false;
+	}
 	return this.optional(element) || check;
 }, "Please enter a correct date");
 
 jQuery.validator.addMethod("dateNL", function(value, element) {
-	return this.optional(element) || /^\d\d?[\.\/-]\d\d?[\.\/-]\d\d\d?\d?$/.test(value);
+	return this.optional(element) || /^\d\d?[\.\/\-]\d\d?[\.\/\-]\d\d\d?\d?$/.test(value);
 }, "Vul hier een geldige datum in.");
 
 jQuery.validator.addMethod("time", function(value, element) {
@@ -236,7 +238,7 @@ jQuery.validator.addMethod("url2", function(value, element, param) {
 // Redistributed under the the Apache License 2.0 at http://www.apache.org/licenses/LICENSE-2.0
 // Valid Types: mastercard, visa, amex, dinersclub, enroute, discover, jcb, unknown, all (overrides all other settings)
 jQuery.validator.addMethod("creditcardtypes", function(value, element, param) {
-	if (/[^0-9-]+/.test(value)) {
+	if (/[^0-9\-]+/.test(value)) {
 		return false;
 	}
 
@@ -244,48 +246,56 @@ jQuery.validator.addMethod("creditcardtypes", function(value, element, param) {
 
 	var validTypes = 0x0000;
 
-	if (param.mastercard)
+	if (param.mastercard) {
 		validTypes |= 0x0001;
-	if (param.visa)
+	}
+	if (param.visa) {
 		validTypes |= 0x0002;
-	if (param.amex)
+	}
+	if (param.amex) {
 		validTypes |= 0x0004;
-	if (param.dinersclub)
+	}
+	if (param.dinersclub) {
 		validTypes |= 0x0008;
-	if (param.enroute)
+	}
+	if (param.enroute) {
 		validTypes |= 0x0010;
-	if (param.discover)
+	}
+	if (param.discover) {
 		validTypes |= 0x0020;
-	if (param.jcb)
+	}
+	if (param.jcb) {
 		validTypes |= 0x0040;
-	if (param.unknown)
+	}
+	if (param.unknown) {
 		validTypes |= 0x0080;
-	if (param.all)
+	}
+	if (param.all) {
 		validTypes = 0x0001 | 0x0002 | 0x0004 | 0x0008 | 0x0010 | 0x0020 | 0x0040 | 0x0080;
-
+	}
 	if (validTypes & 0x0001 && /^(5[12345])/.test(value)) { //mastercard
-		return value.length == 16;
+		return value.length === 16;
 	}
 	if (validTypes & 0x0002 && /^(4)/.test(value)) { //visa
-		return value.length == 16;
+		return value.length === 16;
 	}
 	if (validTypes & 0x0004 && /^(3[47])/.test(value)) { //amex
-		return value.length == 15;
+		return value.length === 15;
 	}
 	if (validTypes & 0x0008 && /^(3(0[012345]|[68]))/.test(value)) { //dinersclub
-		return value.length == 14;
+		return value.length === 14;
 	}
 	if (validTypes & 0x0010 && /^(2(014|149))/.test(value)) { //enroute
-		return value.length == 15;
+		return value.length === 15;
 	}
 	if (validTypes & 0x0020 && /^(6011)/.test(value)) { //discover
-		return value.length == 16;
+		return value.length === 16;
 	}
 	if (validTypes & 0x0040 && /^(3)/.test(value)) { //jcb
-		return value.length == 16;
+		return value.length === 16;
 	}
 	if (validTypes & 0x0040 && /^(2131|1800)/.test(value)) { //jcb
-		return value.length == 15;
+		return value.length === 15;
 	}
 	if (validTypes & 0x0080) { //unknown
 		return true;
@@ -374,7 +384,9 @@ jQuery.validator.addMethod("require_from_group", function(value, element, option
  *
  */
 jQuery.validator.addMethod("skip_or_fill_minimum", function(value, element, options) {
-	var validator = this;
+	var validator = this,
+		numberRequired,
+		selector;
 
 	numberRequired = options[0];
 	selector = options[1];
