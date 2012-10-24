@@ -98,6 +98,5 @@ grunt.registerMultiTask('zip', 'Create a zip file for release', function() {
 });
 
 grunt.registerTask('default', 'lint qunit');
-grunt.registerTask('release', 'default concat min zip');
-
+grunt.registerTask('release', 'default concat min zip'); 
 };
