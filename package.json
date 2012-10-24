@@ -27,7 +27,7 @@
     }
   ],
   "scripts": {
-    "test": "grunt travis --verbose"
+    "test": "grunt lint qunit"
   },
   "dependencies": {},
   "devDependencies": {

@@ -95,9 +95,5 @@ grunt.registerMultiTask('zip', 'Create a zip file for release', function() {
 });
 
 grunt.registerTask('default', 'lint qunit');
-grunt.registerTask('release', 'default concat min zip');
-
-// Travis CI task.
-grunt.registerTask('travis', 'lint qunit');
-  
+grunt.registerTask('release', 'default concat min zip'); 
 };
