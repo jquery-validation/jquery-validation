@@ -164,7 +164,7 @@ jQuery.validator.addMethod("time", function(value, element) {
 }, "Please enter a valid time, between 00:00 and 23:59");
 jQuery.validator.addMethod("time12h", function(value, element) {
 	return this.optional(element) || /^((0?[1-9]|1[012])(:[0-5]\d){1,2}(\s?[AP]M))$/i.test(value);
-}, "Please enter a valid time in 12-hour format");
+}, "Please enter a valid time in 12-hour am/pm format");
 
 /**
  * matches US phone number format
