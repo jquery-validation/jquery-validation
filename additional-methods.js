@@ -389,8 +389,8 @@ jQuery.validator.addMethod("skip_or_fill_minimum", function(value, element, opti
 		numberRequired,
 		selector;
 
-	var numberRequired = options[0];
-	var selector = options[1];
+	numberRequired = options[0];
+	selector = options[1];
 	var numberFilled = $(selector, element.form).filter(function() {
 		return validator.elementValue(this);
 	}).length;
