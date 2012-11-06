@@ -210,7 +210,7 @@ jQuery.validator.addMethod('phonesUK', function(phone_number, element) {
 //  Extract $1 and set $prefix to '+44<space>' if $1 is '44', otherwise set $prefix to '0'
 //  Extract $2 and remove hyphens, spaces and parentheses. Phone number is combined $prefix and $2.
 // A number of very detailed GB telephone number RegEx patterns can also be found at:
-// http://www.aa-asterisk.org.uk/index.php/Regular_Expressions_for_Validating_and_Formatting_UK_Telephone_Numbers
+// http://www.aa-asterisk.org.uk/index.php/Regular_Expressions_for_Validating_and_Formatting_GB_Telephone_Numbers
 
 //Matches UK postcode. based on http://snipplr.com/view/3152/postcode-validation/
 jQuery.validator.addMethod('postcodeUK', function(postcode, element) {
