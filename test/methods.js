@@ -445,7 +445,7 @@ test("remote, with high priority message", function() {
   }); 
   strictEqual( v.element(e), false, "invalid element, nothing entered yet" );
   e.val("Peter");
-  strictEqual( v.element(e), true, "still invalid, because remote validation must block until it returns; dependenc>
+  strictEqual( v.element(e), true, "still invalid, because remote validation must block until it returns; dependency-mismatch considered as valid though ");
 });
 
 
