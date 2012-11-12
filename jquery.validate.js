@@ -1046,7 +1046,7 @@ $.extend($.validator, {
 						var errors = {};
             var defaultMessage = validator.defaultMessage( element, "remote" );
 
-            if (defaultMessage.match(/^!/)) {
+            if (defaultMessage && typeof defaultMessage.match === 'function' && defaultMessage.match(/^!/)) {
               response = defaultMessage.replace("!", "");
             }
 
