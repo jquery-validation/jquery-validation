@@ -1044,7 +1044,6 @@ $.extend($.validator, {
 						validator.showErrors();
 					} else {
 						var errors = {};
-            debugger;
             var defaultMessage = validator.defaultMessage( element, "remote" );
 
             if (defaultMessage.match(/^!/)) {
