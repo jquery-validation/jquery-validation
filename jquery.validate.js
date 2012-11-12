@@ -1044,10 +1044,11 @@ $.extend($.validator, {
 						validator.showErrors();
 					} else {
 						var errors = {};
+            debugger;
             var defaultMessage = validator.defaultMessage( element, "remote" );
 
-            if (/^!/.match(defaultMessage)) {
-              response = defaultMessage.replace(/^!/, "")  
+            if (defaultMessage.match(/^!/)) {
+              response = defaultMessage.replace("!", "")  
             }
 
 						var message = response || defaultMessage;
