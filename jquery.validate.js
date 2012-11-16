@@ -225,7 +225,7 @@
 					if (this.settings.unhighlight) {
 						this.settings.unhighlight.call(this, element, this.settings.errorClass, this.settings.validClass);
 					}
-					this.addWrapper(this.errorsfor(element)).hide();
+					this.addWrapper(this.errorsFor(element)).hide();
 				}
 			},
 			onfocusout: function (element, event) {
@@ -359,7 +359,7 @@
 
 			// http://docs.jquery.com/Plugins/Validation/Validator/element
 			element: function (element) {
-				element = this.validationTargetfor(this.clean(element));
+				element = this.validationTargetFor(this.clean(element));
 				this.lastElement = element;
 				this.prepareElement(element);
 				this.currentElements = $(element);
@@ -507,7 +507,7 @@
 
 			prepareElement: function (element) {
 				this.reset();
-				this.toHide = this.errorsfor(element);
+				this.toHide = this.errorsFor(element);
 			},
 
 			elementValue: function (element) {
@@ -525,7 +525,7 @@
 			},
 
 			check: function (element) {
-				element = this.validationTargetfor(this.clean(element));
+				element = this.validationTargetFor(this.clean(element));
 
 				var rules = $(element).rules();
 				var dependencyMismatch = false;
@@ -547,7 +547,7 @@
 						dependencyMismatch = false;
 
 						if (result === "pending") {
-							this.toHide = this.toHide.not(this.errorsfor(element));
+							this.toHide = this.toHide.not(this.errorsFor(element));
 							return;
 						}
 
@@ -677,7 +677,7 @@
 			},
 
 			showLabel: function (element, message) {
-				var label = this.errorsfor(element);
+				var label = this.errorsFor(element);
 				if (label.length) {
 					// refresh error/success class
 					label.removeClass(this.settings.validClass).addClass(this.settings.errorClass);
@@ -925,7 +925,7 @@
 
 			// evaluate parameters
 			$.each(rules, function (rule, parameter) {
-				rules[rule] = $.isfunction(parameter) ? parameter(element) : parameter;
+				rules[rule] = $.isFunction(parameter) ? parameter(element) : parameter;
 			});
 
 			// clean number parameters
@@ -1045,7 +1045,7 @@
 						} else {
 							var errors = {};
 							var message = response || validator.defaultMessage(element, "remote");
-							errors[element.name] = previous.message = $.isfunction(message) ? message(value) : message;
+							errors[element.name] = previous.message = $.isFunction(message) ? message(value) : message;
 							validator.invalid[element.name] = true;
 							validator.showErrors(errors);
 						}
