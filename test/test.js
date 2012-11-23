@@ -40,7 +40,7 @@ test("Constructor", function() {
 });
 
 test("validate() without elements, with non-form elements", 0, function() {
-	$("#doesn'texist").validate();
+	$("#doesn-texist").validate();
 });
 
 test("valid() plugin method", function() {
