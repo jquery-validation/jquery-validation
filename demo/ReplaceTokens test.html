@@ -1,0 +1,138 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Demonstrates improved tokens in error messages.</title>
+   <script src="../lib/jquery.js" type="text/javascript"></script>
+   <script src="../jquery.validate.js" type="text/javascript"></script>
+   <script src="../jquery.validate.unobtrusive.js" type="text/javascript"></script>
+   <style type="text/css">
+      .error
+      {
+         color : Red;
+      }
+      .errorlabel
+      {
+         font-weight : bold;
+         text-transform : capitalize;
+      }
+      .valid
+      {
+      }
+   </style>
+</head>
+<body>
+   <script type="text/javascript">
+   $(document).ready(
+      function(){ $("#Form1").validate({onkeyup : false, debug : true});
+         $("#TextBox1").rules("add",
+         {
+
+            required: true,
+            messages:
+            {
+               required: "<span class='errorlabel'>{LABEL}</span> is required."
+            }
+
+         });
+
+         $("#TextBox2").rules("add",
+         {
+
+            minlength: 4,
+            messages:
+            {
+               minlength: "<span class='errorlabel'>{LABEL}</span> must be {MIN} characters or higher. You entered {LENGTH} which is {DIFF} short."
+            }
+
+         });
+         $("#TextBox3").rules("add",
+         {
+
+            maxlength: 10,
+            messages:
+            {
+               maxlength: "<span class='errorlabel'>{LABEL}</span> must be be no more than {MAX} characters. You entered {LENGTH} which is {DIFF} too much."
+            }
+
+         });
+
+         $("#TextBox4").rules("add",
+         {
+
+            rangelength: [4,10],
+            messages:
+            {
+               rangelength: "<span class='errorlabel'>{LABEL}</span> must be between {MIN} and {MAX} characters. You entered {LENGTH} which is {DIFF} too little or much."
+            }
+
+         });
+         $("#TextBox5").rules("add",
+         {
+
+            min: 4,
+            messages:
+            {
+               min: "<span class='errorlabel'>{LABEL}</span> must be {MIN} or higher. You entered {VALUE}."
+            }
+
+         });
+         $("#TextBox6").rules("add",
+         {
+
+            max: 10,
+            messages:
+            {
+               max: "<span class='errorlabel'>{LABEL}</span> must be be no more than {MAX}. You entered {VALUE}."
+            }
+
+         });
+
+         $("#TextBox7").rules("add",
+         {
+
+            range: [4,10],
+            messages:
+            {
+               range: "<span class='errorlabel'>{LABEL}</span> must be between {MIN} and {MAX}. You entered {VALUE}."
+            }
+
+         });
+         $("#TextBox8").rules("add",
+         {
+
+            url: true,
+            messages:
+            {
+               url: "<span class='errorlabel'>{LABEL}</span> must be a URL. You entered \"{VALUE}\"."
+            }
+
+         });
+
+
+      }
+   );
+   </script>
+   <p>Demonstrates validation error messages containing tokens using the new replaceToken code.</p>
+   <p>Now each validation method can have a companion method that is passed the error message string.
+   It replaces tokens within that string and returns the updated message.</p>
+   <p>Tokens can be textual and therefore meaningful (like {VALUE}) as compared to the existing model ({0}).</p>
+   <p>The default token replacement method supports the numeric tokens of the past, and adds these: 
+   {LABEL} and {VALUE}. {LABEL} extracts the label associated with the element, either from the data-msglabel attribute
+   on the element or from a &lt;label for= &gt; tag. {VALUE} is the actual data entered.</p>
+   <p>Validators with minimum and maximum rules have additional tokens: {MIN} and {MAX}.
+   The length validators also have {LENGTH} and {DIFF}. {DIFF} is the number the user has exceeded the min or max.</p><br />
+   <!-- REMINDER: Unobtrustive doesn't use the labels 'minlength', 'maxlength', 'rangelength', 'min', and 'max'. You must use 'length' and 'range' instead. -->
+   <form action="" method="post" id="Form1" >
+      <label for="TextBox1" >Required: </label><input type="text" id="TextBox1" name="TextBox1" /><br />
+      <label for="TextBox2" >Minlength: </label><input type="text" id="TextBox2" name="TextBox2" data-msglabel="MINLENGTH" /><br />
+      <label for="TextBox3" >Maxlength: </label><input type="text" id="TextBox3" name="TextBox3" /><br />
+      <label for="TextBox4" >Rangelength: </label><input type="text" id="TextBox4" name="TextBox4" /><br />
+      <label for="TextBox5" >Min: </label><input type="text" id="TextBox5" name="TextBox5" /><br />
+      <label for="TextBox6" >Max: </label><input type="text" id="TextBox6" name="TextBox6" /><br />
+      <label for="TextBox7" >Range: </label><input type="text" id="TextBox7" name="TextBox7" /><br />
+      <label for="TextBox8" >Url: </label><input type="text" id="TextBox8" name="TextBox8" /><br />
+      <input type="submit" id="Button1" />
+   </form>
+
+</body>
+</html>
