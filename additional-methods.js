@@ -443,3 +443,26 @@ jQuery.validator.addMethod("extension", function(value, element, param) {
 	param = typeof param === "string" ? param.replace(/,/g, '|') : "png|jpe?g|gif";
 	return this.optional(element) || value.match(new RegExp(".(" + param + ")$", "i"));
 }, jQuery.format("Please enter a value with a valid extension."));
+
+
+/* Validate chilean rut format
+ * more info: http://es.wikipedia.org/wiki/Rol_%C3%9Anico_Tributario
+ * some examples
+ * valid rut    : "30.686.957-4"
+ * invalid rut  : "30.686.957-3","30.686.957-K"
+ */
+jQuery.validator.addMethod("rut", function (value, element, param) {
+	if(this.optional(element)){
+		return true;
+	}
+
+	var find = new RegExp(/^(\d{1,8})-([K|0-9])$/);
+	if(find.test(value)){
+		var M = 0, S = 1, T = RegExp.$1;
+                for (; T; T = Math.floor(T / 10))
+		S = (S + T % 10 * (9 - M++ % 6)) % 11;
+		return ((S ? S - 1 : 'K') == RegExp.$2 ? true : false);
+	}
+	return false;
+}, "Please enter a valid rut.");
+
