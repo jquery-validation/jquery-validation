@@ -384,9 +384,7 @@ jQuery.validator.addMethod("require_from_group", function(value, element, option
  *
  */
 jQuery.validator.addMethod("skip_or_fill_minimum", function(value, element, options) {
-	var validator = this,
-		numberRequired,
-		selector;
+	var validator = this;
 
 	var numberRequired = options[0];
 	var selector = options[1];
