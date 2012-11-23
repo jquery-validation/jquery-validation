@@ -22,6 +22,12 @@ test("rules() HTML5 required (no value)", function() {
 	deepEqual( element.rules(), { required: true } );
 });
 
+test("rules() HTML5 date ignore min and max", function() {
+	var element = $('#testForm13date');
+	var v = $('#testForm13').validate();
+	deepEqual( element.rules(), { date: true } );
+});
+
 test("rules() - internal - select", function() {
 	var element = $('#meal');
 	var v = $('#testForm3').validate();
