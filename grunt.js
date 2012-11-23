@@ -58,7 +58,8 @@ grunt.initConfig({
 			sub: true,
 			undef: true,
 			eqnull: true,
-			browser: true
+			browser: true,
+			indent:4
 		},
 		globals: {
 			jQuery: true,
