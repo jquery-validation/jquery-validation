@@ -713,7 +713,7 @@ test("validating multiple checkboxes with 'required'", function() {
 test("dynamic form", function() {
 	var counter = 0;
 	function add() {
-		$("<input class='{required:true}' name='list" + counter++ + "' />").appendTo("#testForm2");
+		$("<input data-rule-required='true' name='list" + counter++ + "' />").appendTo("#testForm2");
 	}
 	function errors(expected, message) {
 		equal(expected, v.size(), message );
@@ -856,7 +856,7 @@ test("successlist", function() {
 
 test("success isn't called for optional elements", function() {
 	expect(4);
-	equal( "", $("#firstname").removeClass().val() );
+	equal( "", $("#firstname").removeAttr("data-rule-required").removeAttr("data-rule-minlength").val() );
 	$("#something").remove();
 	$("#lastname").remove();
 	$("#errorFirstname").remove();
@@ -888,7 +888,7 @@ test("success callback with element", function() {
 
 test("all rules are evaluated even if one returns a dependency-mistmatch", function() {
 	expect(6);
-	equal( "", $("#firstname").removeClass().val() );
+	equal( "", $("#firstname").removeAttr("data-rule-required").removeAttr("data-rule-minlength").val() );
 	$("#lastname").remove();
 	$("#errorFirstname").remove();
 	$.validator.addMethod("custom1", function() {

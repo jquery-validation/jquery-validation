@@ -26,6 +26,9 @@
       "url": "http://www.opensource.org/licenses/GPL-2.0"
     }
   ],
+  "scripts": {
+    "test": "grunt lint qunit"
+  },
   "dependencies": {},
   "devDependencies": {
     "grunt": "0.3.x",
