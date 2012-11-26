@@ -36,8 +36,8 @@ test("url", function() {
 	ok( method( "ftp://bassistance.de/jquery/plugin.php?bla=blu" ), "Valid url" );
 	ok( method( "http://www.føtex.dk/" ), "Valid url, danish unicode characters" );
 	ok( method( "http://bösendorfer.de/" ), "Valid url, german unicode characters" );
-	ok( method( "http://192.168.8.5" ), "Valid IP Address" )
-	ok(!method( "http://192.168.8." ), "Invalid IP Address" )
+	ok( method( "http://192.168.8.5" ), "Valid IP Address" );
+	ok(!method( "http://192.168.8." ), "Invalid IP Address" );
 	ok(!method( "http://bassistance" ), "Invalid url" ); // valid
 	ok(!method( "http://bassistance." ), "Invalid url" ); // valid
 	ok(!method( "http://bassistance,de" ), "Invalid url" );
@@ -53,8 +53,8 @@ test("url2 (tld optional)", function() {
 	ok( method( "ftp://bassistance.de/jquery/plugin.php?bla=blu" ), "Valid url" );
 	ok( method( "http://www.føtex.dk/" ), "Valid url, danish unicode characters" );
 	ok( method( "http://bösendorfer.de/" ), "Valid url, german unicode characters" );
-	ok( method( "http://192.168.8.5" ), "Valid IP Address" )
-	ok(!method( "http://192.168.8." ), "Invalid IP Address" )
+	ok( method( "http://192.168.8.5" ), "Valid IP Address" );
+	ok(!method( "http://192.168.8." ), "Invalid IP Address" );
 	ok( method( "http://bassistance" ), "Invalid url" );
 	ok( method( "http://bassistance." ), "Invalid url" );
 	ok(!method( "http://bassistance,de" ), "Invalid url" );
@@ -232,9 +232,9 @@ test("required with dependencies", function() {
 	var v = jQuery("#form").validate(),
 		method = $.validator.methods.required,
 		e = $('#hidden2, #select1, #area2, #radio1, #check2');
-	ok( method.call( v, e[0].value, e[0], "asffsaa"), "Valid text input due to depencie not met" );
+	ok( method.call( v, e[0].value, e[0], "asffsaa"), "Valid text input due to dependency not met" );
 	ok(!method.call( v, e[0].value, e[0], "input"), "Invalid text input" );
-	ok( method.call( v, e[0].value, e[0], function() { return false; }), "Valid text input due to depencie not met" );
+	ok( method.call( v, e[0].value, e[0], function() { return false; }), "Valid text input due to dependency not met" );
 	ok(!method.call( v, e[0].value, e[0], function() { return true; }), "Invalid text input" );
 	ok( method.call( v, e[1].value, e[1], "asfsfa"), "Valid select due to dependency not met" );
 	ok(!method.call( v, e[1].value, e[1], "input"), "Invalid select" );
@@ -488,7 +488,7 @@ asyncTest("remote radio correct value sent", function() {
 						start();
 					}
 				}
-			},
+			}
 		}
 	});
 
@@ -572,6 +572,21 @@ test("dateITA", function() {
 	ok( method( "01/01/1900" ), "Valid date ITA" );
 	ok(!method( "01/13/1990" ), "Invalid date ITA" );
 	ok(!method( "01.01.1900" ), "Invalid date ITA" );
+	ok(!method( "01/01/199" ), "Invalid date ITA" );
+});
+
+test("dateNL", function() {
+	var method = methodTest("dateNL");
+	ok( method( "01-01-1900" ), "Valid date NL" );
+	ok( method( "01.01.1900" ), "Valid date NL" );
+	ok( method( "01/01/1900" ), "Valid date NL" );
+	ok( method( "01-01-00" ), "Valid date NL" );
+	ok( method( "1-01-1900" ), "Valid date NL" );
+	ok( method( "10-10-1900" ), "Valid date NL" );
+	ok(!method( "0-01-1900" ), "Invalid date NL" );
+	ok(!method( "00-01-1900" ), "Invalid date NL" );
+	ok(!method( "35-01-1990" ), "Invalid date NL" );
+	ok(!method( "01.01.190" ), "Invalid date NL" );
 });
 
 test("time", function() {
@@ -584,48 +599,58 @@ test("time", function() {
 	ok( !method("24:00"), "Invalid time" );
 	ok( !method("29:59"), "Invalid time" );
 	ok( !method("30:00"), "Invalid time" );
+	ok( !method("120:00"), "Invalid time" );
+	ok( !method("12:001"), "Invalid time" );
+	ok( !method("12:00a"), "Invalid time" );
 });
 
 test("time12h", function() {
 	var method = methodTest("time12h");
 	ok( method("12:00 AM"), "Valid time, lower bound, am" );
 	ok( method("11:59 AM"), "Valid time, upper bound, am" );
+	ok( method("12:00AM"), "Valid time, no space, am" );
+	ok( method("12:00PM"), "Valid time, no space, pm" );
 	ok( method("12:00 PM"), "Valid time, lower bound, pm" );
 	ok( method("11:59 PM"), "Valid time, upper bound, pm" );
 	ok( method("11:59 am"), "Valid time, also accept lowercase" );
 	ok( method("11:59 pm"), "Valid time, also accept lowercase" );
+	ok( method("1:59 pm"), "Valid time, single hour, no leading 0" );
+	ok( method("01:59 pm"), "Valid time, single hour, leading 0" );
 	ok( !method("12:00"), "Invalid time" );
+	ok( !method("9"), "Invalid time" );
+	ok( !method("9 am"), "Invalid time" );
 	ok( !method("12:61 am"), "Invalid time" );
 	ok( !method("13:00 am"), "Invalid time" );
+	ok( !method("00:00 am"), "Invalid time" );
 });
 
 test("minWords", function() {
 	var method = methodTest("minWords");
 	ok( method("hello worlds", 2), "plain text, valid" );
-	ok( method("<b>hello</b> world", 2), "html, valid" );
+	ok( method("<em>hello</em> world", 2), "html, valid" );
 	ok( !method("hello", 2), "plain text, invalid" );
-	ok( !method("<b>world</b>", 2), "html, invalid" );
+	ok( !method("<em>world</em>", 2), "html, invalid" );
 	ok( !method("world <br/>", 2), "html, invalid" );
 });
 
 test("maxWords", function() {
 	var method = methodTest("maxWords");
 	ok( method("hello", 2), "plain text, valid" );
-	ok( method("<b>world</b>", 2), "html, valid" );
+	ok( method("<em>world</em>", 2), "html, valid" );
 	ok( method("world <br/>", 2), "html, valid" );
 	ok( method("hello worlds", 2), "plain text, valid" );
-	ok( method("<b>hello</b> world", 2), "html, valid" );
+	ok( method("<em>hello</em> world", 2), "html, valid" );
 	ok( !method("hello 123 world", 2), "plain text, invalid" );
-	ok( !method("<b>hello</b> 123 world", 2), "html, invalid" );
+	ok( !method("<em>hello</em> 123 world", 2), "html, invalid" );
 });
 
 test("rangeWords", function() {
 	var method = methodTest("rangeWords");
 	ok( method("hello", [0, 2]), "plain text, valid" );
 	ok( method("hello worlds", [0, 2]), "plain text, valid" );
-	ok( method("<b>hello</b> world", [0, 2]), "html, valid" );
+	ok( method("<em>hello</em> world", [0, 2]), "html, valid" );
 	ok( !method("hello worlds what is up", [0, 2]), "plain text, invalid" );
-	ok( !method("<b>Hello</b> <b>world</b> <b>hello</b>", [0, 2]), "html, invalid" );
+	ok( !method("<em>Hello</em> <em>world</em> <em>hello</em>", [0, 2]), "html, invalid" );
 });
 
 test("pattern", function() {
@@ -653,16 +678,15 @@ test('creditcardtypes, all', function() {
 		}
 	});
 
-	testCardTypeByNumber("4111-1111-1111-1111", "VISA", true)
-	testCardTypeByNumber("5111-1111-1111-1118", "MasterCard", true)
-	testCardTypeByNumber("6111-1111-1111-1116", "Discover", true)
+	testCardTypeByNumber("4111-1111-1111-1111", "VISA", true);
+	testCardTypeByNumber("5111-1111-1111-1118", "MasterCard", true);
+	testCardTypeByNumber("6111-1111-1111-1116", "Discover", true);
 	testCardTypeByNumber("3400-0000-0000-009", "AMEX", true);
 
-	testCardTypeByNumber("4111-1111-1111-1110", "VISA", false)
-	testCardTypeByNumber("5432-1111-1111-1111", "MasterCard", false)
-	testCardTypeByNumber("6611-6611-6611-6611", "Discover", false)
-	testCardTypeByNumber("3777-7777-7777-7777", "AMEX", false)
-
+	testCardTypeByNumber("4111-1111-1111-1110", "VISA", false);
+	testCardTypeByNumber("5432-1111-1111-1111", "MasterCard", false);
+	testCardTypeByNumber("6611-6611-6611-6611", "Discover", false);
+	testCardTypeByNumber("3777-7777-7777-7777", "AMEX", false);
 });
 
 test('creditcardtypes, visa', function() {
@@ -677,9 +701,9 @@ test('creditcardtypes, visa', function() {
 		}
 	});
 
-	testCardTypeByNumber("4111-1111-1111-1111", "VISA", true)
-	testCardTypeByNumber("5111-1111-1111-1118", "MasterCard", false)
-	testCardTypeByNumber("6111-1111-1111-1116", "Discover", false)
+	testCardTypeByNumber("4111-1111-1111-1111", "VISA", true);
+	testCardTypeByNumber("5111-1111-1111-1118", "MasterCard", false);
+	testCardTypeByNumber("6111-1111-1111-1116", "Discover", false);
 	testCardTypeByNumber("3400-0000-0000-009", "AMEX", false);
 });
 
@@ -695,14 +719,14 @@ test('creditcardtypes, mastercard', function() {
 		}
 	});
 
-	testCardTypeByNumber("5111-1111-1111-1118", "MasterCard", true)
-	testCardTypeByNumber("6111-1111-1111-1116", "Discover", false)
+	testCardTypeByNumber("5111-1111-1111-1118", "MasterCard", true);
+	testCardTypeByNumber("6111-1111-1111-1116", "Discover", false);
 	testCardTypeByNumber("3400-0000-0000-009", "AMEX", false);
 	testCardTypeByNumber("4111-1111-1111-1111", "VISA", false);
 });
 
 function fillFormWithValuesAndExpect(formSelector, inputValues, expected) {
-	for (i=0; i < inputValues.length; i++) {
+	for (var i=0; i < inputValues.length; i++) {
 		$(formSelector + ' input:eq(' + i + ')').val(inputValues[i]);
 	}
 	var actual = $(formSelector).valid();
