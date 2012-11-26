@@ -969,7 +969,7 @@ $.extend($.validator, {
 	addMethod: function(name, method, message) {
 		$.validator.methods[name] = method;
 		$.validator.messages[name] = message !== undefined ? message : $.validator.messages[name];
-		if (method.length < 3) {
+		if (method.length < 4) {
 			$.validator.addClassRules(name, $.validator.normalizeRule(name));
 		}
 	},
