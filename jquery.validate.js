@@ -690,7 +690,7 @@ $.extend($.validator, {
 					if ( this.settings.errorPlacement ) {
 						this.settings.errorPlacement(label, $(element) );
 					} else {
-					label.insertAfter(element);
+						label.insertAfter(element);
 					}
 				}
 			}
@@ -898,12 +898,12 @@ $.extend($.validator, {
 			if (val.param || val.depends) {
 				var keepRule = true;
 				switch (typeof val.depends) {
-					case "string":
-						keepRule = !!$(val.depends, element.form).length;
-						break;
-					case "function":
-						keepRule = val.depends.call(element, element);
-						break;
+				case "string":
+					keepRule = !!$(val.depends, element.form).length;
+					break;
+				case "function":
+					keepRule = val.depends.call(element, element);
+					break;
 				}
 				if (keepRule) {
 					rules[prop] = val.param !== undefined ? val.param : true;
