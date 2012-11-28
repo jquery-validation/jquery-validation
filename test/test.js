@@ -796,6 +796,31 @@ test("ajaxSubmit", function() {
 	jQuery("#signupForm").triggerHandler("submit");
 });
 
+test("multiple field, param onlyFirst", function() {
+    expect(3);
+    var form = $("#multipleFields");
+    var fields = $("input", form);
+    equal(fields.size(), 3);
+
+    var v = form.validate({
+        onlyFirst: false,
+        rules: {
+            "multipleField[]": "required"
+        }
+    });
+    v.form();
+    equal(v.size(), 3);
+
+    form.removeData("validator");
+    v = form.validate({
+        rules: {
+            "multipleField[]": "required"
+        }
+    });
+    v.form();
+    equal(v.size(), 1);
+})
+
 
 module("misc");
 

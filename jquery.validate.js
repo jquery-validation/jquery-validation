@@ -217,6 +217,7 @@ $.extend($.validator, {
 		onsubmit: true,
 		ignore: ":hidden",
 		ignoreTitle: false,
+        onlyFirst: true,
 		onfocusin: function(element, event) {
 			this.lastActive = element;
 
@@ -473,7 +474,8 @@ $.extend($.validator, {
 				}
 
 				// select only the first element for each name, and only those with rules specified
-				if ( this.name in rulesCache || !validator.objectLength($(this).rules()) ) {
+				if ( (validator.settings.onlyFirst && this.name in rulesCache) ||
+                        !validator.objectLength($(this).rules()) ) {
 					return false;
 				}
 
