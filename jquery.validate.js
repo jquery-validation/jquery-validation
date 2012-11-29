@@ -919,12 +919,12 @@ $.extend($.validator, {
 		});
 
 		// clean number parameters
-		$.each(['minlength', 'maxlength', 'min', 'max'], function() {
+		$.each(['minlength', 'maxlength'], function() {
 			if (rules[this]) {
 				rules[this] = Number(rules[this]);
 			}
 		});
-		$.each(['rangelength', 'range'], function() {
+		$.each(['rangelength'], function() {
 			var parts;
 			if (rules[this]) {
 				if ($.isArray(rules[this])) {
