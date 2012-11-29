@@ -265,7 +265,6 @@
 			<input type="checkbox" id="checkable3" name="checkablesgroup" />
 		</form>
 
-
 		<form id="subformRequired">
 			<div class="billingAddressControl">
             	<input type="checkbox" id="bill_to_co" name="bill_to_co" class="toggleCheck" checked="checked" style="width: auto;" tabindex="1" />
@@ -292,6 +291,16 @@
 			<input class="productInfo" type="checkbox" name="discount" />
 		</form>
 
+		<form id="ranges">
+			<input type="date" id="minDateInvalid" name="minDateInvalid" min="2012-12-21" value="2012-11-21"/>
+			<input type="date" id="maxDateInvalid" ngame="maxDateInvalid" max="2012-12-21" value="2013-01-21"/>
+			<input type="date" id="rangeDateInvalidGreater" name="rangeDateInvalidGreater" min="2012-11-21" max="2013-01-21" value="2013-02-21"/>
+			<input type="date" id="rangeDateInvalidLess" name="rangeDateInvalidLess" min="2012-11-21" max="2013-01-21" value="2012-10-21"/>
+
+			<input type="date" id="minDateValid" name="minDateValid" min="2012-11-21" value="2012-12-21"/>
+			<input type="date" id="maxDateValid" name="maxDateValid" max="2013-01-21" value="2012-12-21"/>
+			<input type="date" id="rangeDateValid" name="rangeDateValid" min="2012-11-21" max="2013-01-21" value="2012-12-21"/>
+		</form>
 	</div>
 
 </body>
