@@ -1,6 +1,15 @@
-/*! jQuery Validation Plugin - v1.10.0 - 9/7/2012
-* https://github.com/jzaefferer/jquery-validation
-* Copyright (c) 2012 Jörn Zaefferer; Licensed MIT, GPL */
+/**
+ * jQuery Validation Plugin 1.11.0pre
+ *
+ * http://bassistance.de/jquery-plugins/jquery-plugin-validation/
+ * http://docs.jquery.com/Plugins/Validation
+ *
+ * Copyright (c) 2012 Jörn Zaefferer
+ *
+ * Dual licensed under the MIT and GPL licenses:
+ *   http://www.opensource.org/licenses/mit-license.php
+ *   http://www.gnu.org/licenses/gpl.html
+ */
 
 (function($) {
 
@@ -139,11 +148,10 @@ $.extend($.fn, {
 		var data = $.validator.normalizeRules(
 		$.extend(
 			{},
-            $.validator.metadataRules(element),
-            $.validator.classRules(element),
-            $.validator.dataRules(element),
-            $.validator.attributeRules(element),
-            $.validator.staticRules(element)
+			$.validator.metadataRules(element),
+			$.validator.classRules(element),
+			$.validator.attributeRules(element),
+			$.validator.staticRules(element)
 		), element);
 
 		// make sure required is at front
@@ -573,18 +581,10 @@ $.extend($.validator, {
 			return meta && meta.messages && meta.messages[method];
 		},
 
-	    // return the custom message for the given element and validation method
-	    // specified in the element's "messages" data-validation attribute
-		customDataMessage: function (element, method) {
-		    var data = $(element).data("validation");
-		    if (!data)
-		        return;
-
-		    if (data.indexOf('{') < 0)
-		        data = "{" + data + "}";
-
-		    var rules = eval("(" + data + ")");
-		    return rules && rules.messages && rules.messages[method];
+		// return the custom message for the given element and validation method
+		// specified in the element's HTML5 data attribute
+		customDataMessage: function(element, method) {
+			return $(element).data('msg-' + method.toLowerCase()) || (element.attributes && $(element).attr('data-msg-' + method.toLowerCase()));
 		},
 
 		// return the custom message for the given element name and validation method
@@ -886,18 +886,6 @@ $.extend($.validator, {
 		return meta ?
 			$(element).metadata()[meta] :
 			$(element).metadata();
-	},
-
-	dataRules: function (element) {
-	    var rules = {};
-	    var data = $(element).data("validation");
-	    if (data) {
-	        if (data.indexOf('{') < 0)
-	            data = "{" + data + "}";
-
-	        rules = eval("(" + data + ")");
-	    }
-	    return rules;
 	},
 
 	staticRules: function(element) {
