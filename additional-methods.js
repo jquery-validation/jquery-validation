@@ -404,7 +404,7 @@ jQuery.validator.addMethod("skip_or_fill_minimum", function(value, element, opti
 // Accept a value from a file input based on a required mimetype
 jQuery.validator.addMethod("accept", function(value, element, param) {
 	// Split mime on commas incase we have multiple types we can accept
-	var typeParam = typeof param === "string" ? param.replace(/,/g, '|') : "image/*",
+	var typeParam = typeof param === "string" ? param.replace(/\s/g, '').replace(/,/g, '|') : "image/*",
 	optionalValue = this.optional(element),
 	i, file;
 
