@@ -403,27 +403,27 @@ jQuery.validator.addMethod("skip_or_fill_minimum", function(value, element, opti
 
 // Accept a value from a file input based on a required mimetype
 jQuery.validator.addMethod("accept", function(value, element, param) {
-	// Split mime on commas incase we have multiple types we can accept
+	// Split mime on commas in case we have multiple types we can accept
 	var typeParam = typeof param === "string" ? param.replace(/\s/g, '').replace(/,/g, '|') : "image/*",
 	optionalValue = this.optional(element),
 	i, file;
 
 	// Element is optional
-	if(optionalValue) {
+	if (optionalValue) {
 		return optionalValue;
 	}
 
-	if($(element).attr("type") === "file") {
+	if ($(element).attr("type") === "file") {
 		// If we are using a wildcard, make it regex friendly
 		typeParam = typeParam.replace("*", ".*");
 
 		// Check if the element has a FileList before checking each file
-		if(element.files && element.files.length) {
-			for(i = 0; i < element.files.length; i++) {
+		if (element.files && element.files.length) {
+			for (i = 0; i < element.files.length; i++) {
 				file = element.files[i];
 
 				// Grab the mimtype from the loaded file, verify it matches
-				if(!file.type.match(new RegExp( ".?(" + typeParam + ")$", "i"))) {
+				if (!file.type.match(new RegExp( ".?(" + typeParam + ")$", "i"))) {
 					return false;
 				}
 			}
