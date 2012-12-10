@@ -796,6 +796,22 @@ test("ajaxSubmit", function() {
 	jQuery("#signupForm").triggerHandler("submit");
 });
 
+test("validating groups settings parameter", function() {
+    var form = $("<form>");
+    var validate = form.validate({
+        groups: {
+            arrayGroup: ["input one", "input-two", "input three"],
+            stringGroup: "input-four input-five input-six"
+        },
+    });
+    equal(validate.groups["input one"], "arrayGroup");
+    equal(validate.groups["input-two"], "arrayGroup");
+    equal(validate.groups["input three"], "arrayGroup");
+    equal(validate.groups["input-four"], "stringGroup");
+    equal(validate.groups["input-five"], "stringGroup");
+    equal(validate.groups["input-six"], "stringGroup");
+});
+
 
 module("misc");
 
