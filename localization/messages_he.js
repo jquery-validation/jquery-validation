@@ -19,5 +19,6 @@ jQuery.extend(jQuery.validator.messages, {
 	rangelength: jQuery.validator.format("נא למלא ערך בין {0} ל- {1} תווים"),
 	range: jQuery.validator.format("נא למלא ערך בין {0} ל- {1}"),
 	max: jQuery.validator.format("נא למלא ערך קטן או שווה ל- {0}"),
-	min: jQuery.validator.format("נא למלא ערך גדול או שווה ל- {0}")
+	min: jQuery.validator.format("נא למלא ערך גדול או שווה ל- {0}"),
+	greaterThan: jQuery.validator.format('צריך להיות מאוחר יותר מאשר {0}')
 });
