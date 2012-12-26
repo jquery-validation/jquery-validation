@@ -34,6 +34,17 @@
 	}, jQuery.validator.format("Please enter between {0} and {1} words."));
 
 }());
+/*
+will match price
+
+0.01
+12.00
+
+*/
+jQuery.validator.addMethod("priceonly", function(value,element) {
+	return this.optional(element) || /([1-9][0-9]+|0)(\.[0-9]{2})/.test(value);
+}, 'Enter price only');
+
 
 jQuery.validator.addMethod("letterswithbasicpunc", function(value, element) {
 	return this.optional(element) || /^[a-z\-.,()'"\s]+$/i.test(value);
