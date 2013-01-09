@@ -148,9 +148,9 @@ $.extend($.fn, {
 		var data = $.validator.normalizeRules(
 		$.extend(
 			{},
+			$.validator.metadataRules(element),
 			$.validator.classRules(element),
 			$.validator.attributeRules(element),
-			$.validator.dataRules(element),
 			$.validator.staticRules(element)
 		), element);
 
@@ -236,7 +236,7 @@ $.extend($.validator, {
 		onkeyup: function(element, event) {
 			if ( event.which === 9 && this.elementValue(element) === '' ) {
 				return;
-			} else if ( element.name in this.submitted || element === this.lastElement ) {
+			} else if ( element.name in this.submitted || element === this.lastActive ) {
 				this.element(element);
 			}
 		},
@@ -307,10 +307,7 @@ $.extend($.validator, {
 
 			var groups = (this.groups = {});
 			$.each(this.settings.groups, function(key, value) {
-				if (typeof value === "string") {
-					value = value.split(/\s/);
-				}
-				$.each(value, function(index, name) {
+				$.each(value.split(/\s/), function(index, name) {
 					groups[name] = key;
 				});
 			});
@@ -538,9 +535,8 @@ $.extend($.validator, {
 			for (var method in rules ) {
 				var rule = { method: method, parameters: rules[method] };
 				try {
-
 					result = $.validator.methods[method].call( this, val, element, rule.parameters );
-
+					
 					// if a method indicates that the field is optional and therefore valid,
 					// don't mark it as valid when there are no other rules
 					if ( result === "dependency-mismatch" ) {
@@ -575,6 +571,16 @@ $.extend($.validator, {
 		},
 
 		// return the custom message for the given element and validation method
+		// specified in the element's "messages" metadata
+		customMetaMessage: function(element, method) {
+			if (!$.metadata) {
+				return;
+			}
+			var meta = this.settings.meta ? $(element).metadata()[this.settings.meta] : $(element).metadata();
+			return meta && meta.messages && meta.messages[method];
+		},
+
+		// return the custom message for the given element and validation method
 		// specified in the element's HTML5 data attribute
 		customDataMessage: function(element, method) {
 			return $(element).data('msg-' + method.toLowerCase()) || (element.attributes && $(element).attr('data-msg-' + method.toLowerCase()));
@@ -600,6 +606,7 @@ $.extend($.validator, {
 			return this.findDefined(
 				this.customMessage( element.name, method ),
 				this.customDataMessage( element, method ),
+				this.customMetaMessage( element, method ),
 				// title is never undefined, so handle empty string as undefined
 				!this.settings.ignoreTitle && element.title || undefined,
 				$.validator.messages[method],
@@ -617,7 +624,8 @@ $.extend($.validator, {
 			}
 			this.errorList.push({
 				message: message,
-				element: element
+				element: element,
+				rule: rule
 			});
 
 			this.errorMap[element.name] = message;
@@ -632,10 +640,13 @@ $.extend($.validator, {
 		},
 
 		defaultShowErrors: function() {
-			var i, elements;
+			var i, elements, name, rules, rule;
 			for ( i = 0; this.errorList[i]; i++ ) {
 				var error = this.errorList[i];
-				if ( this.settings.highlight ) {
+				if(this.settings.rules[error.element.name] && this.settings.rules[error.element.name][error.rule.method].highlight) {
+					this.settings.rules[error.element.name][error.rule.method].highlight.call( this, error.element, this.settings.errorClass, this.settings.validClass );
+				}
+				else if ( this.settings.highlight ) {
 					this.settings.highlight.call( this, error.element, this.settings.errorClass, this.settings.validClass );
 				}
 				this.showLabel( error.element, error.message );
@@ -648,8 +659,19 @@ $.extend($.validator, {
 					this.showLabel( this.successList[i] );
 				}
 			}
-			if (this.settings.unhighlight) {
-				for ( i = 0, elements = this.validElements(); elements[i]; i++ ) {
+			for ( i = 0, elements = this.validElements(); elements[i]; i++ ) {
+				name = elements[i].getAttribute('name');
+				if(this.settings.rules[name]) {
+					rules = this.settings.rules[name];
+					for(rule in rules) {
+						if(rules[rule].unhighlight) {
+							rules[rule].unhighlight.call( this, elements[i], this.settings.errorClass, this.settings.validClass );
+						}
+						else if (this.settings.unhighlight) {
+							this.settings.unhighlight.call( this, elements[i], this.settings.errorClass, this.settings.validClass );
+						}
+					}
+				} else if (this.settings.unhighlight) {
 					this.settings.unhighlight.call( this, elements[i], this.settings.errorClass, this.settings.validClass );
 				}
 			}
@@ -693,7 +715,7 @@ $.extend($.validator, {
 					if ( this.settings.errorPlacement ) {
 						this.settings.errorPlacement(label, $(element) );
 					} else {
-						label.insertAfter(element);
+					label.insertAfter(element);
 					}
 				}
 			}
@@ -869,16 +891,15 @@ $.extend($.validator, {
 		return rules;
 	},
 
-	dataRules: function(element) {
-		var method, value,
-			rules = {}, $element = $(element);
-		for (method in $.validator.methods) {
-			value = $element.data('rule-' + method.toLowerCase());
-			if (value !== undefined) {
-				rules[method] = value;
-			}
+	metadataRules: function(element) {
+		if (!$.metadata) {
+			return {};
 		}
-		return rules;
+
+		var meta = $.data(element.form, 'validator').settings.meta;
+		return meta ?
+			$(element).metadata()[meta] :
+			$(element).metadata();
 	},
 
 	staticRules: function(element) {
@@ -901,12 +922,12 @@ $.extend($.validator, {
 			if (val.param || val.depends) {
 				var keepRule = true;
 				switch (typeof val.depends) {
-				case "string":
-					keepRule = !!$(val.depends, element.form).length;
-					break;
-				case "function":
-					keepRule = val.depends.call(element, element);
-					break;
+					case "string":
+						keepRule = !!$(val.depends, element.form).length;
+						break;
+					case "function":
+						keepRule = val.depends.call(element, element);
+						break;
 				}
 				if (keepRule) {
 					rules[prop] = val.param !== undefined ? val.param : true;
@@ -928,14 +949,8 @@ $.extend($.validator, {
 			}
 		});
 		$.each(['rangelength', 'range'], function() {
-			var parts;
 			if (rules[this]) {
-				if ($.isArray(rules[this])) {
-					rules[this] = [Number(rules[this][0]), Number(rules[this][1])];
-				} else if (typeof rules[this] === 'string') {
-					parts = rules[this].split(/[\s,]+/);
-					rules[this] = [Number(parts[0]), Number(parts[1])];
-				}
+				rules[this] = [Number(rules[this][0]), Number(rules[this][1])];
 			}
 		});
 
@@ -951,6 +966,11 @@ $.extend($.validator, {
 				delete rules.minlength;
 				delete rules.maxlength;
 			}
+		}
+
+		// To support custom messages in metadata ignore rule methods titled "messages"
+		if (rules.messages) {
+			delete rules.messages;
 		}
 
 		return rules;
@@ -1011,6 +1031,9 @@ $.extend($.validator, {
 
 			param = typeof param === "string" && {url:param} || param;
 
+			if ( this.pending[element.name] ) {
+				return "pending";
+			}
 			if ( previous.old === value ) {
 				return previous.valid;
 			}
@@ -1092,12 +1115,12 @@ $.extend($.validator, {
 		// http://docs.jquery.com/Plugins/Validation/Methods/url
 		url: function(value, element) {
 			// contributed by Scott Gonzalez: http://projects.scottsplayground.com/iri/
-			return this.optional(element) || /^(https?|s?ftp):\/\/(((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:)*@)?(((\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5]))|((([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.)+(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.?)(:\d*)?)(\/((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)+(\/(([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)*)*)?)?(\?((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)|[\uE000-\uF8FF]|\/|\?)*)?(#((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)|\/|\?)*)?$/i.test(value);
+			return this.optional(element) || /^(https?|ftp):\/\/(((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:)*@)?(((\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5]))|((([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.)+(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.?)(:\d*)?)(\/((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)+(\/(([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)*)*)?)?(\?((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)|[\uE000-\uF8FF]|\/|\?)*)?(\#((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)|\/|\?)*)?$/i.test(value);
 		},
 
 		// http://docs.jquery.com/Plugins/Validation/Methods/date
 		date: function(value, element) {
-			return this.optional(element) || !/Invalid|NaN/.test(new Date(value).toString());
+			return this.optional(element) || !/Invalid|NaN/.test(new Date(value));
 		},
 
 		// http://docs.jquery.com/Plugins/Validation/Methods/dateISO
@@ -1201,9 +1224,40 @@ $.format = $.validator.format;
 	}
 }(jQuery));
 
+// provides cross-browser focusin and focusout events
+// IE has native support, in other browsers, use event caputuring (neither bubbles)
+
 // provides delegate(type: String, delegate: Selector, handler: Callback) plugin for easier event delegation
 // handler is only called when $(event.target).is(delegate), in the scope of the jquery-object for event.target
 (function($) {
+	// only implement if not provided by jQuery core (since 1.4)
+	// TODO verify if jQuery 1.4's implementation is compatible with older jQuery special-event APIs
+	if (!jQuery.event.special.focusin && !jQuery.event.special.focusout && document.addEventListener) {
+		$.each({
+			focus: 'focusin',
+			blur: 'focusout'
+		}, function( original, fix ){
+			$.event.special[fix] = {
+				setup:function() {
+					this.addEventListener( original, handler, true );
+				},
+				teardown:function() {
+					this.removeEventListener( original, handler, true );
+				},
+				handler: function(e) {
+					var args = arguments;
+					args[0] = $.event.fix(e);
+					args[0].type = fix;
+					return $.event.handle.apply(this, args);
+				}
+			};
+			function handler(e) {
+				e = $.event.fix(e);
+				e.type = fix;
+				return $.event.handle.call(this, e);
+			}
+		});
+	}
 	$.extend($.fn, {
 		validateDelegate: function(delegate, type, handler) {
 			return this.bind(type, function(event) {
