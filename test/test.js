@@ -1280,3 +1280,25 @@ test("Specify error messages through data attributes", function() {
 	var label = $('#dataMessages label');
 	equal( label.text(), "You must enter a value here", "Correct error label" );
 });
+
+
+test("Updates pre-existing label if has error class", function() {
+	var form = $('#updateLabel'),
+		input = $('#updateLabelInput'),
+		label = $('#targetLabel'),
+		v = form.validate(),
+		labelsBefore = form.find('label').length,
+		labelsAfter;
+
+	input.val('');
+	input.valid();
+	labelsAfter = form.find('label').length;
+
+	// label was updated
+	equal( label.text(), input.attr('data-msg-required') );
+	// new label wasn't created
+	equal( labelsBefore, labelsAfter );
+});
+
+
+
