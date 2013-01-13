@@ -2,7 +2,7 @@
   "name": "jquery-validation",
   "title": "jQuery Validation Plugin",
   "description": "Form validation made easy",
-  "version": "1.10.0pre",
+  "version": "1.11.0pre",
   "homepage": "https://github.com/jzaefferer/jquery-validation",
   "author": {
     "name": "Jörn Zaefferer",
@@ -26,6 +26,9 @@
       "url": "http://www.opensource.org/licenses/GPL-2.0"
     }
   ],
+  "scripts": {
+    "test": "grunt lint qunit"
+  },
   "dependencies": {},
   "devDependencies": {
     "grunt": "0.3.x",

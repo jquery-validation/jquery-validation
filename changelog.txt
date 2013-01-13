@@ -1,6 +1,62 @@
-2.0.0
------
-* Fixed #219 - Fix valid() on elements with dependency-callback or dependency-expression.
+1.10.0 / 2012-09-07
+===================
+
+  * Corrected French strings for nowhitespace, phoneUS, phoneUK and mobileUK based upon community feedback.
+  * rename files for language_REGION according to the standard ISO_3166-1 (http://en.wikipedia.org/wiki/ISO_3166-1), for Taiwan tha language is Chinese (zh) and the region is Taiwan (TW)
+  * Optimise RegEx patterns, especially for UK phone numbers.
+  * Add Language Name for each file, rename the language code according to the standard ISO 639 for Estonian, Georgian, Ukrainian and Chinese (http://en.wikipedia.org/wiki/List_of_ISO_639-1_codes)
+  * Added croatian (HR) localization
+  * Existing French translations were edited and French translations for the additional methods were added.
+  * Merged in changes for specifying custom error messages in data attributes
+  * Updated UK Mobile phone number regex for new numbers. Fixes #154
+  * Add element to success call with test. Fixes #60
+  * Fixed regex for time additional method. Fixes #131
+  * resetForm now clears old previousValue on form elements. Fixes #312
+  * Added checkbox test to require_from_group and changed require_from_group to use elementValue. Fixes #359
+  * Fixed dataFilter response issues in jQuery 1.5.2+. Fixes #405
+  * Added jQuery Mobile demo. Fixes #249
+  * Deoptimize findByName for correctness. Fixes #82 - $.validator.prototype.findByName breaks in IE7
+  * Added US zip code support and test. Fixes #90
+  * Changed lastElement to lastActive in keyup, skip validation on tab or empty element. Fixes #244
+  * Removed number stripping from stripHtml. Fixes #2
+  * Fixed invalid count on invalid to valid remote validation. Fixes #286
+  * Add link to file_input to demo index
+  * Moved old accept method to extension additional-method, added new accept method to handle standard browser mimetype filtering. Fixes #287 and supersedes #369
+  * Disables blur event when onfocusout is set to false. Test added.
+  * Fixed value issue for radio buttons and checkboxes. Fixes #363
+  * Added test for rangeWords and fixed regex and bounds in method. Fixes #308
+  * Fixed TinyMCE Demo and added link on demo page. Fixes #382
+  * Changed localization message for min/max. Fixes #273
+  * Added pseudo selector for text input types to fix issue with default empty type attribute. Added tests and some test markup. Fixes #217
+  * Fixed delegate bug for dynamic-totals demo. Fixes #51
+  * Fix incorrect message for alphanumeric validator
+  * Removed incorrect false check on required attribute
+  * required attribute fix for non-html5 browsers. Fixes #301
+  * Added methods "require_from_group" and "skip_or_fill_minimum"
+  * Use correct iso code for swedish
+  * Updated demo HTML files to use HTML5 doctype
+  * Fixed regex issue for decimals without leading zeroes. Added new methods test. Fixes #41
+  * Introduce a elementValue method that normalizes only string values (don't touch array value of multi-select). Fixes #116
+  * Support for dynamically added submit buttons, and updated test case. Uses validateDelegate. Code from PR #9
+  * Fix bad double quote in test fixtures
+  * Fix maxWords method to include the upper bound, not exclude it. Fixes #284
+  * Fixed grammar error in german range validator message. Fixes #315
+  * Fixed handling of multiple class names for errorClass option. Test by Max Lynch. Fixes #280
+  * Fix jQuery.format usage, should be $.validator.format. Fixes #329
+  * Methods for 'all' UK phone numbers + UK postcodes
+  * Pattern method: Convert string param to RegExp. Fixes issue #223
+  * grammar error in german localization file
+  * Added Estonian localization for messages
+  * Improve tooltip handling on themerollered demo
+  * Add type="text" to input fields without type attribute to please qSA
+  * Update themerollered demo to use tooltip to show errors as overlay.
+  * Update themerollered demo to use latest jQuery UI (along with newer jQuery version). Move code around to speed up page load.
+  * Fixed min error message broken in Japanese.
+  * Update form plugin to latest version. Enhance the ajaxSubmit demo.
+  * Drop dateDE and numberDE methods from classRuleSettings, leftover from moving those to localized methods
+  * Passing submit event to submitHandler callback
+  * Fixed #219 - Fix valid() on elements with dependency-callback or dependency-expression.
+  * Improve build to remove dist dir to ensure only the current release gets zipped up
 
 1.9.0
 ---

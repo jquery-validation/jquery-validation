@@ -1,12 +1,4 @@
-1.3
----
-
-- checkout datejs.com for a proper date implementation -> complete but very heavy parser, currently overkill
-
-- rewrite required-method to use jQuery's extended val() on selects[/radios/checkboxes]
 - consider a field-validator object that encapsulates a single element and all methods working on it
-- export API browser
-- add example/support for other URL schemes like svn://....
 - document min/max/range methods for checkboxes/selects
 
 /**
@@ -112,8 +104,6 @@
  * @name jQuery.validator.prototype.hideErrors
  */
 
-- remove deprecated methods
-
 - css references
  - http://test5.caribmedia.com/CSS/Secrets/members/michiel/floating-forms.html
  - http://paularmstrongdesigns.com/projects/awesomeform/
@@ -121,7 +111,6 @@
 
 - consider validation on page load, disabling required-checks
 - completely rework showErrors: manually settings errors is currently extremely flawed and utterly useless, eg. errors disappear if some other validation is triggered
-- add custom event to remote validation for adding more parameters
 
 - document focusInvalid()
 - document validation lifecycle: setup (add event handlers), run validation (prepare form, validate elements, display errors/submit form)

@@ -40,7 +40,7 @@ test("Constructor", function() {
 });
 
 test("validate() without elements, with non-form elements", 0, function() {
-	$("#doesn'texist").validate();
+	$("#doesntexist").validate();
 });
 
 test("valid() plugin method", function() {
@@ -713,7 +713,7 @@ test("validating multiple checkboxes with 'required'", function() {
 test("dynamic form", function() {
 	var counter = 0;
 	function add() {
-		$("<input class='{required:true}' name='list" + counter++ + "' />").appendTo("#testForm2");
+		$("<input data-rule-required='true' name='list" + counter++ + "' />").appendTo("#testForm2");
 	}
 	function errors(expected, message) {
 		equal(expected, v.size(), message );
@@ -796,6 +796,22 @@ test("ajaxSubmit", function() {
 	jQuery("#signupForm").triggerHandler("submit");
 });
 
+test("validating groups settings parameter", function() {
+    var form = $("<form>");
+    var validate = form.validate({
+        groups: {
+            arrayGroup: ["input one", "input-two", "input three"],
+            stringGroup: "input-four input-five input-six"
+        },
+    });
+    equal(validate.groups["input one"], "arrayGroup");
+    equal(validate.groups["input-two"], "arrayGroup");
+    equal(validate.groups["input three"], "arrayGroup");
+    equal(validate.groups["input-four"], "stringGroup");
+    equal(validate.groups["input-five"], "stringGroup");
+    equal(validate.groups["input-six"], "stringGroup");
+});
+
 
 module("misc");
 
@@ -856,7 +872,7 @@ test("successlist", function() {
 
 test("success isn't called for optional elements", function() {
 	expect(4);
-	equal( "", $("#firstname").removeClass().val() );
+	equal( "", $("#firstname").removeAttr("data-rule-required").removeAttr("data-rule-minlength").val() );
 	$("#something").remove();
 	$("#lastname").remove();
 	$("#errorFirstname").remove();
@@ -888,7 +904,7 @@ test("success callback with element", function() {
 
 test("all rules are evaluated even if one returns a dependency-mistmatch", function() {
 	expect(6);
-	equal( "", $("#firstname").removeClass().val() );
+	equal( "", $("#firstname").removeAttr("data-rule-required").removeAttr("data-rule-minlength").val() );
 	$("#lastname").remove();
 	$("#errorFirstname").remove();
 	$.validator.addMethod("custom1", function() {

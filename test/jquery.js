@@ -4,7 +4,7 @@ var parts = document.location.search.slice( 1 ).split( "&" ),
 	length = parts.length,
 	i = 0,
 	current,
-	version = "1.3.2",
+	version = "1.8.3",
 	file = "http://code.jquery.com/jquery-git.js";
 
 for ( ; i < length; i++ ) {
