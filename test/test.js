@@ -104,7 +104,7 @@ test("addMethod2", function() {
 		e = $('#text1')[0];
 	e.value = "";
 	strictEqual( v.element(e), true, "Rule is optional, valid" );
-	equal( 0, v.size() );
+	equal( v.size(), 0 );
 	e.value = "ko";
 	ok( !v.element(e), "Invalid, doesn't contain one of the required characters" );
 	e.value = "ko1";
@@ -293,10 +293,10 @@ test("showErrors()", function() {
 	var element = $('#firstname')[0];
 	var v = $('#testForm1').validate();
 	ok( errorLabel.is(":hidden") );
-	equal( 0, $("label.error[for=lastname]").size() );
+	equal( $("label.error[for=lastname]").size(), 0 );
 	v.showErrors({"firstname": "required", "lastname": "bla"});
-	equal( true, errorLabel.is(":visible") );
-	equal( true, $("label.error[for=lastname]").is(":visible") );
+	equal( errorLabel.is(":visible"), true );
+	equal( $("label.error[for=lastname]").is(":visible"), true );
 });
 
 test("showErrors(), allow empty string and null as default message", function() {
@@ -315,11 +315,11 @@ test("showErrors(), allow empty string and null as default message", function() 
 		}
 	});
 	ok( !$("#username").valid() );
-	equal( "", $("label.error[for=username]").text() );
+	equal( $("label.error[for=username]").text(), "" );
 
 	$("#username").val("ab");
 	ok( !$("#username").valid() );
-	equal( "too short", $("label.error[for=username]").text() );
+	equal( $("label.error[for=username]").text(), "too short" );
 
 	$("#username").val("abc");
 	ok( $("#username").valid() );
@@ -332,8 +332,8 @@ test("showErrors() - external messages", function() {
 	var messages = $.extend({}, $.validator.messages);
 	$.validator.addMethod("foo", function() { return false; });
 	$.validator.addMethod("bar", function() { return false; });
-	equal( 0, $("#testForm4 label.error[for=f1]").size() );
-	equal( 0, $("#testForm4 label.error[for=f2]").size() );
+	equal( $("#testForm4 label.error[for=f1]").size(), 0 );
+	equal( $("#testForm4 label.error[for=f2]").size(), 0 );
 	var form = $('#testForm4')[0];
 	var v = $(form).validate({
 		messages: {
@@ -354,10 +354,10 @@ test("showErrors() - custom handler", function() {
 	var v = $('#testForm1').validate({
 		showErrors: function(errorMap, errorList) {
 			equal( v, this );
-			equal( v.errorList, errorList );
-			equal( v.errorMap, errorMap );
-			equal( "buga", errorMap.firstname );
-			equal( "buga", errorMap.lastname );
+			equal( errorList, v.errorList );
+			equal( errorMap, v.errorMap );
+			equal( errorMap.firstname, "buga" );
+			equal( errorMap.lastname, "buga" );
 		}
 	});
 	v.form();
@@ -394,11 +394,11 @@ test("option: (un)highlight, custom", function() {
 	expect(5);
 	$("#testForm1clean").validate({
 		highlight: function(element, errorClass) {
-			equal( "invalid", errorClass );
+			equal( errorClass, "invalid" );
 			$(element).hide();
 		},
 		unhighlight: function(element, errorClass) {
-			equal( "invalid", errorClass )
+			equal( errorClass, "invalid" )
 			$(element).show();
 		},
 		errorClass: "invalid",
@@ -503,7 +503,7 @@ test("elements() order", function() {
 
 test("defaultMessage(), empty title is ignored", function() {
 	var v = $("#userForm").validate();
-	equal( "This field is required.", v.defaultMessage($("#username")[0], "required") );
+	equal( v.defaultMessage($("#username")[0], "required"), "This field is required." );
 });
 
 test("formatAndAdd", function() {
@@ -511,14 +511,14 @@ test("formatAndAdd", function() {
 	var v = $("#form").validate();
 	var fakeElement = { form: $("#form")[0], name: "bar" };
 	v.formatAndAdd(fakeElement, {method: "maxlength", parameters: 2})
-	equal( "Please enter no more than 2 characters.", v.errorList[0].message );
-	equal( "bar", v.errorList[0].element.name );
+	equal( v.errorList[0].message, "Please enter no more than 2 characters." );
+	equal( v.errorList[0].element.name, "bar" );
 
 	v.formatAndAdd(fakeElement, {method: "range", parameters:[2,4]})
-	equal( "Please enter a value between 2 and 4.", v.errorList[1].message );
+	equal( v.errorList[1].message, "Please enter a value between 2 and 4." );
 
 	v.formatAndAdd(fakeElement, {method: "range", parameters:[0,4]})
-	equal( "Please enter a value between 0 and 4.", v.errorList[2].message );
+	equal( v.errorList[2].message, "Please enter a value between 0 and 4." );
 });
 
 test("formatAndAdd2", function() {
@@ -526,12 +526,12 @@ test("formatAndAdd2", function() {
 	var v = $("#form").validate();
 	var fakeElement = { form: $("#form")[0], name: "bar" };
 	jQuery.validator.messages.test1 = function(param, element) {
-		equal( v, this );
-		equal( 0, param );
+		equal( this, v );
+		equal( param, 0 );
 		return "element " + element.name + " is not valid";
 	};
 	v.formatAndAdd(fakeElement, {method: "test1", parameters: 0})
-	equal( "element bar is not valid", v.errorList[0].message );
+	equal(v.errorList[0].message, "element bar is not valid");
 });
 
 test("formatAndAdd, auto detect substitution string", function() {
@@ -550,7 +550,7 @@ test("formatAndAdd, auto detect substitution string", function() {
 	});
 	$("#firstnamec").val("abc");
 	v.form();
-	equal( "at least 5, up to 10", v.errorList[0].message );
+	equal( v.errorList[0].message, "at least 5, up to 10" );
 })
 
 test("error containers, simple", function() {
@@ -566,19 +566,19 @@ test("error containers, simple", function() {
 
 	v.prepareForm();
 	ok( v.valid(), "form is valid" );
-	equal( 0, container.find("label").length, "There should be no error labels" );
-	equal( "", container.find("h3").html() );
+	equal( container.find("label").length, 0, "There should be no error labels" );
+	equal( container.find("h3").html(), "" );
 
 	v.prepareForm();
 	v.errorList = [{message:"bar", element: {name:"foo"}}, {message: "necessary", element: {name:"required"}}];
 	ok( !v.valid(), "form is not valid after adding errors manually" );
 	v.showErrors();
-	equal( container.find("label").length, 2, "There should be two error labels" );
+	equal( 2, container.find("label").length, "There should be two error labels" );
 	ok( container.is(":visible"), "Check that the container is visible" );
 	container.find("label").each(function() {
 		ok( $(this).is(":visible"), "Check that each label is visible" );
 	});
-	equal( "There are 2 errors in your form.", container.find("h3").html() );
+	equal(container.find("h3").html(), "There are 2 errors in your form.");
 
 	v.prepareForm();
 	ok( v.valid(), "form is valid after a reset" );
@@ -601,21 +601,21 @@ test("error containers, with labelcontainer I", function() {
 	});
 
 	ok( v.valid(), "form is valid" );
-	equal( 0, container.find("label").length, "There should be no error labels in the container" );
-	equal( 0, labelcontainer.find("label").length, "There should be no error labels in the labelcontainer" );
-	equal( 0, labelcontainer.find("li").length, "There should be no lis labels in the labelcontainer" );
+	equal( container.find("label").length, 0, "There should be no error labels in the container" );
+	equal( labelcontainer.find("label").length, 0, "There should be no error labels in the labelcontainer" );
+	equal( labelcontainer.find("li").length, 0, "There should be no lis labels in the labelcontainer" );
 
 	v.errorList = [{message:"bar", element: {name:"foo"}}, {name: "required", message: "necessary", element: {name:"required"}}];
 	ok( !v.valid(), "form is not valid after adding errors manually" );
 	v.showErrors();
-	equal( 0, container.find("label").length, "There should be no error label in the container" );
-	equal( 2, labelcontainer.find("label").length, "There should be two error labels in the labelcontainer" );
-	equal( 2, labelcontainer.find("li").length, "There should be two error lis in the labelcontainer" );
+	equal( container.find("label").length, 0, "There should be no error label in the container" );
+	equal( labelcontainer.find("label").length, 2, "There should be two error labels in the labelcontainer" );
+	equal( labelcontainer.find("li").length, 2, "There should be two error lis in the labelcontainer" );
 	ok( container.is(":visible"), "Check that the container is visible" );
 	ok( labelcontainer.is(":visible"), "Check that the labelcontainer is visible" );
 	var labels = labelcontainer.find("label").each(function() {
 		ok( $(this).is(":visible"), "Check that each label is visible1" );
-		equal( "li", $(this).parent()[0].tagName.toLowerCase(), "Check that each label is wrapped in an li" );
+		equal( $(this).parent()[0].tagName.toLowerCase(), "li", "Check that each label is wrapped in an li" );
 		ok( $(this).parent("li").is(":visible"), "Check that each parent li is visible" );
 	});
 });
@@ -635,23 +635,23 @@ test("errorcontainer, show/hide only on submit", function() {
 			this.defaultShowErrors();
 		}
 	});
-	equal( "", container.html(), "must be empty" );
-	equal( "", labelContainer.html(), "must be empty" );
+	equal( container.html(), "", "must be empty" );
+	equal( labelContainer.html(), "", "must be empty" );
 	// validate whole form, both showErrors and invalidHandler must be called once
 	// preferably invalidHandler first, showErrors second
 	ok( !v.form(), "invalid form" );
-	equal( 2, labelContainer.find("label").length );
-	equal( "There are 2 errors in your form.", container.html() );
+	equal( labelContainer.find("label").length, 2 );
+	equal( container.html(), "There are 2 errors in your form." );
 	ok( labelContainer.is(":visible"), "must be visible" );
 	ok( container.is(":visible"), "must be visible" );
 
 	$("#firstname").val("hix").keyup();
 	$("#testForm1").triggerHandler("keyup", [jQuery.event.fix({ type: "keyup", target: $("#firstname")[0] })]);
-	equal( 1, labelContainer.find("label:visible").length );
-	equal( "There are 1 errors in your form.", container.html() );
+	equal( labelContainer.find("label:visible").length, 1 );
+	equal( container.html(), "There are 1 errors in your form." );
 
 	$("#lastname").val("abc");
-	ok( v.form(), "Form now valid, trigger showErrors but not invalid-form" );
+	ok( "Form now valid, trigger showErrors but not invalid-form", v.form() );
 });
 
 test("option invalidHandler", function() {
@@ -716,7 +716,7 @@ test("dynamic form", function() {
 		$("<input data-rule-required='true' name='list" + counter++ + "' />").appendTo("#testForm2");
 	}
 	function errors(expected, message) {
-		equal(expected, v.size(), message );
+		equal(v.size(), expected, message);
 	}
 	var v = $("#testForm2").validate();
 	v.form();
@@ -747,15 +747,15 @@ test("dynamic form", function() {
 test("idOrName()", function() {
 	expect(4);
 	var v = $("#testForm1").validate();
-	equal( "form8input", v.idOrName( $("#form8input")[0] ) );
-	equal( "check", v.idOrName( $("#form6check1")[0] ) );
-	equal( "agree", v.idOrName( $("#agb")[0] ) );
-	equal( "button", v.idOrName( $("#form :button")[0] ) );
+	equal( v.idOrName( $("#form8input")[0] ), "form8input" );
+	equal( v.idOrName( $("#form6check1")[0] ), "check" );
+	equal( v.idOrName( $("#agb")[0] ), "agree" );
+	equal( v.idOrName( $("#form :button")[0] ), "button" );
 });
 
 test("resetForm()", function() {
 	function errors(expected, message) {
-		equal(expected, v.size(), message );
+		equal(v.size(), expected, message);
 	}
 	var v = $("#testForm1").validate();
 	v.form();
@@ -763,7 +763,7 @@ test("resetForm()", function() {
 	$("#firstname").val("hiy");
 	v.resetForm();
 	errors(0);
-	equal("", $("#firstname").val(), "form plugin is included, therefor resetForm must also reset inputs, not only errors");
+	equal($("#firstname").val(), "", "form plugin is included, therefor resetForm must also reset inputs, not only errors");
 });
 
 test("message from title", function() {
@@ -787,7 +787,7 @@ test("ajaxSubmit", function() {
 		submitHandler: function(form) {
 			jQuery(form).ajaxSubmit({
 				success: function(response) {
-					equal("Hi Peter, welcome back.", response);
+					equal( response, "Hi Peter, welcome back." );
 					start();
 				}
 			});
@@ -835,7 +835,7 @@ test("success option", function() {
 
 test("success option2", function() {
 	expect(5);
-	equal( "", $("#firstname").val() );
+	equal( $("#firstname").val(), "" );
 	var v = $("#testForm1").validate({
 		success: "valid"
 	});
@@ -850,16 +850,16 @@ test("success option2", function() {
 
 test("success option3", function() {
 	expect(5);
-	equal( "", $("#firstname").val() );
+	equal( $("#firstname").val(), "" );
 	$("#errorFirstname").remove();
 	var v = $("#testForm1").validate({
 		success: "valid"
 	});
-	equal( 0, $("#testForm1 label").size() );
+	equal( $("#testForm1 label").size(), 0 );
 	$("#firstname").val("hi");
 	v.form();
 	var labels = $("#testForm1 label");
-	equal( 3, labels.size() );
+	equal( labels.size(), 3 );
 	ok( labels.eq(0).is(".valid") );
 	ok( !labels.eq(1).is(".valid") );
 });
@@ -867,7 +867,7 @@ test("success option3", function() {
 test("successlist", function() {
 	var v = $("#form").validate({ success: "xyz" });
 	v.form();
-	equal(0, v.successList.length);
+	equal( v.successList.length, 0 );
 });
 
 test("success isn't called for optional elements", function() {
@@ -884,11 +884,11 @@ test("success isn't called for optional elements", function() {
 			firstname: "email"
 		}
 	});
-	equal( 0, $("#testForm1 label").size() );
+	equal( $("#testForm1 label").size(), 0 );
 	v.form();
-	equal( 0, $("#testForm1 label").size() );
+	equal( $("#testForm1 label").size(), 0 );
 	$("#firstname").valid();
-	equal( 0, $("#testForm1 label").size() );
+	equal( $("#testForm1 label").size(), 0 );
 });
 
 test("success callback with element", function() {
@@ -904,7 +904,7 @@ test("success callback with element", function() {
 
 test("all rules are evaluated even if one returns a dependency-mistmatch", function() {
 	expect(6);
-	equal( "", $("#firstname").removeAttr("data-rule-required").removeAttr("data-rule-minlength").val() );
+	equal( $("#firstname").removeAttr("data-rule-required").removeAttr("data-rule-minlength").val(), "" );
 	$("#lastname").remove();
 	$("#errorFirstname").remove();
 	$.validator.addMethod("custom1", function() {
@@ -916,11 +916,11 @@ test("all rules are evaluated even if one returns a dependency-mistmatch", funct
 			firstname: {email:true, custom1: true}
 		}
 	});
-	equal( 0, $("#testForm1 label").size() );
+	equal( $("#testForm1 label").size(), 0 );
 	v.form();
-	equal( 0, $("#testForm1 label").size() );
+	equal( $("#testForm1 label").size(), 0 );
 	$("#firstname").valid();
-	equal( 0, $("#testForm1 label").size() );
+	equal( $("#testForm1 label").size(), 0 );
 
 	delete $.validator.methods.custom1;
 	delete $.validator.messages.custom1;
@@ -928,21 +928,21 @@ test("all rules are evaluated even if one returns a dependency-mistmatch", funct
 
 test("messages", function() {
 	var m = jQuery.validator.messages;
-	equal( "Please enter no more than 0 characters.", m.maxlength(0) );
-	equal( "Please enter at least 1 characters.", m.minlength(1) );
-	equal( "Please enter a value between 1 and 2 characters long.", m.rangelength([1, 2]) );
-	equal( "Please enter a value less than or equal to 1.", m.max(1) );
-	equal( "Please enter a value greater than or equal to 0.", m.min(0) );
-	equal( "Please enter a value between 1 and 2.", m.range([1, 2]) );
+	equal( m.maxlength(0), "Please enter no more than 0 characters." );
+	equal( m.minlength(1), "Please enter at least 1 characters." );
+	equal( m.rangelength([1, 2]), "Please enter a value between 1 and 2 characters long." );
+	equal( m.max(1), "Please enter a value less than or equal to 1." );
+	equal( m.min(0), "Please enter a value greater than or equal to 0." );
+	equal( m.range([1, 2]), "Please enter a value between 1 and 2." );
 });
 
 test("jQuery.validator.format", function() {
-	equal( "Please enter a value between 0 and 1.", jQuery.validator.format("Please enter a value between {0} and {1}.", 0, 1) );
-	equal( "0 is too fast! Enter a value smaller then 0 and at least -15", jQuery.validator.format("{0} is too fast! Enter a value smaller then {0} and at least {1}", 0, -15) );
+	equal(jQuery.validator.format("Please enter a value between {0} and {1}.", 0, 1), "Please enter a value between 0 and 1.");
+	equal( jQuery.validator.format("{0} is too fast! Enter a value smaller then {0} and at least {1}", 0, -15), "0 is too fast! Enter a value smaller then 0 and at least -15" );
 	var template = jQuery.validator.format("{0} is too fast! Enter a value smaller then {0} and at least {1}");
-	equal( "0 is too fast! Enter a value smaller then 0 and at least -15", template(0, -15) );
+	equal( template(0, -15), "0 is too fast! Enter a value smaller then 0 and at least -15" );
 	template = jQuery.validator.format("Please enter a value between {0} and {1}.");
-	equal( "Please enter a value between 1 and 2.", template([1, 2]) );
+	equal( template([1, 2]), "Please enter a value between 1 and 2." );
 });
 
 test("option: ignore", function() {
@@ -950,7 +950,7 @@ test("option: ignore", function() {
 		ignore: "[name=lastname]"
 	});
 	v.form();
-	equal( 1, v.size() );
+	equal( v.size(), 1 );
 });
 
 test("option: subformRequired", function() {
@@ -961,10 +961,10 @@ test("option: subformRequired", function() {
 	}, "");
 	var v = $("#subformRequired").validate();
 	v.form();
-	equal( 1, v.size() );
+	equal( v.size(), 1 );
 	$("#bill_to_co").attr("checked", false);
 	v.form();
-	equal( 2, v.size() );
+	equal( v.size(), 2 );
 
 	delete $.validator.methods.billingRequired;
 	delete $.validator.messages.billingRequired;
@@ -974,33 +974,33 @@ module("expressions");
 
 test("expression: :blank", function() {
 	var e = $("#lastname")[0];
-	equal( 1, $(e).filter(":blank").length );
+	equal( $(e).filter(":blank").length, 1 );
 	e.value = " ";
-	equal( 1, $(e).filter(":blank").length );
+	equal( $(e).filter(":blank").length, 1 );
 	e.value = "   "
-	equal( 1, $(e).filter(":blank").length );
+	equal( $(e).filter(":blank").length, 1 );
 	e.value= " a ";
-	equal( 0, $(e).filter(":blank").length );
+	equal( $(e).filter(":blank").length, 0 );
 });
 
 test("expression: :filled", function() {
 	var e = $("#lastname")[0];
-	equal( 0, $(e).filter(":filled").length );
+	equal( $(e).filter(":filled").length, 0 );
 	e.value = " ";
-	equal( 0, $(e).filter(":filled").length );
+	equal( $(e).filter(":filled").length, 0 );
 	e.value = "   "
-	equal( 0, $(e).filter(":filled").length );
+	equal( $(e).filter(":filled").length, 0 );
 	e.value= " a ";
-	equal( 1, $(e).filter(":filled").length );
+	equal( $(e).filter(":filled").length, 1 );
 });
 
 test("expression: :unchecked", function() {
 	var e = $("#check2")[0];
-	equal( 1, $(e).filter(":unchecked").length );
+	equal( $(e).filter(":unchecked").length, 1 );
 	e.checked = true;
-	equal( 0, $(e).filter(":unchecked").length );
+	equal( $(e).filter(":unchecked").length, 0 );
 	e.checked = false;
-	equal( 1, $(e).filter(":unchecked").length );
+	equal( $(e).filter(":unchecked").length, 1 );
 });
 
 module("events");
@@ -1049,7 +1049,7 @@ test("validate on blur", function() {
 
 test("validate on keyup", function() {
 	function errors(expected, message) {
-		equal(expected, v.size(), message );
+		equal(v.size(), expected, message);
 	}
 	function keyup(target) {
 		target.trigger("keyup");
@@ -1079,7 +1079,7 @@ test("validate on keyup", function() {
 
 test("validate on not keyup, only blur", function() {
 	function errors(expected, message) {
-		equal(expected, v.size(), message );
+		equal( v.size(), expected, message );
 	}
 	var e = $("#firstname");
 	var v = $("#testForm1").validate({
@@ -1096,7 +1096,7 @@ test("validate on not keyup, only blur", function() {
 
 test("validate on keyup and blur", function() {
 	function errors(expected, message) {
-		equal(expected, v.size(), message );
+		equal( expected, v.size(), message );
 	}
 	var e = $("#firstname");
 	var v = $("#testForm1").validate();
@@ -1110,7 +1110,7 @@ test("validate on keyup and blur", function() {
 
 test("validate email on keyup and blur", function() {
 	function errors(expected, message) {
-		equal(expected, v.size(), message );
+		equal( v.size(), expected, message );
 	}
 	var e = $("#firstname");
 	var v = $("#testForm1").validate();
@@ -1126,7 +1126,7 @@ test("validate email on keyup and blur", function() {
 
 test("validate checkbox on click", function() {
 	function errors(expected, message) {
-		equal(expected, v.size(), message );
+		equal( v.size(), expected, message );
 	}
 	function trigger(element) {
 		element.click();
@@ -1152,7 +1152,7 @@ test("validate checkbox on click", function() {
 
 test("validate multiple checkbox on click", function() {
 	function errors(expected, message) {
-		equal(expected, v.size(), message );
+		equal(v.size(), expected, message);
 	}
 	function trigger(element) {
 		element.click();
@@ -1197,15 +1197,15 @@ test("correct checkbox receives the error", function(){
             }
         }
     });
-    equal(false, v.form());
+    equal( v.form(), false );
     trigger(e1);
-    equal(false, v.form());
-    ok(v.errorList[0].element.id === v.currentElements[0].id, "the proper checkbox has the error AND is present in currentElements");
+    equal( v.form(), false );
+    deepEqual(v.errorList[0].element.id, v.currentElements[0].id, "the proper checkbox has the error AND is present in currentElements");
 });
 
 test("validate radio on click", function() {
 	function errors(expected, message) {
-		equal(expected, v.size(), message );
+		equal( v.size(), expected, message );
 	}
 	function trigger(element) {
 		element.click();
@@ -1220,7 +1220,7 @@ test("validate radio on click", function() {
 		}
 	});
 	errors(0);
-	equal( false, v.form() );
+	equal( v.form(), false );
 	errors(1);
 	trigger(e2);
 	errors(0);
@@ -1230,7 +1230,7 @@ test("validate radio on click", function() {
 
 test("validate input with no type attribute, defaulting to text", function() {
 	function errors(expected, message) {
-		equal(expected, v.size(), message );
+		equal( v.size(), expected, message );
 	}
 	var v = $("#testForm12").validate();
 	var e = $("#testForm12text");
@@ -1250,9 +1250,9 @@ test("ignore hidden elements", function(){
         }
     });
     form.get(0).reset();
-    ok(! validate.form(), "form should be initially invalid");
+    ok( !validate.form(), "form should be initially invalid" );
     $('#userForm [name=username]').hide();
-    ok(validate.form(), "hidden elements should be ignored by default");
+    ok( validate.form(), "hidden elements should be ignored by default" );
 });
 
 test("ignore hidden elements at start", function(){
