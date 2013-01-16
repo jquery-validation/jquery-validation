@@ -688,13 +688,13 @@ $.extend($.validator, {
 				label.removeClass( this.settings.validClass ).addClass( this.settings.errorClass );
 
 				// check if we have a generated label, replace the message then
-				if ( label.attr("generated") ) {
+				if ( label.prop("generated") ) {
 					label.html(message);
 				}
 			} else {
 				// create label
 				label = $("<" + this.settings.errorElement + "/>")
-					.attr({"for":  this.idOrName(element), generated: true})
+					.prop({"for":  this.idOrName(element), generated: true})
 					.addClass(this.settings.errorClass)
 					.html(message || "");
 				if ( this.settings.wrapper ) {
