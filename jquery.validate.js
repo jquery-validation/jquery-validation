@@ -32,7 +32,7 @@ $.extend($.fn, {
 		}
 
 		// Add novalidate tag if HTML5.
-		this.attr('novalidate', 'novalidate');
+		this.prop('novalidate', true);
 
 		validator = new $.validator( options, this[0] );
 		$.data(this[0], 'validator', validator);
@@ -60,7 +60,7 @@ $.extend($.fn, {
 					if ( validator.settings.submitHandler ) {
 						if (validator.submitButton) {
 							// insert a hidden input as a replacement for the missing submit button
-							hidden = $("<input type='hidden'/>").attr("name", validator.submitButton.name).val(validator.submitButton.value).appendTo(validator.currentForm);
+							hidden = $("<input type='hidden'/>").prop("name", validator.submitButton.name).val(validator.submitButton.value).appendTo(validator.currentForm);
 						}
 						validator.settings.submitHandler.call( validator, validator.currentForm, event );
 						if (validator.submitButton) {
@@ -105,13 +105,30 @@ $.extend($.fn, {
 			return valid;
 		}
 	},
+
+	// method to bridge attr() with prop() by doing value type conversion when getting a value with attr()
+	attrConv: function (property) {
+//		return this.prop(property);
+		var value = this.attr(property);
+		var asInt = +value;
+
+		if (!isNaN(asInt))
+			return asInt;
+		if (value === "false")
+			return false;
+		if (value === "true")
+			return true;
+
+		return value;
+	},
+
 	// attributes: space seperated list of attributes to retrieve and remove
 	removeAttrs: function(attributes) {
 		var result = {},
 			$element = this;
 		$.each(attributes.split(/\s/), function(index, value) {
-			result[value] = $element.attr(value);
-			$element.removeAttr(value);
+			result[value] = $element.prop(value) || $element.attrConv(value);
+			$element.prop(value, false).removeAttr(value);
 		});
 		return result;
 	},
@@ -514,11 +531,11 @@ $.extend($.validator, {
 		},
 
 		elementValue: function( element ) {
-			var type = $(element).attr('type'),
+			var type = $(element).prop('type'),
 				val = $(element).val();
 
 			if ( type === 'radio' || type === 'checkbox' ) {
-				return $('input[name="' + $(element).attr('name') + '"]:checked').val();
+				return $('input[name="' + $(element).prop('name') + '"]:checked').val();
 			}
 
 			if ( typeof val === 'string' ) {
@@ -577,7 +594,7 @@ $.extend($.validator, {
 		// return the custom message for the given element and validation method
 		// specified in the element's HTML5 data attribute
 		customDataMessage: function(element, method) {
-			return $(element).data('msg-' + method.toLowerCase()) || (element.attributes && $(element).attr('data-msg-' + method.toLowerCase()));
+			return $(element).data('msg-' + method.toLowerCase()) || (element.attributes && $(element).prop('data-msg-' + method.toLowerCase()));
 		},
 
 		// return the custom message for the given element name and validation method
@@ -675,13 +692,13 @@ $.extend($.validator, {
 				label.removeClass( this.settings.validClass ).addClass( this.settings.errorClass );
 
 				// check if we have a generated label, replace the message then
-				if ( label.attr("generated") ) {
+				if ( label.prop("generated") ) {
 					label.html(message);
 				}
 			} else {
 				// create label
 				label = $("<" + this.settings.errorElement + "/>")
-					.attr({"for":  this.idOrName(element), generated: true})
+					.prop({"for":  this.idOrName(element), generated: true})
 					.addClass(this.settings.errorClass)
 					.html(message || "");
 				if ( this.settings.wrapper ) {
@@ -711,7 +728,7 @@ $.extend($.validator, {
 		errorsFor: function(element) {
 			var name = this.idOrName(element);
 			return this.errors().filter(function() {
-				return $(this).attr('for') === name;
+				return $(this).prop('for') === name;
 			});
 		},
 
@@ -822,7 +839,7 @@ $.extend($.validator, {
 
 	classRules: function(element) {
 		var rules = {};
-		var classes = $(element).attr('class');
+		var classes = $(element).prop('class');
 		if ( classes ) {
 			$.each(classes.split(' '), function() {
 				if (this in $.validator.classRuleSettings) {
@@ -851,7 +868,7 @@ $.extend($.validator, {
 				// force non-HTML5 browsers to return bool
 				value = !!value;
 			} else {
-				value = $element.attr(method);
+				value = $element.prop(method) || $element.attrConv(method);
 			}
 
 			if (value) {
