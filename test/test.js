@@ -696,7 +696,7 @@ test("findLastActive()", function() {
 
 test("validating multiple checkboxes with 'required'", function() {
 	expect(3);
-	var checkboxes = $("#form input[name=check3]").attr("checked", false);
+	var checkboxes = $("#form input[name=check3]").prop("checked", false);
 	equal(checkboxes.size(), 5);
 	var v = $("#form").validate({
 		rules: {
@@ -705,7 +705,7 @@ test("validating multiple checkboxes with 'required'", function() {
 	});
 	v.form();
 	equal(v.size(), 1);
-	checkboxes.filter(":last").attr("checked", true);
+	checkboxes.filter(":last").prop("checked", true);
 	v.form();
 	equal(v.size(), 0);
 });
