@@ -110,12 +110,15 @@ $.extend($.fn, {
 		var value = this.attr(property);
 		var asInt = +value;
 
-		if (!isNaN(asInt))
+		if (!isNaN(asInt)) {			
 			return asInt;
-		if (value === "false")
+		}
+		if (value === "false") {
 			return false;
-		if (value === "true")
+		}
+		if (value === "true") {
 			return true;
+		}
 
 		return value;
 	},
