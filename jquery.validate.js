@@ -104,7 +104,9 @@ $.extend($.fn, {
 		}
 	},
 
-	attrConv: function(property) {
+	// method to bridge attr() with prop() by doing value type conversion when getting a value with attr()
+	attrConv: function (property) {
+//		return this.prop(property);
 		var value = this.attr(property);
 		var asInt = +value;
 
