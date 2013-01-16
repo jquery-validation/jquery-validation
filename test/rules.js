@@ -252,7 +252,7 @@ test("rules(), add and remove static rules", function() {
 });
 
 test("rules(), add messages", function() {
-	$("#firstnamec").attr("title", null);
+	$("#firstnamec").prop("title", null);
 	var v = $("#testForm1clean").validate({
 		rules: {
 			firstname: "required"

@@ -475,7 +475,7 @@ test("remote extensions", function() {
 asyncTest("remote radio correct value sent", function() {
 	expect(1);
 	var e = $("#testForm10Radio2");
-	e.attr('checked', 'checked');
+	e.prop('checked', true);
 	var v = $("#testForm10").validate({
 		rules: {
 			testForm10Radio: {
@@ -745,9 +745,9 @@ test('require_from_group', function() {
 
 	fillFormWithValuesAndExpect('#productInfo', [], false);
 	fillFormWithValuesAndExpect('#productInfo', [123], false);
-	$('#productInfo input[type="checkbox"]').attr('checked', 'checked');
+	$('#productInfo input[type="checkbox"]').prop('checked', true);
 	fillFormWithValuesAndExpect('#productInfo', [123], true);
-	$('#productInfo input[type="checkbox"]').removeAttr('checked');
+	$('#productInfo input[type="checkbox"]').prop('checked', false);
 	fillFormWithValuesAndExpect('#productInfo', [123, 'widget'], true);
 	fillFormWithValuesAndExpect('#productInfo', [123, 'widget', 'red'], true);
 	fillFormWithValuesAndExpect('#productInfo', [123, 'widget', 'red'], true);
