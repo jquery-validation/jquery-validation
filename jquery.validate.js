@@ -103,13 +103,28 @@ $.extend($.fn, {
 			return valid;
 		}
 	},
+
+	attrConv: function(property) {
+		var value = this.attr(property);
+		var asInt = +value;
+
+		if (!isNaN(asInt))
+			return asInt;
+		if (value === "false")
+			return false;
+		if (value === "true")
+			return true;
+
+		return value;
+	},
+
 	// attributes: space seperated list of attributes to retrieve and remove
 	removeAttrs: function(attributes) {
 		var result = {},
 			$element = this;
 		$.each(attributes.split(/\s/), function(index, value) {
-			result[value] = $element.attr(value);
-			$element.removeAttr(value);
+			result[value] = $element.prop(value) || $element.attrConv(value);
+			$element.prop(value, false).removeAttr(value);
 		});
 		return result;
 	},
@@ -849,7 +864,7 @@ $.extend($.validator, {
 				// force non-HTML5 browsers to return bool
 				value = !!value;
 			} else {
-				value = $element.attr(method);
+				value = $element.prop(method) || $element.attrConv(method);
 			}
 
 			if (value) {
