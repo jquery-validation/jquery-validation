@@ -30,7 +30,7 @@ $.extend($.fn, {
 		}
 
 		// Add novalidate tag if HTML5.
-		this.attr('novalidate', 'novalidate');
+		this.prop('novalidate', true);
 
 		validator = new $.validator( options, this[0] );
 		$.data(this[0], 'validator', validator);
@@ -58,7 +58,7 @@ $.extend($.fn, {
 					if ( validator.settings.submitHandler ) {
 						if (validator.submitButton) {
 							// insert a hidden input as a replacement for the missing submit button
-							hidden = $("<input type='hidden'/>").attr("name", validator.submitButton.name).val(validator.submitButton.value).appendTo(validator.currentForm);
+							hidden = $("<input type='hidden'/>").prop("name", validator.submitButton.name).val(validator.submitButton.value).appendTo(validator.currentForm);
 						}
 						validator.settings.submitHandler.call( validator, validator.currentForm, event );
 						if (validator.submitButton) {
@@ -512,11 +512,11 @@ $.extend($.validator, {
 		},
 
 		elementValue: function( element ) {
-			var type = $(element).attr('type'),
+			var type = $(element).prop('type'),
 				val = $(element).val();
 
 			if ( type === 'radio' || type === 'checkbox' ) {
-				return $('input[name="' + $(element).attr('name') + '"]:checked').val();
+				return $('input[name="' + $(element).prop('name') + '"]:checked').val();
 			}
 
 			if ( typeof val === 'string' ) {
@@ -575,7 +575,7 @@ $.extend($.validator, {
 		// return the custom message for the given element and validation method
 		// specified in the element's HTML5 data attribute
 		customDataMessage: function(element, method) {
-			return $(element).data('msg-' + method.toLowerCase()) || (element.attributes && $(element).attr('data-msg-' + method.toLowerCase()));
+			return $(element).data('msg-' + method.toLowerCase()) || (element.attributes && $(element).prop('data-msg-' + method.toLowerCase()));
 		},
 
 		// return the custom message for the given element name and validation method
@@ -709,7 +709,7 @@ $.extend($.validator, {
 		errorsFor: function(element) {
 			var name = this.idOrName(element);
 			return this.errors().filter(function() {
-				return $(this).attr('for') === name;
+				return $(this).prop('for') === name;
 			});
 		},
 
@@ -820,7 +820,7 @@ $.extend($.validator, {
 
 	classRules: function(element) {
 		var rules = {};
-		var classes = $(element).attr('class');
+		var classes = $(element).prop('class');
 		if ( classes ) {
 			$.each(classes.split(' '), function() {
 				if (this in $.validator.classRuleSettings) {
