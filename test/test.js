@@ -69,11 +69,11 @@ test("valid() plugin method, special handling for checkable groups", function() 
 	// rule is defined on first checkbox, must apply to others, too
 	var checkable = $("#checkable2");
 	ok( !checkable.valid(), "must be invalid, not checked yet" );
-	checkable.attr("checked", true);
+	checkable.prop("checked", true);
 	ok( checkable.valid(), "valid, is now checked" );
-	checkable.attr("checked", false);
+	checkable.prop("checked", false);
 	ok( !checkable.valid(), "invalid again" );
-	$("#checkable3").attr("checked", true);
+	$("#checkable3").prop("checked", true);
 	ok( checkable.valid(), "valid, third box is checked" );
 });
 
@@ -126,9 +126,9 @@ test("form(): checkboxes: min/required", function() {
 	var form = $('#testForm6')[0];
 	var v = $(form).validate();
 	ok( !v.form(), 'Invalid form' );
-	$('#form6check1').attr("checked", true);
+	$('#form6check1').prop("checked", true);
 	ok( !v.form(), 'Invalid form' );
-	$('#form6check2').attr("checked", true);
+	$('#form6check2').prop("checked", true);
 	ok( v.form(), 'Valid form' );
 });
 
@@ -138,14 +138,14 @@ test("form(): radio buttons: required", function () {
 
 	var v = $(form).validate({ rules: { testForm10Radio: "required"} });
 	ok(!v.form(), 'Invalid Form');
-	equal($('#testForm10Radio1').attr('class'), 'error');
-	equal($('#testForm10Radio2').attr('class'), 'error');
+	equal($('#testForm10Radio1').prop('class'), 'error');
+	equal($('#testForm10Radio2').prop('class'), 'error');
 
-	$('#testForm10Radio2').attr("checked", true);
+	$('#testForm10Radio2').prop("checked", true);
 	ok(v.form(), 'Valid form');
 
-	equal($('#testForm10Radio1').attr('class'), 'valid');
-	equal($('#testForm10Radio2').attr('class'), 'valid');
+	equal($('#testForm10Radio1').prop('class'), 'valid');
+	equal($('#testForm10Radio2').prop('class'), 'valid');
 });
 
 test("form(): selects: min/required", function() {
@@ -153,9 +153,9 @@ test("form(): selects: min/required", function() {
 	var form = $('#testForm7')[0];
 	var v = $(form).validate();
 	ok( !v.form(), 'Invalid form' );
-	$("#optionxa").attr("selected", true);
+	$("#optionxa").prop("selected", true);
 	ok( !v.form(), 'Invalid form' );
-	$("#optionxb").attr("selected", true);
+	$("#optionxb").prop("selected", true);
 	ok( v.form(), 'Valid form' );
 });
 
@@ -493,11 +493,11 @@ test("elements() order", function() {
 		wrap: "li"
 	});
 	deepEqual( v.elements().map(function() {
-		return $(this).attr("id");
+		return $(this).prop("id");
 	}).get(), ["order1", "order2", "order3", "order4", "order5", "order6"], "elements must be in document order" );
 	v.form();
 	deepEqual( container.children().map(function() {
-		return $(this).attr("for");
+		return $(this).prop("for");
 	}).get(), ["order1", "order2", "order3", "order4", "order5", "order6"], "labels in error container must be in document order" );
 });
 
@@ -736,10 +736,10 @@ test("dynamic form", function() {
 	$("#testForm2 input[name^=list]").remove();
 	v.form();
 	errors(1);
-	$("#agb").attr("disabled", true);
+	$("#agb").prop("disabled", true);
 	v.form();
 	errors(0);
-	$("#agb").attr("disabled", false);
+	$("#agb").prop("disabled", false);
 	v.form();
 	errors(1);
 });
@@ -962,7 +962,7 @@ test("option: subformRequired", function() {
 	var v = $("#subformRequired").validate();
 	v.form();
 	equal( v.size(), 1 );
-	$("#bill_to_co").attr("checked", false);
+	$("#bill_to_co").prop("checked", false);
 	v.form();
 	equal( v.size(), 2 );
 
@@ -1159,7 +1159,7 @@ test("validate multiple checkbox on click", function() {
 		// triggered click event screws up checked-state in 1.4
 		element.valid();
 	}
-	var e1 = $("#check1").attr("checked", false);
+	var e1 = $("#check1").prop("checked", false);
 	var e2 = $("#check1b");
 	var v = $("#form").validate({
 		rules: {
@@ -1187,9 +1187,9 @@ test("correct checkbox receives the error", function(){
 		// triggered click event screws up checked-state in 1.4
 		element.valid();
 	}
-	var e1 = $("#check1").attr("checked", false);
-	var e2 = $("#check1b").attr("checked", false);
-    var v = $("#form").find('[type=checkbox]').attr('checked', false).end().validate({
+	var e1 = $("#check1").prop("checked", false);
+	var e2 = $("#check1b").prop("checked", false);
+    var v = $("#form").find('[type=checkbox]').prop('checked', false).end().validate({
         rules:{
             check: {
                     required: true,
