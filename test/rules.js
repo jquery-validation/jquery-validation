@@ -91,7 +91,7 @@ test("rules(), gurantee that required is at front", function() {
 	$("#subformRequired").validate();
 	function flatRules(element) {
 		var result = [];
-		jQuery.each($(element).rules(), function(key, value) { result.push(key) });
+		jQuery.each($(element).rules(), function(key, value) { result.push(key); });
 		return result.join(" ");
 	}
 	equal( "required minlength", flatRules("#firstname") );
@@ -222,7 +222,7 @@ test("rules(), add and remove static rules", function() {
 	});
 	deepEqual( $("#firstnamec").rules(), { required: true, date: true } );
 
-	$("#firstnamec").rules("remove", "date")
+	$("#firstnamec").rules("remove", "date");
 	deepEqual( $("#firstnamec").rules(), { required: true } );
 	$("#firstnamec").rules("add", "email");
 	deepEqual( $("#firstnamec").rules(), { required: true, email: true } );
