@@ -539,7 +539,13 @@ $.extend($.validator, {
 				var rule = { method: method, parameters: rules[method] };
 				try {
 
-					result = $.validator.methods[method].call( this, val, element, rule.parameters );
+					if($.validator.methods[method]) {
+						result = $.validator.methods[method].call( this, val, element, rule.parameters );
+					} else {
+						if(rules[method].getResult)
+							result = rules[method].getResult.call( this, val, element, rule.parameters );
+						else result = rules[method];
+					}
 
 					// if a method indicates that the field is optional and therefore valid,
 					// don't mark it as valid when there are no other rules
@@ -617,7 +623,8 @@ $.extend($.validator, {
 			}
 			this.errorList.push({
 				message: message,
-				element: element
+				element: element,
+				rule: rule
 			});
 
 			this.errorMap[element.name] = message;
@@ -632,10 +639,13 @@ $.extend($.validator, {
 		},
 
 		defaultShowErrors: function() {
-			var i, elements;
+			var i, elements, name, rules, rule;
 			for ( i = 0; this.errorList[i]; i++ ) {
 				var error = this.errorList[i];
-				if ( this.settings.highlight ) {
+				if(this.settings.rules[error.element.name] && this.settings.rules[error.element.name][error.rule.method].highlight) {
+					this.settings.rules[error.element.name][error.rule.method].highlight.call( this, error.element, this.settings.errorClass, this.settings.validClass );
+				}
+				else if ( this.settings.highlight ) {
 					this.settings.highlight.call( this, error.element, this.settings.errorClass, this.settings.validClass );
 				}
 				this.showLabel( error.element, error.message );
@@ -648,8 +658,19 @@ $.extend($.validator, {
 					this.showLabel( this.successList[i] );
 				}
 			}
-			if (this.settings.unhighlight) {
-				for ( i = 0, elements = this.validElements(); elements[i]; i++ ) {
+			for ( i = 0, elements = this.validElements(); elements[i]; i++ ) {
+				name = elements[i].getAttribute('name');
+				if(this.settings.rules[name]) {
+					rules = this.settings.rules[name];
+					for(rule in rules) {
+						if(rules[rule].unhighlight) {
+							rules[rule].unhighlight.call( this, elements[i], this.settings.errorClass, this.settings.validClass );
+						}
+						else if (this.settings.unhighlight) {
+							this.settings.unhighlight.call( this, elements[i], this.settings.errorClass, this.settings.validClass );
+						}
+					}
+				} else if (this.settings.unhighlight) {
 					this.settings.unhighlight.call( this, elements[i], this.settings.errorClass, this.settings.validClass );
 				}
 			}
