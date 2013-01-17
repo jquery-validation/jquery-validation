@@ -93,7 +93,7 @@ test("addMethod", function() {
 test("addMethod2", function() {
 	expect( 4 );
 	$.validator.addMethod("complicatedPassword", function(value, element, param) {
-		return this.optional(element) || /\D/.test(value) && /\d/.test(value)
+		return this.optional(element) || /\D/.test(value) && /\d/.test(value);
 	}, "Your password must contain at least one number and one letter");
 	var v = jQuery("#form").validate({
 		rules: {
@@ -275,12 +275,12 @@ test("submitHandler keeps submitting button", function() {
 		submitHandler: function(form) {
 			// dunno how to test this better; this tests the implementation that uses a hidden input
 			var hidden = $(form).find("input:hidden")[0];
-			deepEqual(hidden.value, button.value)
-			deepEqual(hidden.name, button.name)
+			deepEqual(hidden.value, button.value);
+			deepEqual(hidden.name, button.name);
 		}
 	});
 	$("#username").val("bla");
-	var button = $("#userForm :submit")[0]
+	var button = $("#userForm :submit")[0];
   var event = $.Event("click");
   event.preventDefault();
   $.event.trigger(event, null, button);
@@ -365,13 +365,13 @@ test("showErrors() - custom handler", function() {
 
 test("option: (un)highlight, default", function() {
 	$("#testForm1").validate();
-	var e = $("#firstname")
+	var e = $("#firstname");
 	ok( !e.hasClass("error") );
 	ok( !e.hasClass("valid") );
-	e.valid()
+	e.valid();
 	ok( e.hasClass("error") );
 	ok( !e.hasClass("valid") );
-	e.val("hithere").valid()
+	e.val("hithere").valid();
 	ok( !e.hasClass("error") );
 	ok( e.hasClass("valid") );
 });
@@ -382,11 +382,11 @@ test("option: (un)highlight, nothing", function() {
 		highlight: false,
 		unhighlight: false
 	});
-	var e = $("#firstname")
+	var e = $("#firstname");
 	ok( !e.hasClass("error") );
-	e.valid()
+	e.valid();
 	ok( !e.hasClass("error") );
-	e.valid()
+	e.valid();
 	ok( !e.hasClass("error") );
 });
 
@@ -398,7 +398,7 @@ test("option: (un)highlight, custom", function() {
 			$(element).hide();
 		},
 		unhighlight: function(element, errorClass) {
-			equal( errorClass, "invalid" )
+			equal( errorClass, "invalid" );
 			$(element).show();
 		},
 		errorClass: "invalid",
@@ -406,11 +406,11 @@ test("option: (un)highlight, custom", function() {
 			firstname: "required"
 		}
 	});
-	var e = $("#firstnamec")
+	var e = $("#firstnamec");
 	ok( e.is(":visible") );
-	e.valid()
+	e.valid();
 	ok( !e.is(":visible") );
-	e.val("hithere").valid()
+	e.val("hithere").valid();
 	ok( e.is(":visible") );
 });
 
@@ -427,20 +427,20 @@ test("option: (un)highlight, custom2", function() {
 		},
 		errorClass: "invalid"
 	});
-	var e = $("#firstname")
-	var l = $("#errorFirstname")
+	var e = $("#firstname");
+	var l = $("#errorFirstname");
 	ok( !e.is(".invalid") );
 	ok( !l.is(".invalid") );
-	e.valid()
+	e.valid();
 	ok( e.is(".invalid") );
 	ok( l.is(".invalid") );
-	e.val("hithere").valid()
+	e.val("hithere").valid();
 	ok( !e.is(".invalid") );
 	ok( !l.is(".invalid") );
 });
 
 test("option: focusCleanup default false", function() {
-	var form = $("#userForm")
+	var form = $("#userForm");
 	form.validate();
 	form.valid();
 	ok( form.is(":has(label.error[for=username]:visible)"));
@@ -449,7 +449,7 @@ test("option: focusCleanup default false", function() {
 });
 
 test("option: focusCleanup true", function() {
-	var form = $("#userForm")
+	var form = $("#userForm");
 	form.validate({
 		focusCleanup: true
 	});
@@ -460,7 +460,7 @@ test("option: focusCleanup true", function() {
 });
 
 test("option: focusCleanup with wrapper", function() {
-	var form = $("#userForm")
+	var form = $("#userForm");
 	form.validate({
 		focusCleanup: true,
 		wrapper: "span"
@@ -472,7 +472,7 @@ test("option: focusCleanup with wrapper", function() {
 });
 
 test("option: errorClass with multiple classes", function() {
-	var form = $("#userForm")
+	var form = $("#userForm");
 	form.validate({
 		focusCleanup: true,
 		wrapper: "span",
@@ -510,14 +510,14 @@ test("formatAndAdd", function() {
 	expect(4);
 	var v = $("#form").validate();
 	var fakeElement = { form: $("#form")[0], name: "bar" };
-	v.formatAndAdd(fakeElement, {method: "maxlength", parameters: 2})
+	v.formatAndAdd(fakeElement, {method: "maxlength", parameters: 2});
 	equal( v.errorList[0].message, "Please enter no more than 2 characters." );
 	equal( v.errorList[0].element.name, "bar" );
 
-	v.formatAndAdd(fakeElement, {method: "range", parameters:[2,4]})
+	v.formatAndAdd(fakeElement, {method: "range", parameters:[2,4]});
 	equal( v.errorList[1].message, "Please enter a value between 2 and 4." );
 
-	v.formatAndAdd(fakeElement, {method: "range", parameters:[0,4]})
+	v.formatAndAdd(fakeElement, {method: "range", parameters:[0,4]});
 	equal( v.errorList[2].message, "Please enter a value between 0 and 4." );
 });
 
@@ -530,11 +530,11 @@ test("formatAndAdd2", function() {
 		equal( param, 0 );
 		return "element " + element.name + " is not valid";
 	};
-	v.formatAndAdd(fakeElement, {method: "test1", parameters: 0})
+	v.formatAndAdd(fakeElement, {method: "test1", parameters: 0});
 	equal(v.errorList[0].message, "element bar is not valid");
 });
 
-test("formatAndAdd, auto detect substitution string", function() {
+test("formatAndAdd, auto detect substitution string", function () {
 	var v = $("#testForm1clean").validate({
 		rules: {
 			firstname: {
@@ -550,8 +550,8 @@ test("formatAndAdd, auto detect substitution string", function() {
 	});
 	$("#firstnamec").val("abc");
 	v.form();
-	equal( v.errorList[0].message, "at least 5, up to 10" );
-})
+	equal(v.errorList[0].message, "at least 5, up to 10");
+});
 
 test("error containers, simple", function() {
 	expect(14);
@@ -977,7 +977,7 @@ test("expression: :blank", function() {
 	equal( $(e).filter(":blank").length, 1 );
 	e.value = " ";
 	equal( $(e).filter(":blank").length, 1 );
-	e.value = "   "
+	e.value = "   ";
 	equal( $(e).filter(":blank").length, 1 );
 	e.value= " a ";
 	equal( $(e).filter(":blank").length, 0 );
@@ -988,7 +988,7 @@ test("expression: :filled", function() {
 	equal( $(e).filter(":filled").length, 0 );
 	e.value = " ";
 	equal( $(e).filter(":filled").length, 0 );
-	e.value = "   "
+	e.value = "   ";
 	equal( $(e).filter(":filled").length, 0 );
 	e.value= " a ";
 	equal( $(e).filter(":filled").length, 1 );
