@@ -539,7 +539,13 @@ $.extend($.validator, {
 				var rule = { method: method, parameters: rules[method] };
 				try {
 
-					result = $.validator.methods[method].call( this, val, element, rule.parameters );
+					if($.validator.methods[method]) {
+						result = $.validator.methods[method].call( this, val, element, rule.parameters );
+					} else {
+						if(rules[method].getResult)
+							result = rules[method].getResult.call( this, val, element, rule.parameters );
+						else result = rules[method];
+					}
 
 					// if a method indicates that the field is optional and therefore valid,
 					// don't mark it as valid when there are no other rules
