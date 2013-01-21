@@ -4,7 +4,7 @@
  */
 (function ($) {
 	$.extend($.validator.messages, {
-		required: "Це поле необхідно заповнити.",
+		required: "This field is required.",
 		remote: "Будь ласка, введіть правильне значення.",
 		email: "Будь ласка, введіть коректну адресу електронної пошти.",
 		url: "Будь ласка, введіть коректний URL.",
