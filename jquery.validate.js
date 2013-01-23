@@ -13,6 +13,26 @@
 
 (function($) {
 
+// Function to bridge attr() with prop() by doing value type conversion.
+// Needed to get HTML attributes not present as DOM properties, such as certain HTML5 attributes.
+var attrConv = function($element, property) {
+	var value = $element.attr(property);
+	var asInt = +value;
+
+	if (!isNaN(asInt)) {			
+		return asInt;
+	}
+	if (value === "false") {
+		return false;
+	}
+	if (value === "true") {
+		return true;
+	}
+
+	return value;
+};
+
+
 $.extend($.fn, {
 	// http://docs.jquery.com/Plugins/Validation/validate
 	validate: function( options ) {
@@ -106,31 +126,12 @@ $.extend($.fn, {
 		}
 	},
 
-	// method to bridge attr() with prop() by doing value type conversion when getting a value with attr()
-	attrConv: function (property) {
-//		return this.prop(property);
-		var value = this.attr(property);
-		var asInt = +value;
-
-		if (!isNaN(asInt)) {			
-			return asInt;
-		}
-		if (value === "false") {
-			return false;
-		}
-		if (value === "true") {
-			return true;
-		}
-
-		return value;
-	},
-
 	// attributes: space seperated list of attributes to retrieve and remove
 	removeAttrs: function(attributes) {
 		var result = {},
 			$element = this;
 		$.each(attributes.split(/\s/), function(index, value) {
-			result[value] = $element.prop(value) || $element.attrConv(value);
+			result[value] = $element.prop(value) || attrConv($element, value);
 			$element.prop(value, false).removeAttr(value);
 		});
 		return result;
@@ -871,7 +872,7 @@ $.extend($.validator, {
 				// force non-HTML5 browsers to return bool
 				value = !!value;
 			} else {
-				value = $element.prop(method) || $element.attrConv(method);
+				value = $element.prop(method) || attrConv($element, method);
 			}
 
 			if (value) {
