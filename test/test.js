@@ -802,7 +802,7 @@ test("validating groups settings parameter", function() {
         groups: {
             arrayGroup: ["input one", "input-two", "input three"],
             stringGroup: "input-four input-five input-six"
-        },
+        }
     });
     equal(validate.groups["input one"], "arrayGroup");
     equal(validate.groups["input-two"], "arrayGroup");
