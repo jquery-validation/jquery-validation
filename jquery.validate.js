@@ -22,12 +22,6 @@ var attrConv = function($element, property) {
 	if (!isNaN(asInt)) {			
 		return asInt;
 	}
-	if (value === "false") {
-		return false;
-	}
-	if (value === "true") {
-		return true;
-	}
 
 	return value;
 };
