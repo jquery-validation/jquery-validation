@@ -415,7 +415,7 @@ jQuery.validator.addMethod("accept", function(value, element, param) {
 
 	if ($(element).attr("type") === "file") {
 		// If we are using a wildcard, make it regex friendly
-		typeParam = typeParam.replace("*", ".*");
+		typeParam = typeParam.replace(/\*/g, ".*");
 
 		// Check if the element has a FileList before checking each file
 		if (element.files && element.files.length) {
