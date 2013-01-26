@@ -11,6 +11,28 @@
 
 (function($) {
 
+// Function to bridge attr() with prop() by doing value type conversion.
+// Needed to get HTML attributes not present as DOM properties, such as certain HTML5 attributes.
+var getProp = function($element, property) {
+	var value = $element.prop(property);
+
+	if (value === undefined) { // Property not found in DOM element, try attribute instead.
+		value = $element.attr(property);
+	}
+
+	if (value === "") { // Some browsers return empty string for boolean attributes (HTML5)
+		return value;
+	}
+
+	var asInt = Number(value);
+	if (!isNaN(asInt)) { // Properties
+		return asInt;
+	}
+
+	return value;
+};
+
+
 $.extend($.fn, {
 	// http://docs.jquery.com/Plugins/Validation/validate
 	validate: function( options ) {
@@ -30,7 +52,7 @@ $.extend($.fn, {
 		}
 
 		// Add novalidate tag if HTML5.
-		this.attr('novalidate', 'novalidate');
+		this.prop('novalidate', true);
 
 		validator = new $.validator( options, this[0] );
 		$.data(this[0], 'validator', validator);
@@ -58,7 +80,7 @@ $.extend($.fn, {
 					if ( validator.settings.submitHandler ) {
 						if (validator.submitButton) {
 							// insert a hidden input as a replacement for the missing submit button
-							hidden = $("<input type='hidden'/>").attr("name", validator.submitButton.name).val(validator.submitButton.value).appendTo(validator.currentForm);
+							hidden = $("<input type='hidden'/>").prop("name", validator.submitButton.name).val(validator.submitButton.value).appendTo(validator.currentForm);
 						}
 						validator.settings.submitHandler.call( validator, validator.currentForm, event );
 						if (validator.submitButton) {
@@ -103,13 +125,14 @@ $.extend($.fn, {
 			return valid;
 		}
 	},
+
 	// attributes: space seperated list of attributes to retrieve and remove
 	removeAttrs: function(attributes) {
 		var result = {},
 			$element = this;
 		$.each(attributes.split(/\s/), function(index, value) {
-			result[value] = $element.attr(value);
-			$element.removeAttr(value);
+			result[value] = getProp($element, value);
+			$element.prop(value, false).removeAttr(value);
 		});
 		return result;
 	},
@@ -512,11 +535,11 @@ $.extend($.validator, {
 		},
 
 		elementValue: function( element ) {
-			var type = $(element).attr('type'),
+			var type = $(element).prop('type'),
 				val = $(element).val();
 
 			if ( type === 'radio' || type === 'checkbox' ) {
-				return $('input[name="' + $(element).attr('name') + '"]:checked').val();
+				return $('input[name="' + $(element).prop('name') + '"]:checked').val();
 			}
 
 			if ( typeof val === 'string' ) {
@@ -575,7 +598,7 @@ $.extend($.validator, {
 		// return the custom message for the given element and validation method
 		// specified in the element's HTML5 data attribute
 		customDataMessage: function(element, method) {
-			return $(element).data('msg-' + method.toLowerCase()) || (element.attributes && $(element).attr('data-msg-' + method.toLowerCase()));
+			return $(element).data('msg-' + method.toLowerCase()) || (element.attributes && $(element).prop('data-msg-' + method.toLowerCase()));
 		},
 
 		// return the custom message for the given element name and validation method
@@ -673,13 +696,13 @@ $.extend($.validator, {
 				label.removeClass( this.settings.validClass ).addClass( this.settings.errorClass );
 
 				// check if we have a generated label, replace the message then
-				if ( label.attr("generated") ) {
+				if ( label.prop("generated") ) {
 					label.html(message);
 				}
 			} else {
 				// create label
 				label = $("<" + this.settings.errorElement + "/>")
-					.attr({"for":  this.idOrName(element), generated: true})
+					.prop({"for":  this.idOrName(element), generated: true})
 					.addClass(this.settings.errorClass)
 					.html(message || "");
 				if ( this.settings.wrapper ) {
@@ -709,7 +732,7 @@ $.extend($.validator, {
 		errorsFor: function(element) {
 			var name = this.idOrName(element);
 			return this.errors().filter(function() {
-				return $(this).attr('for') === name;
+				return $(this).prop('for') === name;
 			});
 		},
 
@@ -820,7 +843,7 @@ $.extend($.validator, {
 
 	classRules: function(element) {
 		var rules = {};
-		var classes = $(element).attr('class');
+		var classes = $(element).prop('class');
 		if ( classes ) {
 			$.each(classes.split(' '), function() {
 				if (this in $.validator.classRuleSettings) {
@@ -840,7 +863,7 @@ $.extend($.validator, {
 
 			// support for <input required> in both html5 and older browsers
 			if (method === 'required') {
-				value = $element.get(0).getAttribute(method);
+				value = getProp($element.first(), method);
 				// Some browsers return an empty string for the required attribute
 				// and non-HTML5 browsers might have required="" markup
 				if (value === "") {
@@ -849,7 +872,7 @@ $.extend($.validator, {
 				// force non-HTML5 browsers to return bool
 				value = !!value;
 			} else {
-				value = $element.attr(method);
+				value = getProp($element, method);
 			}
 
 			if (value) {
