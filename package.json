@@ -20,12 +20,7 @@
     {
       "type": "MIT",
       "url": "http://www.opensource.org/licenses/MIT"
-    },
-    {
-      "type": "GPL",
-      "url": "http://www.opensource.org/licenses/GPL-2.0"
-    }
-  ],
+    }  ],
   "scripts": {
     "test": "grunt lint qunit"
   },
