@@ -25,7 +25,7 @@ $.mockjax({
 $.mockjax({
 	url: "echo.php",
 	response: function(data) {
-		this.responseText = JSON.stringify(data.data); // TODO: Fails on IE7. JSON is undefined.
+		this.responseText = JSON.stringify(data.data);
 	},
 	responseTime: 100
 });
