@@ -126,6 +126,7 @@ $.extend($.fn, {
 		}
 	},
 
+
 	// attributes: space seperated list of attributes to retrieve and remove
 	removeAttrs: function(attributes) {
 		var result = {},

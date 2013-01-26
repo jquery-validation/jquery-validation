@@ -7,4 +7,3 @@ docs
 *.patch
 .DS_Store
 node_modules
-Web.config
