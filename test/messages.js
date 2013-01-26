@@ -40,9 +40,9 @@ test("group error messages", function() {
 });
 
 test("read messages from metadata", function() {
-	var form = $("#testForm9");
+	var form = $("#testForm9")
 	form.validate();
-	var e = $("#testEmail9");
+	var e = $("#testEmail9")
 	e.valid();
 	equal( form.find("label").text(), "required" );
 	e.val("bla").valid();
@@ -51,7 +51,7 @@ test("read messages from metadata", function() {
 
 
 test("read messages from metadata, with meta option specified, but no metadata in there", function() {
-	var form = $("#testForm1clean");
+	var form = $("#testForm1clean")
 	form.validate({
 		meta: "validate",
 		rules: {

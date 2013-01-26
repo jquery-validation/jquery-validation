@@ -20,10 +20,6 @@
     {
       "type": "MIT",
       "url": "http://www.opensource.org/licenses/MIT"
-    },
-    {
-      "type": "GPL",
-      "url": "http://www.opensource.org/licenses/GPL-2.0"
     }
   ],
   "scripts": {
@@ -34,5 +30,9 @@
     "grunt": "0.3.x",
     "zipstream": "0.2.x"
   },
-  "keywords": []
+  "keywords": [
+    "forms",
+    "validation",
+    "validate"
+  ]
 }
