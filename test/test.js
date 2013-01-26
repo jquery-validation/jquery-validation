@@ -25,7 +25,7 @@ $.mockjax({
 $.mockjax({
 	url: "echo.php",
 	response: function(data) {
-		this.responseText = JSON.stringify(data.data);
+		this.responseText = JSON.stringify(data.data); // TODO: Fails on IE7. JSON is undefined.
 	},
 	responseTime: 100
 });
@@ -676,11 +676,11 @@ test("focusInvalid()", function() {
 	// TODO when using 1.4 focusin, triggered twice; fix once not testing against 1.3 anymore
 	// expect(1);
 	var inputs = $("#testForm1 input").focus(function() {
-		equal( inputs[0], this, "focused first element" );
+		equal( this, inputs[0], "focused first element" );
 	});
 	var v = $("#testForm1").validate();
 	v.form();
-	v.focusInvalid();
+	v.focusInvalid(); // TODO: Fails on IE7-9. Needs extra call to $.fn.focus() for some reason.
 });
 
 test("findLastActive()", function() {

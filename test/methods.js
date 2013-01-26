@@ -746,7 +746,7 @@ test('require_from_group', function() {
 	fillFormWithValuesAndExpect('#productInfo', [], false);
 	fillFormWithValuesAndExpect('#productInfo', [123], false);
 	$('#productInfo input[type="checkbox"]').prop('checked', true);
-	fillFormWithValuesAndExpect('#productInfo', [123], true);
+	fillFormWithValuesAndExpect('#productInfo', [123], true); // TODO: Fails on IE8.
 	$('#productInfo input[type="checkbox"]').prop('checked', false);
 	fillFormWithValuesAndExpect('#productInfo', [123, 'widget'], true);
 	fillFormWithValuesAndExpect('#productInfo', [123, 'widget', 'red'], true);
