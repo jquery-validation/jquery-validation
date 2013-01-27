@@ -676,11 +676,11 @@ test("focusInvalid()", function() {
 	// TODO when using 1.4 focusin, triggered twice; fix once not testing against 1.3 anymore
 	// expect(1);
 	var inputs = $("#testForm1 input").focus(function() {
-		equal( this, inputs[0], "focused first element" );
+		equal( inputs[0], this, "focused first element" );
 	});
 	var v = $("#testForm1").validate();
 	v.form();
-	v.focusInvalid(); // TODO: Fails on IE7-9. Needs extra call to $.fn.focus() for some reason.
+	v.focusInvalid();
 });
 
 test("findLastActive()", function() {
@@ -802,7 +802,7 @@ test("validating groups settings parameter", function() {
         groups: {
             arrayGroup: ["input one", "input-two", "input three"],
             stringGroup: "input-four input-five input-six"
-        }
+        },
     });
     equal(validate.groups["input one"], "arrayGroup");
     equal(validate.groups["input-two"], "arrayGroup");
