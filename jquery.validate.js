@@ -631,6 +631,11 @@ $.extend($.validator, {
 
 		defaultShowErrors: function() {
 			var i, elements;
+			if (this.settings.unhighlight) {
+				for ( i = 0, elements = this.validElements(); elements[i]; i++ ) {
+					this.settings.unhighlight.call( this, elements[i], this.settings.errorClass, this.settings.validClass );
+				}
+			}
 			for ( i = 0; this.errorList[i]; i++ ) {
 				var error = this.errorList[i];
 				if ( this.settings.highlight ) {
@@ -644,11 +649,6 @@ $.extend($.validator, {
 			if (this.settings.success) {
 				for ( i = 0; this.successList[i]; i++ ) {
 					this.showLabel( this.successList[i] );
-				}
-			}
-			if (this.settings.unhighlight) {
-				for ( i = 0, elements = this.validElements(); elements[i]; i++ ) {
-					this.settings.unhighlight.call( this, elements[i], this.settings.errorClass, this.settings.validClass );
 				}
 			}
 			this.toHide = this.toHide.not( this.toShow );
