@@ -195,7 +195,9 @@ $.validator.format = function(source, params) {
 		params = [ params ];
 	}
 	$.each(params, function(i, n) {
-		source = source.replace(new RegExp("\\{" + i + "\\}", "g"), n);
+		source = source.replace(new RegExp("\\{" + i + "\\}", "g"), function() {
+			return n;
+		});
 	});
 	return source;
 };

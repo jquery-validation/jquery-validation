@@ -943,6 +943,7 @@ test("jQuery.validator.format", function() {
 	equal( "0 is too fast! Enter a value smaller then 0 and at least -15", template(0, -15) );
 	template = jQuery.validator.format("Please enter a value between {0} and {1}.");
 	equal( "Please enter a value between 1 and 2.", template([1, 2]) );
+	equal( $.validator.format("{0}", "$0"), "$0" );
 });
 
 test("option: ignore", function() {
