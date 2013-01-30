@@ -353,10 +353,10 @@ test("extension", function() {
 	ok( method( "picture.png" ), "Valid default accept type" );
 	ok( !method( "picture.pgn" ), "Invalid default accept type" );
 
-	var v = jQuery("#form").validate(),
-		method = function(value, param) {
-			return $.validator.methods.extension.call(v, value, $('#text1')[0], param);
-		};
+	var v = jQuery("#form").validate();
+	method = function(value, param) {
+		return $.validator.methods.extension.call(v, value, $('#text1')[0], param);
+	};
 	ok( method( "picture.doc", "doc"), "Valid custom accept type" );
 	ok( method( "picture.pdf", "doc|pdf"), "Valid custom accept type" );
 	ok( method( "picture.pdf", "pdf|doc"), "Valid custom accept type" );
@@ -472,8 +472,9 @@ test("remote extensions", function() {
 	strictEqual( v.element(e), true, "still invalid, because remote validation must block until it returns; dependency-mismatch considered as valid though" );
 });
 
-asyncTest("remote radio correct value sent", function() {
+test("remote radio correct value sent", function() {
 	expect(1);
+	stop();
 	var e = $("#testForm10Radio2");
 	e.attr('checked', 'checked');
 	var v = $("#testForm10").validate({
@@ -495,9 +496,9 @@ asyncTest("remote radio correct value sent", function() {
 	v.element(e);
 });
 
-asyncTest("remote reset clear old value", function() {
+test("remote reset clear old value", function() {
 	expect(1);
-
+	stop();
 	var e = $("#username");
 	var v = $("#userForm").validate({
 		rules: {
@@ -507,7 +508,7 @@ asyncTest("remote reset clear old value", function() {
 					url: "echo.php",
 					dataFilter: function(data) {
 						var json = JSON.parse(data);
-						if(json.username == 'asdf') {
+						if(json.username === 'asdf') {
 							return "\"asdf is already taken\"";
 						}
 						return "\"" + true + "\"";

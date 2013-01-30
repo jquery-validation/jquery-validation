@@ -1,4 +1,6 @@
-window.sessionStorage && sessionStorage.clear();
+if ( window.sessionStorage ) {
+	sessionStorage.clear();
+}
 jQuery.validator.defaults.debug = true;
 $.mockjaxSettings.log = $.noop;
 
@@ -80,20 +82,20 @@ test("valid() plugin method, special handling for checkable groups", function() 
 test("addMethod", function() {
 	expect( 3 );
 	$.validator.addMethod("hi", function(value) {
-		return value == "hi";
+		return value === "hi";
 	}, "hi me too");
 	var method = $.validator.methods.hi,
 		e = $('#text1')[0];
 	ok( !method(e.value, e), "Invalid" );
 	e.value = "hi";
 	ok( method(e.value, e), "Invalid" );
-	ok( jQuery.validator.messages.hi == "hi me too", "Check custom message" );
+	ok( jQuery.validator.messages.hi === "hi me too", "Check custom message" );
 });
 
 test("addMethod2", function() {
 	expect( 4 );
 	$.validator.addMethod("complicatedPassword", function(value, element, param) {
-		return this.optional(element) || /\D/.test(value) && /\d/.test(value)
+		return this.optional(element) || /\D/.test(value) && /\d/.test(value);
 	}, "Your password must contain at least one number and one letter");
 	var v = jQuery("#form").validate({
 		rules: {
@@ -189,13 +191,13 @@ test("check(): simple", function() {
 	expect( 3 );
 	var element = $('#firstname')[0];
 	var v = $('#testForm1').validate();
-	ok( v.size() == 0, 'No errors yet' );
+	ok( v.size() === 0, 'No errors yet' );
 	v.check(element);
-	ok( v.size() == 1, 'error exists' );
+	ok( v.size() === 1, 'error exists' );
 	v.errorList = [];
 	$('#firstname').val("hi");
 	v.check(element);
-	ok( !v.size() == 1, 'No more errors' );
+	ok( v.size() === 0, 'No more errors' );
 });
 
 test("hide(): input", function() {
@@ -275,12 +277,12 @@ test("submitHandler keeps submitting button", function() {
 		submitHandler: function(form) {
 			// dunno how to test this better; this tests the implementation that uses a hidden input
 			var hidden = $(form).find("input:hidden")[0];
-			deepEqual(hidden.value, button.value)
-			deepEqual(hidden.name, button.name)
+			deepEqual(hidden.value, button.value);
+			deepEqual(hidden.name, button.name);
 		}
 	});
 	$("#username").val("bla");
-	var button = $("#userForm :submit")[0]
+	var button = $("#userForm :submit")[0];
   var event = $.Event("click");
   event.preventDefault();
   $.event.trigger(event, null, button);
@@ -365,13 +367,13 @@ test("showErrors() - custom handler", function() {
 
 test("option: (un)highlight, default", function() {
 	$("#testForm1").validate();
-	var e = $("#firstname")
+	var e = $("#firstname");
 	ok( !e.hasClass("error") );
 	ok( !e.hasClass("valid") );
-	e.valid()
+	e.valid();
 	ok( e.hasClass("error") );
 	ok( !e.hasClass("valid") );
-	e.val("hithere").valid()
+	e.val("hithere").valid();
 	ok( !e.hasClass("error") );
 	ok( e.hasClass("valid") );
 });
@@ -382,11 +384,11 @@ test("option: (un)highlight, nothing", function() {
 		highlight: false,
 		unhighlight: false
 	});
-	var e = $("#firstname")
+	var e = $("#firstname");
 	ok( !e.hasClass("error") );
-	e.valid()
+	e.valid();
 	ok( !e.hasClass("error") );
-	e.valid()
+	e.valid();
 	ok( !e.hasClass("error") );
 });
 
@@ -398,7 +400,7 @@ test("option: (un)highlight, custom", function() {
 			$(element).hide();
 		},
 		unhighlight: function(element, errorClass) {
-			equal( "invalid", errorClass )
+			equal( "invalid", errorClass );
 			$(element).show();
 		},
 		errorClass: "invalid",
@@ -406,11 +408,11 @@ test("option: (un)highlight, custom", function() {
 			firstname: "required"
 		}
 	});
-	var e = $("#firstnamec")
+	var e = $("#firstnamec");
 	ok( e.is(":visible") );
-	e.valid()
+	e.valid();
 	ok( !e.is(":visible") );
-	e.val("hithere").valid()
+	e.val("hithere").valid();
 	ok( e.is(":visible") );
 });
 
@@ -427,20 +429,20 @@ test("option: (un)highlight, custom2", function() {
 		},
 		errorClass: "invalid"
 	});
-	var e = $("#firstname")
-	var l = $("#errorFirstname")
+	var e = $("#firstname");
+	var l = $("#errorFirstname");
 	ok( !e.is(".invalid") );
 	ok( !l.is(".invalid") );
-	e.valid()
+	e.valid();
 	ok( e.is(".invalid") );
 	ok( l.is(".invalid") );
-	e.val("hithere").valid()
+	e.val("hithere").valid();
 	ok( !e.is(".invalid") );
 	ok( !l.is(".invalid") );
 });
 
 test("option: focusCleanup default false", function() {
-	var form = $("#userForm")
+	var form = $("#userForm");
 	form.validate();
 	form.valid();
 	ok( form.is(":has(label.error[for=username]:visible)"));
@@ -449,7 +451,7 @@ test("option: focusCleanup default false", function() {
 });
 
 test("option: focusCleanup true", function() {
-	var form = $("#userForm")
+	var form = $("#userForm");
 	form.validate({
 		focusCleanup: true
 	});
@@ -460,7 +462,7 @@ test("option: focusCleanup true", function() {
 });
 
 test("option: focusCleanup with wrapper", function() {
-	var form = $("#userForm")
+	var form = $("#userForm");
 	form.validate({
 		focusCleanup: true,
 		wrapper: "span"
@@ -472,7 +474,7 @@ test("option: focusCleanup with wrapper", function() {
 });
 
 test("option: errorClass with multiple classes", function() {
-	var form = $("#userForm")
+	var form = $("#userForm");
 	form.validate({
 		focusCleanup: true,
 		wrapper: "span",
@@ -510,14 +512,14 @@ test("formatAndAdd", function() {
 	expect(4);
 	var v = $("#form").validate();
 	var fakeElement = { form: $("#form")[0], name: "bar" };
-	v.formatAndAdd(fakeElement, {method: "maxlength", parameters: 2})
+	v.formatAndAdd(fakeElement, {method: "maxlength", parameters: 2});
 	equal( "Please enter no more than 2 characters.", v.errorList[0].message );
 	equal( "bar", v.errorList[0].element.name );
 
-	v.formatAndAdd(fakeElement, {method: "range", parameters:[2,4]})
+	v.formatAndAdd(fakeElement, {method: "range", parameters:[2,4]});
 	equal( "Please enter a value between 2 and 4.", v.errorList[1].message );
 
-	v.formatAndAdd(fakeElement, {method: "range", parameters:[0,4]})
+	v.formatAndAdd(fakeElement, {method: "range", parameters:[0,4]});
 	equal( "Please enter a value between 0 and 4.", v.errorList[2].message );
 });
 
@@ -530,7 +532,7 @@ test("formatAndAdd2", function() {
 		equal( 0, param );
 		return "element " + element.name + " is not valid";
 	};
-	v.formatAndAdd(fakeElement, {method: "test1", parameters: 0})
+	v.formatAndAdd(fakeElement, {method: "test1", parameters: 0});
 	equal( "element bar is not valid", v.errorList[0].message );
 });
 
@@ -551,7 +553,7 @@ test("formatAndAdd, auto detect substitution string", function() {
 	$("#firstnamec").val("abc");
 	v.form();
 	equal( "at least 5, up to 10", v.errorList[0].message );
-})
+});
 
 test("error containers, simple", function() {
 	expect(14);
@@ -802,7 +804,7 @@ test("validating groups settings parameter", function() {
         groups: {
             arrayGroup: ["input one", "input-two", "input three"],
             stringGroup: "input-four input-five input-six"
-        },
+        }
     });
     equal(validate.groups["input one"], "arrayGroup");
     equal(validate.groups["input-two"], "arrayGroup");
@@ -956,8 +958,9 @@ test("option: ignore", function() {
 
 test("option: subformRequired", function() {
 	jQuery.validator.addMethod("billingRequired", function(value, element) {
-		if ($("#bill_to_co").is(":checked"))
+		if ($("#bill_to_co").is(":checked")) {
 			return $(element).parents("#subform").length;
+		}
 		return !this.optional(element);
 	}, "");
 	var v = $("#subformRequired").validate();
@@ -978,7 +981,7 @@ test("expression: :blank", function() {
 	equal( 1, $(e).filter(":blank").length );
 	e.value = " ";
 	equal( 1, $(e).filter(":blank").length );
-	e.value = "   "
+	e.value = "   ";
 	equal( 1, $(e).filter(":blank").length );
 	e.value= " a ";
 	equal( 0, $(e).filter(":blank").length );
@@ -989,7 +992,7 @@ test("expression: :filled", function() {
 	equal( 0, $(e).filter(":filled").length );
 	e.value = " ";
 	equal( 0, $(e).filter(":filled").length );
-	e.value = "   "
+	e.value = "   ";
 	equal( 0, $(e).filter(":filled").length );
 	e.value= " a ";
 	equal( 1, $(e).filter(":filled").length );
