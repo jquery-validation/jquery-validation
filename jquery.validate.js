@@ -471,8 +471,11 @@ $.extend($.validator, {
 			.not(":submit, :reset, :image, [disabled]")
 			.not( this.settings.ignore )
 			.filter(function() {
-				if ( !this.name && validator.settings.debug && window.console ) {
-					console.error( "%o has no name assigned", this);
+				if ( !this.name ) {
+					if ( window.console ) {
+						console.error( "%o has no name assigned", this );
+					}
+					throw new Error( "Failed to validate, found an element with no name assigned. See console for element reference." );
 				}
 
 				// select only the first element for each name, and only those with rules specified
