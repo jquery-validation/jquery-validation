@@ -195,7 +195,9 @@ $.validator.format = function( source, params ) {
 		params = [ params ];
 	}
 	$.each(params, function( i, n ) {
-		source = source.replace(new RegExp("\\{" + i + "\\}", "g"), n);
+		source = source.replace( new RegExp("\\{" + i + "\\}", "g"), function() {
+			return n;
+		});
 	});
 	return source;
 };
@@ -472,8 +474,11 @@ $.extend($.validator, {
 			.not(":submit, :reset, :image, [disabled]")
 			.not( this.settings.ignore )
 			.filter(function() {
-				if ( !this.name && validator.settings.debug && window.console ) {
-					console.error( "%o has no name assigned", this);
+				if ( !this.name ) {
+					if ( window.console ) {
+						console.error( "%o has no name assigned", this );
+					}
+					throw new Error( "Failed to validate, found an element with no name assigned. See console for element reference." );
 				}
 
 				// select only the first element for each name, and only those with rules specified
@@ -674,15 +679,12 @@ $.extend($.validator, {
 			if ( label.length ) {
 				// refresh error/success class
 				label.removeClass( this.settings.validClass ).addClass( this.settings.errorClass );
-
-				// check if we have a generated label, replace the message then
-				if ( label.attr("generated") ) {
-					label.html(message);
-				}
+				// replace message on existing label
+				label.html(message);
 			} else {
 				// create label
-				label = $("<" + this.settings.errorElement + "/>")
-					.attr({"for":  this.idOrName(element), generated: true})
+				label = $("<" + this.settings.errorElement + ">")
+					.attr("for", this.idOrName(element))
 					.addClass(this.settings.errorClass)
 					.html(message || "");
 				if ( this.settings.wrapper ) {

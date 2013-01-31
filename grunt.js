@@ -45,6 +45,12 @@ grunt.initConfig({
 			'jquery.validate.js',
 			'additional-methods.js',
 			'localization/*.js'
+		],
+		test: [
+			'test/test.js',
+			'test/rules.js',
+			'test/messages.js',
+			'test/methods.js'
 		]
 	},
 	jshint: {
@@ -63,7 +69,18 @@ grunt.initConfig({
 		globals: {
 			jQuery: true,
 			$: true,
-			console: true
+			console: true,
+			/* TODO only allows these for tests (grunt 0.4) */
+			QUnit: true,
+			module: true,
+			test: true,
+			start: true,
+			stop: true,
+			expect: true,
+			ok: true,
+			equal: true,
+			deepEqual: true,
+			strictEqual: true
 		}
 	}
 });
