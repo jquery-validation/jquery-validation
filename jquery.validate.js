@@ -354,9 +354,10 @@ $.extend($.validator, {
 
 		checkForm: function() {
 			this.prepareForm();
-			for ( var i = 0, elements = (this.currentElements = this.elements()); elements[i]; i++ ) {
-				this.check( elements[i] );
-			}
+			var elements = (this.currentElements = this.elements());
+			$.each(elements, $.proxy(function( index, element ) {
+				this.check(element);
+			}, this));
 			return this.valid();
 		},
 
@@ -541,7 +542,7 @@ $.extend($.validator, {
 			var val = this.elementValue(element);
 			var result;
 
-			for (var method in rules ) {
+			for ( var method in rules ) {
 				var rule = { method: method, parameters: rules[method] };
 				try {
 
@@ -638,26 +639,25 @@ $.extend($.validator, {
 		},
 
 		defaultShowErrors: function() {
-			var i, elements;
-			for ( i = 0; this.errorList[i]; i++ ) {
-				var error = this.errorList[i];
+			var elements;
+			$.each(this.errorList, $.proxy(function( index, error ) {
 				if ( this.settings.highlight ) {
 					this.settings.highlight.call( this, error.element, this.settings.errorClass, this.settings.validClass );
 				}
 				this.showLabel( error.element, error.message );
-			}
+			}, this));
 			if ( this.errorList.length ) {
 				this.toShow = this.toShow.add( this.containers );
 			}
 			if ( this.settings.success ) {
-				for ( i = 0; this.successList[i]; i++ ) {
-					this.showLabel( this.successList[i] );
-				}
+				$.each(this.successList, $.proxy(function( index, success ) {
+					this.showLabel( this.success );
+				}, this));
 			}
 			if ( this.settings.unhighlight ) {
-				for ( i = 0, elements = this.validElements(); elements[i]; i++ ) {
-					this.settings.unhighlight.call( this, elements[i], this.settings.errorClass, this.settings.validClass );
-				}
+				$.each(this.validElements(), $.proxy(function( index, element) {
+					this.settings.unhighlight.call( this, element, this.settings.errorClass, this.settings.validClass );
+				}, this));
 			}
 			this.toHide = this.toHide.not( this.toShow );
 			this.hideErrors();
@@ -840,7 +840,7 @@ $.extend($.validator, {
 		var rules = {};
 		var $element = $(element);
 
-		for (var method in $.validator.methods) {
+		for ( var method in $.validator.methods ) {
 			var value;
 
 			// support for <input required> in both html5 and older browsers
@@ -875,7 +875,7 @@ $.extend($.validator, {
 	dataRules: function( element ) {
 		var method, value,
 			rules = {}, $element = $(element);
-		for (method in $.validator.methods) {
+		for ( method in $.validator.methods ) {
 			value = $element.data("rule-" + method.toLowerCase());
 			if ( value !== undefined ) {
 				rules[method] = value;
@@ -1134,7 +1134,7 @@ $.extend($.validator, {
 
 			value = value.replace(/\D/g, "");
 
-			for (var n = value.length - 1; n >= 0; n--) {
+			for ( var n = value.length - 1; n >= 0; n-- ) {
 				var cDigit = value.charAt(n);
 				nDigit = parseInt(cDigit, 10);
 				if ( bEven ) {
