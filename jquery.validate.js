@@ -719,9 +719,6 @@ $.extend($.validator, {
 		},
 
 		idOrName: function( element ) {
-			if ( element === undefined || element === null ) {
-				return;
-			}
 			return this.groups[element.name] || (this.checkable(element) ? element.name : element.id || element.name);
 		},
 
