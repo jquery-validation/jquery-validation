@@ -1,3 +1,27 @@
+
+1.11.0 / 2013-02-04
+==================
+
+  * Remove clearing as numbers of `min`, `max` and `range` rules. Fixes #455. Closes gh-528.
+  * Update pre-existing labels - fixes #430 closes gh-436
+  * Fix $.validator.format to avoid group interpolation, where at least IE8/9 replaces -bash with the match. Fixes #614
+  * Fix mimetype regex
+  * Add plugin manifest and update headers to just MIT license, drop unnecessary dual-licensing (like jQuery).
+  * Hebrew messages: Removed dots at end of sentences - Fixes gh-568
+  * French translation for require_from_group validation. Fixes gh-573.
+  * Allow groups to be an array or a string - Fixes #479
+  * Removed spaces with multiple MIME types
+  * Fix some date validations, JS syntax errors.
+  * Remove support for metadata plugin, replace with data-rule- and data-msg- (added in 907467e8) properties.
+  * Added sftp as a valid url-pattern
+  * Add Malay (my) localization
+  * Update localization/messages_hu.js
+  * Remove focusin/focusout polyfill. Fixes #542 - Inclusion of jquery.validate interfers with focusin and focusout events in IE9
+  * Localization: Fixed typo in finnish translation
+  * Fix RTM demo to show invalid icon when going from valid back to invalid
+  * Fixed premature return in remote function which prevented ajax call from being made in case an input was entered too quickly. Ensures remote validation always validates the newest value.
+  * Undo fix for #244. Fixes #521 - E-mail validation fires immediately when text is in the field.
+
 1.10.0 / 2012-09-07
 ===================
 
