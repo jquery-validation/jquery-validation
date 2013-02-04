@@ -45,6 +45,11 @@ $.extend($.fn, {
 				if ( $(event.target).hasClass("cancel") ) {
 					validator.cancelSubmit = true;
 				}
+				
+				// allow suppressing validation by adding the html 5 formnovalidate attribute to button
+				if ( $(event.target).attr('formnovalidate') ) {
+					validator.cancelSubmit = true;
+				}
 			});
 
 			// validate the form on submit
