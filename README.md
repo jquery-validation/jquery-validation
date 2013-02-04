@@ -32,12 +32,10 @@ $("form").validate();
 For more information on how to setup a rules and customizations, [check the documentation](http://docs.jquery.com/Plugins/Validation).
 
 ## Contributing
-In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint and test your code using [grunt](https://github.com/cowboy/grunt).
+Follow the [jQuery style guide](http://contribute.jquery.com/style-guides/js), even if existing code doesn't. Add unit tests for any new or changed functionality. Lint and test your code using [grunt](https://github.com/gruntjs/grunt/).
 
 If you've wrote custom methods that you'd like to contribute to additional-methods.js, create a branch, add the method there and send a pull request for that branch.
 
-If you've wrote a patch for some bug listed on http://plugins.jquery.com/project/issues/validate, please provide a link to that issue in your commit message.
-
 ## License
-Copyright (c) 2012 Jörn Zaefferer
+Copyright (c) 2013 Jörn Zaefferer
 Licensed under the MIT license.
