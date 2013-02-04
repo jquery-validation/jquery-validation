@@ -814,6 +814,33 @@ test("validating groups settings parameter", function() {
     equal(validate.groups["input-six"], "stringGroup");
 });
 
+test('bypassing validation on form submission',function () {
+	var form = $("#bypassValidation");
+	var normalSubmission = $("form#bypassValidation :input[id=normalSubmit]");
+	var bypassSubmitWithCancel = $("form#bypassValidation :input[id=bypassSubmitWithCancel]");
+	var bypassSubmitWithNoValidate1 = $("form#bypassValidation :input[id=bypassSubmitWithNoValidate1]");
+	var bypassSubmitWithNoValidate2 = $("form#bypassValidation :input[id=bypassSubmitWithNoValidate2]");
+
+	var $v = form.validate({
+		debug : true
+	});
+	
+	bypassSubmitWithCancel.click();
+	equal($v.numberOfInvalids(), 0, "Validation was bypassed using CSS 'cancel' class.");
+	$v.resetForm();
+	
+	bypassSubmitWithNoValidate1.click();
+	equal($v.numberOfInvalids(), 0, "Validation was bypassed using blank 'formnovalidate' attribute.");
+	$v.resetForm();
+	
+	bypassSubmitWithNoValidate2.click();
+	equal($v.numberOfInvalids(), 0, "Validation was bypassed using 'formnovalidate=\"formnovalidate\"' attribute.");
+	$v.resetForm();
+	
+	normalSubmission.click();
+	equal($v.numberOfInvalids(), 1, "Validation failed correctly");
+});
+
 
 module("misc");
 
@@ -1422,3 +1449,5 @@ test("Min and Max strings set by attributes valid", function() {
 	var label = $('#ranges label');
 	equal( label.text(), "", "Correct error label" );
 });
+
+
