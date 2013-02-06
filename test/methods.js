@@ -634,6 +634,38 @@ test("postalcodeNL", function() {
 	ok(!method( "1234-AA"), "Invalid NL Postal Code");
 });
 
+test("bankaccountNL", function() {
+	var method = methodTest("bankaccountNL");
+	ok( method( "755490975"), "Valid NL bank account");
+	ok( method( "75 54 90 975"), "Valid NL bank account");
+	ok( method( "123456789"), "Valid NL bank account");
+	ok( method( "12 34 56 789"), "Valid NL bank account");
+	ok(!method( "12 3456789"), "Valid NL bank account: inconsistent spaces");
+	ok(!method( "123 45 67 89"), "Valid NL bank account: incorrect spaces");
+	ok(!method( "755490971"), "Invalid NL bank account");
+	ok(!method( "755490973"), "Invalid NL bank account");
+	ok(!method( "755490979"), "Invalid NL bank account");
+	ok(!method( "123456781"), "Invalid NL bank account");
+	ok(!method( "123456784"), "Invalid NL bank account");
+	ok(!method( "123456788"), "Invalid NL bank account");
+});
+
+test("giroaccountNL", function() {
+	var method = methodTest("giroaccountNL");
+	ok( method( "123"), "Valid NL giro  account");
+	ok( method( "1234567"), "Valid NL giro account");
+	ok(!method( "123456788"), "Invalid NL giro account");
+});
+
+test("bankorgiroaccountNL", function() {
+	var method = methodTest("bankorgiroaccountNL");
+	ok( method( "123"), "Valid NL giro account");
+	ok( method( "1234567"), "Valid NL giro account");
+	ok( method( "123456789"), "Valid NL bank account");
+	ok(!method( "12345678"), "Invalid NL bank or giro account");
+	ok(!method( "123456788"), "Invalid NL bank or giro account");
+});
+
 test("time", function() {
 	var method = methodTest("time");
 	ok( method("00:00"), "Valid time, lower bound" );
