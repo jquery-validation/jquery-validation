@@ -29,6 +29,7 @@
 		postalcodeNL: "Vul hier een geldige postcode in.",
 		bankaccountNL: "Vul hier een geldig bankrekeningnummer in.",
 		giroaccountNL: "Vul hier een geldig gironummer in.",
-		bankorgiroaccountNL: "Vul hier een geldig bank- of gironummer in."
+		bankorgiroaccountNL: "Vul hier een geldig bank- of gironummer in.",
+		iban: "Vul hier een geldig IBAN in."
 	});
 }(jQuery));
