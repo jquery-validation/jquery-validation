@@ -155,7 +155,14 @@ jQuery.validator.addMethod("dateITA", function(value, element) {
 
 jQuery.validator.addMethod("dateNL", function(value, element) {
 	return this.optional(element) || /^(0?[1-9]|[12]\d|3[01])[\.\/\-](0?[1-9]|1[012])[\.\/\-]([12]\d)?(\d\d)$/.test(value);
-}, "Vul hier een geldige datum in.");
+}, "Please enter a correct date");
+
+/**
+ * Dutch phone numbers have 10 digits, or 11 and start with +31.
+ */
+jQuery.validator.addMethod("phoneNL", function(value, element) {
+	return this.optional(element) || /^((\+|00(\s|\s?\-\s?)?)31(\s|\s?\-\s?)?(\(0\)[\-\s]?)?|0)[1-9]((\s|\s?\-\s?)?[0-9]){8}$/.test(value);
+}, "Please specify a valid phone number.");
 
 jQuery.validator.addMethod("time", function(value, element) {
 	return this.optional(element) || /^([01]\d|2[0-3])(:[0-5]\d){1,2}$/.test(value);
