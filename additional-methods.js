@@ -179,20 +179,22 @@ jQuery.validator.addMethod("postalcodeNL", function(value, element) {
  * acceptable: 123456789 or 12 34 56 789
  */
 jQuery.validator.addMethod("bankaccountNL", function(value, element) {
-	if (this.optional(element))
+	if (this.optional(element)) {
 		return true;
-	if (!(/^[0-9]{9}|([0-9]{2} ){3}[0-9]{3}$/.test(value)))
+	}
+	if (!(/^[0-9]{9}|([0-9]{2} ){3}[0-9]{3}$/.test(value))) {
 		return false;
+	}
 	// now '11 check'
-	account = value.replace(/ /g,''); // remove spaces
+	var account = value.replace(/ /g,''); // remove spaces
 	var sum = 0;
 	var len = account.length;
-	for (pos=0; pos<len; pos++) {
-		factor = len - pos;
-		digit = account.substring(pos, pos+1);
+	for (var pos=0; pos<len; pos++) {
+		var factor = len - pos;
+		var digit = account.substring(pos, pos+1);
 		sum = sum + factor * digit;
 	}
-	return sum % 11 == 0;
+	return sum % 11 === 0;
 }, "Please specify a valid bank account number");
 
 /**

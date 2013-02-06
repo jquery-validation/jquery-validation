@@ -25,7 +25,7 @@
 		// for validations in additional-methods.js
 		dateNL: "Vul hier een geldige datum in.",
 		phoneNL: "Vul hier een geldig Nederlands telefoonnummer in.",
-		phoneNL: "Vul hier een geldig Nederlands mobiel telefoonnummer in.",
+		mobileNL: "Vul hier een geldig Nederlands mobiel telefoonnummer in.",
 		postalcodeNL: "Vul hier een geldige postcode in.",
 		bankaccountNL: "Vul hier een geldig bankrekeningnummer in.",
 		giroaccountNL: "Vul hier een geldig gironummer in.",
