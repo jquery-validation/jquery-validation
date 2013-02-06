@@ -157,6 +157,283 @@ jQuery.validator.addMethod("dateNL", function(value, element) {
 	return this.optional(element) || /^(0?[1-9]|[12]\d|3[01])[\.\/\-](0?[1-9]|1[012])[\.\/\-]([12]\d)?(\d\d)$/.test(value);
 }, "Vul hier een geldige datum in.");
 
+/**
+ * IBAN is the international bank account number. 
+ * It has a country - specific format, that is checked here too 
+ */
+jQuery.validator.addMethod("iban", function(value, element) {
+	// some quick simple tests to prevent needless work
+	if (this.optional(element)) {
+		return true;
+	}
+	if (!(/^([a-zA-Z0-9]{4} ){2,8}[a-zA-Z0-9]{1,4}|[a-zA-Z0-9]{12,34}$/.test(value))) {
+		return false;
+	}
+	
+	// check the country code and find the country specific format
+	var iban = value.replace(/ /g,'').toUpperCase(); // remove spaces and to upper case
+	var countrycode = iban.substring(0,2);
+	var bbanformat = "";
+	var bbanpattern = "";
+	switch (countrycode) {
+		case 'AL':
+			bbanformat = "8n16c";
+			break;
+		case 'AD':
+			bbanformat = "8n12c";
+			break;
+		case 'AT':
+			bbanformat = "16n";
+			break;
+		case 'AZ':
+			bbanformat = "4c20n";
+			break;
+		case 'BE':
+			bbanformat = "12n";
+			break;
+		case 'BH':
+			bbanformat = "4a14c";
+			break;
+		case 'BA':
+			bbanformat = "16n";
+			break;
+		case 'BR':
+			bbanformat = "23n1a1c";
+			break;
+		case 'BG':
+			bbanformat = "4a6n8c";
+			break;
+		case 'CR':
+			bbanformat = "17n";
+			break;
+		case 'HR':
+			bbanformat = "17n";
+			break;
+		case 'CY':
+			bbanformat = "8n16c";
+			break;
+		case 'CZ':
+			bbanformat = "20n";
+			break;
+		case 'DK':
+			bbanformat = "14n";
+			break;
+		case 'DO':
+			bbanformat = "4a20n";
+			break;
+		case 'EE':
+			bbanformat = "16n";
+			break;
+		case 'FO':
+			bbanformat = "14n";
+			break;
+		case 'FI':
+			bbanformat = "14n";
+			break;
+		case 'FR':
+			bbanformat = "10n11c2n";
+			break;
+		case 'GE':
+			bbanformat = "2c16n";
+			break;
+		case 'DE':
+			bbanformat = "18n";
+			break;
+		case 'GI':
+			bbanformat = "4a15c";
+			break;
+		case 'GR':
+			bbanformat = "7n16c";
+			break;
+		case 'GL':
+			bbanformat = "14n";
+			break;
+		case 'GT':
+			bbanformat = "4c20c";
+			break;
+		case 'HU':
+			bbanformat = "24n";
+			break;
+		case 'IS':
+			bbanformat = "22n";
+			break;
+		case 'IE':
+			bbanformat = "4c14n";
+			break;
+		case 'IL':
+			bbanformat = "19n";
+			break;
+		case 'IT':
+			bbanformat = "1a10n12c";
+			break;
+		case 'KZ':
+			bbanformat = "3n13c";
+			break;
+		case 'KW':
+			bbanformat = "4a22c";
+			break;
+		case 'LV':
+			bbanformat = "4a13c";
+			break;
+		case 'LB':
+			bbanformat = "4n20c";
+			break;
+		case 'LI':
+			bbanformat = "5n12c";
+			break;
+		case 'LT':
+			bbanformat = "16n";
+			break;
+		case 'LU':
+			bbanformat = "3n13c";
+			break;
+		case 'MK':
+			bbanformat = "3n10c2n";
+			break;
+		case 'MT':
+			bbanformat = "4a5n18c";
+			break;
+		case 'MR':
+			bbanformat = "23n";
+			break;
+		case 'MU':
+			bbanformat = "4a19n3a";
+			break;
+		case 'MC':
+			bbanformat = "10n11c2n";
+			break;
+		case 'MD':
+			bbanformat = "2c18n";
+			break;
+		case 'ME':
+			bbanformat = "18n";
+			break;
+		case 'NL':
+			bbanformat = "4a10n";
+			break;
+		case 'NO':
+			bbanformat = "11n";
+			break;
+		case 'PK':
+			bbanformat = "4c16n";
+			break;
+		case 'PS':
+			bbanformat = "4c21n";
+			break;
+		case 'PL':
+			bbanformat = "24n";
+			break;
+		case 'PT':
+			bbanformat = "21n";
+			break;
+		case 'RO':
+			bbanformat = "4a16c";
+			break;
+		case 'SM':
+			bbanformat = "1a10n12c";
+			break;
+		case 'SA':
+			bbanformat = "2n18c";
+			break;
+		case 'RS':
+			bbanformat = "18n";
+			break;
+		case 'SK':
+			bbanformat = "20n";
+			break;
+		case 'SI':
+			bbanformat = "15n";
+			break;
+		case 'ES':
+			bbanformat = "20n";
+			break;
+		case 'SE':
+			bbanformat = "20n";
+			break;
+		case 'CH':
+			bbanformat = "5n12c";
+			break;
+		case 'TN':
+			bbanformat = "20n";
+			break;
+		case 'TR':
+			bbanformat = "5n17c";
+			break;
+		case 'AE':
+			bbanformat = "3n16n";
+			break;
+		case 'GB':
+			bbanformat = "4a14n";
+			break;
+		case 'VG':
+			bbanformat = "4c16n";
+			break;
+	}
+	if (bbanformat === "") {
+		return false; // unknown country: MAYBE WE SHOULD ALLOW THIS???
+	}
+	
+	// check the country specific format
+	while (bbanformat.length>1) {
+		var count = 0;
+		var type = "?";
+		var l = 0;
+		if (/^\d[acn]/.test(bbanformat)) {
+			l = 1;
+		} else { 
+			l = 2;
+		}
+		
+		count = bbanformat.substring(0, l);
+		type = bbanformat.substring(l, l + 1);
+		bbanformat = bbanformat.substring(l + 1, bbanformat.length);
+		if (count === 0) {
+			break; // this indicates illegal bbanformat string: MAYBE HANDLE???
+		}
+		var typeexpression = '';
+		switch (type) {
+		case 'a': // alphabet letter
+			typeexpression = '[A-Z]';
+			break;
+		case 'c': // character (digit or letter)
+			typeexpression = '[\\dA-Z]';
+			break;
+		case 'n': // number (digit actually)
+			typeexpression = '\\d';
+			break;
+		}
+		bbanpattern = bbanpattern + typeexpression + "{" + count + "}";
+	}
+	var ibanregexp = new RegExp("^[A-Z]{2}\\d{2}" + bbanpattern + "$", "");
+	if (!(ibanregexp.test(iban))) {
+		return false; // invalid country specific format
+	}
+	
+	// now check the checksum, first convert to digits
+	var ibancheck = iban.substring(4,iban.length) + iban.substring(0,4);
+	var ibancheckdigits = "";
+	var leadingZeroes = true;
+	for (var i =0; i<ibancheck.length; i++) {
+		var char = ibancheck.charAt(i);
+		if (char !== "0") {
+			leadingZeroes = false;
+		}
+		if (!leadingZeroes) {
+			ibancheckdigits += "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ".indexOf(char);
+		}
+	}
+
+	// calculate the result of: ibancheckdigits % 97
+    var cRest = '';
+    var cOperator = '';
+	for (var p=0; p<ibancheckdigits.length; p++) {
+		var cChar = ibancheckdigits.charAt(p);
+		cOperator = '' + cRest + '' + cChar;
+		cRest = cOperator % 97;
+    }
+	return cRest === 1;
+}, "Please specify a valid IBAN");
+
 jQuery.validator.addMethod("time", function(value, element) {
 	return this.optional(element) || /^([01]\d|2[0-3])(:[0-5]\d){1,2}$/.test(value);
 }, "Please enter a valid time, between 00:00 and 23:59");
