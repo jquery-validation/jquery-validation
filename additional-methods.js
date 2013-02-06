@@ -164,6 +164,11 @@ jQuery.validator.addMethod("phoneNL", function(value, element) {
 	return this.optional(element) || /^((\+|00(\s|\s?\-\s?)?)31(\s|\s?\-\s?)?(\(0\)[\-\s]?)?|0)[1-9]((\s|\s?\-\s?)?[0-9]){8}$/.test(value);
 }, "Please specify a valid phone number.");
 
+jQuery.validator.addMethod("mobileNL", function(value, element) {
+	return this.optional(element) || /^((\+|00(\s|\s?\-\s?)?)31(\s|\s?\-\s?)?(\(0\)[\-\s]?)?|0)6((\s|\s?\-\s?)?[0-9]){8}$/.test(value);
+}, "Please specify a valid mobile number");
+
+
 jQuery.validator.addMethod("time", function(value, element) {
 	return this.optional(element) || /^([01]\d|2[0-3])(:[0-5]\d){1,2}$/.test(value);
 }, "Please enter a valid time, between 00:00 and 23:59");
