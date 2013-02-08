@@ -11,12 +11,12 @@ grunt.initConfig({
 			' Licensed <%= _.pluck(pkg.licenses, "type").join(", ") %> */'
 	},
 	concat: {
-		'dist/jquery.validate.js': ['<banner>', '<file_strip_banner:jquery.validate.js>'],
-		'dist/additional-methods.js': ['<banner>', '<file_strip_banner:additional-methods.js>']
+		'dist/jquery.validate.js': 'jquery.validate.js',
+		'dist/additional-methods.js': 'additional-methods.js'
 	},
 	min: {
-		'dist/jquery.validate.min.js': ['<banner>', 'dist/jquery.validate.js'],
-		'dist/additional-methods.min.js': ['<banner>', 'dist/additional-methods.js']
+		'dist/jquery.validate.min.js': ['<banner>', '<file_strip_banner:jquery.validate.js>'],
+		'dist/additional-methods.min.js': ['<banner>', '<file_strip_banner:additional-methods.js>']
 	},
 	zip: {
 		dist: {
