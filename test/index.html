@@ -310,6 +310,14 @@
 
 			<input type="text" id="rangeTextValid" name="rangeTextValid" min="AAA" max="ZZZ" value="NNN"/>
 		</form>
+		
+		<form id="bypassValidation">
+				<input type="text" required/>
+				<input id="normalSubmit" type="submit" value="submit"/>
+				<input id="bypassSubmitWithCancel" type="submit" class="cancel" value="bypass1"/>
+				<input id="bypassSubmitWithNoValidate1" type="submit" formnovalidate value="bypass1"/>
+				<input id="bypassSubmitWithNoValidate2" type="submit" formnovalidate="formnovalidate" value="bypass2"/>
+		</form>
 	</div>
 
 </body>
