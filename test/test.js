@@ -830,11 +830,11 @@ test('bypassing validation on form submission',function () {
 	$v.resetForm();
 	
 	bypassSubmitWithNoValidate1.click();
-	equal($v.numberOfInvalids(), 0, "Validation was bypassed using CSS 'cancel' class.");
+	equal($v.numberOfInvalids(), 0, "Validation was bypassed using blank 'formnovalidate' attribute.");
 	$v.resetForm();
 	
 	bypassSubmitWithNoValidate2.click();
-	equal($v.numberOfInvalids(), 0, "Validation was bypassed using CSS 'cancel' class.");
+	equal($v.numberOfInvalids(), 0, "Validation was bypassed using 'formnovalidate=\"formnovalidate\"' attribute.");
 	$v.resetForm();
 	
 	normalSubmission.click();
