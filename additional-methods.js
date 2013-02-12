@@ -173,240 +173,85 @@ jQuery.validator.addMethod("iban", function(value, element) {
 	// check the country code and find the country specific format
 	var iban = value.replace(/ /g,'').toUpperCase(); // remove spaces and to upper case
 	var countrycode = iban.substring(0,2);
-	var bbanformat = "";
-	var bbanpattern = "";
-	switch (countrycode) {
-		case 'AL':
-			bbanformat = "8n16c";
-			break;
-		case 'AD':
-			bbanformat = "8n12c";
-			break;
-		case 'AT':
-			bbanformat = "16n";
-			break;
-		case 'AZ':
-			bbanformat = "4c20n";
-			break;
-		case 'BE':
-			bbanformat = "12n";
-			break;
-		case 'BH':
-			bbanformat = "4a14c";
-			break;
-		case 'BA':
-			bbanformat = "16n";
-			break;
-		case 'BR':
-			bbanformat = "23n1a1c";
-			break;
-		case 'BG':
-			bbanformat = "4a6n8c";
-			break;
-		case 'CR':
-			bbanformat = "17n";
-			break;
-		case 'HR':
-			bbanformat = "17n";
-			break;
-		case 'CY':
-			bbanformat = "8n16c";
-			break;
-		case 'CZ':
-			bbanformat = "20n";
-			break;
-		case 'DK':
-			bbanformat = "14n";
-			break;
-		case 'DO':
-			bbanformat = "4a20n";
-			break;
-		case 'EE':
-			bbanformat = "16n";
-			break;
-		case 'FO':
-			bbanformat = "14n";
-			break;
-		case 'FI':
-			bbanformat = "14n";
-			break;
-		case 'FR':
-			bbanformat = "10n11c2n";
-			break;
-		case 'GE':
-			bbanformat = "2c16n";
-			break;
-		case 'DE':
-			bbanformat = "18n";
-			break;
-		case 'GI':
-			bbanformat = "4a15c";
-			break;
-		case 'GR':
-			bbanformat = "7n16c";
-			break;
-		case 'GL':
-			bbanformat = "14n";
-			break;
-		case 'GT':
-			bbanformat = "4c20c";
-			break;
-		case 'HU':
-			bbanformat = "24n";
-			break;
-		case 'IS':
-			bbanformat = "22n";
-			break;
-		case 'IE':
-			bbanformat = "4c14n";
-			break;
-		case 'IL':
-			bbanformat = "19n";
-			break;
-		case 'IT':
-			bbanformat = "1a10n12c";
-			break;
-		case 'KZ':
-			bbanformat = "3n13c";
-			break;
-		case 'KW':
-			bbanformat = "4a22c";
-			break;
-		case 'LV':
-			bbanformat = "4a13c";
-			break;
-		case 'LB':
-			bbanformat = "4n20c";
-			break;
-		case 'LI':
-			bbanformat = "5n12c";
-			break;
-		case 'LT':
-			bbanformat = "16n";
-			break;
-		case 'LU':
-			bbanformat = "3n13c";
-			break;
-		case 'MK':
-			bbanformat = "3n10c2n";
-			break;
-		case 'MT':
-			bbanformat = "4a5n18c";
-			break;
-		case 'MR':
-			bbanformat = "23n";
-			break;
-		case 'MU':
-			bbanformat = "4a19n3a";
-			break;
-		case 'MC':
-			bbanformat = "10n11c2n";
-			break;
-		case 'MD':
-			bbanformat = "2c18n";
-			break;
-		case 'ME':
-			bbanformat = "18n";
-			break;
-		case 'NL':
-			bbanformat = "4a10n";
-			break;
-		case 'NO':
-			bbanformat = "11n";
-			break;
-		case 'PK':
-			bbanformat = "4c16n";
-			break;
-		case 'PS':
-			bbanformat = "4c21n";
-			break;
-		case 'PL':
-			bbanformat = "24n";
-			break;
-		case 'PT':
-			bbanformat = "21n";
-			break;
-		case 'RO':
-			bbanformat = "4a16c";
-			break;
-		case 'SM':
-			bbanformat = "1a10n12c";
-			break;
-		case 'SA':
-			bbanformat = "2n18c";
-			break;
-		case 'RS':
-			bbanformat = "18n";
-			break;
-		case 'SK':
-			bbanformat = "20n";
-			break;
-		case 'SI':
-			bbanformat = "15n";
-			break;
-		case 'ES':
-			bbanformat = "20n";
-			break;
-		case 'SE':
-			bbanformat = "20n";
-			break;
-		case 'CH':
-			bbanformat = "5n12c";
-			break;
-		case 'TN':
-			bbanformat = "20n";
-			break;
-		case 'TR':
-			bbanformat = "5n17c";
-			break;
-		case 'AE':
-			bbanformat = "3n16n";
-			break;
-		case 'GB':
-			bbanformat = "4a14n";
-			break;
-		case 'VG':
-			bbanformat = "4c16n";
-			break;
-	}
-	if (bbanformat === "") {
-		return false; // unknown country: MAYBE WE SHOULD ALLOW THIS???
-	}
-	
-	// check the country specific format
-	while (bbanformat.length>1) {
-		var count = 0;
-		var type = "?";
-		var l = 0;
-		if (/^\d[acn]/.test(bbanformat)) {
-			l = 1;
-		} else { 
-			l = 2;
+	var bbancountrypatterns = {
+		'AL': "\\d{8}[\\dA-Z]{16}",
+		'AD': "\\d{8}[\\dA-Z]{12}",
+		'AT': "\\d{16}",
+		'AZ': "[\\dA-Z]{4}\\d{20}",
+		'BE': "\\d{12}",
+		'BH': "[A-Z]{4}[\\dA-Z]{14}",
+		'BA': "\\d{16}",
+		'BR': "\\d{23}[A-Z][\\dA-Z]",
+		'BG': "[A-Z]{4}\\d{6}[\\dA-Z]{8}",
+		'CR': "\\d{17}",
+		'HR': "\\d{17}",
+		'CY': "\\d{8}[\\dA-Z]{16}",
+		'CZ': "\\d{20}",
+		'DK': "\\d{14}",
+		'DO': "[A-Z]{4}\\d{20}",
+		'EE': "\\d{16}",
+		'FO': "\\d{14}",
+		'FI': "\\d{14}",
+		'FR': "\\d{10}[\\dA-Z]{11}\\d{2}",
+		'GE': "[\\dA-Z]{2}\\d{16}",
+		'DE': "\\d{18}",
+		'GI': "[A-Z]{4}[\\dA-Z]{15}",
+		'GR': "\\d{7}[\\dA-Z]{16}",
+		'GL': "\\d{14}",
+		'GT': "[\\dA-Z]{4}[\\dA-Z]{20}",
+		'HU': "\\d{24}",
+		'IS': "\\d{22}",
+		'IE': "[\\dA-Z]{4}\\d{14}",
+		'IL': "\\d{19}",
+		'IT': "[A-Z]\\d{10}[\\dA-Z]{12}",
+		'KZ': "\\d{3}[\\dA-Z]{13}",
+		'KW': "[A-Z]{4}[\\dA-Z]{22}",
+		'LV': "[A-Z]{4}[\\dA-Z]{13}",
+		'LB': "\\d{4}[\\dA-Z]{20}",
+		'LI': "\\d{5}[\\dA-Z]{12}",
+		'LT': "\\d{16}",
+		'LU': "\\d{3}[\\dA-Z]{13}",
+		'MK': "\\d{3}[\\dA-Z]{10}\\d{2}",
+		'MT': "[A-Z]{4}\\d{5}[\\dA-Z]{18}",
+		'MR': "\\d{23}",
+		'MU': "[A-Z]{4}\\d{19}[A-Z]{3}",
+		'MC': "\\d{10}[\\dA-Z]{11}\\d{2}",
+		'MD': "[\\dA-Z]{2}\\d{18}",
+		'ME': "\\d{18}",
+		'NL': "[A-Z]{4}\\d{10}",
+		'NO': "\\d{11}",
+		'PK': "[\\dA-Z]{4}\\d{16}",
+		'PS': "[\\dA-Z]{4}\\d{21}",
+		'PL': "\\d{24}",
+		'PT': "\\d{21}",
+		'RO': "[A-Z]{4}[\\dA-Z]{16}",
+		'SM': "[A-Z]\\d{10}[\\dA-Z]{12}",
+		'SA': "\\d{2}[\\dA-Z]{18}",
+		'RS': "\\d{18}",
+		'SK': "\\d{20}",
+		'SI': "\\d{15}",
+		'ES': "\\d{20}",
+		'SE': "\\d{20}",
+		'CH': "\\d{5}[\\dA-Z]{12}",
+		'TN': "\\d{20}",
+		'TR': "\\d{5}[\\dA-Z]{17}",
+		'AE': "\\d{3}\\d{16}",
+		'GB': "[A-Z]{4}\\d{14}",
+		'VG': "[\\dA-Z]{4}\\d{16}"
+	};
+	var bbanpattern = bbancountrypatterns[countrycode];
+	// As new countries will start using IBAN in the
+	// future, we only check if the countrycode is known.
+	// This prevents false negatives, while almost all
+	// false positives introduced by this, will be caught
+	// by the checksum validation below anyway.
+	// Strict checking should return FALSE for unknown 
+	// countries.
+	if (typeof bbanpattern !== 'undefined') {
+		var ibanregexp = new RegExp("^[A-Z]{2}\\d{2}" + bbanpattern + "$", "");
+		if (!(ibanregexp.test(iban))) {
+			return false; // invalid country specific format
 		}
-		
-		count = bbanformat.substring(0, l);
-		type = bbanformat.substring(l, l + 1);
-		bbanformat = bbanformat.substring(l + 1, bbanformat.length);
-		if (count === 0) {
-			break; // this indicates illegal bbanformat string: MAYBE HANDLE???
-		}
-		var typeexpression = '';
-		switch (type) {
-		case 'a': // alphabet letter
-			typeexpression = '[A-Z]';
-			break;
-		case 'c': // character (digit or letter)
-			typeexpression = '[\\dA-Z]';
-			break;
-		case 'n': // number (digit actually)
-			typeexpression = '\\d';
-			break;
-		}
-		bbanpattern = bbanpattern + typeexpression + "{" + count + "}";
-	}
-	var ibanregexp = new RegExp("^[A-Z]{2}\\d{2}" + bbanpattern + "$", "");
-	if (!(ibanregexp.test(iban))) {
-		return false; // invalid country specific format
 	}
 	
 	// now check the checksum, first convert to digits

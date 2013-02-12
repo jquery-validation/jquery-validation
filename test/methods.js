@@ -596,6 +596,7 @@ test("iban", function() {
 	ok( method( "DE68 2105 0170 0012 3456 78"), "Valid IBAN");
 	ok( method( "NL20 INGB0001234567"), "Valid IBAN: invalid spacing");
 	ok( method( "NL20 INGB 00 0123 4567"), "Valid IBAN: invalid spacing");
+	ok( method( "XX40INGB000123456712341234"), "Valid (more or less) IBAN: unknown country, but checksum OK");
 	
 	ok(!method( "NL20INGB000123456"), "Invalid IBAN: too short");
 	ok(!method( "NL20INGB00012345678"), "Invalid IBAN: too long");
@@ -603,6 +604,9 @@ test("iban", function() {
 	ok(!method( "DE68 2105 0170 0012 3456 7"), "Invalid IBAN: too short");
 	ok(!method( "DE68 2105 0170 0012 3456 789"), "Invalid IBAN: too long");
 	ok(!method( "DE68 2105 0170 0012 3456 79"), "Invalid IBAN: checksum incorrect");
+
+	ok(!method( "NL54INGB00012345671234"), "Invalid IBAN too long, BUT CORRECT CHECKSUM");
+	ok(!method( "XX00INGB000123456712341234"), "Invalid IBAN: unknown country and checksum incorrect");
 
 	// sample IBANs for different countries
 	ok( method( "AL47 2121 1009 0000 0002 3569 8741"), "Valid IBAN - AL");
