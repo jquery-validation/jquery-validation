@@ -108,6 +108,11 @@
 			<input data-rule-equalto="#x1" value="y" name="x2" id="x2" />
 		</form>
 
+		<form id="testForm5_1">
+			<input data-rule-equalto="[name=x2]" value="x" name="x1" />
+			<input data-rule-equalto="[name=x1]" value="y" name="x2" />
+		</form>
+
 		<form id="testForm6">
 			<input data-rule-required="true" data-rule-minlength="2" type="checkbox" name="check" id="form6check1" />
 			<input type="checkbox" name="check" id="form6check2" />
@@ -181,6 +186,7 @@
 			<input type="text" name="text2" value="T " id="text1c"/>
 			<input type="text" name="text2" value="T" id="text2"/>
 			<input type="text" name="text2" value="TestTestTest" id="text3"/>
+			<input type="text" name="text3" value="T"/>
 
 			<input type="text" name="action" value="0" id="value1"/>
 			<input type="text" name="text2" value="10" id="value2"/>

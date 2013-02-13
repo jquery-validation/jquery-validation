@@ -170,6 +170,16 @@ test("form(): with equalTo", function() {
 	ok( v.form(), 'Valid form' );
 });
 
+test("form(): with equalTo and selectors by name", function() {
+	expect( 2 );
+	var form = $('#testForm5_1')[0];
+	var v = $(form).validate();
+	console.log("v.form=" + v.form());
+	ok( !v.form(), 'Invalid form' );
+	$('[name=x1], [name=x2]', form).val("hi");
+	ok( v.form(), 'Valid form' );
+});
+
 test("form(): with equalTo and onfocusout=false", function() {
 	expect( 4 );
 	var form = $('#testForm5')[0];

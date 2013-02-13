@@ -333,9 +333,10 @@ test("range", function() {
 test("equalTo", function() {
 	var v = jQuery("#form").validate();
 	var method = $.validator.methods.equalTo,
-		e = $('#text1, #text2');
+		e = $('#text1, #text2, #form input[name=text3]');
 	ok( method.call( v, "Test", e[0], "#text1"), "Text input" );
 	ok( method.call( v, "T", e[1], "#text2"), "Another one" );
+	ok( method.call( v, "T", e[2], "input[name=text3]"), "Find by name" );
 });
 
 test("creditcard", function() {
