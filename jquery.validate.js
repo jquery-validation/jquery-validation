@@ -842,6 +842,7 @@ $.extend($.validator, {
 	attributeRules: function( element ) {
 		var rules = {};
 		var $element = $(element);
+		var type = $element[0].getAttribute("type");
 
 		for (var method in $.validator.methods) {
 			var value;
@@ -860,9 +861,17 @@ $.extend($.validator, {
 				value = $element.attr(method);
 			}
 
+			// convert the value to a number for number inputs, and for text for backwards compability
+			// allows type="date" and others to be compared as strings
+			if ( /min|max/.test( method ) && ( type === null || /number|range|text/.test( type ) ) ) {
+				value = Number(value);
+			}
+
 			if ( value ) {
 				rules[method] = value;
-			} else if ( $element[0].getAttribute("type") === method ) {
+			} else if ( type === method && type !== 'range' ) {
+				// exception: the jquery validate 'range' method
+				// does not test for the html5 'range' type
 				rules[method] = true;
 			}
 		}

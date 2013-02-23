@@ -297,20 +297,44 @@
 			<label id="targetLabel" class="error" for="updateLabelInput">Some server-side error</label>
 		</form>
 
+		<form id="rangesMinDateInvalid">
+			<input type="date" id="minDateInvalid" name="minDateInvalid" min="2012-12-21" value="2012-11-21"/>
+		</form>
 		<form id="ranges">
-			<input type="text" id="minDateInvalid" name="minDateInvalid" min="2012-12-21" value="2012-11-21"/>
-			<input type="text" id="maxDateInvalid" ngame="maxDateInvalid" max="2012-12-21" value="2013-01-21"/>
-			<input type="text" id="rangeDateInvalidGreater" name="rangeDateInvalidGreater" min="2012-11-21" max="2013-01-21" value="2013-02-21"/>
-			<input type="text" id="rangeDateInvalidLess" name="rangeDateInvalidLess" min="2012-11-21" max="2013-01-21" value="2012-10-21"/>
+			<input type="date" id="maxDateInvalid" ngame="maxDateInvalid" max="2012-12-21" value="2013-01-21"/>
+			<input type="date" id="rangeDateInvalidGreater" name="rangeDateInvalidGreater" min="2012-11-21" max="2013-01-21" value="2013-02-21"/>
+			<input type="date" id="rangeDateInvalidLess" name="rangeDateInvalidLess" min="2012-11-21" max="2013-01-21" value="2012-10-21"/>
 
-			<input type="text" id="minDateValid" name="minDateValid" min="2012-11-21" value="2012-12-21"/>
-			<input type="text" id="maxDateValid" name="maxDateValid" max="2013-01-21" value="2012-12-21"/>
-			<input type="text" id="rangeDateValid" name="rangeDateValid" min="2012-11-21" max="2013-01-21" value="2012-12-21"/>
+			<input type="date" id="maxDateValid" name="maxDateValid" max="2013-01-21" value="2012-12-21"/>
+			<input type="date" id="rangeDateValid" name="rangeDateValid" min="2012-11-21" max="2013-01-21" value="2012-12-21"/>
 
-			<input type="text" id="rangeTextInvalidGreater" name="rangeTextInvalidGreater" min="BBB" max="YYY" value="ZZZ"/>
-			<input type="text" id="rangeTextInvalidLess" name="rangeTextInvalidLess" min="BBB" max="YYY" value="AAA"/>
+			<!-- input type text is not supposed to have min/max according to html5,
+			     but for backward compatibility with 1.10.0 we treat it as number.
+			     you can also use type="number", in which case the browser may also
+			     do validation, and mobile browsers may offer a numeric keypad to edit 
+			     the value.
+			     Type absent is treated like type="text".
+			  -->
+			<input type="text" id="rangeTextInvalidGreater" name="rangeTextInvalidGreater" min="50" max="200" value="1000"/>
+			<input type="text" id="rangeTextInvalidLess" name="rangeTextInvalidLess" min="200" max="1000" value="50"/>
+			<input id="rangeAbsentInvalidGreater" name="rangeAbsentInvalidGreater" min="50" max="200" value="1000"/>
+			<input id="rangeAbsentInvalidLess" name="rangeAbsentInvalidLess" min="200" max="1000" value="50"/>
 
-			<input type="text" id="rangeTextValid" name="rangeTextValid" min="AAA" max="ZZZ" value="NNN"/>
+			<input type="text" id="rangeTextValid" name="rangeTextValid" min="50" max="1000" value="200"/>
+			<input id="rangeAbsentValid" name="rangeTextValid" min="50" max="1000" value="200"/>
+
+			<!-- ranges are like numbers in html5, except that browser is not required 
+			     to demand an exact value.  User interface could be a slider.
+			  -->
+			<input type="range" id="rangeRangeValid" name="rangeRangeValid" min="50" max="1000" value="200"/>
+
+			<input type="number" id="rangeNumberValid" name="rangeNumberValid" min="50" max="1000" value="200"/>
+			<input type="number" id="rangeNumberInvalidGreater" name="rangeNumberInvalidGreater" min="50" max="200" value="1000"/>
+			<input type="number" id="rangeNumberInvalidLess" name="rangeNumberInvalidLess" min="50" max="200" value="6"/>
+
+		</form>
+		<form id="rangeMinDateValid">
+			<input type="date" id="minDateValid" name="minDateValid" min="2012-11-21" value="2012-12-21"/>
 		</form>
 		
 		<form id="bypassValidation">
