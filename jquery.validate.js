@@ -63,7 +63,7 @@ $.extend($.fn, {
 					if ( validator.settings.submitHandler ) {
 						if ( validator.submitButton ) {
 							// insert a hidden input as a replacement for the missing submit button
-							hidden = $("<input type='hidden'/>").attr("name", validator.submitButton.name).val(validator.submitButton.value).appendTo(validator.currentForm);
+							hidden = $("<input type='hidden'/>").attr("name", validator.submitButton.name).val( $(validator.submitButton).val() ).appendTo(validator.currentForm);
 						}
 						validator.settings.submitHandler.call( validator, validator.currentForm, event );
 						if ( validator.submitButton ) {
@@ -171,11 +171,11 @@ $.extend($.fn, {
 // Custom selectors
 $.extend($.expr[":"], {
 	// http://docs.jquery.com/Plugins/Validation/blank
-	blank: function( a ) { return !$.trim("" + a.value); },
+	blank: function( a ) { return !$.trim("" + $(a).val()); },
 	// http://docs.jquery.com/Plugins/Validation/filled
-	filled: function( a ) { return !!$.trim("" + a.value); },
+	filled: function( a ) { return !!$.trim("" + $(a).val()); },
 	// http://docs.jquery.com/Plugins/Validation/unchecked
-	unchecked: function( a ) { return !a.checked; }
+	unchecked: function( a ) { return !$(a).prop("checked"); }
 });
 
 // constructor for validator
