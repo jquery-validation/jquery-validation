@@ -1,4 +1,4 @@
-/**
+/*!
  * jQuery Validation Plugin 1.12.0pre
  *
  * http://bassistance.de/jquery-plugins/jquery-plugin-validation/
@@ -63,7 +63,7 @@ $.extend($.fn, {
 					if ( validator.settings.submitHandler ) {
 						if ( validator.submitButton ) {
 							// insert a hidden input as a replacement for the missing submit button
-							hidden = $("<input type='hidden'/>").attr("name", validator.submitButton.name).val(validator.submitButton.value).appendTo(validator.currentForm);
+							hidden = $("<input type='hidden'/>").attr("name", validator.submitButton.name).val( $(validator.submitButton).val() ).appendTo(validator.currentForm);
 						}
 						validator.settings.submitHandler.call( validator, validator.currentForm, event );
 						if ( validator.submitButton ) {
@@ -171,11 +171,11 @@ $.extend($.fn, {
 // Custom selectors
 $.extend($.expr[":"], {
 	// http://docs.jquery.com/Plugins/Validation/blank
-	blank: function( a ) { return !$.trim("" + a.value); },
+	blank: function( a ) { return !$.trim("" + $(a).val()); },
 	// http://docs.jquery.com/Plugins/Validation/filled
-	filled: function( a ) { return !!$.trim("" + a.value); },
+	filled: function( a ) { return !!$.trim("" + $(a).val()); },
 	// http://docs.jquery.com/Plugins/Validation/unchecked
-	unchecked: function( a ) { return !a.checked; }
+	unchecked: function( a ) { return !$(a).prop("checked"); }
 });
 
 // constructor for validator
@@ -1075,39 +1075,6 @@ $.extend($.validator, {
 			return "pending";
 		},
 
-		// http://docs.jquery.com/Plugins/Validation/Methods/minlength
-		minlength: function( value, element, param ) {
-			var length = $.isArray( value ) ? value.length : this.getLength($.trim(value), element);
-			return this.optional(element) || length >= param;
-		},
-
-		// http://docs.jquery.com/Plugins/Validation/Methods/maxlength
-		maxlength: function( value, element, param ) {
-			var length = $.isArray( value ) ? value.length : this.getLength($.trim(value), element);
-			return this.optional(element) || length <= param;
-		},
-
-		// http://docs.jquery.com/Plugins/Validation/Methods/rangelength
-		rangelength: function( value, element, param ) {
-			var length = $.isArray( value ) ? value.length : this.getLength($.trim(value), element);
-			return this.optional(element) || ( length >= param[0] && length <= param[1] );
-		},
-
-		// http://docs.jquery.com/Plugins/Validation/Methods/min
-		min: function( value, element, param ) {
-			return this.optional(element) || value >= param;
-		},
-
-		// http://docs.jquery.com/Plugins/Validation/Methods/max
-		max: function( value, element, param ) {
-			return this.optional(element) || value <= param;
-		},
-
-		// http://docs.jquery.com/Plugins/Validation/Methods/range
-		range: function( value, element, param ) {
-			return this.optional(element) || ( value >= param[0] && value <= param[1] );
-		},
-
 		// http://docs.jquery.com/Plugins/Validation/Methods/email
 		email: function( value, element ) {
 			// contributed by Scott Gonzalez: http://projects.scottsplayground.com/email_address_validation/
@@ -1171,6 +1138,39 @@ $.extend($.validator, {
 			return (nCheck % 10) === 0;
 		},
 
+		// http://docs.jquery.com/Plugins/Validation/Methods/minlength
+		minlength: function( value, element, param ) {
+			var length = $.isArray( value ) ? value.length : this.getLength($.trim(value), element);
+			return this.optional(element) || length >= param;
+		},
+
+		// http://docs.jquery.com/Plugins/Validation/Methods/maxlength
+		maxlength: function( value, element, param ) {
+			var length = $.isArray( value ) ? value.length : this.getLength($.trim(value), element);
+			return this.optional(element) || length <= param;
+		},
+
+		// http://docs.jquery.com/Plugins/Validation/Methods/rangelength
+		rangelength: function( value, element, param ) {
+			var length = $.isArray( value ) ? value.length : this.getLength($.trim(value), element);
+			return this.optional(element) || ( length >= param[0] && length <= param[1] );
+		},
+
+		// http://docs.jquery.com/Plugins/Validation/Methods/min
+		min: function( value, element, param ) {
+			return this.optional(element) || value >= param;
+		},
+
+		// http://docs.jquery.com/Plugins/Validation/Methods/max
+		max: function( value, element, param ) {
+			return this.optional(element) || value <= param;
+		},
+
+		// http://docs.jquery.com/Plugins/Validation/Methods/range
+		range: function( value, element, param ) {
+			return this.optional(element) || ( value >= param[0] && value <= param[1] );
+		},
+
 		// http://docs.jquery.com/Plugins/Validation/Methods/equalTo
 		equalTo: function( value, element, param ) {
 			// bind to the blur event of the target in order to revalidate whenever the target field is updated
@@ -1219,7 +1219,8 @@ $.format = $.validator.format;
 				if ( pendingRequests[port] ) {
 					pendingRequests[port].abort();
 				}
-				return (pendingRequests[port] = ajax.apply(this, arguments));
+				pendingRequests[port] = ajax.apply(this, arguments);
+				return pendingRequests[port];
 			}
 			return ajax.apply(this, arguments);
 		};

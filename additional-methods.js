@@ -153,16 +153,193 @@ jQuery.validator.addMethod("dateITA", function(value, element) {
 	return this.optional(element) || check;
 }, "Please enter a correct date");
 
+/**
+ * IBAN is the international bank account number.
+ * It has a country - specific format, that is checked here too
+ */
+jQuery.validator.addMethod("iban", function(value, element) {
+	// some quick simple tests to prevent needless work
+	if (this.optional(element)) {
+		return true;
+	}
+	if (!(/^([a-zA-Z0-9]{4} ){2,8}[a-zA-Z0-9]{1,4}|[a-zA-Z0-9]{12,34}$/.test(value))) {
+		return false;
+	}
+
+	// check the country code and find the country specific format
+	var iban = value.replace(/ /g,'').toUpperCase(); // remove spaces and to upper case
+	var countrycode = iban.substring(0,2);
+	var bbancountrypatterns = {
+		'AL': "\\d{8}[\\dA-Z]{16}",
+		'AD': "\\d{8}[\\dA-Z]{12}",
+		'AT': "\\d{16}",
+		'AZ': "[\\dA-Z]{4}\\d{20}",
+		'BE': "\\d{12}",
+		'BH': "[A-Z]{4}[\\dA-Z]{14}",
+		'BA': "\\d{16}",
+		'BR': "\\d{23}[A-Z][\\dA-Z]",
+		'BG': "[A-Z]{4}\\d{6}[\\dA-Z]{8}",
+		'CR': "\\d{17}",
+		'HR': "\\d{17}",
+		'CY': "\\d{8}[\\dA-Z]{16}",
+		'CZ': "\\d{20}",
+		'DK': "\\d{14}",
+		'DO': "[A-Z]{4}\\d{20}",
+		'EE': "\\d{16}",
+		'FO': "\\d{14}",
+		'FI': "\\d{14}",
+		'FR': "\\d{10}[\\dA-Z]{11}\\d{2}",
+		'GE': "[\\dA-Z]{2}\\d{16}",
+		'DE': "\\d{18}",
+		'GI': "[A-Z]{4}[\\dA-Z]{15}",
+		'GR': "\\d{7}[\\dA-Z]{16}",
+		'GL': "\\d{14}",
+		'GT': "[\\dA-Z]{4}[\\dA-Z]{20}",
+		'HU': "\\d{24}",
+		'IS': "\\d{22}",
+		'IE': "[\\dA-Z]{4}\\d{14}",
+		'IL': "\\d{19}",
+		'IT': "[A-Z]\\d{10}[\\dA-Z]{12}",
+		'KZ': "\\d{3}[\\dA-Z]{13}",
+		'KW': "[A-Z]{4}[\\dA-Z]{22}",
+		'LV': "[A-Z]{4}[\\dA-Z]{13}",
+		'LB': "\\d{4}[\\dA-Z]{20}",
+		'LI': "\\d{5}[\\dA-Z]{12}",
+		'LT': "\\d{16}",
+		'LU': "\\d{3}[\\dA-Z]{13}",
+		'MK': "\\d{3}[\\dA-Z]{10}\\d{2}",
+		'MT': "[A-Z]{4}\\d{5}[\\dA-Z]{18}",
+		'MR': "\\d{23}",
+		'MU': "[A-Z]{4}\\d{19}[A-Z]{3}",
+		'MC': "\\d{10}[\\dA-Z]{11}\\d{2}",
+		'MD': "[\\dA-Z]{2}\\d{18}",
+		'ME': "\\d{18}",
+		'NL': "[A-Z]{4}\\d{10}",
+		'NO': "\\d{11}",
+		'PK': "[\\dA-Z]{4}\\d{16}",
+		'PS': "[\\dA-Z]{4}\\d{21}",
+		'PL': "\\d{24}",
+		'PT': "\\d{21}",
+		'RO': "[A-Z]{4}[\\dA-Z]{16}",
+		'SM': "[A-Z]\\d{10}[\\dA-Z]{12}",
+		'SA': "\\d{2}[\\dA-Z]{18}",
+		'RS': "\\d{18}",
+		'SK': "\\d{20}",
+		'SI': "\\d{15}",
+		'ES': "\\d{20}",
+		'SE': "\\d{20}",
+		'CH': "\\d{5}[\\dA-Z]{12}",
+		'TN': "\\d{20}",
+		'TR': "\\d{5}[\\dA-Z]{17}",
+		'AE': "\\d{3}\\d{16}",
+		'GB': "[A-Z]{4}\\d{14}",
+		'VG': "[\\dA-Z]{4}\\d{16}"
+	};
+	var bbanpattern = bbancountrypatterns[countrycode];
+	// As new countries will start using IBAN in the
+	// future, we only check if the countrycode is known.
+	// This prevents false negatives, while almost all
+	// false positives introduced by this, will be caught
+	// by the checksum validation below anyway.
+	// Strict checking should return FALSE for unknown
+	// countries.
+	if (typeof bbanpattern !== 'undefined') {
+		var ibanregexp = new RegExp("^[A-Z]{2}\\d{2}" + bbanpattern + "$", "");
+		if (!(ibanregexp.test(iban))) {
+			return false; // invalid country specific format
+		}
+	}
+
+	// now check the checksum, first convert to digits
+	var ibancheck = iban.substring(4,iban.length) + iban.substring(0,4);
+	var ibancheckdigits = "";
+	var leadingZeroes = true;
+	var charAt;
+	for (var i =0; i<ibancheck.length; i++) {
+		charAt = ibancheck.charAt(i);
+		if (charAt !== "0") {
+			leadingZeroes = false;
+		}
+		if (!leadingZeroes) {
+			ibancheckdigits += "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ".indexOf(charAt);
+		}
+	}
+
+	// calculate the result of: ibancheckdigits % 97
+    var cRest = '';
+    var cOperator = '';
+	for (var p=0; p<ibancheckdigits.length; p++) {
+		var cChar = ibancheckdigits.charAt(p);
+		cOperator = '' + cRest + '' + cChar;
+		cRest = cOperator % 97;
+    }
+	return cRest === 1;
+}, "Please specify a valid IBAN");
+
 jQuery.validator.addMethod("dateNL", function(value, element) {
 	return this.optional(element) || /^(0?[1-9]|[12]\d|3[01])[\.\/\-](0?[1-9]|1[012])[\.\/\-]([12]\d)?(\d\d)$/.test(value);
-}, "Vul hier een geldige datum in.");
+}, "Please enter a correct date");
+
+/**
+ * Dutch phone numbers have 10 digits (or 11 and start with +31).
+ */
+jQuery.validator.addMethod("phoneNL", function(value, element) {
+	return this.optional(element) || /^((\+|00(\s|\s?\-\s?)?)31(\s|\s?\-\s?)?(\(0\)[\-\s]?)?|0)[1-9]((\s|\s?\-\s?)?[0-9]){8}$/.test(value);
+}, "Please specify a valid phone number.");
+
+jQuery.validator.addMethod("mobileNL", function(value, element) {
+	return this.optional(element) || /^((\+|00(\s|\s?\-\s?)?)31(\s|\s?\-\s?)?(\(0\)[\-\s]?)?|0)6((\s|\s?\-\s?)?[0-9]){8}$/.test(value);
+}, "Please specify a valid mobile number");
+
+jQuery.validator.addMethod("postalcodeNL", function(value, element) {
+	return this.optional(element) || /^[1-9][0-9]{3}\s?[a-zA-Z]{2}$/.test(value);
+}, "Please specify a valid postal code");
+
+/*
+ * Dutch bank account numbers (not 'giro' numbers) have 9 digits
+ * and pass the '11 check'.
+ * We accept the notation with spaces, as that is common.
+ * acceptable: 123456789 or 12 34 56 789
+ */
+jQuery.validator.addMethod("bankaccountNL", function(value, element) {
+	if (this.optional(element)) {
+		return true;
+	}
+	if (!(/^[0-9]{9}|([0-9]{2} ){3}[0-9]{3}$/.test(value))) {
+		return false;
+	}
+	// now '11 check'
+	var account = value.replace(/ /g,''); // remove spaces
+	var sum = 0;
+	var len = account.length;
+	for (var pos=0; pos<len; pos++) {
+		var factor = len - pos;
+		var digit = account.substring(pos, pos+1);
+		sum = sum + factor * digit;
+	}
+	return sum % 11 === 0;
+}, "Please specify a valid bank account number");
+
+/**
+ * Dutch giro account numbers (not bank numbers) have max 7 digits
+ */
+jQuery.validator.addMethod("giroaccountNL", function(value, element) {
+	return this.optional(element) || /^[0-9]{1,7}$/.test(value);
+}, "Please specify a valid giro account number");
+
+jQuery.validator.addMethod("bankorgiroaccountNL", function(value, element) {
+	return this.optional(element) ||
+			($.validator.methods["bankaccountNL"].call(this, value, element)) ||
+			($.validator.methods["giroaccountNL"].call(this, value, element));
+}, "Please specify a valid bank or giro account number");
+
 
 jQuery.validator.addMethod("time", function(value, element) {
 	return this.optional(element) || /^([01]\d|2[0-3])(:[0-5]\d){1,2}$/.test(value);
 }, "Please enter a valid time, between 00:00 and 23:59");
 jQuery.validator.addMethod("time12h", function(value, element) {
-	return this.optional(element) || /^((0?[1-9]|1[012])(:[0-5]\d){1,2}( ?[AP]M))$/i.test(value);
-}, "Please enter a valid time in 12-hour format");
+	return this.optional(element) || /^((0?[1-9]|1[012])(:[0-5]\d){1,2}(\ ?[AP]M))$/i.test(value);
+}, "Please enter a valid time in 12-hour am/pm format");
 
 /**
  * matches US phone number format
@@ -189,27 +366,28 @@ jQuery.validator.addMethod("phoneUS", function(phone_number, element) {
 jQuery.validator.addMethod('phoneUK', function(phone_number, element) {
 	phone_number = phone_number.replace(/\(|\)|\s+|-/g,'');
 	return this.optional(element) || phone_number.length > 9 &&
-		phone_number.match(/^(?:(?:(?:00\s?|\+)44\s?)|(?:\(?0))(?:(?:\d{5}\)?\s?\d{4,5})|(?:\d{4}\)?\s?(?:\d{5}|\d{3}\s?\d{3}))|(?:\d{3}\)?\s?\d{3}\s?\d{3,4})|(?:\d{2}\)?\s?\d{4}\s?\d{4}))$/);
+		phone_number.match(/^(?:(?:(?:00\s?|\+)44\s?)|(?:\(?0))(?:\d{2}\)?\s?\d{4}\s?\d{4}|\d{3}\)?\s?\d{3}\s?\d{3,4}|\d{4}\)?\s?(?:\d{5}|\d{3}\s?\d{3})|\d{5}\)?\s?\d{4,5})$/);
 }, 'Please specify a valid phone number');
 
 jQuery.validator.addMethod('mobileUK', function(phone_number, element) {
-	phone_number = phone_number.replace(/\s+|-/g,'');
+	phone_number = phone_number.replace(/\(|\)|\s+|-/g,'');
 	return this.optional(element) || phone_number.length > 9 &&
 		phone_number.match(/^(?:(?:(?:00\s?|\+)44\s?|0)7(?:[45789]\d{2}|624)\s?\d{3}\s?\d{3})$/);
 }, 'Please specify a valid mobile number');
 
 //Matches UK landline + mobile, accepting only 01-3 for landline or 07 for mobile to exclude many premium numbers
 jQuery.validator.addMethod('phonesUK', function(phone_number, element) {
-	phone_number = phone_number.replace(/\s+|-/g,'');
+	phone_number = phone_number.replace(/\(|\)|\s+|-/g,'');
 	return this.optional(element) || phone_number.length > 9 &&
 		phone_number.match(/^(?:(?:(?:00\s?|\+)44\s?|0)(?:1\d{8,9}|[23]\d{9}|7(?:[45789]\d{8}|624\d{6})))$/);
 }, 'Please specify a valid uk phone number');
 // On the above three UK functions, do the following server side processing:
-//  Compare with ^((?:00\s?|\+)(44)\s?)?\(?0?(?:\)\s?)?([1-9]\d{1,4}\)?[\d\s]+)
-//  Extract $2 and set $prefix to '+44<space>' if $2 is '44' otherwise set $prefix to '0'
-//  Extract $3 and remove spaces and parentheses. Phone number is combined $2 and $3.
+//  Compare original input with this RegEx pattern:
+//   ^\(?(?:(?:00\)?[\s\-]?\(?|\+)(44)\)?[\s\-]?\(?(?:0\)?[\s\-]?\(?)?|0)([1-9]\d{1,4}\)?[\s\d\-]+)$
+//  Extract $1 and set $prefix to '+44<space>' if $1 is '44', otherwise set $prefix to '0'
+//  Extract $2 and remove hyphens, spaces and parentheses. Phone number is combined $prefix and $2.
 // A number of very detailed GB telephone number RegEx patterns can also be found at:
-// http://www.aa-asterisk.org.uk/index.php/Regular_Expressions_for_Validating_and_Formatting_UK_Telephone_Numbers
+// http://www.aa-asterisk.org.uk/index.php/Regular_Expressions_for_Validating_and_Formatting_GB_Telephone_Numbers
 
 //Matches UK postcode. based on http://snipplr.com/view/3152/postcode-validation/
 jQuery.validator.addMethod('postcodeUK', function(postcode, element) {
@@ -382,9 +560,9 @@ jQuery.validator.addMethod("require_from_group", function(value, element, option
  *
  */
 jQuery.validator.addMethod("skip_or_fill_minimum", function(value, element, options) {
-	var validator = this;
-	var numberRequired = options[0];
-	var selector = options[1];
+	var validator = this,
+		numberRequired = options[0],
+		selector = options[1];
 	var numberFilled = $(selector, element.form).filter(function() {
 		return validator.elementValue(this);
 	}).length;
