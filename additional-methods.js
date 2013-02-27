@@ -254,13 +254,14 @@ jQuery.validator.addMethod("iban", function(value, element) {
 	var ibancheck = iban.substring(4,iban.length) + iban.substring(0,4);
 	var ibancheckdigits = "";
 	var leadingZeroes = true;
+	var charAt;
 	for (var i =0; i<ibancheck.length; i++) {
-		var char = ibancheck.charAt(i);
-		if (char !== "0") {
+		charAt = ibancheck.charAt(i);
+		if (charAt !== "0") {
 			leadingZeroes = false;
 		}
 		if (!leadingZeroes) {
-			ibancheckdigits += "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ".indexOf(char);
+			ibancheckdigits += "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ".indexOf(charAt);
 		}
 	}
 
