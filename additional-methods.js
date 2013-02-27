@@ -311,7 +311,8 @@ jQuery.validator.addMethod("ipv6", function(value, element, param) {
 }, "Please enter a valid IP v6 address.");
 
 /**
-* Return true if the field value matches the given format RegExp
+* Return true if the field value matches the given format RegExp.
+* Supports 3 regular expression modifiers: i, m, and g.
 *
 * @example jQuery.validator.methods.pattern("AR1004",element,/^AR\d{4}$/)
 * @result true
@@ -324,15 +325,19 @@ jQuery.validator.addMethod("ipv6", function(value, element, param) {
 * @cat Plugins/Validate/Methods
 */
 jQuery.validator.addMethod("pattern", function(value, element, param) {
-	if (this.optional(element)) {
-		return true;
-	}
 	if (typeof param === 'string') {
-		param = new RegExp('^(?:' + param + ')$');
+		parts = param.split("/");
+		modifiers = parts[parts.length - 1];
+		if (!/^[img]+$/.test(modifiers)) {
+			modifiers = '';
+		}
+		param = param.replace(/(.*\/)[img]+$/, "$1");
+		param = param.replace(/^\//, '');
+		param = param.replace(/\/$/, '');
+		param = new RegExp(param, modifiers);
 	}
-	return param.test(value);
-}, "Invalid format.");
-
+	return this.optional(element) || param.test(value);
+},
 
 /*
  * Lets you say "at least X inputs that match selector Y must be filled."
