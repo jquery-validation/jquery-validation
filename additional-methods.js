@@ -438,3 +438,86 @@ jQuery.validator.addMethod("extension", function(value, element, param) {
 	param = typeof param === "string" ? param.replace(/,/g, '|') : "png|jpe?g|gif";
 	return this.optional(element) || value.match(new RegExp(".(" + param + ")$", "i"));
 }, jQuery.format("Please enter a value with a valid extension."));
+
+//
+//  GreaterThan
+//	by Jonathan Fielding http://www.jonathanfielding.com
+//
+
+jQuery.validator.addMethod("greaterThan", function(value, element, params) {
+	if($('[name='+params+']').length){
+	
+		if(parseInt(value) > parseInt($('[name='+params+']').val())){
+			$('[name='+params+']').removeClass('error').next('label').remove();
+			return true;
+		}
+		else{
+			return false;
+		}
+	
+	}
+}, "Please add your own validation error");
+
+//
+//  LessThan
+//	by Jonathan Fielding http://www.jonathanfielding.com
+//
+
+jQuery.validator.addMethod("lessThan", function(value, element, params) {
+	if($('[name='+params+']').length){
+	
+		if(parseInt(value) < parseInt($('[name='+params+']').val())){
+			$('[name='+params+']').removeClass('error').next('label').remove();
+			
+			return true;
+			
+		}
+		else{
+			return false;
+		}
+	
+	}
+}, "Please add your own validation error");
+
+//
+//  GreaterThanEqualTo
+//	by Jonathan Fielding http://www.jonathanfielding.com
+//
+
+jQuery.validator.addMethod("greaterThanEqualTo", function(value, element, params) {
+	if($('[name='+params+']').length){
+	
+		if(parseInt(value) > parseInt($('[name='+params+']').val())){
+			$('[name='+params+']').removeClass('error').next('label').remove();
+			return true;
+		}
+		else{
+			return false;
+		}
+	
+	}
+}, "Please add your own validation error");
+
+
+//
+//  LessThanEqualTo
+//	by Jonathan Fielding http://www.jonathanfielding.com
+//
+
+jQuery.validator.addMethod("lessThanEqualTo", function(value, element, params) {
+	if($('[name='+params+']').length){
+	
+		if(parseInt(value) <= parseInt($('[name='+params+']').val())){
+			$('[name='+params+']').removeClass('error').next('label').remove();
+			
+			return true;
+			
+		}
+		else{
+			return false;
+		}
+	
+	}
+}, "Please add your own validation error");
+
+
