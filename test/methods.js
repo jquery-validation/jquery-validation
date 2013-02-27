@@ -408,6 +408,47 @@ test("remote", function() {
 	strictEqual( v.element(e), true, "still invalid, because remote validation must block until it returns; dependency-mismatch considered as valid though" );
 });
 
+test("remote, with high priority message", function() {
+  expect(7);
+  stop();
+  var e = $("#username");
+  var v = $("#userForm").validate({
+    rules: {
+      username: {
+        required: true,
+        remote: "users.php"
+      }   
+    },  
+    messages: {
+      username: {
+        required: "Please",
+        remote: "!override-message"
+      }   
+    },  
+    submitHandler: function() {
+      ok( false, "submitHandler may never be called when validating only elements");
+    }   
+  }); 
+  $(document).ajaxStop(function() {
+    $(document).unbind("ajaxStop");
+    equal( 1, v.size(), "There must be one error" );
+    equal( "override-message", v.errorList[0].message );
+
+    $(document).ajaxStop(function() {
+      $(document).unbind("ajaxStop");
+      equal( 1, v.size(), "There must be one error" );
+      equal( "override-message", v.errorList[0].message );
+      start();
+    }); 
+    e.val("Peter2");
+    strictEqual( v.element(e), true, "new value, new request; dependency-mismatch considered as valid though" );
+  }); 
+  strictEqual( v.element(e), false, "invalid element, nothing entered yet" );
+  e.val("Peter");
+  strictEqual( v.element(e), true, "still invalid, because remote validation must block until it returns; dependency-mismatch considered as valid though ");
+});
+
+
 test("remote, customized ajax options", function() {
 	expect(2);
 	stop();

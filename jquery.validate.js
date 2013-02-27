@@ -1040,7 +1040,13 @@ $.extend($.validator, {
 						validator.showErrors();
 					} else {
 						var errors = {};
-						var message = response || validator.defaultMessage( element, "remote" );
+            var defaultMessage = validator.defaultMessage( element, "remote" );
+
+            if (defaultMessage && typeof defaultMessage.match === 'function' && defaultMessage.match(/^!/)) {
+              response = defaultMessage.replace("!", "");
+            }
+
+						var message = response || defaultMessage;
 						errors[element.name] = previous.message = $.isFunction(message) ? message(value) : message;
 						validator.invalid[element.name] = true;
 						validator.showErrors(errors);
