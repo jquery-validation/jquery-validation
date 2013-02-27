@@ -1052,39 +1052,6 @@ $.extend($.validator, {
 			return "pending";
 		},
 
-		// http://docs.jquery.com/Plugins/Validation/Methods/minlength
-		minlength: function( value, element, param ) {
-			var length = $.isArray( value ) ? value.length : this.getLength($.trim(value), element);
-			return this.optional(element) || length >= param;
-		},
-
-		// http://docs.jquery.com/Plugins/Validation/Methods/maxlength
-		maxlength: function( value, element, param ) {
-			var length = $.isArray( value ) ? value.length : this.getLength($.trim(value), element);
-			return this.optional(element) || length <= param;
-		},
-
-		// http://docs.jquery.com/Plugins/Validation/Methods/rangelength
-		rangelength: function( value, element, param ) {
-			var length = $.isArray( value ) ? value.length : this.getLength($.trim(value), element);
-			return this.optional(element) || ( length >= param[0] && length <= param[1] );
-		},
-
-		// http://docs.jquery.com/Plugins/Validation/Methods/min
-		min: function( value, element, param ) {
-			return this.optional(element) || value >= param;
-		},
-
-		// http://docs.jquery.com/Plugins/Validation/Methods/max
-		max: function( value, element, param ) {
-			return this.optional(element) || value <= param;
-		},
-
-		// http://docs.jquery.com/Plugins/Validation/Methods/range
-		range: function( value, element, param ) {
-			return this.optional(element) || ( value >= param[0] && value <= param[1] );
-		},
-
 		// http://docs.jquery.com/Plugins/Validation/Methods/email
 		email: function( value, element ) {
 			// contributed by Scott Gonzalez: http://projects.scottsplayground.com/email_address_validation/
@@ -1148,7 +1115,40 @@ $.extend($.validator, {
 			return (nCheck % 10) === 0;
 		},
 
-		// http://docs.jquery.com/Plugins/Validation/Methods/equalTo
+        // http://docs.jquery.com/Plugins/Validation/Methods/minlength
+        minlength: function( value, element, param ) {
+            var length = $.isArray( value ) ? value.length : this.getLength($.trim(value), element);
+            return this.optional(element) || length >= param;
+        },
+
+        // http://docs.jquery.com/Plugins/Validation/Methods/maxlength
+        maxlength: function( value, element, param ) {
+            var length = $.isArray( value ) ? value.length : this.getLength($.trim(value), element);
+            return this.optional(element) || length <= param;
+        },
+
+        // http://docs.jquery.com/Plugins/Validation/Methods/rangelength
+        rangelength: function( value, element, param ) {
+            var length = $.isArray( value ) ? value.length : this.getLength($.trim(value), element);
+            return this.optional(element) || ( length >= param[0] && length <= param[1] );
+        },
+
+        // http://docs.jquery.com/Plugins/Validation/Methods/min
+        min: function( value, element, param ) {
+            return this.optional(element) || value >= param;
+        },
+
+        // http://docs.jquery.com/Plugins/Validation/Methods/max
+        max: function( value, element, param ) {
+            return this.optional(element) || value <= param;
+        },
+
+        // http://docs.jquery.com/Plugins/Validation/Methods/range
+        range: function( value, element, param ) {
+            return this.optional(element) || ( value >= param[0] && value <= param[1] );
+        },
+
+        // http://docs.jquery.com/Plugins/Validation/Methods/equalTo
 		equalTo: function( value, element, param ) {
 			// bind to the blur event of the target in order to revalidate whenever the target field is updated
 			// TODO find a way to bind the event just once, avoiding the unbind-rebind overhead
