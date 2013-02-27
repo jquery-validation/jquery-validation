@@ -4,6 +4,7 @@ module.exports = function(grunt) {
 grunt.initConfig({
 	pkg: grunt.file.readJSON('package.json'),
 	concat: {
+		// used to copy to dist folder
 		dist: {
 			files: {
 				'dist/jquery.validate.js': ['jquery.validate.js'],
@@ -113,11 +114,13 @@ grunt.initConfig({
 	}
 });
 
-grunt.registerTask('default', ['jshint', 'qunit']);
-grunt.registerTask('release', ['default', 'concat', 'uglify', 'zip']);
 grunt.loadNpmTasks('grunt-contrib-jshint');
 grunt.loadNpmTasks('grunt-contrib-qunit');
 grunt.loadNpmTasks('grunt-contrib-uglify');
 grunt.loadNpmTasks('grunt-contrib-concat');
 grunt.loadNpmTasks('grunt-zipstream');
+
+grunt.registerTask('default', ['jshint', 'qunit']);
+grunt.registerTask('release', ['default', 'concat', 'uglify', 'zip']);
+
 };

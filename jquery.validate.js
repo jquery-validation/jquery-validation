@@ -1196,7 +1196,8 @@ $.format = $.validator.format;
 				if ( pendingRequests[port] ) {
 					pendingRequests[port].abort();
 				}
-				return (pendingRequests[port] = ajax.apply(this, arguments));
+				pendingRequests[port] = ajax.apply(this, arguments);
+				return pendingRequests[port];
 			}
 			return ajax.apply(this, arguments);
 		};
