@@ -1331,14 +1331,14 @@ test("Updates pre-existing label if has error class", function() {
 });
 
 test("Min date set by attribute", function() {
-	var form = $('#ranges');
+	var form = $('#rangesMinDateInvalid');
 	var name = $('#minDateInvalid');
 	var v = form.validate();
 
 	form.get(0).reset();
 	name.valid();
 
-	var label = $('#ranges label');
+	var label = $('#rangesMinDateInvalid label');
 	equal( label.text(), "Please enter a value greater than or equal to 2012-12-21.", "Correct error label" );
 });
 
@@ -1379,14 +1379,14 @@ test("Min and Max date set by attributes less", function() {
 });
 
 test("Min date set by attribute valid", function() {
-	var form = $('#ranges');
+	var form = $('#rangeMinDateValid');
 	var name = $('#minDateValid');
 	var v = form.validate();
 
 	form.get(0).reset();
 	name.valid();
 
-	var label = $('#ranges label');
+	var label = $('#rangeMinDateValid label');
 	equal( label.text(), "", "Correct error label" );
 });
 
@@ -1423,7 +1423,7 @@ test("Min and Max strings set by attributes greater", function() {
 	name.valid();
 
 	var label = $('#ranges label');
-	equal( label.text(), "Please enter a value less than or equal to YYY.", "Correct error label" );
+	equal( label.text(), "Please enter a value less than or equal to 200.", "Correct error label" );
 });
 
 test("Min and Max strings set by attributes less", function() {
@@ -1435,7 +1435,7 @@ test("Min and Max strings set by attributes less", function() {
 	name.valid();
 
 	var label = $('#ranges label');
-	equal( label.text(), "Please enter a value greater than or equal to BBB.", "Correct error label" );
+	equal( label.text(), "Please enter a value greater than or equal to 200.", "Correct error label" );
 });
 
 test("Min and Max strings set by attributes valid", function() {

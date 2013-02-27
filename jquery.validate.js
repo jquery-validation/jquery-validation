@@ -862,6 +862,9 @@ $.extend($.validator, {
 				case 'range':
 					value = Number(value);
 					break;
+				case 'text':
+					value = Number(value);
+					break;
 				}
 			} else if ( method === "max" ) {
 				value = $element.get(0).getAttribute(method);
@@ -870,6 +873,9 @@ $.extend($.validator, {
 					value = Number(value);
 					break;
 				case 'range':
+					value = Number(value);
+					break;
+				case 'text':
 					value = Number(value);
 					break;
 				}
