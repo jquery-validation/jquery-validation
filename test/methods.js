@@ -553,6 +553,15 @@ test("phone (us)", function() {
 	ok(!method( "212 123 4567" ), "Invalid us phone number" );
 });
 
+test("phoneUK", function() {
+	var method = methodTest("phoneUK");
+	ok( method( "07222 555555" ), "Valid UK Phone Number" );
+	ok( method( "(07222) 555555" ), "Valid UK Phone Number" );
+	ok( method( "+44 7222 555 555" ), "Valid UK Phone Number" );
+	ok(!method( "7222 555555" ), "Invalid UK Phone Number" );
+	ok(!method( "+44 07222 555555" ), "Invalid UK Phone Number" );
+});
+
 test("mobileUK", function() {
 	var method = methodTest("mobileUK");
 	ok( method( "07734234323" ), "Valid UK Mobile Number" );
