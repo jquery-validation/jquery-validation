@@ -599,6 +599,82 @@ test("dateNL", function() {
 	ok(!method( "01.01.190" ), "Invalid date NL" );
 });
 
+test("phoneNL", function() {
+	var method = methodTest("phoneNL");
+	ok( method( "0701234567"), "Valid phone NL");
+	ok( method( "0687654321"), "Valid phone NL");
+	ok( method( "020-1234567"), "Valid phone NL");
+	ok( method( "020 - 12 34 567"), "Valid phone NL");
+	ok( method( "010-2345678"), "Valid phone NL");
+	ok( method( "+3120-1234567"), "Valid phone NL");
+	ok( method( "+31(0)10-2345678"), "Valid phone NL");
+	ok(!method( "020-123456"), "Invalid phone NL: too short");
+	ok(!method( "020-12345678"), "Invalid phone NL: too long");
+	ok(!method( "-0201234567"), "Invalid phone NL");
+	ok(!method( "+310201234567"), "Invalid phone NL: no 0 after +31 allowed");
+});
+
+test("mobileNL", function() {
+	var method = methodTest("mobileNL");
+	ok( method( "0612345678"), "Valid NL Mobile Number");
+	ok( method( "06-12345678"), "Valid NL Mobile Number");
+	ok( method( "06-12 345 678"), "Valid NL Mobile Number");
+	ok( method( "+316-12345678"), "Valid NL Mobile Number");
+	ok( method( "+31(0)6-12345678"), "Valid NL Mobile Number");
+	ok(!method( "abcdefghij"), "Invalid NL Mobile Number: text");
+	ok(!method( "0123456789"), "Invalid NL Mobile Number: should start with 06");
+	ok(!method( "0823456789"), "Invalid NL Mobile Number: should start with 06");
+	ok(!method( "06-1234567"), "Invalid NL Mobile Number: too short");
+	ok(!method( "06-123456789"), "Invalid NL Mobile Number: too long");
+	ok(!method( "-0612345678"), "Invalid NL Mobile Number");
+	ok(!method( "+310612345678"), "Invalid NL Mobile Number: no 0 after +31 allowed");
+});
+
+test("postalcodeNL", function() {
+	var method = methodTest("postalcodeNL");
+	ok( method( "1234AB"), "Valid NL Postal Code");
+	ok( method( "1234ab"), "Valid NL Postal Code");
+	ok( method( "1234 AB"), "Valid NL Postal Code");
+	ok( method( "6789YZ"), "Valid NL Postal Code");
+	ok(!method( "123AA"), "Invalid NL Postal Code: not enough digits");
+	ok(!method( "12345ZZ"), "Invalid NL Postal Code: too many digits");
+	ok(!method( "1234  AA"), "Invalid NL Postal Code: too many spaces");
+	ok(!method( "AA1234"), "Invalid NL Postal Code");
+	ok(!method( "1234-AA"), "Invalid NL Postal Code");
+});
+
+test("bankaccountNL", function() {
+	var method = methodTest("bankaccountNL");
+	ok( method( "755490975"), "Valid NL bank account");
+	ok( method( "75 54 90 975"), "Valid NL bank account");
+	ok( method( "123456789"), "Valid NL bank account");
+	ok( method( "12 34 56 789"), "Valid NL bank account");
+	ok(!method( "12 3456789"), "Valid NL bank account: inconsistent spaces");
+	ok(!method( "123 45 67 89"), "Valid NL bank account: incorrect spaces");
+	ok(!method( "755490971"), "Invalid NL bank account");
+	ok(!method( "755490973"), "Invalid NL bank account");
+	ok(!method( "755490979"), "Invalid NL bank account");
+	ok(!method( "123456781"), "Invalid NL bank account");
+	ok(!method( "123456784"), "Invalid NL bank account");
+	ok(!method( "123456788"), "Invalid NL bank account");
+});
+
+test("giroaccountNL", function() {
+	var method = methodTest("giroaccountNL");
+	ok( method( "123"), "Valid NL giro  account");
+	ok( method( "1234567"), "Valid NL giro account");
+	ok(!method( "123456788"), "Invalid NL giro account");
+});
+
+test("bankorgiroaccountNL", function() {
+	var method = methodTest("bankorgiroaccountNL");
+	ok( method( "123"), "Valid NL giro account");
+	ok( method( "1234567"), "Valid NL giro account");
+	ok( method( "123456789"), "Valid NL bank account");
+	ok(!method( "12345678"), "Invalid NL bank or giro account");
+	ok(!method( "123456788"), "Invalid NL bank or giro account");
+});
+
 test("time", function() {
 	var method = methodTest("time");
 	ok( method( "00:00" ), "Valid time, lower bound" );

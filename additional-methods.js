@@ -155,7 +155,60 @@ jQuery.validator.addMethod("dateITA", function(value, element) {
 
 jQuery.validator.addMethod("dateNL", function(value, element) {
 	return this.optional(element) || /^(0?[1-9]|[12]\d|3[01])[\.\/\-](0?[1-9]|1[012])[\.\/\-]([12]\d)?(\d\d)$/.test(value);
-}, "Vul hier een geldige datum in.");
+}, "Please enter a correct date");
+
+/**
+ * Dutch phone numbers have 10 digits (or 11 and start with +31).
+ */
+jQuery.validator.addMethod("phoneNL", function(value, element) {
+	return this.optional(element) || /^((\+|00(\s|\s?\-\s?)?)31(\s|\s?\-\s?)?(\(0\)[\-\s]?)?|0)[1-9]((\s|\s?\-\s?)?[0-9]){8}$/.test(value);
+}, "Please specify a valid phone number.");
+
+jQuery.validator.addMethod("mobileNL", function(value, element) {
+	return this.optional(element) || /^((\+|00(\s|\s?\-\s?)?)31(\s|\s?\-\s?)?(\(0\)[\-\s]?)?|0)6((\s|\s?\-\s?)?[0-9]){8}$/.test(value);
+}, "Please specify a valid mobile number");
+
+jQuery.validator.addMethod("postalcodeNL", function(value, element) {
+	return this.optional(element) || /^[1-9][0-9]{3}\s?[a-zA-Z]{2}$/.test(value);
+}, "Please specify a valid postal code");
+
+/**
+ * Dutch bank account numbers (not 'giro' numbers) have 9 digits
+ * and pass the '11 check'.
+ * We accept the notation with spaces, as that is common.
+ * acceptable: 123456789 or 12 34 56 789
+ */
+jQuery.validator.addMethod("bankaccountNL", function(value, element) {
+	if (this.optional(element)) {
+		return true;
+	}
+	if (!(/^[0-9]{9}|([0-9]{2} ){3}[0-9]{3}$/.test(value))) {
+		return false;
+	}
+	// now '11 check'
+	var account = value.replace(/ /g,''); // remove spaces
+	var sum = 0;
+	var len = account.length;
+	for (var pos=0; pos<len; pos++) {
+		var factor = len - pos;
+		var digit = account.substring(pos, pos+1);
+		sum = sum + factor * digit;
+	}
+	return sum % 11 === 0;
+}, "Please specify a valid bank account number");
+
+/**
+ * Dutch giro account numbers (not bank numbers) have max 7 digits
+ */
+jQuery.validator.addMethod("giroaccountNL", function(value, element) {
+	return this.optional(element) || /^[0-9]{1,7}$/.test(value);
+}, "Please specify a valid giro account number");
+
+jQuery.validator.addMethod("bankorgiroaccountNL", function(value, element) {
+	return this.optional(element) || 
+			($.validator.methods["bankaccountNL"].call(this, value, element)) ||
+			($.validator.methods["giroaccountNL"].call(this, value, element));
+}, "Please specify a valid bank or giro account number");
 
 jQuery.validator.addMethod("time", function(value, element) {
 	return this.optional(element) || /^([01]\d|2[0-3])(:[0-5]\d){1,2}$/.test(value);
