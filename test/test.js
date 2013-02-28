@@ -62,9 +62,9 @@ test("valid() plugin method", function() {
 	var inputs = form.find("input");
 	ok( !inputs.valid(), "all invalid" );
 	inputs.not(":first").val("ok");
-	ok( !inputs.valid(), "just one invalid" );
+	strictEqual( inputs.valid(), false, "just one invalid" );
 	inputs.val("ok");
-	ok( inputs.valid(), "all valid" );
+	strictEqual( inputs.valid(), true, "all valid" );
 });
 
 test("valid() plugin method, special handling for checkable groups", function() {
@@ -824,19 +824,19 @@ test('bypassing validation on form submission',function () {
 	var $v = form.validate({
 		debug : true
 	});
-	
+
 	bypassSubmitWithCancel.click();
 	equal($v.numberOfInvalids(), 0, "Validation was bypassed using CSS 'cancel' class.");
 	$v.resetForm();
-	
+
 	bypassSubmitWithNoValidate1.click();
 	equal($v.numberOfInvalids(), 0, "Validation was bypassed using blank 'formnovalidate' attribute.");
 	$v.resetForm();
-	
+
 	bypassSubmitWithNoValidate2.click();
 	equal($v.numberOfInvalids(), 0, "Validation was bypassed using 'formnovalidate=\"formnovalidate\"' attribute.");
 	$v.resetForm();
-	
+
 	normalSubmission.click();
 	equal($v.numberOfInvalids(), 1, "Validation failed correctly");
 });

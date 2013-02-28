@@ -103,7 +103,7 @@ $.extend($.fn, {
 			var valid = true;
 			var validator = $(this[0].form).validate();
 			this.each(function() {
-				valid &= validator.element(this);
+				valid = valid && validator.element(this);
 			});
 			return valid;
 		}
