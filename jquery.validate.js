@@ -128,11 +128,14 @@ $.extend($.fn, {
 			var existingRules = $.validator.staticRules(element);
 			switch(command) {
 			case "add":
-				$.extend(existingRules, $.validator.normalizeRule(argument));
-				staticRules[element.name] = existingRules;
+				// Moved up
 				if ( argument.messages ) {
 					settings.messages[element.name] = $.extend( settings.messages[element.name], argument.messages );
+					argument.messages = undefined; // removing messages from arguments before normalizeRule;
 				}
+				$.extend(existingRules, $.validator.normalizeRule(argument));
+				staticRules[element.name] = existingRules;
+				
 				break;
 			case "remove":
 				if ( !argument ) {
