@@ -270,4 +270,8 @@ test("rules(), add messages", function() {
 
 	$("#firstnamec").valid();
 	deepEqual( v.errorList[0] && v.errorList[0].message, "required" );
+    
+    $("#firstnamec").val("test");
+    $("#firstnamec").valid();
+    equal(v.errorList.length, 0);
 });
