@@ -9,7 +9,7 @@ Thanks for contributing! Here's a few guidelines to help your contribution get l
 
 ## Unit Tests
 
-To run unit tests, you should have a local webserver installed and pointing at your workspace. Then open `http://localhost/jquery-validation/test` to run the unit tests. Start with one browser while developing the fix, then run against others before commiting. Usually latest Chrome, Firefox, Safari and Opera and a few IEs.
+To run unit tests, you should have a local webserver installed and pointing at your workspace. Then open `http://localhost/jquery-validation/test` to run the unit tests. Start with one browser while developing the fix, then run against others before committing. Usually latest Chrome, Firefox, Safari and Opera and a few IEs.
 
 ## Linting
 

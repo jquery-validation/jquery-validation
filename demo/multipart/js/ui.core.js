@@ -503,7 +503,7 @@ $.ui.mouse = {
 		return this.mouseDelayMet;
 	},
 
-	// These are placeholder methods, to be overriden by extending plugin
+	// These are placeholder methods, to be overridden by extending plugin
 	_mouseStart: function(event) {},
 	_mouseDrag: function(event) {},
 	_mouseStop: function(event) {},

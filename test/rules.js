@@ -85,7 +85,7 @@ test("rules(), merge min/max to range, minlength/maxlength to rangelength", func
 	jQuery.validator.autoCreateRanges = false;
 });
 
-test("rules(), gurantee that required is at front", function() {
+test("rules(), guarantee that required is at front", function() {
 	$("#testForm1").validate();
 	var v = $("#v2").validate();
 	$("#subformRequired").validate();

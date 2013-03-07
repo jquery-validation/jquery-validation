@@ -16,7 +16,7 @@ $.validator.setDefaults({
 		alert("submitted!");
 	}
 });
-$.validator.messages.max = jQuery.format("Your totals musn't exceed {0}!");
+$.validator.messages.max = jQuery.format("Your totals mustn't exceed {0}!");
 
 $.validator.addMethod("quantity", function(value, element) {
 	return !this.optional(element) && !this.optional($(element).parent().prev().children("select")[0]);

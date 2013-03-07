@@ -91,9 +91,9 @@
 * Added in support for HTML5 input types, fixes #97
 * Improved HTML5 support by setting novalidate attribute on the form, and reading the type attribute.
 * Fixed showLabel() removing all classes from error element. Remove only settings.validClass. Fixes #151.
-* Added 'pattern' to additional-methods to validate against arbitraty regular expressions.
+* Added 'pattern' to additional-methods to validate against arbitrary regular expressions.
 * Improved email method to not allow the dot at the end (valid by RFC, but unwanted here). Fixes #143
-* Fixed swedish and norwedian translations, min/max messages got switched. Fixes #181
+* Fixed swedish and norwegian translations, min/max messages got switched. Fixes #181
 * Fixed #184 - resetForm: should unset lastElement
 * Fixed #71 - improve existing time method and add time12h method for 12h am/pm time format
 * Fixed #177 - Fix validation of a single radio or checkbox input
@@ -118,7 +118,7 @@
 * Added Catalan (CA) localization, thanks Xavier de Pedro
 * Fixed missing var statements within for-in loops
 * Fix for remote validation, where a formatted message got messed up (https://github.com/jzaefferer/jquery-validation/issues/11)
-* Bugfixes for compability with jQuery 1.5.1, while maintaining backwards-compability
+* Bugfixes for compatibility with jQuery 1.5.1, while maintaining backwards-compatibility
 
 1.7
 ---
@@ -133,7 +133,7 @@
 * Renamed phone-method in additional-methods.js to phoneUS
 * Added phoneUK and mobileUK methods to additional-methods.js (http://plugins.jquery.com/node/12359)
 * Deep extend options to avoid modifying multiple forms when using the rules-method on a single element (http://plugins.jquery.com/node/12411)
-* Bugfixes for compability with jQuery 1.4.2, while maintaining backwards-compability
+* Bugfixes for compatibility with jQuery 1.4.2, while maintaining backwards-compatibility
 
 1.6
 ---
@@ -171,7 +171,7 @@
 * Updated multipart demo to use latest jQuery UI accordion
 * Added dateNL and time methods to additionalMethods.js
 * Added Traditional Chinese (Taiwan, tw) and Kazakhstan (KK) localization
-* Moved jQuery.format (fomerly String.format) to jQuery.validator.format, jQuery.format is deprecated and will be removed in 1.6 (see http://code.google.com/p/jquery-utils/issues/detail?id=15 for details)
+* Moved jQuery.format (formerly String.format) to jQuery.validator.format, jQuery.format is deprecated and will be removed in 1.6 (see http://code.google.com/p/jquery-utils/issues/detail?id=15 for details)
 * Cleaned up messages_pl.js and messages_ptbr.js (still defined messages for max/min/rangeValue, which were removed in 1.4)
 * Fixed flawed boolean logic in valid-plugin-method for multiple elements; now all elements need to be valid for a boolean-true result (http://plugins.jquery.com/node/8481)
 * Enhancement $.validator.addMethod: An undefined third message-argument won't overwrite an existing message (http://plugins.jquery.com/node/8443)
@@ -186,7 +186,7 @@
 * Fixed messages in additional-methods.js for maxWords, minWords, and rangeWords to include call to $.format
 * Fixed value passed to methods to exclude carriage return (\r), same as jQuery's val() does
 * Added slovak (sk) localization
-* Added demo for intergration with jQuery UI tabs
+* Added demo for integration with jQuery UI tabs
 * Added selects-grouping example to tabs demo (see second tab, birthdate field)
 
 1.5.1
@@ -195,7 +195,7 @@
 * Added TinyMCE integration example
 * Added ukrainian (ua) localization
 * Fixed length validation to work with trimmed value (regression from 1.5 where general trimming before validation was removed)
-* Various small fixes for compability with both 1.2.6 and 1.3
+* Various small fixes for compatibility with both 1.2.6 and 1.3
 
 1.5
 ---
@@ -203,19 +203,19 @@
 * Fixed basic validation to pass the untrimmed input value as the first parameter to validation methods, changed required accordingly; breaks existing custom method that rely on the trimming
 * Added norwegian (no), italian (it), hungarian (hu) and romanian (ro) localization
 * Fixed #3195: Two flaws in swedish localization
-* Fixed #3503: Extended rules("add") to accept messages propery: use to specify add custom messages to an element via rules("add", { messages: { required: "Required! " } });
+* Fixed #3503: Extended rules("add") to accept messages property: use to specify add custom messages to an element via rules("add", { messages: { required: "Required! " } });
 * Fixed #3356: Regression from #2908 when using meta-option
-* Fixed #3370: Added ignoreTitle option, set to skip reading messages from the title attribute, helps to avoid issues with Google Toolbar; default is false for compability
+* Fixed #3370: Added ignoreTitle option, set to skip reading messages from the title attribute, helps to avoid issues with Google Toolbar; default is false for compatibility
 * Fixed #3516: Trigger invalid-form event even when remote validation is involved
 * Added invalidHandler option as a shortcut to bind("invalid-form", function() {})
 * Fixed Safari issue for loading indicator in ajaxSubmit-integration-demo (append to body first, then hide)
 * Added test for creditcard validation and improved default message
-* Enhanced remote validation, accepting options to passthrough to $.ajax as paramter (either url string or options, including url property plus everything else that $.ajax supports)
+* Enhanced remote validation, accepting options to passthrough to $.ajax as parameter (either url string or options, including url property plus everything else that $.ajax supports)
 
 1.4
 ---
 * Fixed #2931, validate elements in document order and ignore type=image inputs
-* Fixed usage of $ and jQuery variables, now fully comptible with all variations of noConflict usage
+* Fixed usage of $ and jQuery variables, now fully compatible with all variations of noConflict usage
 * Implemented #2908, enabling custom messages via metadata ala class="{required:true,messages:{required:'required field'}}", added demo/custom-messages-metadata-demo.html
 * Removed deprecated methods minValue (min), maxValue (max), rangeValue (rangevalue), minLength (minlength), maxLength (maxlength), rangeLength (rangelength)
 * Fixed #2215 regression: Call unhighlight only for current elements, not everything
@@ -230,7 +230,7 @@
 ---
 * Fixed invalid-form event, now only triggered when form is invalid
 * Added spanish (es), russian (ru), portuguese brazilian (ptbr), turkish (tr), and polish (pl) localization
-* Added removeAttrs plugin to facilate adding and removing multiple attributes
+* Added removeAttrs plugin to facilitate adding and removing multiple attributes
 * Added groups option to display a single message for multiple elements, via groups: { arbitraryGroupName: "fieldName1 fieldName2[, fieldNameN" }
 * Enhanced rules() for adding and removing (static) rules: rules("add", "method1[, methodN]"/{method1:param[, method_n:param]}) and rules("remove"[, "method1[, method_n]")
 * Enhanced rules-option, accepts space-seperated string-list of methods, eg. {birthdate: "required date"}
@@ -241,12 +241,12 @@
 * Fixed creditcard validation to accept only digits and dashes ("asdf" is not a valid creditcard number)
 * Allow both button and input elements for cancel buttons (via class="cancel")
 * Fixed #2215: Fixed message display to call unhighlight as part of showing and hiding messages, no more visual side-effects while checking an element and extracted validator.checkForm to validate a form without UI sideeffects
-* Rewrote custom selectors (:blank, :filled, :unchecked) with functions for compability with AIR
+* Rewrote custom selectors (:blank, :filled, :unchecked) with functions for compatibility with AIR
 
 1.2.1
 -----
 
-* Bundled delegeate plugin with validate plugin - its always required anyway
+* Bundled delegate plugin with validate plugin - its always required anyway
 * Improved remote validation to include parts from the ajaxQueue plugin for proper synchronization (no additional plugin necessary)
 * Fixed stopRequest to prevent pendingRequest < 0
 * Added jQuery.validator.autoCreateRanges property, defaults to false, enable to convert min/max to range and minlength/maxlength to rangelength; this basically fixes the issue introduced by automatically creating ranges in 1.2
@@ -256,7 +256,7 @@
 * Improved demo, replacing metadata with classes/attributes for specifying rules
 * Fixed error when no custom message is used for remote validation
 * Modified email and url validation to require domain label and top label
-* Fixed url and email validation to require TLD (actually to require domain label); 1.2 version (TLD is optional) is moved to additionals as url2 and email2
+* Fixed url and email validation to require TLD (actually to require domain label); 1.2 version (TLD is optional) is moved to additions as url2 and email2
 * Fixed dynamic-totals demo in IE6/7 and improved templating, using textarea to store multiline template and string interpolation
 * Added login form example with "Email password" link that makes the password field optional
 * Enhanced dynamic-totals demo with an example of a single message for two fields
@@ -270,11 +270,11 @@
 * Added support for ajax-validation, see method "remote"; serverside returns JSON, true for valid elements, false or a String for invalid, String is used as message
 * Added highlight and unhighlight options, by default toggles errorClass on element, allows custom highlighting
 * Added valid() plugin method for easy programmatic checking of forms and fields without the need to use the validator API
-* Added rules() plguin method to read and write rules for an element (currently read only)
+* Added rules() plugin method to read and write rules for an element (currently read only)
 * Replaced regex for email method, thanks to the contribution by Scott Gonzalez, see http://projects.scottsplayground.com/email_address_validation/
 * Restructured event architecture to rely solely on delegation, both improving performance, and ease-of-use for the developer (requires jquery.delegate.js)
 * Moved documentation from inline to http://docs.jquery.com/Plugins/Validation - including interactive examples for all methods
-* Removed validator.refresh(), validation is now completey dynamic
+* Removed validator.refresh(), validation is now completely dynamic
 * Renamed minValue to min, maxValue to max and rangeValue to range, deprecating the previous names (to be removed in 1.3)
 * Renamed minLength to minlength, maxLength to maxlength and rangeLength to rangelength, deprecating the previous names (to be removed in 1.3)
 * Added feature to merge min + max into and range and minlength + maxlength into rangelength
@@ -336,14 +336,14 @@
 * Fixed Opera select-issue (avoiding a attribute-collision)
 * Fixed problems with focussing hidden elements in IE
 * Added feature to skip validation for submit buttons with class "cancel"
-* Fixed potential issues with Google Toolbar by prefering plugin option messages over title attribute
+* Fixed potential issues with Google Toolbar by preferring plugin option messages over title attribute
 * submitHandler is only called when an actual submit event was handled, validator.form() returns false only for invalid forms
 * Invalid elements are now focused only on submit or via validator.focusInvalid(), avoiding all trouble with focus-on-blur
 * IE6 error container layout issue is solved
 * Customize error element via errorElement option
 * Added validator.refresh() to find new inputs in the form
 * Added accept validation method, checks file extensions
-* Improved dependecy feature by adding two custom expressions: ":blank" to select elements with an empty value and �:filled� to select elements with a value, both excluding whitespace
+* Improved dependency feature by adding two custom expressions: ":blank" to select elements with an empty value and �:filled� to select elements with a value, both excluding whitespace
 * Added a resetForm() method to the validator: Resets each form element (using the form plugin, if available), removes classes on invalid elements and hides all error messages
 * Fixed docs for validator.showErrors()
 * Fixed error label creation to always use html() instead of text(), allowing arbitrary HTML passed in as messages
