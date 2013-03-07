@@ -232,7 +232,7 @@ test("required with dependencies", function() {
 	var v = jQuery("#form").validate(),
 		method = $.validator.methods.required,
 		e = $('#hidden2, #select1, #area2, #radio1, #check2');
-	ok( method.call( v, e[0].value, e[0], "asffsaa" ), "Valid text input due to depencie not met" );
+	ok( method.call( v, e[0].value, e[0], "asffsaa" ), "Valid text input due to dependency not met" );
 	ok(!method.call( v, e[0].value, e[0], "input" ), "Invalid text input" );
 	ok( method.call( v, e[0].value, e[0], function() { return false; }), "Valid text input due to dependency not met" );
 	ok(!method.call( v, e[0].value, e[0], function() { return true; }), "Invalid text input" );
