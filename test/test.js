@@ -1452,6 +1452,44 @@ test("Min and Max strings set by attributes valid", function() {
 
 
 
+test("Min and Max type absent set by attributes greater", function() {
+	var form = $('#ranges');
+	var name = $('#rangeAbsentInvalidGreater');
+	var v = form.validate();
+
+	form.get(0).reset();
+	name.valid();
+
+	var label = $('#ranges label');
+	equal( label.text(), "Please enter a value less than or equal to 200.", "Correct error label" );
+});
+
+test("Min and Max type absent set by attributes less", function() {
+	var form = $('#ranges');
+	var name = $('#rangeAbsentInvalidLess');
+	var v = form.validate();
+
+	form.get(0).reset();
+	name.valid();
+
+	var label = $('#ranges label');
+	equal( label.text(), "Please enter a value greater than or equal to 200.", "Correct error label" );
+});
+
+test("Min and Max type absent set by attributes valid", function() {
+	var form = $('#ranges');
+	var name = $('#rangeAbsentValid');
+	var v = form.validate();
+
+	form.get(0).reset();
+	name.valid();
+
+	var label = $('#ranges label');
+	equal( label.text(), "", "Correct error label" );
+});
+
+
+
 test("Min and Max range set by attributes valid", function() {
 	//
 	// cannot test for overflow: 

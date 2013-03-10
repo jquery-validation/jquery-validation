@@ -863,6 +863,7 @@ $.extend($.validator, {
 					value = Number(value);
 					break;
 				case 'text':
+				case null:
 					value = Number(value);
 					break;
 				}
@@ -876,6 +877,7 @@ $.extend($.validator, {
 					value = Number(value);
 					break;
 				case 'text':
+				case null:
 					value = Number(value);
 					break;
 				}

@@ -311,11 +311,15 @@
 			     you can also use type="number", in which case the browser may also
 			     do validation, and mobile browsers may offer a numeric keypad to edit 
 			     the value.
+			     Type absent is treated like type="text".
 			  -->
 			<input type="text" id="rangeTextInvalidGreater" name="rangeTextInvalidGreater" min="50" max="200" value="1000"/>
 			<input type="text" id="rangeTextInvalidLess" name="rangeTextInvalidLess" min="200" max="1000" value="50"/>
+			<input id="rangeAbsentInvalidGreater" name="rangeAbsentInvalidGreater" min="50" max="200" value="1000"/>
+			<input id="rangeAbsentInvalidLess" name="rangeAbsentInvalidLess" min="200" max="1000" value="50"/>
 
 			<input type="text" id="rangeTextValid" name="rangeTextValid" min="50" max="1000" value="200"/>
+			<input id="rangeAbsentValid" name="rangeTextValid" min="50" max="1000" value="200"/>
 
 			<!-- ranges are like numbers in html5, except that browser is not required 
 			     to demand an exact value.  User interface could be a slider.
