@@ -670,8 +670,8 @@ test("postcodeUK", function() {
 	ok( method( "A99 9AA" ), "Valid postcode" );
 	ok( method( "AA9 9AA" ), "Valid postcode" );
 	ok( method( "AA99 9AA" ), "Valid postcode" );
-	ok(!method( "AAAA 9AA" ), "Invalid postcode" ); // Channel Iseland
-	ok(!method( "AA-2640" ), "Invalid postcode" ); // Channel Iseland
+	ok(!method( "AAAA 9AA" ), "Invalid postcode" ); // Channel Island
+	ok(!method( "AA-2640" ), "Invalid postcode" ); // Channel Island
 	ok(!method( "AAA AAA" ), "Invalid postcode" );
 	ok(!method( "AA AAAA" ), "Invalid postcode" );
 	ok(!method( "A AAAA" ), "Invalid postcode" );
