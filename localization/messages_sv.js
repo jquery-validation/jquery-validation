@@ -11,7 +11,7 @@
 		email: "Ange en korrekt e-postadress.",
 		url: "Ange en korrekt URL.",
 		date: "Ange ett korrekt datum.",
-		dateISO: "Ange ett korrekt datum (&ARING;&ARING;&ARING;&ARING;-MM-DD).",
+		dateISO: "Ange ett korrekt datum (&Aring;&Aring;&Aring;&Aring;-MM-DD).",
 		number: "Ange ett korrekt nummer.",
 		digits: "Ange endast siffror.",
 		equalTo: "Ange samma v&auml;rde igen.",
