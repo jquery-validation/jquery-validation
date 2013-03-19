@@ -68,6 +68,16 @@ $(document).ready(function() {
 			dateformat: "Choose your preferred dateformat",
 			terms: " "
 		},
+		//show/hide loading style when sending async quest
+		,pendingHandler:function(element,status) {
+			if(element.name=='username'){
+				if(status==='startRequest'){
+					$(element).after($('<img class="loading" src="loading.gif">')
+				}else{
+					$(element).siblings('.loading').remove()
+				}
+			}
+		} 
 		// the errorPlacement has to take the table layout into account
 		errorPlacement: function(error, element) {
 			if ( element.is(":radio") )
