@@ -1331,14 +1331,14 @@ test("Updates pre-existing label if has error class", function() {
 });
 
 test("Min date set by attribute", function() {
-	var form = $('#ranges');
+	var form = $('#rangesMinDateInvalid');
 	var name = $('#minDateInvalid');
 	var v = form.validate();
 
 	form.get(0).reset();
 	name.valid();
 
-	var label = $('#ranges label');
+	var label = $('#rangesMinDateInvalid label');
 	equal( label.text(), "Please enter a value greater than or equal to 2012-12-21.", "Correct error label" );
 });
 
@@ -1379,14 +1379,14 @@ test("Min and Max date set by attributes less", function() {
 });
 
 test("Min date set by attribute valid", function() {
-	var form = $('#ranges');
+	var form = $('#rangeMinDateValid');
 	var name = $('#minDateValid');
 	var v = form.validate();
 
 	form.get(0).reset();
 	name.valid();
 
-	var label = $('#ranges label');
+	var label = $('#rangeMinDateValid label');
 	equal( label.text(), "", "Correct error label" );
 });
 
@@ -1423,7 +1423,7 @@ test("Min and Max strings set by attributes greater", function() {
 	name.valid();
 
 	var label = $('#ranges label');
-	equal( label.text(), "Please enter a value less than or equal to YYY.", "Correct error label" );
+	equal( label.text(), "Please enter a value less than or equal to 200.", "Correct error label" );
 });
 
 test("Min and Max strings set by attributes less", function() {
@@ -1435,7 +1435,7 @@ test("Min and Max strings set by attributes less", function() {
 	name.valid();
 
 	var label = $('#ranges label');
-	equal( label.text(), "Please enter a value greater than or equal to BBB.", "Correct error label" );
+	equal( label.text(), "Please enter a value greater than or equal to 200.", "Correct error label" );
 });
 
 test("Min and Max strings set by attributes valid", function() {
@@ -1450,4 +1450,63 @@ test("Min and Max strings set by attributes valid", function() {
 	equal( label.text(), "", "Correct error label" );
 });
 
+
+
+test("Min and Max range set by attributes valid", function() {
+	//
+	// cannot test for overflow: 
+	// When the element is suffering from an underflow,
+	// the user agent must set the element's value to a valid
+	// floating-point number that represents the minimum.
+	// http://www.w3.org/TR/html5/forms.html#range-state-%28type=range%29
+	//
+	var form = $('#ranges');
+	var name = $('#rangeRangeValid');
+	var v = form.validate();
+
+	form.get(0).reset();
+	name.valid();
+
+	var label = $('#ranges label');
+	equal( label.text(), "", "Correct error label" );
+});
+
+
+test("Min and Max number set by attributes valid", function() {
+	var form = $('#ranges');
+	var name = $('#rangeNumberValid');
+	var v = form.validate();
+
+	form.get(0).reset();
+	name.valid();
+
+	var label = $('#ranges label');
+	equal( label.text(), "", "Correct error label" );
+});
+
+
+test("Min and Max number set by attributes greater", function() {
+	var form = $('#ranges');
+	var name = $('#rangeNumberInvalidGreater');
+	var v = form.validate();
+
+	form.get(0).reset();
+	name.valid();
+
+	var label = $('#ranges label');
+	equal( label.text(), "Please enter a value less than or equal to 200.", "Correct error label" );
+});
+
+
+test("Min and Max number set by attributes less", function() {
+	var form = $('#ranges');
+	var name = $('#rangeNumberInvalidLess');
+	var v = form.validate();
+
+	form.get(0).reset();
+	name.valid();
+
+	var label = $('#ranges label');
+	equal( label.text(), "Please enter a value greater than or equal to 50.", "Correct error label" );
+});
 

@@ -840,6 +840,7 @@ $.extend($.validator, {
 	attributeRules: function( element ) {
 		var rules = {};
 		var $element = $(element);
+		var type = $element[0].getAttribute("type");
 
 		for (var method in $.validator.methods) {
 			var value;
@@ -854,13 +855,41 @@ $.extend($.validator, {
 				}
 				// force non-HTML5 browsers to return bool
 				value = !!value;
+			} else if ( method === "min" ) {
+				value = $element.get(0).getAttribute(method);
+				switch(type) {
+				case 'number':
+					value = Number(value);
+					break;
+				case 'range':
+					value = Number(value);
+					break;
+				case 'text':
+					value = Number(value);
+					break;
+				}
+			} else if ( method === "max" ) {
+				value = $element.get(0).getAttribute(method);
+				switch(type) {
+				case 'number':
+					value = Number(value);
+					break;
+				case 'range':
+					value = Number(value);
+					break;
+				case 'text':
+					value = Number(value);
+					break;
+				}
 			} else {
 				value = $element.attr(method);
 			}
 
 			if ( value ) {
 				rules[method] = value;
-			} else if ( $element[0].getAttribute("type") === method ) {
+			} else if ( type === method  &&  type !== 'range' ) {
+				// exception: the jquery validate 'range' method 
+				// does not test for the html5 'range' type
 				rules[method] = true;
 			}
 		}
