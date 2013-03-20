@@ -1,21 +1,44 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html>
+<html lang="en">
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<meta charset="utf-8">
 <title>Remember The Milk signup form - jQuery Validate plugin demo - with friendly permission from the RTM team</title>
 
-<link rel="stylesheet" type="text/css" media="screen" href="milk.css" />
-<link rel="stylesheet" type="text/css" media="screen" href="../css/chili.css" />
+<link rel="stylesheet" href="milk.css" />
 
-<script src="../../lib/jquery.js" type="text/javascript"></script>
-<script src="../../jquery.validate.js" type="text/javascript"></script>
+<script src="../../lib/jquery.js"></script>
+<script src="../../lib/jquery.mockjax.js"></script>
+<script src="../../jquery.validate.js"></script>
 
-<style type="text/css">
-	pre { text-align: left; }
-</style>
-
-<script id="demo" type="text/javascript">
+<script>
 $(document).ready(function() {
+	$.mockjax({
+		url: "emails.action",
+		response: function(settings) {
+			var email = settings.data.email,
+				emails = ["glen@marketo.com", "george@bush.gov", "me@god.com", "aboutface@cooper.com", "steam@valve.com", "bill@gates.com"];
+			this.responseText = "true";
+			if ( $.inArray( email, emails ) !== -1 ) {
+				this.responseText = "That's already taken.";
+			}
+		},
+		responseTime: 500
+	});
+
+	$.mockjax({
+		url: "users.action",
+		response: function(settings) {
+			var user = settings.data.username,
+				users = ["asdf", "Peter", "Peter2", "George"];
+			this.responseText = "true";
+			if ( $.inArray( user, users ) !== -1 ) {
+				this.responseText = "false";
+			}
+		},
+		responseTime: 500
+	});
+
+
 	// validate signup form on keyup and submit
 	var validator = $("#signupform").validate({
 		rules: {
@@ -24,7 +47,7 @@ $(document).ready(function() {
 			username: {
 				required: true,
 				minlength: 2,
-				remote: "users.php"
+				remote: "users.action"
 			},
 			password: {
 				required: true,
@@ -38,7 +61,7 @@ $(document).ready(function() {
 			email: {
 				required: true,
 				email: true,
-				remote: "emails.php"
+				remote: "emails.action"
 			},
 			dateformat: "required",
 			terms: "required"
