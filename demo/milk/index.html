@@ -69,7 +69,7 @@ $(document).ready(function() {
 			terms: " "
 		},
 		//show/hide loading style when sending async quest
-		,pendingHandler:function(element,status) {
+		pendingHandler:function(element,status) {
 			if(element.name=='username'){
 				if(status==='startRequest'){
 					$(element).after($('<img class="loading" src="loading.gif">')
@@ -77,7 +77,7 @@ $(document).ready(function() {
 					$(element).siblings('.loading').remove()
 				}
 			}
-		} 
+		},
 		// the errorPlacement has to take the table layout into account
 		errorPlacement: function(error, element) {
 			if ( element.is(":radio") )

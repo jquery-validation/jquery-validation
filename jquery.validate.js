@@ -1228,10 +1228,10 @@ $.format = $.validator.format;
 
 		fn[method] = function(element) {
 			var settings = this.settings;
-			oldMethod.apply(this,arguments)
+			oldMethod.apply(this,arguments);
 			//pendingHandler(method,status)
 			if(settings.pendingHandler){
-				settings.pendingHandler.call(this,element,method)
+				settings.pendingHandler.call(this,element,method);
 			}
 		} 
 	})
