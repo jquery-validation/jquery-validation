@@ -1218,3 +1218,21 @@ $.format = $.validator.format;
 		}
 	});
 }(jQuery));
+
+//using the settings option 'pendingHandler' , 
+//we can add some interaction when async validating
+(function($) {
+	$.each(['startRequest','stopRequest'],function(i,method) {
+		var fn = $.validator.prototype,
+			oldMethod = fn[method];
+
+		fn[method] = function(element) {
+			var settings = this.settings;
+			oldMethod.apply(this,arguments);
+			//pendingHandler(method,status)
+			if(settings.pendingHandler){
+				settings.pendingHandler.call(this,element,method);
+			}
+		}; 
+	});
+}(jQuery));
