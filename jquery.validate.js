@@ -348,8 +348,8 @@ $.extend($.validator, {
 		},
 
 		// http://docs.jquery.com/Plugins/Validation/Validator/form
-		form: function() {
-			this.checkForm();
+		form: function(container) {
+			this.checkForm(container);
 			$.extend(this.submitted, this.errorMap);
 			this.invalid = $.extend({}, this.errorMap);
 			if ( !this.valid() ) {
@@ -359,9 +359,9 @@ $.extend($.validator, {
 			return this.valid();
 		},
 
-		checkForm: function() {
+		checkForm: function(container) {
 			this.prepareForm();
-			for ( var i = 0, elements = (this.currentElements = this.elements()); elements[i]; i++ ) {
+			for ( var i = 0, elements = (this.currentElements = this.elements(container)); elements[i]; i++ ) {
 				this.check( elements[i] );
 			}
 			return this.valid();
@@ -468,12 +468,13 @@ $.extend($.validator, {
 			}).length === 1 && lastActive;
 		},
 
-		elements: function() {
+		elements: function(container) {
+            container = container || $(this.currentForm);
 			var validator = this,
 				rulesCache = {};
 
 			// select all valid inputs inside the form (no submit or reset buttons)
-			return $(this.currentForm)
+			return container
 			.find("input, select, textarea")
 			.not(":submit, :reset, :image, [disabled]")
 			.not( this.settings.ignore )
