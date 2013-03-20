@@ -1463,8 +1463,6 @@ test("Min and Max strings set by attributes valid", function() {
 	equal( label.text(), "", "Correct error label" );
 });
 
-
-
 test("Min and Max type absent set by attributes greater", function() {
 	var form = $('#ranges');
 	var name = $('#rangeAbsentInvalidGreater');
@@ -1560,4 +1558,3 @@ test("Min and Max number set by attributes less", function() {
 	var label = $('#ranges label');
 	equal( label.text(), "Please enter a value greater than or equal to 50.", "Correct error label" );
 });
-
