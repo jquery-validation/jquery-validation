@@ -13,6 +13,8 @@
 	<script src="rules.js"></script>
 	<script src="messages.js"></script>
 	<script src="methods.js"></script>
+	<script src="../lib/plupload.js"></script>
+	<script src="../lib/plupload.html5.js"></script>
 </head>
 <body id="body">
 	<h1 id="qunit-header">
@@ -317,6 +319,10 @@
 				<input id="bypassSubmitWithCancel" type="submit" class="cancel" value="bypass1"/>
 				<input id="bypassSubmitWithNoValidate1" type="submit" formnovalidate value="bypass1"/>
 				<input id="bypassSubmitWithNoValidate2" type="submit" formnovalidate="formnovalidate" value="bypass2"/>
+		</form>
+		
+		<form id="enclosingForm">
+			<input type="text" name="uname" class="required" />
 		</form>
 	</div>
 

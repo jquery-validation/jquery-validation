@@ -842,6 +842,19 @@ test('bypassing validation on form submission',function () {
 });
 
 
+test("elements() should ignore elements of nested forms", function() {
+	var validator,
+		$form = $( "#enclosingForm" );		
+	
+	$( "<form id='nestedForm-1'><input type='text' name='nested-uname-1' /></form> " ).appendTo( $form );
+	$( "<form id='nestedForm-2'><input type='text' name='nested-uname-2' /></form> " ).appendTo( $form );
+	$form[ 0 ].uname.value = "Test";	
+	
+	validator = $form.validate();
+	
+	equal( validator.elements().length, 1, "Elements of nested forms are ignored" );
+});
+
 module("misc");
 
 test("success option", function() {
@@ -1449,5 +1462,3 @@ test("Min and Max strings set by attributes valid", function() {
 	var label = $('#ranges label');
 	equal( label.text(), "", "Correct error label" );
 });
-
-
