@@ -1233,6 +1233,6 @@ $.format = $.validator.format;
 			if(settings.pendingHandler){
 				settings.pendingHandler.call(this,element,method);
 			}
-		} 
-	})
+		}; 
+	});
 }(jQuery));
