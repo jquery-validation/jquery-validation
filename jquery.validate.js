@@ -923,11 +923,16 @@ $.extend($.validator, {
 			rules[rule] = $.isFunction(parameter) ? parameter(element) : parameter;
 		});
 
-		// clean number parameters
 		$.each(['minlength', 'maxlength'], function() {
 			if ( rules[this] ) {
 				rules[this] = Number(rules[this]);
 			}
+		});
+		// clean number parameters
+		$.each(['min', 'max'], function () {
+		    if (rules[this] && rules.number) {
+		        rules[this] = Number(rules[this]);
+		    }
 		});
 		$.each(['rangelength'], function() {
 			var parts;

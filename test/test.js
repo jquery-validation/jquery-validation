@@ -1450,4 +1450,41 @@ test("Min and Max strings set by attributes valid", function() {
 	equal( label.text(), "", "Correct error label" );
 });
 
+test("Min and max numbers set by attribute valid", function() {
+	var form = $('#ranges');
+	var name = $('#rangeNumberValid');
+	var v = form.validate();
+
+	form.get(0).reset();
+	name.valid();
+
+	var label = $('#ranges label');
+	equal( label.text(), "", "Correct error label" );
+});
+
+test("Min and max numbers set by attribute too high", function() {
+	var form = $('#ranges');
+	var name = $('#rangeNumberTooHigh');
+	var v = form.validate();
+
+	form.get(0).reset();
+	name.valid();
+
+	var label = $('#ranges label');
+	console.log(label.val());
+	equal( label.text(), "Please enter a value less than or equal to 100.", "Correct error label" );
+});
+
+test("Min and max numbers set by attribute too low", function() {
+	var form = $('#ranges');
+	var name = $('#rangeNumberTooLow');
+	var v = form.validate();
+
+	form.get(0).reset();
+	name.valid();
+
+	var label = $('#ranges label');
+	console.log(label.val());
+	equal( label.text(), "Please enter a value greater than or equal to 1.", "Correct error label" );
+});
 
