@@ -618,8 +618,8 @@ jQuery.validator.addMethod("extension", function(value, element, param) {
 }, jQuery.format("Please enter a value with a valid extension."));
 
 /* 
- * Validates currencies with any given symbol by @jameslouiz
- * Symbol can be optional or required. Symbol required by default
+ * Validates currencies with any given symbols by @jameslouiz
+ * Symbols can be optional or required. Symbols required by default
  * 
  * Usage examples:
  * 	currency: ['£', false] - Use false for soft currency validation
