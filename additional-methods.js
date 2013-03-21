@@ -617,46 +617,46 @@ jQuery.validator.addMethod("extension", function(value, element, param) {
 	return this.optional(element) || value.match(new RegExp(".(" + param + ")$", "i"));
 }, jQuery.format("Please enter a value with a valid extension."));
 
-/* 
+/**
  * Validates currencies with any given symbols by @jameslouiz
  * Symbols can be optional or required. Symbols required by default
  * 
  * Usage examples:
- * 	currency: ['£', false] - Use false for soft currency validation
- *	currency: ['$', false]
- *	currency: ['RM', false] - also works with text based symbols such as 'RM' - Malaysia Ringgit etc
+ *  currency: ['£', false] - Use false for soft currency validation
+ *  currency: ['$', false]
+ *  currency: ['RM', false] - also works with text based symbols such as 'RM' - Malaysia Ringgit etc
  *
- *	<input class="currencyInput" name="currencyInput">
+ *  <input class="currencyInput" name="currencyInput">
  *
- *  Soft symbol checking
- *	currencyInput: {
- *		currency: ['$', false]
- *	}
+ * Soft symbol checking
+ *  currencyInput: {
+ *     currency: ['$', false]
+ *  }
  *
- *	Strict symbol checking (default)
- *	currencyInput: {
- *		currency: '$' 
- *		//OR
- * 		currency: ['$', true]
- *	}
- *	
- *	Multiple Symbols
- *	currencyInput: {
- *		currency: '$,£,¢' 
- *	}
- */ 
+ * Strict symbol checking (default)
+ *  currencyInput: {
+ *     currency: '$' 
+ *     //OR
+ *     currency: ['$', true]
+ *  }
+ *
+ * Multiple Symbols
+ *  currencyInput: {
+ *     currency: '$,£,¢' 
+ *  }
+ */
 jQuery.validator.addMethod('currency', function(value, element, param) {
     var symbol, soft, regex;
-    if ( typeof param === 'string') {
+    if (typeof param === 'string') {
         symbol = param;
-        soft = true;        
+        soft = true;       
     } else {
         symbol = param[0];
         soft = param[1];
     }
     symbol = symbol.replace(/,/g, '');
-    symbol = soft ? symbol+']' : symbol+']?';
-    regex = '^['+symbol+'([1-9]{1}[0-9]{0,2}(\\,[0-9]{3})*(\\.[0-9]{0,2})?|[1-9]{1}[0-9]{0,}(\\.[0-9]{0,2})?|0(\\.[0-9]{0,2})?|(\\.[0-9]{1,2})?)$',    
+    symbol = soft ? symbol + ']' : symbol + ']?';
+    regex = '^[' + symbol + '([1-9]{1}[0-9]{0,2}(\\,[0-9]{3})*(\\.[0-9]{0,2})?|[1-9]{1}[0-9]{0,}(\\.[0-9]{0,2})?|0(\\.[0-9]{0,2})?|(\\.[0-9]{1,2})?)$';  
     regex = new RegExp(regex);
     return this.optional(element) || regex.test(value);
 
