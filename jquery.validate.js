@@ -480,7 +480,8 @@ $.extend($.validator, {
 			.filter(function() {
 				if ( !this.name && validator.settings.debug && window.console ) {
 					console.error( "%o has no name assigned", this);
-				}												
+				}
+				// ignore elements of nested forms												
 				if ( this.form !== validator.currentForm ) {
 					return false;	
 				}				
