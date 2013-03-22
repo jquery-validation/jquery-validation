@@ -950,7 +950,6 @@ test("currency", function() { // Works with any symbol
 	ok( method( "£9.90", '£'), "Valid currency" );
 	ok( method( "£9,999.9", '£'), "Valid currency" );
 	ok( method( "£9,999.99", '£'), "Valid currency" );
-	ok( method( "£9,999,999.9", '£'), "Valid currency" );
 	ok(!method( "£9,", '£'), "Invalid currency" );
 	ok(!method( "£9,99.99", '£'), "Invalid currency" );
 	ok(!method( "£9,", '£'), "Invalid currency" );
