@@ -369,6 +369,10 @@ $.extend($.validator, {
 
 		// http://docs.jquery.com/Plugins/Validation/Validator/element
 		element: function( element ) {
+			//if the element is set to be ignored, don't continue validation
+			if ( $(element).not(this.settings.ignore).length === 0 ) {
+				return;
+				}
 			element = this.validationTargetFor( this.clean( element ) );
 			this.lastElement = element;
 			this.prepareElement( element );
