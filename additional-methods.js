@@ -646,17 +646,14 @@ jQuery.validator.addMethod("extension", function(value, element, param) {
  *  }
  */
 jQuery.validator.addMethod('currency', function(value, element, param) {
-    var symbol, soft, regex;
-    if (typeof param === 'string') {
-        symbol = param;
-        soft = true;       
-    } else {
-        symbol = param[0];
-        soft = param[1];
-    }
+    var paramType = typeof param === 'string',
+        symbol = paramType ? param : param[0],
+        soft = paramType ? true : param[1],
+        regex;
+
     symbol = symbol.replace(/,/g, '');
     symbol = soft ? symbol + ']' : symbol + ']?';
-    regex = '^[' + symbol + '([1-9]{1}[0-9]{0,2}(\\,[0-9]{3})*(\\.[0-9]{0,2})?|[1-9]{1}[0-9]{0,}(\\.[0-9]{0,2})?|0(\\.[0-9]{0,2})?|(\\.[0-9]{1,2})?)$';  
+    regex = '^[' + symbol + '([1-9]{1}[0-9]{0,2}(\\,[0-9]{3})*(\\.[0-9]{0,2})?|[1-9]{1}[0-9]{0,}(\\.[0-9]{0,2})?|0(\\.[0-9]{0,2})?|(\\.[0-9]{1,2})?)$';
     regex = new RegExp(regex);
     return this.optional(element) || regex.test(value);
 
