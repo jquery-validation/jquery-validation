@@ -13,4 +13,5 @@ To run unit tests, you should have a local webserver installed and pointing at y
 
 ## Linting
 
-To run jshint and other tools, use `grunt`. To install, you need nodejs and npm, then run `npm install -g grunt`.
+To run jshint and other tools, use `grunt`. To install, you need nodejs and npm, then run `npm install -g grunt-cli`. 
+More details are available on their website http://gruntjs.com/getting-started.
