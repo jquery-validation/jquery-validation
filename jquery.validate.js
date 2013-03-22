@@ -940,7 +940,7 @@ $.extend($.validator, {
 				rules[this] = Number(rules[this]);
 			}
 		});
-		$.each(['rangelength'], function() {
+		$.each(['rangelength', 'range'], function() {
 			var parts;
 			if ( rules[this] ) {
 				if ( $.isArray(rules[this]) ) {
