@@ -965,4 +965,21 @@ test("zipcodeUS", function() {
 	ok(!method( "12345-43" ), "Invalid zip" );
 });
 
+test("currency", function() { // Works with any symbol 
+	var method = methodTest("currency");
+	ok( method( "£9", '£'), "Valid currency" );
+	ok( method( "£9.9", '£'), "Valid currency" );
+	ok( method( "£9.99", '£'), "Valid currency" );
+	ok( method( "£9.90", '£'), "Valid currency" );
+	ok( method( "£9,999.9", '£'), "Valid currency" );
+	ok( method( "£9,999.99", '£'), "Valid currency" );
+	ok(!method( "£9,", '£'), "Invalid currency" );
+	ok(!method( "£9,99.99", '£'), "Invalid currency" );
+	ok(!method( "£9,", '£'), "Invalid currency" );
+	ok(!method( "£9.999", '£'), "Invalid currency" );
+	ok(!method( "£09.999", '£'), "Invalid currency" );
+	ok(!method( "£9.999", '£'), "Invalid currency" );
+	ok(!method( "£9.99,9", '£'), "Invalid currency" );
+});
+
 })(jQuery);
