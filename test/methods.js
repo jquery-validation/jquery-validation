@@ -963,8 +963,6 @@ test("zipcodeUS", function() {
 });
 
 test("currency", function() { // Works with any symbol
-	//var method = methodTest("currency");
-
     var v = jQuery("#currency").validate();
     var method = function(value, param) {
         return $.validator.methods.extension.call(v, value, $('#currency_input')[0], param);
