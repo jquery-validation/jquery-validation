@@ -641,7 +641,7 @@ jQuery.validator.addMethod("extension", function(value, element, param) {
  *
  * Multiple Symbols
  *  currencyInput: {
- *     currency: '$,£,¢' 
+ *     currency: '$,£,¢'
  *  }
  */
 jQuery.validator.addMethod('currency', function(value, element, param) {
