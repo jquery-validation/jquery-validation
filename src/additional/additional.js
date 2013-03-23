@@ -33,10 +33,6 @@
 
 }());
 
-jQuery.validator.addMethod("ziprange", function(value, element) {
-	return this.optional(element) || /^90[2-5]\d\{2\}-\d{4}$/.test(value);
-}, "Your ZIP-code must be in the range 902xx-xxxx to 905-xx-xxxx");
-
 jQuery.validator.addMethod("zipcodeUS", function(value, element) {
 	return this.optional(element) || /\d{5}-\d{4}$|^\d{5}$/.test(value);
 }, "The specified US ZIP Code is invalid");
