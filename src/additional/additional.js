@@ -33,13 +33,6 @@
 
 }());
 
-/**
- * Dutch giro account numbers (not bank numbers) have max 7 digits
- */
-jQuery.validator.addMethod("giroaccountNL", function(value, element) {
-	return this.optional(element) || /^[0-9]{1,7}$/.test(value);
-}, "Please specify a valid giro account number");
-
 jQuery.validator.addMethod("bankorgiroaccountNL", function(value, element) {
 	return this.optional(element) ||
 			($.validator.methods["bankaccountNL"].call(this, value, element)) ||
