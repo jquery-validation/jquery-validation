@@ -33,10 +33,6 @@
 
 }());
 
-jQuery.validator.addMethod("zipcodeUS", function(value, element) {
-	return this.optional(element) || /\d{5}-\d{4}$|^\d{5}$/.test(value);
-}, "The specified US ZIP Code is invalid");
-
 jQuery.validator.addMethod("integer", function(value, element) {
 	return this.optional(element) || /^-?\d+$/.test(value);
 }, "A positive or negative non-decimal number please");
