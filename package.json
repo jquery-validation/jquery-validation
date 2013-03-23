@@ -23,7 +23,7 @@
     }
   ],
   "scripts": {
-    "test": "grunt jshint qunit"
+    "test": "grunt"
   },
   "dependencies": {},
   "devDependencies": {
