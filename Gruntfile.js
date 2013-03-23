@@ -33,17 +33,14 @@ grunt.initConfig({
 	zip: {
 		dist: {
 			src: [
-				'dist/additional-methods.js',
-				'dist/additional-methods.min.js',
-				'dist/jquery.validate.js',
-				'dist/jquery.validate.min.js',
+				'dist/*.js',
 				'README.md',
 				'changelog.txt',
-				'grunt.js',
+				'Gruntfile.js',
 				'package.json',
 				'demo/**/*.*',
 				'lib/**/*.*',
-				'src/localization/*.js',
+				'src/localization/**/*.*',
 				'test/**/*.*'
 			],
 			dest: 'dist/<%= pkg.name %>-<%= pkg.version %>.zip'
