@@ -8,7 +8,6 @@
  * Released under the MIT license:
  *   http://www.opensource.org/licenses/mit-license.php
  */
-
 (function() {
 
 	function stripHtml(value) {
@@ -17,6 +16,7 @@
 		// remove punctuation
 		.replace(/[.(),;:!?%#$'"_+=\/\-]*/g,'');
 	}
+
 	jQuery.validator.addMethod("maxWords", function(value, element, params) {
 		return this.optional(element) || stripHtml(value).match(/\b\w+\b/g).length <= params;
 	}, jQuery.validator.format("Please enter {0} words or less."));
@@ -32,9 +32,3 @@
 	}, jQuery.validator.format("Please enter between {0} and {1} words."));
 
 }());
-
-// Older "accept" file extension method. Old docs: http://docs.jquery.com/Plugins/Validation/Methods/accept
-jQuery.validator.addMethod("extension", function(value, element, param) {
-	param = typeof param === "string" ? param.replace(/,/g, '|') : "png|jpe?g|gif";
-	return this.optional(element) || value.match(new RegExp(".(" + param + ")$", "i"));
-}, jQuery.format("Please enter a value with a valid extension."));
