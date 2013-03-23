@@ -33,12 +33,6 @@
 
 }());
 
-jQuery.validator.addMethod('mobileUK', function(phone_number, element) {
-	phone_number = phone_number.replace(/\(|\)|\s+|-/g,'');
-	return this.optional(element) || phone_number.length > 9 &&
-		phone_number.match(/^(?:(?:(?:00\s?|\+)44\s?|0)7(?:[1345789]\d{2}|624)\s?\d{3}\s?\d{3})$/);
-}, 'Please specify a valid mobile number');
-
 //Matches UK landline + mobile, accepting only 01-3 for landline or 07 for mobile to exclude many premium numbers
 jQuery.validator.addMethod('phonesUK', function(phone_number, element) {
 	phone_number = phone_number.replace(/\(|\)|\s+|-/g,'');
