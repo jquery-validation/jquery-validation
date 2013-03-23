@@ -9,8 +9,8 @@ grunt.initConfig({
 		// used to copy to dist folder
 		dist: {
 			files: {
-				'dist/jquery.validate.js': ['jquery.validate.js'],
-				'dist/additional-methods.js': ['additional-methods.js']
+				'dist/jquery.validate.js': ['src/core.js', 'src/*.js'],
+				'dist/additional-methods.js': ['src/additional/additional.js', 'src/additional/*.js']
 			}
 		}
 	},
@@ -33,17 +33,14 @@ grunt.initConfig({
 	zip: {
 		dist: {
 			src: [
-				'dist/additional-methods.js',
-				'dist/additional-methods.min.js',
-				'dist/jquery.validate.js',
-				'dist/jquery.validate.min.js',
+				'dist/*.js',
 				'README.md',
 				'changelog.txt',
-				'grunt.js',
+				'Gruntfile.js',
 				'package.json',
 				'demo/**/*.*',
 				'lib/**/*.*',
-				'localization/**/*.*',
+				'src/localization/**/*.*',
 				'test/**/*.*'
 			],
 			dest: 'dist/<%= pkg.name %>-<%= pkg.version %>.zip'
@@ -76,9 +73,7 @@ grunt.initConfig({
 			}
 		},
 		files: [
-			'jquery.validate.js',
-			'additional-methods.js',
-			'localization/*.js'
+			'src/**/*.js'
 		],
 		test: {
 			options: {
@@ -113,6 +108,20 @@ grunt.initConfig({
 				]
 			}
 		}
+	},
+	watch: {
+		gruntfile: {
+			files: 'Gruntfile.js',
+			tasks: ['jshint:grunt']
+		},
+		src: {
+			files: '<%= jshint.files %>',
+			tasks: ['default']
+		},
+		test: {
+			files: '<%= jshint.test.files.src %>',
+			tasks: ['jshint:test', 'qunit']
+		}
 	}
 });
 
@@ -121,8 +130,9 @@ grunt.loadNpmTasks('grunt-contrib-qunit');
 grunt.loadNpmTasks('grunt-contrib-uglify');
 grunt.loadNpmTasks('grunt-contrib-concat');
 grunt.loadNpmTasks('grunt-zipstream');
+grunt.loadNpmTasks('grunt-contrib-watch');
 
-grunt.registerTask('default', ['jshint', 'qunit']);
-grunt.registerTask('release', ['default', 'concat', 'uglify', 'zip']);
+grunt.registerTask('default', ['concat', 'jshint', 'qunit']);
+grunt.registerTask('release', ['default', 'uglify', 'zip']);
 
 };
