@@ -33,10 +33,6 @@
 
 }());
 
-jQuery.validator.addMethod("lettersonly", function(value, element) {
-	return this.optional(element) || /^[a-z]+$/i.test(value);
-}, "Letters only please");
-
 jQuery.validator.addMethod("nowhitespace", function(value, element) {
 	return this.optional(element) || /^\S+$/i.test(value);
 }, "No white space please");
