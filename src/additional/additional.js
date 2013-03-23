@@ -33,10 +33,6 @@
 
 }());
 
-jQuery.validator.addMethod("mobileNL", function(value, element) {
-	return this.optional(element) || /^((\+|00(\s|\s?\-\s?)?)31(\s|\s?\-\s?)?(\(0\)[\-\s]?)?|0)6((\s|\s?\-\s?)?[0-9]){8}$/.test(value);
-}, "Please specify a valid mobile number");
-
 jQuery.validator.addMethod("postalcodeNL", function(value, element) {
 	return this.optional(element) || /^[1-9][0-9]{3}\s?[a-zA-Z]{2}$/.test(value);
 }, "Please specify a valid postal code");
