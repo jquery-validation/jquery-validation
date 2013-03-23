@@ -480,6 +480,11 @@ $.extend($.validator, {
 					console.error( "%o has no name assigned", this);
 				}
 
+				// ignore elements of nested forms												
+				if ( this.form !== validator.currentForm ) {
+					return false;	
+				}
+				
 				// select only the first element for each name, and only those with rules specified
 				if ( this.name in rulesCache || !validator.objectLength($(this).rules()) ) {
 					return false;
