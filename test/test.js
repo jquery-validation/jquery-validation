@@ -1450,4 +1450,18 @@ test("Min and Max strings set by attributes valid", function() {
 	equal( label.text(), "", "Correct error label" );
 });
 
+test("calling blur on ignored element", function() {
+	var form = $( "#ignoredElements" );
+
+	form.validate( {
+		ignore: '.ignore',
+		submitHandler: $.noop,
+		invalidHandler: function() {
+			$( "#ss1" ).blur();
+		}
+	} );
+	
+	form.trigger( "submit" );
+	equal( form.valid(), false, "valid() should return false" );		
+});
 
