@@ -8,8 +8,8 @@
  * Released under the MIT license:
  *   http://www.opensource.org/licenses/mit-license.php
  */
-
-(function($) {
+(function (factory) { if (typeof define === 'function' && define.amd) { define(['jquery'], factory); } else { factory(jQuery); }
+}(function ($) {
 
 $.extend($.fn, {
 	// http://docs.jquery.com/Plugins/Validation/validate
@@ -1179,7 +1179,6 @@ $.extend($.validator, {
 // deprecated, use $.validator.format instead
 $.format = $.validator.format;
 
-}(jQuery));
 
 // ajax mode: abort
 // usage: $.ajax({ mode: "abort"[, port: "uniqueport"]});
@@ -1213,19 +1212,19 @@ $.format = $.validator.format;
 			return ajax.apply(this, arguments);
 		};
 	}
-}(jQuery));
+}($));
 
 // provides delegate(type: String, delegate: Selector, handler: Callback) plugin for easier event delegation
 // handler is only called when $(event.target).is(delegate), in the scope of the jquery-object for event.target
-(function($) {
-	$.extend($.fn, {
-		validateDelegate: function( delegate, type, handler ) {
-			return this.bind(type, function( event ) {
-				var target = $(event.target);
-				if ( target.is(delegate) ) {
-					return handler.apply(target, arguments);
-				}
-			});
-		}
-	});
-}(jQuery));
+$.extend($.fn, {
+	validateDelegate: function( delegate, type, handler ) {
+		return this.bind(type, function( event ) {
+			var target = $(event.target);
+			if ( target.is(delegate) ) {
+				return handler.apply(target, arguments);
+			}
+		});
+	}
+});
+
+}));
