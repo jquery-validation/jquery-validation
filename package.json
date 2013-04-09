@@ -38,5 +38,11 @@
     "forms",
     "validation",
     "validate"
-  ]
+  ],
+  "jam": {
+	"main" : "jquery.validate.js",
+    "shim" : {
+      "deps" : ["jquery"]
+    }
+  }
 }
