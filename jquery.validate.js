@@ -371,7 +371,8 @@ $.extend($.validator, {
 		element: function( element ) {
 			var cleanElement = this.clean( element );
 			var checkElement = this.validationTargetFor( cleanElement );
-
+			var result = true;
+			
 			this.lastElement = checkElement;
 			
 			if (checkElement === undefined) {
@@ -381,7 +382,7 @@ $.extend($.validator, {
 				this.prepareElement( checkElement );
 				this.currentElements = $(checkElement);
 
-				var result = this.check( checkElement ) !== false;
+				result = this.check( checkElement ) !== false;
 				if (result) {
 					delete this.invalid[checkElement.name];
 				} else {
