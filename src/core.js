@@ -385,15 +385,24 @@ $.extend($.validator, {
 
 		// http://jqueryvalidation.org/Validator.element/
 		element: function( element ) {
-			element = this.validationTargetFor( this.clean( element ) );
-			this.lastElement = element;
-			this.prepareElement( element );
-			this.currentElements = $(element);
-			var result = this.check( element ) !== false;
-			if ( result ) {
-				delete this.invalid[element.name];
+			var cleanElement = this.clean( element );
+			var checkElement = this.validationTargetFor( cleanElement );
+			var result = true;
+
+			this.lastElement = checkElement;
+
+			if (checkElement === undefined) {
+				delete this.invalid[cleanElement.name];
 			} else {
-				this.invalid[element.name] = true;
+				this.prepareElement( checkElement );
+				this.currentElements = $(checkElement);
+
+				result = this.check( checkElement ) !== false;
+				if (result) {
+					delete this.invalid[checkElement.name];
+				} else {
+					this.invalid[checkElement.name] = true;
+				}
 			}
 			//Add aria-invalid status for screen readers
 			$(element).attr("aria-invalid", !result);
