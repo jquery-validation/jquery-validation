@@ -436,7 +436,11 @@ $.extend($.validator, {
 		},
 
 		hideErrors: function() {
-			this.addWrapper( this.toHide ).hide();
+			if ( this.settings.hideErrors ) {
+				this.settings.hideErrors.call( this );
+			} else {
+				this.defaultHideErrors();
+			}
 		},
 
 		valid: function() {
@@ -673,6 +677,10 @@ $.extend($.validator, {
 			return $(this.errorList).map(function() {
 				return this.element;
 			});
+		},
+		
+		defaultHideErrors: function() {
+			this.addWrapper( this.toHide ).hide();
 		},
 
 		showLabel: function( element, message ) {
