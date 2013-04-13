@@ -205,7 +205,7 @@ test("rules(), add and remove", function() {
 	deepEqual( $("#v2-i5").rules(), { required: true, minlength: 2, maxlength: 5, customMethod1: "123" });
 
 	$("#v2-i5").addClass("email").attr({min: 5});
-	deepEqual( $("#v2-i5").rules(), { required: true, email: true, minlength: 2, maxlength: 5, min: "5", customMethod1: "123" });
+	deepEqual( $("#v2-i5").rules(), { required: true, email: true, minlength: 2, maxlength: 5, min: 5, customMethod1: "123" });
 
 	$("#v2-i5").removeClass("required email").removeAttrs("minlength maxlength customMethod1 min");
 	deepEqual( $("#v2-i5").rules(), {});
@@ -270,4 +270,8 @@ test("rules(), add messages", function() {
 
 	$("#firstnamec").valid();
 	deepEqual( v.errorList[0] && v.errorList[0].message, "required" );
+
+	$("#firstnamec").val("test");
+	$("#firstnamec").valid();
+	equal(v.errorList.length, 0);
 });

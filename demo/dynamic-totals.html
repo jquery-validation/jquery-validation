@@ -16,7 +16,7 @@ $.validator.setDefaults({
 		alert("submitted!");
 	}
 });
-$.validator.messages.max = jQuery.format("Your totals mustn't exceed {0}!");
+$.validator.messages.max = jQuery.validator.format("Your totals mustn't exceed {0}!");
 
 $.validator.addMethod("quantity", function(value, element) {
 	return !this.optional(element) && !this.optional($(element).parent().prev().children("select")[0]);
@@ -31,18 +31,18 @@ $().ready(function() {
 			$(element).addClass(errorClass).parent().prev().children("select").addClass(errorClass);
 		}
 	});
-	
-	var template = jQuery.format($("#template").val());
+
+	var template = jQuery.validator.format($.trim($("#template").val()));
 	function addRow() {
 		$(template(i++)).appendTo("#orderitems tbody");
 	}
-	
+
 	var i = 1;
 	// start with one row
 	addRow();
 	// add more rows on click
 	$("#add").click(addRow);
-	
+
 	// check keyup on quantity inputs to update totals field
 	$("#orderform").validateDelegate("input.quantity", "keyup", function(event) {
 		var totals = 0;
@@ -51,7 +51,7 @@ $().ready(function() {
 		});
 		$("#totals").attr("value", totals).valid();
 	});
-	
+
 });
 </script>
 
@@ -110,12 +110,12 @@ select.error {
 
 <form id="orderform" class="cmxform" method="get" action="foo.html">
 	<h2 id="summary"></h2>
-	
+
 	<fieldset>
 		<legend>Example with custom methods and heavily customized error display</legend>
 		<table id="orderitems">
 			<tbody>
-				
+
 			</tbody>
 			<tfoot>
 				<tr>

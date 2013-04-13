@@ -1,3 +1,22 @@
+1.11.1 / 2013-03-22
+==================
+
+  * Revert to also converting parameters of range method to numbers. Closes gh-702
+  * Replace most usage of PHP with mockjax handlers. Do some demo cleanup as well, update to newer masked-input plugin. Keep captcha demo in PHP. Fixes #662
+  * Remove inline code highlighting from milk demo. View source works fine.
+  * Fix dynamic-totals demo by trimming whitespace from template content before passing to jQuery constructor
+  * Fix min/max validation. Closes gh-666. Fixes #648
+  * Fixed 'messages' coming up as a rule and causing an exception after being updated through rules("add"). Closes gh-670, fixes #624
+  * Add Korean (ko) localization. Closes gh-671
+  * Improved the UK postcode method to filter out more invalid postcodes. Closes #682
+  * Update messages_sv.js. Closes #683
+  * Change grunt link to the project website. Closes #684
+  * Move remote method down the list to run last, after all other methods applied to a field. Fixes #679
+  * Update plugin.json description, should include the word 'validate'
+  * Fix typos
+  * Fix jQuery loader to use path of itself. Fixes nested demos.
+  * Update grunt-contrib-qunit to make use of PhantomJS 1.8, when installed through node module 'phantomjs'
+  * Make valid() return a boolean instead of 0 or 1. Fixes #109 - valid() does not return boolean value
 
 1.11.0 / 2013-02-04
 ==================
