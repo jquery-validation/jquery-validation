@@ -108,7 +108,7 @@ $.extend($.fn, {
 			return valid;
 		}
 	},
-	// attributes: space seperated list of attributes to retrieve and remove
+	// attributes: space separated list of attributes to retrieve and remove
 	removeAttrs: function( attributes ) {
 		var result = {},
 			$element = this;

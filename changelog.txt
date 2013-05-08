@@ -198,7 +198,7 @@
 * Added option validClass, default "valid", which adds that class to all valid elements, after validation (http://dev.jquery.com/ticket/2205)
 * Added creditcardtypes method to additionalMethods.js, including tests (via http://dev.jquery.com/ticket/3635)
 * Improved remote method to allow serverside message as a string, or true for valid, or false for invalid using the clientside defined message (http://dev.jquery.com/ticket/3807)
-* Improved accept method to also accept a Drupal-style comma-seperated list of values (http://plugins.jquery.com/node/8580)
+* Improved accept method to also accept a Drupal-style comma-separated list of values (http://plugins.jquery.com/node/8580)
 
 1.5.2
 ---
@@ -252,7 +252,7 @@
 * Added removeAttrs plugin to facilitate adding and removing multiple attributes
 * Added groups option to display a single message for multiple elements, via groups: { arbitraryGroupName: "fieldName1 fieldName2[, fieldNameN" }
 * Enhanced rules() for adding and removing (static) rules: rules("add", "method1[, methodN]"/{method1:param[, method_n:param]}) and rules("remove"[, "method1[, method_n]")
-* Enhanced rules-option, accepts space-seperated string-list of methods, eg. {birthdate: "required date"}
+* Enhanced rules-option, accepts space-separated string-list of methods, eg. {birthdate: "required date"}
 * Fixed checkbox group validation with inline rules: As long as the rules are specified on the first element, the group is now properly validated on click
 * Fixed #2473, ignoring all rules with an explicit parameter of boolean-false, eg. required:false is the same as not specifying required at all (it was handled as required:true so far)
 * Fixed #2424, with a modified patch from #2473: Methods returning a dependency-mismatch don't stop other rules from being evaluated anymore; still, success isn't applied for optional fields
