@@ -30,7 +30,7 @@ $.extend($.fn, {
 		}
 
 		// Add novalidate tag if HTML5.
-		this.attr( "novalidate", "novalidate" );
+		this.prop("novalidate", true);
 
 		validator = new $.validator( options, this[0] );
 		$.data( this[0], "validator", validator );
