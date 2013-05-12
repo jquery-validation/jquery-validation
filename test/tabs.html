@@ -1,19 +1,18 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html>
+<html lang="en">
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<meta charset="utf-8">
 <title>Test for jQuery validate() plugin</title>
 
-<link rel="stylesheet" type="text/css" media="screen" href="../demo/css/screen.css" />
-<link rel="stylesheet" href="../../../themes/flora/flora.all.css" type="text/css" media="screen" title="Flora (Default)">
+<link rel="stylesheet" media="screen" href="../demo/css/screen.css">
+<link rel="stylesheet" href="../../../themes/flora/flora.all.css" media="screen" title="Flora (Default)">
 
-<script src="../lib/jquery.js" type="text/javascript"></script>
-<script src="../../../ui/current/ui.tabs.js" type="text/javascript"></script>
-<script type="text/javascript" src="../lib/jquery.metadata.js"></script>
-<script type="text/javascript" src="../jquery.validate.js"></script>
-<script src="firebug/firebug.js" type="text/javascript"></script>
+<script src="../lib/jquery.js"></script>
+<script src="../../../ui/current/ui.tabs.js"></script>
+<script src="../jquery.validate.js"></script>
+<script src="firebug/firebug.js"></script>
 
-<script type="text/javascript">
+<script>
 
 $().ready(function() {
 	$("#commentForm").validate({debug:true});
@@ -21,7 +20,7 @@ $().ready(function() {
 });
 </script>
 
-<style type="text/css">
+<style>
 form.cmxform { width: 470px; }
 </style>
 
@@ -42,18 +41,18 @@ form.cmxform { width: 470px; }
 						<legend>A simple comment form with submit validation and default messages</legend>
 						<p>
 							<label for="cname">Name (required, at least 2 characters)</label>
-							<input id="cname" name="name" class="some other styles {required:true,minLength:2}" />
+							<input id="cname" name="name" required minlength="2">
 						<p>
 							<label for="cemail">E-Mail (required)</label>
-							<input id="cemail" name="email" class="{required:true,email:true}" />
+							<input id="cemail" name="email" required type="email">
 						</p>
 						<p>
 							<label for="curl">URL (optional)</label>
-							<input id="curl" name="url" class="{url:true}" value="" />
+							<input id="curl" name="url" type="url" value="">
 						</p>
 						<p>
 							<label for="ccomment">Your comment (required)</label>
-							<textarea id="ccomment" name="comment" class="{required:true}"></textarea>
+							<textarea id="ccomment" name="comment" required></textarea>
 						</p>
 					</fieldset>
 
@@ -69,7 +68,7 @@ form.cmxform { width: 470px; }
 	        </div>
 	    </div>
 		<p>
-			<input class="submit" type="submit" value="Submit"/>
+			<input class="submit" type="submit" value="Submit">
 		</p>
 
 	</form>
