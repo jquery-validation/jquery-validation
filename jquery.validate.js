@@ -725,7 +725,7 @@ $.extend($.validator, {
 
 		validationTargetFor: function( element ) {
 			// if radio/checkbox, validate first element in group instead
-			if ( this.checkable(element) ) {
+			if ( this.checkable(element) && element.name !== "" ) {
 				element = this.findByName( element.name ).not(this.settings.ignore)[0];
 			}
 			return element;
