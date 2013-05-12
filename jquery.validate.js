@@ -369,15 +369,25 @@ $.extend($.validator, {
 
 		// http://docs.jquery.com/Plugins/Validation/Validator/element
 		element: function( element ) {
-			element = this.validationTargetFor( this.clean( element ) );
-			this.lastElement = element;
-			this.prepareElement( element );
-			this.currentElements = $(element);
-			var result = this.check( element ) !== false;
-			if ( result ) {
-				delete this.invalid[element.name];
-			} else {
-				this.invalid[element.name] = true;
+			var cleanElement = this.clean( element );
+			var checkElement = this.validationTargetFor( cleanElement );
+			var result = true;
+			
+			this.lastElement = checkElement;
+			
+			if (checkElement === undefined) {
+				delete this.invalid[cleanElement.name];
+			}
+			else {
+				this.prepareElement( checkElement );
+				this.currentElements = $(checkElement);
+
+				result = this.check( checkElement ) !== false;
+				if (result) {
+					delete this.invalid[checkElement.name];
+				} else {
+					this.invalid[checkElement.name] = true;
+				}
 			}
 			if ( !this.numberOfInvalids() ) {
 				// Hide error containers on last error
