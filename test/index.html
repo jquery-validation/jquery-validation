@@ -20,7 +20,7 @@
 		<a href="?jquery=1.6.4">jQuery 1.6.4</a>
 		<a href="?jquery=1.7.2">jQuery 1.7.2</a>
 		<a href="?jquery=1.8.3">jQuery 1.8.3</a>
-		<a href="?jquery=1.9.0">jQuery 1.9.0</a>
+		<a href="?jquery=1.9.1">jQuery 1.9.1</a>
 		<a href="?jquery=git">jQuery Latest (git)</a>
 		</h1>
 	<div>
@@ -309,7 +309,7 @@
 			<!-- input type text is not supposed to have min/max according to html5,
 			     but for backward compatibility with 1.10.0 we treat it as number.
 			     you can also use type="number", in which case the browser may also
-			     do validation, and mobile browsers may offer a numeric keypad to edit 
+			     do validation, and mobile browsers may offer a numeric keypad to edit
 			     the value.
 			     Type absent is treated like type="text".
 			  -->
@@ -321,7 +321,7 @@
 			<input type="text" id="rangeTextValid" name="rangeTextValid" min="50" max="1000" value="200"/>
 			<input id="rangeAbsentValid" name="rangeTextValid" min="50" max="1000" value="200"/>
 
-			<!-- ranges are like numbers in html5, except that browser is not required 
+			<!-- ranges are like numbers in html5, except that browser is not required
 			     to demand an exact value.  User interface could be a slider.
 			  -->
 			<input type="range" id="rangeRangeValid" name="rangeRangeValid" min="50" max="1000" value="200"/>
@@ -334,7 +334,7 @@
 		<form id="rangeMinDateValid">
 			<input type="date" id="minDateValid" name="minDateValid" min="2012-11-21" value="2012-12-21"/>
 		</form>
-		
+
 		<form id="bypassValidation">
 				<input type="text" required/>
 				<input id="normalSubmit" type="submit" value="submit"/>
