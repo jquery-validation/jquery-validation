@@ -39,7 +39,8 @@ test("rules() - external", function() {
 });
 
 test("rules() - external - complete form", function() {
-	expect(1);
+	// twice because #form has two inputs with the name 'action'
+	expect(2);
 
 	var methods = $.extend({}, $.validator.methods);
 	var messages = $.extend({}, $.validator.messages);

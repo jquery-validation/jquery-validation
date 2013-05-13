@@ -482,12 +482,25 @@ $.extend($.validator, {
 					console.error( "%o has no name assigned", this);
 				}
 
-				// select only the first element for each name, and only those with rules specified
-				if ( this.name in rulesCache || !validator.objectLength($(this).rules()) ) {
+				// filter out checkable elements whose name already in cache
+				if ( validator.checkable(this) && this.name in rulesCache ) {
 					return false;
 				}
 
-				rulesCache[this.name] = true;
+				// select this element (non-checkable) if this has the same name as one in cache
+				if ( this.name in rulesCache ) {
+					if ( !validator.objectLength($(this).rules()) ) {
+						$(this).rules('add', rulesCache[this.name]);
+					}
+					return true;
+				}
+
+				// select only the element with rules specified
+				if ( !validator.objectLength($(this).rules()) ) {
+					return false;
+				}
+
+				rulesCache[this.name] = $(this).rules();
 				return true;
 			});
 		},
