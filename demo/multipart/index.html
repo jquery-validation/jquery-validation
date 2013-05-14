@@ -1,16 +1,14 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<!DOCTYPE html>
+<html lang="en">
 <head>
-
+<meta charset="utf-8">
 <title>jQuery accordion form with validation</title>
 
-<link rel="stylesheet" href="../assets/demo_blue.css" type="text/css" />
+<script src="../../lib/jquery.js"></script>
+<script src="../../jquery.validate.js"></script>
 
-<script type="text/javascript" src="../../lib/jquery.js"></script>
-<script type="text/javascript" src="../../jquery.validate.js"></script>
-<script type="text/javascript" src="js/jquery.maskedinput-1.0.js"></script>
-<script type="text/javascript" src="js/ui.core.js"></script>
-<script type="text/javascript" src="js/ui.accordion.js"></script>
+<script src="../marketo/jquery.maskedinput.js"></script>
+<script src="http://code.jquery.com/ui/1.10.2/jquery-ui.min.js"></script>
 
 <script type="text/javascript">
 $(document).ready(function(){
@@ -18,16 +16,16 @@ $(document).ready(function(){
 	$("#recordClientPhone").mask("(999) 999-9999");
 	$("#recordClientPhoneAlt").mask("(999) 999-9999");
 	$("#recordClientZip").mask("99999");
-	$("#recordPropertyZip").mask("99999");	
-	$("#recordPurchaseZip").mask("99999");	
+	$("#recordPropertyZip").mask("99999");
+	$("#recordPurchaseZip").mask("99999");
 
 	// add * to required field labels
 	$('label.required').append('&nbsp;<strong>*</strong>&nbsp;');
 
 	// accordion functions
-	var accordion = $("#stepForm").accordion(); 
+	var accordion = $("#stepForm").accordion();
 	var current = 0;
-	
+
 	$.validator.addMethod("pageRequired", function(value, element) {
 		var $element = $(element)
 		function match(index) {
@@ -38,7 +36,7 @@ $(document).ready(function(){
 		}
 		return "dependency-mismatch";
 	}, $.validator.messages.required)
-	
+
 	var v = $("#cmaForm").validate({
 		errorClass: "warning",
 		onkeyup: false,
@@ -47,36 +45,36 @@ $(document).ready(function(){
 			alert("Submitted, thanks!");
 		}
 	});
-	
+
 	// back buttons do not need to run validation
 	$("#sf2 .prevbutton").click(function(){
-		accordion.accordion("activate", 0);
+		accordion.accordion("option", "active", 0);
 		current = 0;
-	}); 
+	});
 	$("#sf3 .prevbutton").click(function(){
-		accordion.accordion("activate", 1);
+		accordion.accordion("option", "active", 1);
 		current = 1;
-	}); 
+	});
 	// these buttons all run the validation, overridden by specific targets above
 	$(".open2").click(function() {
 	  if (v.form()) {
-	    accordion.accordion("activate", 2);
+	    accordion.accordion("option", "active", 2);
 	    current = 2;
 	  }
 	});
 	$(".open1").click(function() {
 	  if (v.form()) {
-	    accordion.accordion("activate", 1);
+	    accordion.accordion("option", "active", 1);
 	    current = 1;
 	  }
 	});
 	$(".open0").click(function() {
 	  if (v.form()) {
-	    accordion.accordion("activate", 0);
+	    accordion.accordion("option", "active", 0);
 	    current = 0;
 	  }
 	});
- 
+
 });
 </script>
 

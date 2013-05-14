@@ -41,6 +41,7 @@
 		url2: "Veuillez fournir une adresse URL valide.",
 		creditcardtypes: "Veuillez fournir un numéro de carte de crédit valide.",
 		ipv4: "Veuillez fournir une adresse IP v4 valide.",
-		ipv6: "Veuillez fournir une adresse IP v6 valide."
+		ipv6: "Veuillez fournir une adresse IP v6 valide.",
+		require_from_group: "Veuillez fournir au moins {0} de ces champs."
 	});
 }(jQuery));

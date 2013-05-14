@@ -116,7 +116,7 @@
 - document validation lifecycle: setup (add event handlers), run validation (prepare form, validate elements, display errors/submit form)
 	 -> show where the user can hook in via callbacks
 	 
-- AND depedency: specify multiple expressions as an array
+- AND dependency: specify multiple expressions as an array
 
 - add custom events for form and elements instead of more callbacks (additional options/callbacks)
  - beforeValidation: Callback, called before doing any validation
@@ -147,7 +147,7 @@ $.validator.addMethod({
  - timepicker integration ( http://labs.perifer.se/timedatepicker/ ) 
  - integration with CakePHP ( https://trac.cakephp.org/ticket/2359 )
  - integration with tabs: http://www.netix.sk/forms/test.html 
- - intergration with rich-text-editors (FCKEditor, Codepress)
+ - integration with rich-text-editors (FCKEditor, Codepress)
 	http://www.fyneworks.com/jquery/FCKEditor/
 
 2.0
@@ -158,4 +158,4 @@ $.validator.addMethod({
 - move metadata support
 - make validate method chainable
   -> provide an accessor for the validator if necessary at all 
-- move a few default methods to additionals, eg. dateXXX, creditcard, definitely accept
+- move a few default methods to additions, eg. dateXXX, creditcard, definitely accept

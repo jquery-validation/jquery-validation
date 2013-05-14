@@ -7,6 +7,8 @@ The jQuery Validation Plugin provides drop-in validation for your existing forms
 
 ## [Help the project](http://pledgie.com/campaigns/18159)
 
+[![Help the project](http://www.pledgie.com/campaigns/18159.png?skin_name=chrome)](http://pledgie.com/campaigns/18159)
+
 This project is looking for help! [You can donate to the ongoing pledgie campaign](http://pledgie.com/campaigns/18159)
 and help spread the word. If you've used the plugin, or plan to use, consider a donation - any amount will help.
 
@@ -29,13 +31,18 @@ $("form").validate();
 
 For more information on how to setup a rules and customizations, [check the documentation](http://docs.jquery.com/Plugins/Validation).
 
+## Reporting an Issue
+
+1. Make sure the problem you're addressing is reproducible.
+2. Use http://jsbin.com or http://jsfiddle.net to provide a test page.
+3. Indicate what browsers the isssue can be reproduced in.
+4. What version of the plug-in is the issue reproducable in. Is it reproducable after updating to the latest version.
+
 ## Contributing
-In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint and test your code using [grunt](https://github.com/cowboy/grunt).
+Follow the [jQuery style guide](http://contribute.jquery.com/style-guides/js), even if existing code doesn't. Add unit tests for any new or changed functionality. Lint and test your code using [Grunt](http://gruntjs.com/).
 
 If you've wrote custom methods that you'd like to contribute to additional-methods.js, create a branch, add the method there and send a pull request for that branch.
 
-If you've wrote a patch for some bug listed on http://plugins.jquery.com/project/issues/validate, please provide a link to that issue in your commit message.
-
 ## License
-Copyright (c) 2012 Jörn Zaefferer
+Copyright (c) 2013 Jörn Zaefferer
 Licensed under the MIT license.

@@ -17,6 +17,8 @@
 		range: $.validator.format("{0} és {1} közé kell esnie."),
 		max: $.validator.format("Nem lehet nagyobb, mint {0}."),
 		min: $.validator.format("Nem lehet kisebb, mint {0}."),
-		creditcard: "Érvényes hitelkártyaszámnak kell lennie."
+		creditcard: "Érvényes hitelkártyaszámnak kell lennie.",
+		remote: "Kérem javítsa ki ezt a mezőt.",
+		dateISO: "Kérem írjon be egy érvényes dátumot (ISO)."
 	});
 }(jQuery));
