@@ -1,14 +1,12 @@
 /*!
- * jQuery Validation Plugin 1.11.0pre
+ * jQuery Validation Plugin 1.12.0pre
  *
  * http://bassistance.de/jquery-plugins/jquery-plugin-validation/
  * http://docs.jquery.com/Plugins/Validation
  *
- * Copyright (c) 2006 - 2011 Jörn Zaefferer
- *
- * Dual licensed under the MIT and GPL licenses:
+ * Copyright 2013 Jörn Zaefferer
+ * Released under the MIT license:
  *   http://www.opensource.org/licenses/mit-license.php
- *   http://www.gnu.org/licenses/gpl.html
  */
 
 (function() {
@@ -36,7 +34,7 @@
 }());
 
 jQuery.validator.addMethod("letterswithbasicpunc", function(value, element) {
-	return this.optional(element) || /^[a-z\-.,()'\"\s]+$/i.test(value);
+	return this.optional(element) || /^[a-z\-.,()'"\s]+$/i.test(value);
 }, "Letters or punctuation only please");
 
 jQuery.validator.addMethod("alphanumeric", function(value, element) {
@@ -56,7 +54,7 @@ jQuery.validator.addMethod("ziprange", function(value, element) {
 }, "Your ZIP-code must be in the range 902xx-xxxx to 905-xx-xxxx");
 
 jQuery.validator.addMethod("zipcodeUS", function(value, element) {
-	return this.optional(element) || /\d{5}-\d{4}$|^\d{5}$/.test(value);
+	return this.optional(element) || /^\d{5}-\d{4}$|^\d{5}$/.test(value);
 }, "The specified US ZIP Code is invalid");
 
 jQuery.validator.addMethod("integer", function(value, element) {
@@ -138,7 +136,7 @@ jQuery.validator.addMethod("vinUS", function(v) {
 jQuery.validator.addMethod("dateITA", function(value, element) {
 	var check = false;
 	var re = /^\d{1,2}\/\d{1,2}\/\d{4}$/;
-	if( re.test(value)){
+	if( re.test(value)) {
 		var adata = value.split('/');
 		var gg = parseInt(adata[0],10);
 		var mm = parseInt(adata[1],10);
@@ -155,9 +153,203 @@ jQuery.validator.addMethod("dateITA", function(value, element) {
 	return this.optional(element) || check;
 }, "Please enter a correct date");
 
+/**
+ * IBAN is the international bank account number.
+ * It has a country - specific format, that is checked here too
+ */
+jQuery.validator.addMethod("iban", function(value, element) {
+	// some quick simple tests to prevent needless work
+	if (this.optional(element)) {
+		return true;
+	}
+	if (!(/^([a-zA-Z0-9]{4} ){2,8}[a-zA-Z0-9]{1,4}|[a-zA-Z0-9]{12,34}$/.test(value))) {
+		return false;
+	}
+
+	// check the country code and find the country specific format
+	var iban = value.replace(/ /g,'').toUpperCase(); // remove spaces and to upper case
+	var countrycode = iban.substring(0,2);
+	var bbancountrypatterns = {
+		'AL': "\\d{8}[\\dA-Z]{16}",
+		'AD': "\\d{8}[\\dA-Z]{12}",
+		'AT': "\\d{16}",
+		'AZ': "[\\dA-Z]{4}\\d{20}",
+		'BE': "\\d{12}",
+		'BH': "[A-Z]{4}[\\dA-Z]{14}",
+		'BA': "\\d{16}",
+		'BR': "\\d{23}[A-Z][\\dA-Z]",
+		'BG': "[A-Z]{4}\\d{6}[\\dA-Z]{8}",
+		'CR': "\\d{17}",
+		'HR': "\\d{17}",
+		'CY': "\\d{8}[\\dA-Z]{16}",
+		'CZ': "\\d{20}",
+		'DK': "\\d{14}",
+		'DO': "[A-Z]{4}\\d{20}",
+		'EE': "\\d{16}",
+		'FO': "\\d{14}",
+		'FI': "\\d{14}",
+		'FR': "\\d{10}[\\dA-Z]{11}\\d{2}",
+		'GE': "[\\dA-Z]{2}\\d{16}",
+		'DE': "\\d{18}",
+		'GI': "[A-Z]{4}[\\dA-Z]{15}",
+		'GR': "\\d{7}[\\dA-Z]{16}",
+		'GL': "\\d{14}",
+		'GT': "[\\dA-Z]{4}[\\dA-Z]{20}",
+		'HU': "\\d{24}",
+		'IS': "\\d{22}",
+		'IE': "[\\dA-Z]{4}\\d{14}",
+		'IL': "\\d{19}",
+		'IT': "[A-Z]\\d{10}[\\dA-Z]{12}",
+		'KZ': "\\d{3}[\\dA-Z]{13}",
+		'KW': "[A-Z]{4}[\\dA-Z]{22}",
+		'LV': "[A-Z]{4}[\\dA-Z]{13}",
+		'LB': "\\d{4}[\\dA-Z]{20}",
+		'LI': "\\d{5}[\\dA-Z]{12}",
+		'LT': "\\d{16}",
+		'LU': "\\d{3}[\\dA-Z]{13}",
+		'MK': "\\d{3}[\\dA-Z]{10}\\d{2}",
+		'MT': "[A-Z]{4}\\d{5}[\\dA-Z]{18}",
+		'MR': "\\d{23}",
+		'MU': "[A-Z]{4}\\d{19}[A-Z]{3}",
+		'MC': "\\d{10}[\\dA-Z]{11}\\d{2}",
+		'MD': "[\\dA-Z]{2}\\d{18}",
+		'ME': "\\d{18}",
+		'NL': "[A-Z]{4}\\d{10}",
+		'NO': "\\d{11}",
+		'PK': "[\\dA-Z]{4}\\d{16}",
+		'PS': "[\\dA-Z]{4}\\d{21}",
+		'PL': "\\d{24}",
+		'PT': "\\d{21}",
+		'RO': "[A-Z]{4}[\\dA-Z]{16}",
+		'SM': "[A-Z]\\d{10}[\\dA-Z]{12}",
+		'SA': "\\d{2}[\\dA-Z]{18}",
+		'RS': "\\d{18}",
+		'SK': "\\d{20}",
+		'SI': "\\d{15}",
+		'ES': "\\d{20}",
+		'SE': "\\d{20}",
+		'CH': "\\d{5}[\\dA-Z]{12}",
+		'TN': "\\d{20}",
+		'TR': "\\d{5}[\\dA-Z]{17}",
+		'AE': "\\d{3}\\d{16}",
+		'GB': "[A-Z]{4}\\d{14}",
+		'VG': "[\\dA-Z]{4}\\d{16}"
+	};
+	var bbanpattern = bbancountrypatterns[countrycode];
+	// As new countries will start using IBAN in the
+	// future, we only check if the countrycode is known.
+	// This prevents false negatives, while almost all
+	// false positives introduced by this, will be caught
+	// by the checksum validation below anyway.
+	// Strict checking should return FALSE for unknown
+	// countries.
+	if (typeof bbanpattern !== 'undefined') {
+		var ibanregexp = new RegExp("^[A-Z]{2}\\d{2}" + bbanpattern + "$", "");
+		if (!(ibanregexp.test(iban))) {
+			return false; // invalid country specific format
+		}
+	}
+
+	// now check the checksum, first convert to digits
+	var ibancheck = iban.substring(4,iban.length) + iban.substring(0,4);
+	var ibancheckdigits = "";
+	var leadingZeroes = true;
+	var charAt;
+	for (var i =0; i<ibancheck.length; i++) {
+		charAt = ibancheck.charAt(i);
+		if (charAt !== "0") {
+			leadingZeroes = false;
+		}
+		if (!leadingZeroes) {
+			ibancheckdigits += "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ".indexOf(charAt);
+		}
+	}
+
+	// calculate the result of: ibancheckdigits % 97
+    var cRest = '';
+    var cOperator = '';
+	for (var p=0; p<ibancheckdigits.length; p++) {
+		var cChar = ibancheckdigits.charAt(p);
+		cOperator = '' + cRest + '' + cChar;
+		cRest = cOperator % 97;
+    }
+	return cRest === 1;
+}, "Please specify a valid IBAN");
+
+/**
+ * BIC is the business identifier code (ISO 9362). This BIC check is not a guarantee for authenticity.
+ *
+ * BIC pattern: BBBBCCLLbbb (8 or 11 characters long; bbb is optional)
+ *
+ * BIC definition in detail:
+ * - First 4 characters - bank code (only letters)
+ * - Next 2 characters - ISO 3166-1 alpha-2 country code (only letters)
+ * - Next 2 characters - location code (letters and digits)
+ *   a. shall not start with '0' or '1'
+ *   b. second character must be a letter ('O' is not allowed) or one of the following digits ('0' for test (therefore not allowed), '1' for passive participant and '2' for active participant)
+ * - Last 3 characters - branch code, optional (shall not start with 'X' except in case of 'XXX' for primary office) (letters and digits)
+ */
+jQuery.validator.addMethod("bic", function(value, element) {
+    return this.optional( element ) || /^([A-Z]{6}[A-Z2-9]{1}[A-NP-Z1-2]{1})(X{3}|[A-WY-Z0-9]{1}[A-Z0-9]{2})?$/.test( value );
+}, "Please specify a valid BIC code");
+
 jQuery.validator.addMethod("dateNL", function(value, element) {
 	return this.optional(element) || /^(0?[1-9]|[12]\d|3[01])[\.\/\-](0?[1-9]|1[012])[\.\/\-]([12]\d)?(\d\d)$/.test(value);
-}, "Vul hier een geldige datum in.");
+}, "Please enter a correct date");
+
+/**
+ * Dutch phone numbers have 10 digits (or 11 and start with +31).
+ */
+jQuery.validator.addMethod("phoneNL", function(value, element) {
+	return this.optional(element) || /^((\+|00(\s|\s?\-\s?)?)31(\s|\s?\-\s?)?(\(0\)[\-\s]?)?|0)[1-9]((\s|\s?\-\s?)?[0-9]){8}$/.test(value);
+}, "Please specify a valid phone number.");
+
+jQuery.validator.addMethod("mobileNL", function(value, element) {
+	return this.optional(element) || /^((\+|00(\s|\s?\-\s?)?)31(\s|\s?\-\s?)?(\(0\)[\-\s]?)?|0)6((\s|\s?\-\s?)?[0-9]){8}$/.test(value);
+}, "Please specify a valid mobile number");
+
+jQuery.validator.addMethod("postalcodeNL", function(value, element) {
+	return this.optional(element) || /^[1-9][0-9]{3}\s?[a-zA-Z]{2}$/.test(value);
+}, "Please specify a valid postal code");
+
+/*
+ * Dutch bank account numbers (not 'giro' numbers) have 9 digits
+ * and pass the '11 check'.
+ * We accept the notation with spaces, as that is common.
+ * acceptable: 123456789 or 12 34 56 789
+ */
+jQuery.validator.addMethod("bankaccountNL", function(value, element) {
+	if (this.optional(element)) {
+		return true;
+	}
+	if (!(/^[0-9]{9}|([0-9]{2} ){3}[0-9]{3}$/.test(value))) {
+		return false;
+	}
+	// now '11 check'
+	var account = value.replace(/ /g,''); // remove spaces
+	var sum = 0;
+	var len = account.length;
+	for (var pos=0; pos<len; pos++) {
+		var factor = len - pos;
+		var digit = account.substring(pos, pos+1);
+		sum = sum + factor * digit;
+	}
+	return sum % 11 === 0;
+}, "Please specify a valid bank account number");
+
+/**
+ * Dutch giro account numbers (not bank numbers) have max 7 digits
+ */
+jQuery.validator.addMethod("giroaccountNL", function(value, element) {
+	return this.optional(element) || /^[0-9]{1,7}$/.test(value);
+}, "Please specify a valid giro account number");
+
+jQuery.validator.addMethod("bankorgiroaccountNL", function(value, element) {
+	return this.optional(element) ||
+			($.validator.methods["bankaccountNL"].call(this, value, element)) ||
+			($.validator.methods["giroaccountNL"].call(this, value, element));
+}, "Please specify a valid bank or giro account number");
+
 
 jQuery.validator.addMethod("time", function(value, element) {
 	return this.optional(element) || /^([01]\d|2[0-3])(:[0-5]\d){1,2}$/.test(value);
@@ -214,11 +406,10 @@ jQuery.validator.addMethod('phonesUK', function(phone_number, element) {
 // A number of very detailed GB telephone number RegEx patterns can also be found at:
 // http://www.aa-asterisk.org.uk/index.php/Regular_Expressions_for_Validating_and_Formatting_GB_Telephone_Numbers
 
-//Matches UK postcode. based on http://snipplr.com/view/3152/postcode-validation/
-jQuery.validator.addMethod('postcodeUK', function(postcode, element) {
-	postcode = (postcode.toUpperCase()).replace(/\s+/g,'');
-	return this.optional(element) || postcode.match(/^([^QZ][^IJZ]{0,1}\d{1,2})(\d[^CIKMOV]{2})$/) || postcode.match(/^([^QV]\d[ABCDEFGHJKSTUW])(\d[^CIKMOV]{2})$/) || postcode.match(/^([^QV][^IJZ]\d[ABEHMNPRVWXY])(\d[^CIKMOV]{2})$/) || postcode.match(/^(GIR)(0AA)$/) || postcode.match(/^(BFPO)(\d{1,4})$/) || postcode.match(/^(BFPO)(C\/O\d{1,3})$/);
-}, 'Please specify a valid postcode');
+// Matches UK postcode. Does not match to UK Channel Islands that have their own postcodes (non standard UK)
+jQuery.validator.addMethod('postcodeUK', function(value, element) {
+	return this.optional(element) || /^((([A-PR-UWYZ][0-9])|([A-PR-UWYZ][0-9][0-9])|([A-PR-UWYZ][A-HK-Y][0-9])|([A-PR-UWYZ][A-HK-Y][0-9][0-9])|([A-PR-UWYZ][0-9][A-HJKSTUW])|([A-PR-UWYZ][A-HK-Y][0-9][ABEHMNPRVWXY]))\s?([0-9][ABD-HJLNP-UW-Z]{2})|(GIR)\s?(0AA))$/i.test(value);
+}, 'Please specify a valid UK postcode');
 
 // TODO check if value starts with <, otherwise don't try stripping anything
 jQuery.validator.addMethod("strippedminlength", function(value, element, param) {
@@ -232,7 +423,7 @@ jQuery.validator.addMethod("email2", function(value, element, param) {
 
 // same as url, but TLD is optional
 jQuery.validator.addMethod("url2", function(value, element, param) {
-	return this.optional(element) || /^(https?|ftp):\/\/(((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:)*@)?(((\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5]))|((([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.)*(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.?)(:\d*)?)(\/((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)+(\/(([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)*)*)?)?(\?((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)|[\uE000-\uF8FF]|\/|\?)*)?(\#((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)|\/|\?)*)?$/i.test(value);
+	return this.optional(element) || /^(https?|ftp):\/\/(((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:)*@)?(((\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5]))|((([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.)*(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.?)(:\d*)?)(\/((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)+(\/(([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)*)*)?)?(\?((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)|[\uE000-\uF8FF]|\/|\?)*)?(#((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)|\/|\?)*)?$/i.test(value);
 }, jQuery.validator.messages.url);
 
 // NOTICE: Modified version of Castle.Components.Validator.CreditCardValidator
@@ -305,11 +496,11 @@ jQuery.validator.addMethod("creditcardtypes", function(value, element, param) {
 }, "Please enter a valid credit card number.");
 
 jQuery.validator.addMethod("ipv4", function(value, element, param) {
-		return this.optional(element) || /^(25[0-5]|2[0-4]\d|[01]?\d\d?)\.(25[0-5]|2[0-4]\d|[01]?\d\d?)\.(25[0-5]|2[0-4]\d|[01]?\d\d?)\.(25[0-5]|2[0-4]\d|[01]?\d\d?)$/i.test(value);
+	return this.optional(element) || /^(25[0-5]|2[0-4]\d|[01]?\d\d?)\.(25[0-5]|2[0-4]\d|[01]?\d\d?)\.(25[0-5]|2[0-4]\d|[01]?\d\d?)\.(25[0-5]|2[0-4]\d|[01]?\d\d?)$/i.test(value);
 }, "Please enter a valid IP v4 address.");
 
 jQuery.validator.addMethod("ipv6", function(value, element, param) {
-		return this.optional(element) || /^((([0-9A-Fa-f]{1,4}:){7}[0-9A-Fa-f]{1,4})|(([0-9A-Fa-f]{1,4}:){6}:[0-9A-Fa-f]{1,4})|(([0-9A-Fa-f]{1,4}:){5}:([0-9A-Fa-f]{1,4}:)?[0-9A-Fa-f]{1,4})|(([0-9A-Fa-f]{1,4}:){4}:([0-9A-Fa-f]{1,4}:){0,2}[0-9A-Fa-f]{1,4})|(([0-9A-Fa-f]{1,4}:){3}:([0-9A-Fa-f]{1,4}:){0,3}[0-9A-Fa-f]{1,4})|(([0-9A-Fa-f]{1,4}:){2}:([0-9A-Fa-f]{1,4}:){0,4}[0-9A-Fa-f]{1,4})|(([0-9A-Fa-f]{1,4}:){6}((\b((25[0-5])|(1\d{2})|(2[0-4]\d)|(\d{1,2}))\b)\.){3}(\b((25[0-5])|(1\d{2})|(2[0-4]\d)|(\d{1,2}))\b))|(([0-9A-Fa-f]{1,4}:){0,5}:((\b((25[0-5])|(1\d{2})|(2[0-4]\d)|(\d{1,2}))\b)\.){3}(\b((25[0-5])|(1\d{2})|(2[0-4]\d)|(\d{1,2}))\b))|(::([0-9A-Fa-f]{1,4}:){0,5}((\b((25[0-5])|(1\d{2})|(2[0-4]\d)|(\d{1,2}))\b)\.){3}(\b((25[0-5])|(1\d{2})|(2[0-4]\d)|(\d{1,2}))\b))|([0-9A-Fa-f]{1,4}::([0-9A-Fa-f]{1,4}:){0,5}[0-9A-Fa-f]{1,4})|(::([0-9A-Fa-f]{1,4}:){0,6}[0-9A-Fa-f]{1,4})|(([0-9A-Fa-f]{1,4}:){1,7}:))$/i.test(value);
+	return this.optional(element) || /^((([0-9A-Fa-f]{1,4}:){7}[0-9A-Fa-f]{1,4})|(([0-9A-Fa-f]{1,4}:){6}:[0-9A-Fa-f]{1,4})|(([0-9A-Fa-f]{1,4}:){5}:([0-9A-Fa-f]{1,4}:)?[0-9A-Fa-f]{1,4})|(([0-9A-Fa-f]{1,4}:){4}:([0-9A-Fa-f]{1,4}:){0,2}[0-9A-Fa-f]{1,4})|(([0-9A-Fa-f]{1,4}:){3}:([0-9A-Fa-f]{1,4}:){0,3}[0-9A-Fa-f]{1,4})|(([0-9A-Fa-f]{1,4}:){2}:([0-9A-Fa-f]{1,4}:){0,4}[0-9A-Fa-f]{1,4})|(([0-9A-Fa-f]{1,4}:){6}((\b((25[0-5])|(1\d{2})|(2[0-4]\d)|(\d{1,2}))\b)\.){3}(\b((25[0-5])|(1\d{2})|(2[0-4]\d)|(\d{1,2}))\b))|(([0-9A-Fa-f]{1,4}:){0,5}:((\b((25[0-5])|(1\d{2})|(2[0-4]\d)|(\d{1,2}))\b)\.){3}(\b((25[0-5])|(1\d{2})|(2[0-4]\d)|(\d{1,2}))\b))|(::([0-9A-Fa-f]{1,4}:){0,5}((\b((25[0-5])|(1\d{2})|(2[0-4]\d)|(\d{1,2}))\b)\.){3}(\b((25[0-5])|(1\d{2})|(2[0-4]\d)|(\d{1,2}))\b))|([0-9A-Fa-f]{1,4}::([0-9A-Fa-f]{1,4}:){0,5}[0-9A-Fa-f]{1,4})|(::([0-9A-Fa-f]{1,4}:){0,6}[0-9A-Fa-f]{1,4})|(([0-9A-Fa-f]{1,4}:){1,7}:))$/i.test(value);
 }, "Please enter a valid IP v6 address.");
 
 /**
@@ -386,11 +577,8 @@ jQuery.validator.addMethod("require_from_group", function(value, element, option
  */
 jQuery.validator.addMethod("skip_or_fill_minimum", function(value, element, options) {
 	var validator = this,
-		numberRequired,
-		selector;
-
-	numberRequired = options[0];
-	selector = options[1];
+		numberRequired = options[0],
+		selector = options[1];
 	var numberFilled = $(selector, element.form).filter(function() {
 		return validator.elementValue(this);
 	}).length;
@@ -407,27 +595,27 @@ jQuery.validator.addMethod("skip_or_fill_minimum", function(value, element, opti
 
 // Accept a value from a file input based on a required mimetype
 jQuery.validator.addMethod("accept", function(value, element, param) {
-	// Split mime on commas incase we have multiple types we can accept
-	var typeParam = typeof param === "string" ? param.replace(/,/g, '|') : "image/*",
+	// Split mime on commas in case we have multiple types we can accept
+	var typeParam = typeof param === "string" ? param.replace(/\s/g, '').replace(/,/g, '|') : "image/*",
 	optionalValue = this.optional(element),
 	i, file;
 
 	// Element is optional
-	if(optionalValue) {
+	if (optionalValue) {
 		return optionalValue;
 	}
 
-	if($(element).attr("type") === "file") {
+	if ($(element).attr("type") === "file") {
 		// If we are using a wildcard, make it regex friendly
-		typeParam = typeParam.replace("*", ".*");
+		typeParam = typeParam.replace(/\*/g, ".*");
 
 		// Check if the element has a FileList before checking each file
-		if(element.files && element.files.length) {
-			for(i = 0; i < element.files.length; i++) {
+		if (element.files && element.files.length) {
+			for (i = 0; i < element.files.length; i++) {
 				file = element.files[i];
 
-				// Grab the mimtype from the loaded file, verify it matches
-				if(!file.type.match(new RegExp( ".?(" + typeParam + ")$", "i"))) {
+				// Grab the mimetype from the loaded file, verify it matches
+				if (!file.type.match(new RegExp( ".?(" + typeParam + ")$", "i"))) {
 					return false;
 				}
 			}
