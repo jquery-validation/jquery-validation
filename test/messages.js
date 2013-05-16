@@ -44,9 +44,15 @@ test("read messages from metadata", function() {
 	form.validate();
 	var e = $("#testEmail9");
 	e.valid();
-	equal( form.find("label").text(), "required" );
+	equal( form.find("label[for=testEmail9]").text(), "required" );
 	e.val("bla").valid();
-	equal( form.find("label").text(), "email" );
+	equal( form.find("label[for=testEmail9]").text(), "email" );
+
+	var g = $("#testGeneric9");
+	g.valid();
+	equal( form.find("label[for=testGeneric9]").text(), "generic");
+	g.val("bla").valid();
+	equal( form.find("label[for=testGeneric9]").text(), "email" );
 });
 
 
