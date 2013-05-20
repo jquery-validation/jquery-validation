@@ -992,6 +992,7 @@ test("zipcodeUS", function() {
 	ok(!method( "1234" ), "Invalid zip" );
 	ok(!method( "123-23" ), "Invalid zip" );
 	ok(!method( "12345-43" ), "Invalid zip" );
+	ok(!method( "123456-7890" ), "Invalid zip" );
 });
 
 })(jQuery);
