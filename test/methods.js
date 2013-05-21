@@ -546,25 +546,54 @@ module("additional methods");
 
 test("phone (us)", function() {
 	var method = methodTest("phoneUS");
-	ok( method( "1(212)-999-2345" ), "Valid us phone number" );
-	ok( method( "212 999 2344" ), "Valid us phone number" );
-	ok( method( "212-999-0983" ), "Valid us phone number" );
-	ok(!method( "111-123-5434" ), "Invalid us phone number" );
-	ok(!method( "212 123 4567" ), "Invalid us phone number" );
+	ok( method( "1(212)-999-2345" ), "Valid US phone number" );
+	ok( method( "212 999 2344" ), "Valid US phone number" );
+	ok( method( "212-999-0983" ), "Valid US phone number" );
+	ok(!method( "111-123-5434" ), "Invalid US phone number" );
+	ok(!method( "212 123 4567" ), "Invalid US phone number" );
 });
 
 test("phoneUK", function() {
 	var method = methodTest("phoneUK");
+	ok( method( "0117 333 5555" ), "Valid UK Phone Number" );
+	ok( method( "0121 555 5555" ), "Valid UK Phone Number" );
+	ok( method( "01633 555555" ), "Valid UK Phone Number" );
+	ok( method( "01298 28555" ), "Valid UK Phone Number" );
+	ok( method( "015395 55555" ), "Valid UK Phone Number" );
+	ok( method( "016977 3999" ), "Valid UK Phone Number" );
+	ok( method( "020 3000 5555" ), "Valid UK Phone Number" );
+	ok( method( "024 7500 5555" ), "Valid UK Phone Number" );
+	ok( method( "0333 555 5555" ), "Valid UK Phone Number" );
+	ok( method( "0500 555555" ), "Valid UK Phone Number" );
+	ok( method( "055 3555 5555" ), "Valid UK Phone Number" );
+	ok( method( "07122 555555" ), "Valid UK Phone Number" );
 	ok( method( "07222 555555" ), "Valid UK Phone Number" );
+	ok( method( "07322 555555" ), "Valid UK Phone Number" );
+	ok( method( "0800 555 5555" ), "Valid UK Phone Number" );
+	ok( method( "0800 355555" ), "Valid UK Phone Number" );
+	ok( method( "0843 555 5555" ), "Valid UK Phone Number" );
+	ok( method( "0872 555 5555" ), "Valid UK Phone Number" );
+	ok( method( "0903 555 5555" ), "Valid UK Phone Number" );
+	ok( method( "0983 555 5555" ), "Valid UK Phone Number" );
+	ok( method( "(07122) 555555" ), "Valid UK Phone Number" );
 	ok( method( "(07222) 555555" ), "Valid UK Phone Number" );
+	ok( method( "(07322) 555555" ), "Valid UK Phone Number" );
+	ok( method( "+44 7122 555 555" ), "Valid UK Phone Number" );
 	ok( method( "+44 7222 555 555" ), "Valid UK Phone Number" );
+	ok( method( "+44 7322 555 555" ), "Valid UK Phone Number" );
 	ok(!method( "7222 555555" ), "Invalid UK Phone Number" );
 	ok(!method( "+44 07222 555555" ), "Invalid UK Phone Number" );
 });
 
 test("mobileUK", function() {
 	var method = methodTest("mobileUK");
+	ok( method( "07134234323" ), "Valid UK Mobile Number" );
+	ok( method( "07334234323" ), "Valid UK Mobile Number" );
+	ok( method( "07624234323" ), "Valid UK Mobile Number" );
 	ok( method( "07734234323" ), "Valid UK Mobile Number" );
+	ok( method( "+447134234323" ), "Valid UK Mobile Number" );
+	ok( method( "+447334234323" ), "Valid UK Mobile Number" );
+	ok( method( "+447624234323" ), "Valid UK Mobile Number" );
 	ok( method( "+447734234323" ), "Valid UK Mobile Number" );
 	ok(!method( "07034234323" ), "Invalid UK Mobile Number" );
 	ok(!method( "0753423432" ), "Invalid UK Mobile Number" );
