@@ -85,6 +85,8 @@ test("email", function() {
 	ok(!method( "name,@domain.tld" ), "Invalid email" );
 	ok(!method( "name;@domain.tld" ), "Invalid email" );
 	ok(!method( "name;@domain.tld." ), "Invalid email" );
+	ok(!method( "user@admin.state.in..us" ), "Invalid email" );
+	ok(!method( "name@website.a" ), "Invalid email" );
 });
 
 test("email2 (tld optional)", function() {
@@ -108,6 +110,8 @@ test("email2 (tld optional)", function() {
 	ok(!method( "name.@domain.tld" ), "Invalid email" );
 	ok(!method( "name,@domain.tld" ), "Invalid email" );
 	ok(!method( "name;@domain.tld" ), "Invalid email" );
+	ok(!method( "user@admin.state.in..us" ), "Invalid email" );
+	ok(!method( "name@website.a" ), "Invalid email" );
 });
 
 test("number", function() {
