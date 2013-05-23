@@ -544,12 +544,12 @@ jQuery.validator.addMethod("pattern", function(value, element, param) {
 jQuery.validator.addMethod("require_from_group", function(value, element, options) {
 	var validator = this;
 	var selector = options[1];
-	var validOrNot = $(selector, element.form).filter(function() {
+	var validOrNot = jQuery(selector, element.form).filter(function() {
 		return validator.elementValue(this);
 	}).length >= options[0];
 
 	if(!$(element).data('being_validated')) {
-		var fields = $(selector, element.form);
+		var fields = jQuery(selector, element.form);
 		fields.data('being_validated', true);
 		fields.valid();
 		fields.data('being_validated', false);
@@ -579,12 +579,12 @@ jQuery.validator.addMethod("skip_or_fill_minimum", function(value, element, opti
 	var validator = this,
 		numberRequired = options[0],
 		selector = options[1];
-	var numberFilled = $(selector, element.form).filter(function() {
+	var numberFilled = jQuery(selector, element.form).filter(function() {
 		return validator.elementValue(this);
 	}).length;
 	var valid = numberFilled >= numberRequired || numberFilled === 0;
 
-	if(!$(element).data('being_validated')) {
+	if(!jQuery(element).data('being_validated')) {
 		var fields = $(selector, element.form);
 		fields.data('being_validated', true);
 		fields.valid();
@@ -605,7 +605,7 @@ jQuery.validator.addMethod("accept", function(value, element, param) {
 		return optionalValue;
 	}
 
-	if ($(element).attr("type") === "file") {
+	if (jQuery(element).attr("type") === "file") {
 		// If we are using a wildcard, make it regex friendly
 		typeParam = typeParam.replace(/\*/g, ".*");
 
