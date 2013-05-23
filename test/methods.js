@@ -75,16 +75,21 @@ test("email", function() {
 	ok( method( "bla.blu@g.mail.com"), "Valid email" );
 	ok( method( "\"Scott Gonzalez\"@example.com" ), "Valid email" );
 	ok( method( "\"Scott González\"@example.com" ), "Valid email" );
+	ok( method( "a.nonymous@example.com" ), "Valid email" );
+	ok( method( "!#$%&'+-/=.?^`{|}~@[1.0.0.127]" ), "Valid email" );
 	ok( method( "\"name.\"@domain.tld" ), "Valid email" ); // valid without top label
 	ok( method( "\"name,\"@domain.tld" ), "Valid email" ); // valid without top label
 	ok( method( "\"name;\"@domain.tld" ), "Valid email" ); // valid without top label
 	ok(!method( "name" ), "Invalid email" );
 	ok(!method( "name@" ), "Invalid email" );
+	ok(!method( "@example" ), "Invalid email" );
 	ok(!method( "name@domain" ), "Invalid email" );
 	ok(!method( "name.@domain.tld" ), "Invalid email" );
+	ok(!method( ".name@domain.tld" ), "Invalid email" );
 	ok(!method( "name,@domain.tld" ), "Invalid email" );
 	ok(!method( "name;@domain.tld" ), "Invalid email" );
 	ok(!method( "name;@domain.tld." ), "Invalid email" );
+	ok(!method( "me@example..com" ), "Invalid email" );
 	ok(!method( "user@admin.state.in..us" ), "Invalid email" );
 	ok(!method( "name@website.a" ), "Invalid email" );
 });
@@ -110,8 +115,6 @@ test("email2 (tld optional)", function() {
 	ok(!method( "name.@domain.tld" ), "Invalid email" );
 	ok(!method( "name,@domain.tld" ), "Invalid email" );
 	ok(!method( "name;@domain.tld" ), "Invalid email" );
-	ok(!method( "user@admin.state.in..us" ), "Invalid email" );
-	ok(!method( "name@website.a" ), "Invalid email" );
 });
 
 test("number", function() {
