@@ -1,4 +1,4 @@
-[jQuery Validation Plugin](http://bassistance.de/jquery-plugins/jquery-plugin-validation/) - Form validation made easy
+[jQuery Validation Plugin](http://jqueryvalidation.org/) - Form validation made easy
 ================================
 
 [![Build Status](https://secure.travis-ci.org/jzaefferer/jquery-validation.png)](http://travis-ci.org/jzaefferer/jquery-validation)
