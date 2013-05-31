@@ -29,7 +29,11 @@ $.extend($.fn, {
 		}
 
 		// Add novalidate tag if HTML5.
-		this.attr( "novalidate", "novalidate" );
+		try {
+			this.attr( "novalidate", "novalidate" );
+		} catch(e){
+			e && console.warn('HTML5 attribute "novalidate" is not supported in this browser!');
+		}
 
 		validator = new $.validator( options, this[0] );
 		$.data( this[0], "validator", validator );
