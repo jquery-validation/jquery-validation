@@ -1,0 +1,13 @@
+{
+  "name": "jquery-validation",
+  "version": "1.11.2",
+  "main": "jquery.validate.js",
+  "scripts": [
+    "jquery.validate.js"
+  ],
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "components"
+  ]
+}
