@@ -30,8 +30,14 @@ grunt.initConfig({
 			}
 		}
 	},
-	zip: {
+	compress: {
 		dist: {
+			options: {
+				mode: 'zip',
+				level: 1,
+				archive: 'dist/<%= pkg.name %>-<%= pkg.version %>.zip',
+				pretty: true
+			},
 			src: [
 				'dist/*.js',
 				'README.md',
@@ -42,13 +48,7 @@ grunt.initConfig({
 				'lib/**/*.*',
 				'src/localization/**/*.*',
 				'test/**/*.*'
-			],
-			dest: 'dist/<%= pkg.name %>-<%= pkg.version %>.zip'
-		},
-		options: {
-			zlib: {
-				level: 1
-			}
+			]
 		}
 	},
 	qunit: {
@@ -129,10 +129,10 @@ grunt.loadNpmTasks('grunt-contrib-jshint');
 grunt.loadNpmTasks('grunt-contrib-qunit');
 grunt.loadNpmTasks('grunt-contrib-uglify');
 grunt.loadNpmTasks('grunt-contrib-concat');
-grunt.loadNpmTasks('grunt-zipstream');
+grunt.loadNpmTasks('grunt-contrib-compress');
 grunt.loadNpmTasks('grunt-contrib-watch');
 
 grunt.registerTask('default', ['concat', 'jshint', 'qunit']);
-grunt.registerTask('release', ['default', 'uglify', 'zip']);
+grunt.registerTask('release', ['default', 'uglify', 'compress']);
 
 };
