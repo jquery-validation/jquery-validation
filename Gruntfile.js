@@ -30,8 +30,14 @@ grunt.initConfig({
 			}
 		}
 	},
-	zip: {
+	compress: {
 		dist: {
+			options: {
+				mode: 'zip',
+				level: 1,
+				archive: 'dist/<%= pkg.name %>-<%= pkg.version %>.zip',
+				pretty: true
+			},
 			src: [
 				'dist/additional-methods.js',
 				'dist/additional-methods.min.js',
@@ -45,13 +51,7 @@ grunt.initConfig({
 				'lib/**/*.*',
 				'localization/**/*.*',
 				'test/**/*.*'
-			],
-			dest: 'dist/<%= pkg.name %>-<%= pkg.version %>.zip'
-		},
-		options: {
-			zlib: {
-				level: 1
-			}
+			]
 		}
 	},
 	qunit: {
@@ -120,9 +120,9 @@ grunt.loadNpmTasks('grunt-contrib-jshint');
 grunt.loadNpmTasks('grunt-contrib-qunit');
 grunt.loadNpmTasks('grunt-contrib-uglify');
 grunt.loadNpmTasks('grunt-contrib-concat');
-grunt.loadNpmTasks('grunt-zipstream');
+grunt.loadNpmTasks('grunt-contrib-compress');
 
 grunt.registerTask('default', ['jshint', 'qunit']);
-grunt.registerTask('release', ['default', 'concat', 'uglify', 'zip']);
+grunt.registerTask('release', ['default', 'concat', 'uglify', 'compress']);
 
 };
