@@ -1057,6 +1057,12 @@ $.extend($.validator, {
 
 			value = value.replace(/\D/g, "");
 
+			// Basing min and max length on
+			// http://developer.ean.com/general_info/Valid_Credit_Card_Types
+			if ( value.length < 13 || value.length > 19 ) {
+				return false;
+			}
+
 			for (var n = value.length - 1; n >= 0; n--) {
 				var cDigit = value.charAt(n);
 				nDigit = parseInt(cDigit, 10);
