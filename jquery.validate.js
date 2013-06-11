@@ -886,7 +886,7 @@ $.extend($.validator, {
 		var method, value,
 			rules = {}, $element = $(element);
 		for (method in $.validator.methods) {
-			value = $element.data("rule-" + method.toLowerCase());
+			value = $element.data("rule" + method[0].toUpperCase() + method.substring(1).toLowerCase());
 			if ( value !== undefined ) {
 				rules[method] = value;
 			}
