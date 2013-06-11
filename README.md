@@ -2,6 +2,9 @@
 ================================
 
 [![Build Status](https://secure.travis-ci.org/jzaefferer/jquery-validation.png)](http://travis-ci.org/jzaefferer/jquery-validation)
+[![Selenium Test Status](https://saucelabs.com/buildstatus/jquery-validation)](https://saucelabs.com/u/jquery-validation)
+
+[![Selenium Test Status](https://saucelabs.com/browser-matrix/jquery-validation.svg)](https://saucelabs.com/u/jquery-validation)
 
 The jQuery Validation Plugin provides drop-in validation for your existing forms, while making all kinds of customizations to fit your application really easy.
 
