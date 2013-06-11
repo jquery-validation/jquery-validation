@@ -4,17 +4,17 @@ module.exports = function(grunt) {
 "use strict";
 
 var browsers = [
-  /*{
+  {
     browserName: 'firefox',
     version: '19',
     platform: 'XP'
-  },*/ {
+  }, {
     browserName: 'chrome',
     platform: 'XP'
   }, {
     browserName: 'chrome',
     platform: 'linux'
-  } /*, {
+  } , {
     browserName: 'internet explorer',
     platform: 'WIN8',
     version: '10'
@@ -30,7 +30,7 @@ var browsers = [
     browserName: 'opera',
     platform: 'Windows 2008',
     version: '12'
-  }*/
+  }
 ];
 
 grunt.initConfig({
