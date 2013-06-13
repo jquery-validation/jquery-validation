@@ -528,6 +528,10 @@ $.extend($.validator, {
 				return $("input[name='" + $(element).attr("name") + "']:checked").val();
 			}
 
+			if ( type === "text" && val === $(element).attr("placeholder") ) {
+				val = "";
+			}
+
 			if ( typeof val === "string" ) {
 				return val.replace(/\r/g, "");
 			}
