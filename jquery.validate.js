@@ -160,15 +160,15 @@ $.extend($.fn, {
 
 		// make sure required is at front
 		if ( data.required ) {
-			var param = data.required;
+			var requiredParam = data.required;
 			delete data.required;
-			data = $.extend({required: param}, data);
+			data = $.extend({required: requiredParam}, data);
 		}
 		// make sure remote is at the end
 		if (data.remote) {
-			var param = data.remote;
+			var remoteParam = data.remote;
 			delete data.remote;
-			data = $.extend(data, { remote: param });
+			data = $.extend(data, { remote: remoteParam });
 		}
 
 		return data;
