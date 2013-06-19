@@ -164,6 +164,12 @@ $.extend($.fn, {
 			delete data.required;
 			data = $.extend({required: param}, data);
 		}
+		// make sure remote is at the end
+		if (data.remote) {
+			var param = data.remote;
+			delete data.remote;
+			data = $.extend(data, { remote: param });
+		}
 
 		return data;
 	}
