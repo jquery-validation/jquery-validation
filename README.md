@@ -29,7 +29,7 @@ $("form").validate();
 </script>
 ```
 
-For more information on how to setup a rules and customizations, [check the documentation](http://docs.jquery.com/Plugins/Validation).
+For more information on how to setup a rules and customizations, [check the documentation](http://jqueryvalidation.org/documentation/).
 
 ## Reporting an Issue
 
