@@ -222,6 +222,7 @@ $.extend($.validator, {
 		errorContainer: $([]),
 		errorLabelContainer: $([]),
 		onsubmit: true,
+    include: "input, select, textarea", 
 		ignore: ":hidden",
 		ignoreTitle: false,
 		onfocusin: function( element, event ) {
@@ -474,7 +475,7 @@ $.extend($.validator, {
 
 			// select all valid inputs inside the form (no submit or reset buttons)
 			return $(this.currentForm)
-			.find("input, select, textarea")
+      .find( this.settings.include )
 			.not(":submit, :reset, :image, [disabled]")
 			.not( this.settings.ignore )
 			.filter(function() {
