@@ -14,7 +14,7 @@
 		digits: "Si us plau, escriu només dígits.",
 		creditcard: "Si us plau, escriu un número de tarjeta vàlid.",
 		equalTo: "Si us plau, escriu el maateix valor de nou.",
-		accept: "Si us plau, escriu un valor amb una extensió acceptada.",
+		extension: "Si us plau, escriu un valor amb una extensió acceptada.",
 		maxlength: $.validator.format("Si us plau, no escriguis més de {0} caracters."),
 		minlength: $.validator.format("Si us plau, no escriguis menys de {0} caracters."),
 		rangelength: $.validator.format("Si us plau, escriu un valor entre {0} i {1} caracters."),

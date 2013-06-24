@@ -14,7 +14,7 @@
 		digits: "Inserisci solo numeri.",
 		creditcard: "Inserisci un numero di carta di credito valido.",
 		equalTo: "Il valore non corrisponde.",
-		accept: "Inserisci un valore con un&apos;estensione valida.",
+		extension: "Inserisci un valore con un&apos;estensione valida.",
 		maxlength: $.validator.format("Non inserire pi&ugrave; di {0} caratteri."),
 		minlength: $.validator.format("Inserisci almeno {0} caratteri."),
 		rangelength: $.validator.format("Inserisci un valore compreso tra {0} e {1} caratteri."),

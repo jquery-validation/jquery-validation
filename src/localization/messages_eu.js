@@ -14,7 +14,7 @@
 		digits: "Mesedez, idatzi digituak soilik.",
 		creditcard: "Mesedez, idatzi baliozko txartel zenbaki bat.",
 		equalTo: "Mesedez, idatzi berdina berriro ere.",
-		accept: "Mesedez, idatzi onartutako luzapena duen balio bat.",
+		extension: "Mesedez, idatzi onartutako luzapena duen balio bat.",
 		maxlength: $.validator.format("Mesedez, ez idatzi {0} karaktere baino gehiago."),
 		minlength: $.validator.format("Mesedez, ez idatzi {0} karaktere baino gutxiago."),
 		rangelength: $.validator.format("Mesedez, idatzi {0} eta {1} karaktere arteko balio bat."),

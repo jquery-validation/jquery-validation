@@ -14,7 +14,7 @@
 		digits: "Sila masukkan nilai digit sahaja.",
 		creditcard: "Sila masukkan nombor kredit kad yang betul.",
 		equalTo: "Sila masukkan nilai yang sama semula.",
-		accept: "Sila masukkan nilai yang telah diterima.",
+		extension: "Sila masukkan nilai yang telah diterima.",
 		maxlength: $.validator.format("Sila masukkan nilai tidak lebih dari {0} aksara."),
 		minlength: $.validator.format("Sila masukkan nilai sekurang-kurangnya {0} aksara."),
 		rangelength: $.validator.format("Sila masukkan panjang nilai antara {0} dan {1} aksara."),
