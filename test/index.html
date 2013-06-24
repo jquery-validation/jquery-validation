@@ -13,6 +13,7 @@
 	<script src="rules.js"></script>
 	<script src="messages.js"></script>
 	<script src="methods.js"></script>
+	<script src="aria.js"></script>
 </head>
 <body id="body">
 	<h1 id="qunit-header">
@@ -279,7 +280,7 @@
 			<input class="required" name="hastitle" type="text" title="fromtitle" />
 		</form>
 
-		<form id="ccform" method="get" action="">
+		<form id="ccform" method="get">
 			<input id="cardnumber" name="cardnumber" />
 		</form>
 
@@ -299,7 +300,7 @@
 			<input type="date" id="minDateInvalid" name="minDateInvalid" min="2012-12-21" value="2012-11-21"/>
 		</form>
 		<form id="ranges">
-			<input type="date" id="maxDateInvalid" ngame="maxDateInvalid" max="2012-12-21" value="2013-01-21"/>
+			<input type="date" id="maxDateInvalid" name="maxDateInvalid" max="2012-12-21" value="2013-01-21"/>
 			<input type="date" id="rangeDateInvalidGreater" name="rangeDateInvalidGreater" min="2012-11-21" max="2013-01-21" value="2013-02-21"/>
 			<input type="date" id="rangeDateInvalidLess" name="rangeDateInvalidLess" min="2012-11-21" max="2013-01-21" value="2012-10-21"/>
 
@@ -319,7 +320,7 @@
 			<input id="rangeAbsentInvalidLess" name="rangeAbsentInvalidLess" min="200" max="1000" value="50"/>
 
 			<input type="text" id="rangeTextValid" name="rangeTextValid" min="50" max="1000" value="200"/>
-			<input id="rangeAbsentValid" name="rangeTextValid" min="50" max="1000" value="200"/>
+			<input id="rangeAbsentValid" name="rangeAbsentValid" min="50" max="1000" value="200"/>
 
 			<!-- ranges are like numbers in html5, except that browser is not required
 			     to demand an exact value.  User interface could be a slider.
@@ -336,11 +337,15 @@
 		</form>
 
 		<form id="bypassValidation">
-				<input type="text" required/>
+				<input type="text" name="bypassValidationRequiredInput" required/>
 				<input id="normalSubmit" type="submit" value="submit"/>
 				<input id="bypassSubmitWithCancel" type="submit" class="cancel" value="bypass1"/>
 				<input id="bypassSubmitWithNoValidate1" type="submit" formnovalidate value="bypass1"/>
 				<input id="bypassSubmitWithNoValidate2" type="submit" formnovalidate="formnovalidate" value="bypass2"/>
+		</form>
+		
+		<form id="ariaInvalid">
+			<input type="text" name="ariafirstname" id="ariafirstname" />
 		</form>
 	</div>
 
