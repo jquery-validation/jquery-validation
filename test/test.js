@@ -56,12 +56,13 @@ test("valid() plugin method", function() {
 	ok ( input.valid(), "Input is valid, too" );
 });
 
-test("valid() plugin method", function() {
+test("valid() plugin method, multiple inputs", function() {
 	var form = $("#testForm1");
-	form.validate();
+	var validator = form.validate();
 	var inputs = form.find("input");
 	ok( !inputs.valid(), "all invalid" );
 	inputs.not(":first").val("ok");
+	equal( validator.numberOfInvalids(), 2 );
 	strictEqual( inputs.valid(), false, "just one invalid" );
 	inputs.val("ok");
 	strictEqual( inputs.valid(), true, "all valid" );
@@ -1492,7 +1493,7 @@ test("Min and Max type absent set by attributes valid", function() {
 
 test("Min and Max range set by attributes valid", function() {
 	//
-	// cannot test for overflow: 
+	// cannot test for overflow:
 	// When the element is suffering from an underflow,
 	// the user agent must set the element's value to a valid
 	// floating-point number that represents the minimum.
