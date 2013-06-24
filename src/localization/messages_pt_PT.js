@@ -15,7 +15,7 @@
 		digits: "Por favor, introduza apenas d&iacute;gitos.",
 		creditcard: "Por favor, introduza um n&uacute;mero de cart&atilde;o de cr&eacute;dito v&aacute;lido.",
 		equalTo: "Por favor, introduza de novo o mesmo valor.",
-		accept: "Por favor, introduza um ficheiro com uma extens&atilde;o v&aacute;lida.",
+		extension: "Por favor, introduza um ficheiro com uma extens&atilde;o v&aacute;lida.",
 		maxlength: $.validator.format("Por favor, n&atilde;o introduza mais do que {0} caracteres."),
 		minlength: $.validator.format("Por favor, introduza pelo menos {0} caracteres."),
 		rangelength: $.validator.format("Por favor, introduza entre {0} e {1} caracteres."),

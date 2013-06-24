@@ -14,7 +14,7 @@
 		digits: "Lütfen sadece sayısal karakterler giriniz.",
 		creditcard: "Lütfen geçerli bir kredi kartı giriniz.",
 		equalTo: "Lütfen aynı değeri tekrar giriniz.",
-		accept: "Lütfen geçerli uzantıya sahip bir değer giriniz.",
+		extension: "Lütfen geçerli uzantıya sahip bir değer giriniz.",
 		maxlength: $.validator.format("Lütfen en fazla {0} karakter uzunluğunda bir değer giriniz."),
 		minlength: $.validator.format("Lütfen en az {0} karakter uzunluğunda bir değer giriniz."),
 		rangelength: $.validator.format("Lütfen en az {0} ve en fazla {1} uzunluğunda bir değer giriniz."),

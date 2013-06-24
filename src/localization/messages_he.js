@@ -14,7 +14,7 @@
 		digits: "נא למלא רק מספרים",
 		creditcard: "נא למלא מספר כרטיס אשראי חוקי",
 		equalTo: "נא למלא את אותו ערך שוב",
-		accept: "נא למלא ערך עם סיומת חוקית",
+		extension: "נא למלא ערך עם סיומת חוקית",
 		maxlength: $.validator.format(".נא לא למלא יותר מ- {0} תווים"),
 		minlength: $.validator.format("נא למלא לפחות {0} תווים"),
 		rangelength: $.validator.format("נא למלא ערך בין {0} ל- {1} תווים"),
