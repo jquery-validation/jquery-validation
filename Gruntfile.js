@@ -116,7 +116,7 @@ grunt.initConfig({
 		},
 		src: {
 			files: '<%= jshint.files %>',
-			tasks: ['default']
+			tasks: ['concat']
 		},
 		test: {
 			files: '<%= jshint.test.files.src %>',
