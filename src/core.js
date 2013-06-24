@@ -379,6 +379,9 @@ $.extend($.validator, {
 			} else {
 				this.invalid[element.name] = true;
 			}
+			//Add aria-invalid status for screen readers
+			$(element).attr("aria-invalid", !result);
+			
 			if ( !this.numberOfInvalids() ) {
 				// Hide error containers on last error
 				this.toHide = this.toHide.add( this.containers );
