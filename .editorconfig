@@ -1,0 +1,10 @@
+; See http://EditorConfig.org for supported IDEs
+
+root = true  ; top-most EditorConfig file
+
+[*]
+indent_style = tab
+indent_size = 4
+charset = utf-8
+trim_trailing_whitespace = true
+insert_final_newline = true
