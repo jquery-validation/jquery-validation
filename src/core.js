@@ -1133,7 +1133,10 @@ $.extend($.validator, {
 			var previous = this.previousValue(element);
 			if (!this.settings.messages[element.name] ) {
 				this.settings.messages[element.name] = {};
-			}
+            }
+            if ( !this.settings.validators[element.name] ) {
+                this.settings.validators[element.name] = {};
+            }
 			previous.originalMessage = this.settings.messages[element.name].remote;
 			this.settings.messages[element.name].remote = previous.message;
 
@@ -1155,9 +1158,19 @@ $.extend($.validator, {
 				dataType: "json",
 				data: data,
 				success: function( response ) {
-					validator.settings.messages[element.name].remote = previous.originalMessage;
-					var valid = response === true || response === "true";
-					if ( valid ) {
+                    var valid = false;
+                    validator.settings.messages[element.name].remote = previous.originalMessage;
+                    if (!validator.settings.validators[element.name].remote) {
+                        validator.settings.validators[element.name].remote = null;
+                    }
+                    if ( $.isFunction(validator.settings.validators[element.name].remote) ) {
+                        valid = validator.settings.validators[element.name].remote(response);
+                        // Force use of defaultMessage in case of failure
+                        response = null;
+                    } else {
+                        valid = response === true || response === "true";
+                    }
+                    if ( valid ) {
 						var submitted = validator.formSubmitted;
 						validator.prepareElement(element);
 						validator.formSubmitted = submitted;
