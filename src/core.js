@@ -850,7 +850,7 @@ $.extend($.validator, {
 				value = $element.get(0).getAttribute(method);
 				// Some browsers return an empty string for the required attribute
 				// and non-HTML5 browsers might have required="" markup
-				if ( value === "" && !( $.browser.msie  && parseInt($.browser.version, 10 ) === 8 ) ) {
+				if ( value === "" && !navigator.userAgent.match(/MSIE 8\./) ) {
 					value = true;
 				}
 				// force non-HTML5 browsers to return bool
