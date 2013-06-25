@@ -1158,16 +1158,17 @@ $.extend($.validator, {
 				dataType: "json",
 				data: data,
 				success: function( response ) {
+                    var valid = false;
                     validator.settings.messages[element.name].remote = previous.originalMessage;
                     if (!validator.settings.validators[element.name].remote) {
                         validator.settings.validators[element.name].remote = null;
                     }
                     if ( $.isFunction(validator.settings.validators[element.name].remote) ) {
-                        var valid = validator.settings.validators[element.name].remote(response);
+                        valid = validator.settings.validators[element.name].remote(response);
                         // Force use of defaultMessage in case of failure
                         response = null;
                     } else {
-                        var valid = response === true || response === "true";
+                        valid = response === true || response === "true";
                     }
                     if ( valid ) {
 						var submitted = validator.formSubmitted;
