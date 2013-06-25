@@ -14,7 +14,7 @@
 		digits: "Hãy nhập chữ số.",
 		creditcard: "Hãy nhập số thẻ tín dụng.",
 		equalTo: "Hãy nhập thêm lần nữa.",
-		accept: "Phần mở rộng không đúng.",
+		extension: "Phần mở rộng không đúng.",
 		maxlength: $.format("Hãy nhập từ {0} kí tự trở xuống."),
 		minlength: $.format("Hãy nhập từ {0} kí tự trở lên."),
 		rangelength: $.format("Hãy nhập từ {0} đến {1} kí tự."),

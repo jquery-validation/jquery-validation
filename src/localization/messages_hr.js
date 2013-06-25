@@ -14,7 +14,7 @@
 		digits: "Unesite samo brojeve.",
 		creditcard: "Unesite ispravan broj kreditne kartice.",
 		equalTo: "Unesite ponovo istu vrijednost.",
-		accept: "Unesite vrijednost sa ispravnom ekstenzijom.",
+		extension: "Unesite vrijednost sa ispravnom ekstenzijom.",
 		maxlength: $.validator.format("Maksimalni broj znakova je {0} ."),
 		minlength: $.validator.format("Minimalni broj znakova je {0} ."),
 		rangelength: $.validator.format("Unesite vrijednost između {0} i {1} znakova."),

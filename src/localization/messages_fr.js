@@ -14,7 +14,7 @@
 		digits: "Veuillez fournir seulement des chiffres.",
 		creditcard: "Veuillez fournir un numéro de carte de crédit valide.",
 		equalTo: "Veuillez fournir encore la même valeur.",
-		accept: "Veuillez fournir une valeur avec une extension valide.",
+		extension: "Veuillez fournir une valeur avec une extension valide.",
 		maxlength: $.validator.format("Veuillez fournir au plus {0} caractères."),
 		minlength: $.validator.format("Veuillez fournir au moins {0} caractères."),
 		rangelength: $.validator.format("Veuillez fournir une valeur qui contient entre {0} et {1} caractères."),

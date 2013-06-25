@@ -15,7 +15,7 @@
 		digits: "Por favor, forne&ccedil;a somente d&iacute;gitos.",
 		creditcard: "Por favor, forne&ccedil;a um cart&atilde;o de cr&eacute;dito v&aacute;lido.",
 		equalTo: "Por favor, forne&ccedil;a o mesmo valor novamente.",
-		accept: "Por favor, forne&ccedil;a um valor com uma extens&atilde;o v&aacute;lida.",
+		extension: "Por favor, forne&ccedil;a um valor com uma extens&atilde;o v&aacute;lida.",
 		maxlength: $.validator.format("Por favor, forne&ccedil;a n&atilde;o mais que {0} caracteres."),
 		minlength: $.validator.format("Por favor, forne&ccedil;a ao menos {0} caracteres."),
 		rangelength: $.validator.format("Por favor, forne&ccedil;a um valor entre {0} e {1} caracteres de comprimento."),

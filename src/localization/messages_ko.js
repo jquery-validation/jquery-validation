@@ -14,7 +14,7 @@
 		digits: "숫자만 입력 가능합니다.",
 		creditcard: "신용카드 번호가 바르지 않습니다.",
 		equalTo: "같은 값을 다시 입력하세요.",
-		accept: "올바른 확장자가 아닙니다.",
+		extension: "올바른 확장자가 아닙니다.",
 		maxlength: $.format("{0}자를 넘을 수 없습니다. "),
 		minlength: $.format("{0}자 이상 입력하세요."),
 		rangelength: $.format("문자 길이가 {0} 에서 {1} 사이의 값을 입력하세요."),
