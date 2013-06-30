@@ -1025,4 +1025,35 @@ test("zipcodeUS", function() {
 	ok(!method( "123456-7890" ), "Invalid zip" );
 });
 
+test("length", function() {
+	var method = methodTest("length");
+	ok( method( "123", 3 ), "Valid length" );
+	ok(!method( "123", 4 ), "Invalid length" );
+	ok( method( "hello world", 11 ), "Valid length" );
+	ok( method( " hello world ", 11 ), "Valid length" );
+});
+
+test("slug", function() {
+	var method = methodTest("slug");
+	ok( method( "123" ), "Valid slug" );
+	ok( !method( "hello world" ), "Invalid slug" );
+	ok( method( "hello_world" ), "Valid slug" );
+	ok( method( "hello-world" ), "Valid slug" );
+	ok( !method( "$helloworld" ), "Invalid slug" );
+	ok( !method( "%helloworld%" ), "Invalid slug" );
+});
+
+test("alpha", function() {
+	var method = methodTest("alpha");
+	ok( !method( "123" ), "Invalid alpha" );
+	ok( method( "helloworld" ), "Valid alpha" );
+	ok( !method( " helloworld" ), "Invalid alpha" );
+	ok( !method( "helloworld123" ), "Invalid alpha" );
+	ok( !method( "hello world" ), "Invalid alpha" );
+	ok( !method( "hello_world" ), "Invalid alpha" );
+	ok( !method( "hello-world" ), "Invalid alpha" );
+	ok( !method( "$helloworld" ), "Invalid alpha" );
+	ok( !method( "%helloworld%" ), "Invalid alpha" );
+});
+
 })(jQuery);
