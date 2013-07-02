@@ -1131,9 +1131,7 @@ $.extend($.validator, {
 			}
 
 			var previous = this.previousValue(element);
-			if (!this.settings.messages[element.name] ) {
-				this.settings.messages[element.name] = {};
-			}
+			this.settings.messages[element.name] = {};
 			previous.originalMessage = this.settings.messages[element.name].remote;
 			this.settings.messages[element.name].remote = previous.message;
 
