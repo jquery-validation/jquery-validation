@@ -165,6 +165,13 @@ $.extend($.fn, {
 			data = $.extend({required: param}, data);
 		}
 
+		// make sure remote is at back
+		if ( data.remote ) {
+			var param = data.remote;
+			delete data.remote;
+			data = $.extend(data, {remote: param});
+		}
+
 		return data;
 	}
 });
