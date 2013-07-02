@@ -162,11 +162,19 @@ $.extend($.fn, {
 		), element);
 
 		// make sure required is at front
+		var param;
 		if ( data.required ) {
-			var param = data.required;
+			param = data.required;
 			delete data.required;
-			data = $.extend({required: param}, data);
-			$(element).attr("aria-required", "true");
+			data = $.extend({ required: param }, data );
+			$(element).attr( "aria-required", "true" );
+		}
+
+		// make sure remote is at back
+		if ( data.remote ) {
+			param = data.remote;
+			delete data.remote;
+			data = $.extend( data, { remote: param });
 		}
 
 		return data;
