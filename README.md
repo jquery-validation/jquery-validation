@@ -29,19 +29,27 @@ $("form").validate();
 </script>
 ```
 
-For more information on how to setup a rules and customizations, [check the documentation](http://docs.jquery.com/Plugins/Validation).
+For more information on how to setup a rules and customizations, [check the documentation](http://jqueryvalidation.org/documentation/).
 
 ## Reporting an Issue
 
 1. Make sure the problem you're addressing is reproducible.
 2. Use http://jsbin.com or http://jsfiddle.net to provide a test page.
-3. Indicate what browsers the isssue can be reproduced in.
-4. What version of the plug-in is the issue reproducable in. Is it reproducable after updating to the latest version.
+3. Indicate what browsers the issue can be reproduced in.
+4. What version of the plug-in is the issue reproducible in. Is it reproducible after updating to the latest version.
 
 ## Contributing
-Follow the [jQuery style guide](http://contribute.jquery.com/style-guides/js), even if existing code doesn't. Add unit tests for any new or changed functionality. Lint and test your code using [Grunt](http://gruntjs.com/).
+1. Follow the [jQuery style guide](http://contribute.jquery.com/style-guides/js), even if existing code doesn't.
+2. Add unit tests for any new or changed functionality.
+3. Lint and test your code using [Grunt](http://gruntjs.com/).
 
-If you've wrote custom methods that you'd like to contribute to additional-methods.js, create a branch, add the method there and send a pull request for that branch.
+### Additional Methods
+If you've wrote custom methods that you'd like to contribute to additional-methods.js:
+
+1. Create a branch
+2. Add the method as a new file in src/additional
+3. (Optional) Add translations to src/localization
+4. Send a pull request to the master branch.
 
 ## License
 Copyright (c) 2013 Jörn Zaefferer
