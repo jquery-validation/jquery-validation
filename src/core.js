@@ -120,9 +120,9 @@ $.extend($.fn, {
 	// http://jqueryvalidation.org/rules/
 	rules: function( command, argument ) {
 		var element = this[0];
-
+		var validator = $.data(element.form, "validator")
 		if ( command ) {
-			var settings = $.data(element.form, "validator").settings;
+			var settings = validator.settings;
 			var staticRules = settings.rules;
 			var existingRules = $.validator.staticRules(element);
 			switch(command) {
@@ -158,20 +158,19 @@ $.extend($.fn, {
 			$.validator.staticRules(element)
 		), element);
 
-		// make sure required is at front
-		if ( data.required ) {
-			var requiredParam = data.required;
-			delete data.required;
-			data = $.extend({required: requiredParam}, data);
+		// make sure required is first and remote is last
+		var idx = 0;
+		var arr = new Array(validator.objectLength(data));
+		if ( data.required )
+			arr[idx++] = { method: 'required', parameters: data.required };
+		for ( prop in data ) {
+			if ( prop != 'required' && prop != 'remote')
+				arr[idx++] = { method: prop, parameters: data[prop] };
 		}
-		// make sure remote is at the end
-		if (data.remote) {
-			var remoteParam = data.remote;
-			delete data.remote;
-			data = $.extend(data, { remote: remoteParam });
-		}
+		if ( data.remote )
+			arr[idx] = { method: 'remote', parameters: data.remote };
 
-		return data;
+		return arr;
 	}
 });
 
@@ -220,7 +219,7 @@ $.extend($.validator, {
 	defaults: {
 		messages: {},
 		groups: {},
-		rules: {},
+		rules: [],
 		errorClass: "error",
 		validClass: "valid",
 		errorElement: "label",
@@ -489,7 +488,7 @@ $.extend($.validator, {
 				}
 
 				// select only the first element for each name, and only those with rules specified
-				if ( this.name in rulesCache || !validator.objectLength($(this).rules()) ) {
+				if ( this.name in rulesCache || $(this).rules().length ) {
 					return false;
 				}
 
@@ -552,11 +551,11 @@ $.extend($.validator, {
 			var val = this.elementValue(element);
 			var result;
 
-			for (var method in rules ) {
-				var rule = { method: method, parameters: rules[method] };
+			for (var i = 0; i < rules.length; i++) {
+				var rule = rules[i];
 				try {
 
-					result = $.validator.methods[method].call( this, val, element, rule.parameters );
+					result = $.validator.methods[rule.method].call( this, val, element, rule.parameters );
 
 					// if a method indicates that the field is optional and therefore valid,
 					// don't mark it as valid when there are no other rules
