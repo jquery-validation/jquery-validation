@@ -120,7 +120,7 @@ $.extend($.fn, {
 	// http://jqueryvalidation.org/rules/
 	rules: function( command, argument ) {
 		var element = this[0];
-		var validator = $.data(element.form, "validator")
+		var validator = $.data(element.form, "validator");
 		if ( command ) {
 			var settings = validator.settings;
 			var staticRules = settings.rules;
@@ -161,14 +161,20 @@ $.extend($.fn, {
 		// make sure required is first and remote is last
 		var idx = 0;
 		var arr = new Array(validator.objectLength(data));
-		if ( data.required )
+		if ( data.required ) {
 			arr[idx++] = { method: 'required', parameters: data.required };
-		for ( prop in data ) {
-			if ( prop != 'required' && prop != 'remote')
-				arr[idx++] = { method: prop, parameters: data[prop] };
 		}
-		if ( data.remote )
+		for ( var prop in data ) {
+			if ( prop !== 'required' && prop !== 'remote') {
+				arr[idx++] = { method: prop, parameters: data[prop] };
+			}
+		}
+		if ( data.remote ) {
 			arr[idx] = { method: 'remote', parameters: data.remote };
+		}
+		if ( data.remote ) {
+			arr[idx] = { method: 'remote', parameters: data.remote };
+		}
 
 		return arr;
 	}
@@ -488,7 +494,7 @@ $.extend($.validator, {
 				}
 
 				// select only the first element for each name, and only those with rules specified
-				if ( this.name in rulesCache || $(this).rules().length ) {
+				if ( this.name in rulesCache || !$(this).rules().length ) {
 					return false;
 				}
 
