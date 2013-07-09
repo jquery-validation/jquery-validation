@@ -1174,6 +1174,7 @@ $.extend($.validator, {
 				port: "validate" + element.name,
 				dataType: "json",
 				data: data,
+				context: validator.currentForm,
 				success: function( response ) {
 					validator.settings.messages[element.name].remote = previous.originalMessage;
 					var valid = response === true || response === "true";
