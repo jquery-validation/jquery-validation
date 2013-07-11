@@ -12,18 +12,47 @@
  * description: {require_from_group: [1,".productinfo"]}
  *
  */
-jQuery.validator.addMethod("require_from_group", function(value, element, options) {
-	var validator = this;
-	var selector = options[1];
-	var validOrNot = jQuery(selector, element.form).filter(function() {
-		return validator.elementValue(this);
-	}).length >= options[0];
+jQuery.validator.addMethod("require_from_group", function (value, element, options) {
+    var validator = this;
+    var minRequired = options[0];
+    var selector = options[1];
+    var validOrNot = jQuery(selector, element.form).filter(function () {
+        return validator.elementValue(this);
+    }).length >= minRequired;
 
-	if(!$(element).data('being_validated')) {
-		var fields = jQuery(selector, element.form);
-		fields.data('being_validated', true);
-		fields.valid();
-		fields.data('being_validated', false);
-	}
-	return validOrNot;
+    // remove all events in namespace upload
+
+    jQuery(selector, element.form).off('.require_from_group');
+
+    if (this.settings.onkeyup) {
+        jQuery(selector, element.form).on({
+            'keyup.require_from_group': function (e) {
+                jQuery(selector, element.form).valid();
+            }
+        });
+    }
+    if (this.settings.onfocusin) {
+        jQuery(selector, element.form).on({
+            'focusin.require_from_group': function (e) {
+                jQuery(selector, element.form).valid();
+            }
+        });
+    }
+    if (this.settings.click) {
+        jQuery(selector, element.form).on({
+            'click.require_from_group': function (e) {
+                jQuery(selector, element.form).valid();
+            }
+        });
+    }
+    if (this.settings.onkeyup) {
+        jQuery(selector, element.form).on({
+            'keyup.require_from_group': function (e) {
+                jQuery(selector, element.form).valid();
+            }
+        });
+    }
+
+    return validOrNot;
 }, jQuery.format("Please fill at least {0} of these fields."));
+
