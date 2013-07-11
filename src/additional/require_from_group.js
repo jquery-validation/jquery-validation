@@ -48,9 +48,9 @@ jQuery.validator.addMethod("require_from_group", function (value, element, optio
         });
     }
     
-    if (this.settings.onkeyup) {
+    if (this.settings.onfocusout) {
         jQuery(selector, element.form).on({
-            'keyup.require_from_group': function (e) {
+            'focusout.require_from_group': function (e) {
                 jQuery(selector, element.form).valid();
             }
         });
