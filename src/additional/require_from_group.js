@@ -20,10 +20,10 @@ jQuery.validator.addMethod("require_from_group", function (value, element, optio
         return validator.elementValue(this);
     }).length >= minRequired;
 
-    // remove all events in namespace upload
-
+    // remove all events in namespace require_from_group
     jQuery(selector, element.form).off('.require_from_group');
 
+    //add the required events to trigger revalidation if setting is enabled in the validator
     if (this.settings.onkeyup) {
         jQuery(selector, element.form).on({
             'keyup.require_from_group': function (e) {
@@ -31,6 +31,7 @@ jQuery.validator.addMethod("require_from_group", function (value, element, optio
             }
         });
     }
+    
     if (this.settings.onfocusin) {
         jQuery(selector, element.form).on({
             'focusin.require_from_group': function (e) {
@@ -38,6 +39,7 @@ jQuery.validator.addMethod("require_from_group", function (value, element, optio
             }
         });
     }
+    
     if (this.settings.click) {
         jQuery(selector, element.form).on({
             'click.require_from_group': function (e) {
@@ -45,6 +47,7 @@ jQuery.validator.addMethod("require_from_group", function (value, element, optio
             }
         });
     }
+    
     if (this.settings.onkeyup) {
         jQuery(selector, element.form).on({
             'keyup.require_from_group': function (e) {
@@ -52,7 +55,7 @@ jQuery.validator.addMethod("require_from_group", function (value, element, optio
             }
         });
     }
-
+    
     return validOrNot;
 }, jQuery.format("Please fill at least {0} of these fields."));
 
