@@ -1025,4 +1025,37 @@ test("zipcodeUS", function() {
 	ok(!method( "123456-7890" ), "Invalid zip" );
 });
 
+test("maxWords", function(){
+	var method = methodTest("maxWords");
+	var maxWords = 6;
+	ok( method( "I am a sentence", maxWords), "Max Words");
+	ok(!method( "I'm way too long for this sentence!", maxWords), "Too many words");
+	ok(method( "Don’t “count” me as too long", maxWords), "Right amount of words with smartquotes");
+	ok(!method( "But you can “count” me as too long", maxWords), "Too many words with smartquotes");
+	ok(method( "<div>Don’t “count” me as too long</div>", maxWords), "Right amount of words with smartquotes w/ HTML");
+	ok(!method( "<div>But you can “count” me as too long</div>", maxWords), "Too many words with smartquotes w/ HTML");
+});
+
+test("minWords", function(){
+	var method = methodTest("minWords");
+	var minWords = 6;
+	ok(!method( "I am a short sentence", minWords), "Max Words");
+	ok( method( "I'm way too long for this sentence!", minWords), "Too many words");
+	ok(!method( "Don’t “count” me as short.", minWords), "Right amount of words with smartquotes");
+	ok( method( "But you can “count” me as too short", minWords), "Too many words with smartquotes");
+	ok(!method( "<div>“Count” me as too short.</div>", minWords), "Right amount of words with smartquotes w/ HTML");
+	ok( method( "<div>But you can “count” me as too long</div>", minWords), "Too many words with smartquotes w/ HTML");
+});
+
+test("rangeWords", function(){
+	var method = methodTest("rangeWords");
+	var rangeWords = [3,6];
+	ok(!method( "I'm going to be longer than “six words!”", rangeWords), "Longer than 6 with smartquotes");
+	ok( method( "I'm just the right amount!", rangeWords), "In between");
+	ok( method( "Super short sentence’s.", rangeWords), "Low end");
+	ok(!method( "I", rangeWords), "Too short");
+	ok( method( "<div>“Count” me as perfect.</div>", rangeWords), "Right amount of words with smartquotes w/ HTML");
+	ok(!method( "<div>But you can “count” me as too long</div>", rangeWords), "Too many words with smartquotes w/ HTML");
+});
+
 })(jQuery);
