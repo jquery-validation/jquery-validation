@@ -17,11 +17,7 @@ jQuery.validator.addMethod("nieES",function(value, element) {
 	//comprobacion de NIEs
 	//T
 	if (/^[T]{1}/.test(NIE)){
-		if (NIE[8] === /^[T]{1}[A-Z0-9]{8}$/.test(NIE)){
-			return true;
-		}else{
-			return false;
-		}
+		return (NIE[8] === /^[T]{1}[A-Z0-9]{8}$/.test(NIE));
 	}
 
 	//XYZ
@@ -30,12 +26,7 @@ jQuery.validator.addMethod("nieES",function(value, element) {
 		pos = pos.replace('Y','1');
 		pos = pos.replace('Z','2');
 		pos = pos.substring(0, 8) % 23;
-		if (NIE[8] === cadenadni.substring(pos, pos + 1)){
-			return true;
-		}
-		else{
-			return false;
-		}
+		return (NIE[8] === cadenadni.substring(pos, pos + 1));
 	}
 
 	return false;
