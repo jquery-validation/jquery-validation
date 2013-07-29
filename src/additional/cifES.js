@@ -18,7 +18,7 @@ jQuery.validator.addMethod("cifES",function(value, element) {
 		num[i] = CIF.substr(i, 1);
 	}
 
-	// Algoritmo para comprobacion de codigos tipo CIF
+	// Algorithm for checking CIF codes
 	suma = parseInt(num[2],10) + parseInt(num[4],10) + parseInt(num[6],10);
 	for (var temp1=0, temp2=0, count = 1; count < 8; count += 2){
 		temp1 = 2 * parseInt(num[count],10);
@@ -38,7 +38,7 @@ jQuery.validator.addMethod("cifES",function(value, element) {
 
 	if (/^[ABCDEFGHJNPQRSUVW]{1}/.test(CIF)){
 		CIF = n + '';
-		if (parseInt(num[8],10) === parseInt(String.fromCharCode(64 + n),10) || parseInt(num[8],10) === parseInt(CIF.substring(CIF.length-1, CIF.length),10)){
+		if (num[8] === String.fromCharCode(64 + n) || num[8] === CIF.substring(CIF.length-1, CIF.length)){
 			return true;
 		} else{
 			return false;
