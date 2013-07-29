@@ -1,25 +1,24 @@
-jQuery.validator.addMethod("nifES",function(value, element) {
-
+jQuery.validator.addMethod( "nifES", function ( value, element ) {
 	"use strict";
 
 	var NIF = value.toUpperCase(),
-		letradni=NIF.charAt(8),
-		cadenadni = "TRWAGMYFPDXBNJZSQVHLCKE",
-		posicion = NIF.substring(8,0) % 23,
-		letra = cadenadni.charAt(posicion);
+		letterDNI=NIF.charAt( 8 ),
+		stringDNI = "TRWAGMYFPDXBNJZSQVHLCKE",
+		position = NIF.substring( 8,0 ) % 23,
+		letter = stringDNI.charAt( position );
 
 	// Basic format test 
-	if (!NIF.match('((^[A-Z]{1}[0-9]{7}[A-Z0-9]{1}$|^[T]{1}[A-Z0-9]{8}$)|^[0-9]{8}[A-Z]{1}$)')) {
+	if ( !NIF.match('((^[A-Z]{1}[0-9]{7}[A-Z0-9]{1}$|^[T]{1}[A-Z0-9]{8}$)|^[0-9]{8}[A-Z]{1}$)') ) {
 		return false;
 	}
 
-	// Comprobacion de NIFs
-	if (/^[0-9]{8}[A-Z]{1}$/.test(NIF)){
-		return (letra === letradni);
+	// Test NIF
+	if ( /^[0-9]{8}[A-Z]{1}$/.test( NIF ) ){
+		return ( letter === letterDNI );
 	}
-	// Comprobacion de NIFs especiales
-	if (/^[KLM]{1}/.test(NIF)){
-		return (NIF[8] === String.fromCharCode(64));
+	// Test specials NIF (starts with K, L or M)
+	if ( /^[KLM]{1}/.test( NIF ) ){
+		return ( NIF[ 8 ] === String.fromCharCode( 64 ) );
 	}
 
 	return false;
