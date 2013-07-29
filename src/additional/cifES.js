@@ -38,11 +38,7 @@ jQuery.validator.addMethod("cifES",function(value, element) {
 
 	if (/^[ABCDEFGHJNPQRSUVW]{1}/.test(CIF)){
 		CIF = n + '';
-		if (num[8] === String.fromCharCode(64 + n) || num[8] === CIF.substring(CIF.length-1, CIF.length)){
-			return true;
-		} else{
-			return false;
-		}
+		return (num[8] === String.fromCharCode(64 + n) || num[8] === CIF.substring(CIF.length-1, CIF.length));
 	}
 
 	return false;
