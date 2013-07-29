@@ -37,4 +37,4 @@ jQuery.validator.addMethod("nifES",function(value, element) {
 
 	return false;
 
-}, "Por favor, escribe un NIF válido");
+}, "Please specify a valid NIF number.");

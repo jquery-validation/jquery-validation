@@ -47,4 +47,4 @@ jQuery.validator.addMethod("cifES",function(value, element) {
 
 	return false;
 
-}, "Por favor, escribe un CIF válido.");
+}, "Please specify a valid CIF number.");

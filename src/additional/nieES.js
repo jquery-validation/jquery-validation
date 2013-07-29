@@ -40,5 +40,5 @@ jQuery.validator.addMethod("nieES",function(value, element) {
 
 	return false;
 
-}, "Por favor, escribe un NIE válido.");
+}, "Please specify a valid NIE number.");
 
