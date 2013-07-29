@@ -25,7 +25,7 @@ jQuery.validator.addMethod("nieES",function(value, element) {
 				.replace('Z','2')
 				.substring(0, 8) % 23;
 
-		return (NIE[8] === cadenadni.substring(pos, pos + 1));
+		return (NIE[8] === cadenadni.charAt(pos));
 	}
 
 	return false;
