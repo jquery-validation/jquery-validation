@@ -18,21 +18,11 @@ jQuery.validator.addMethod("nifES",function(value, element) {
 
 	// Comprobacion de NIFs
 	if (/^[0-9]{8}[A-Z]{1}$/.test(NIF)){
-		if (letra === letradni){
-			return true;
-		}
-		else{
-			return false;
-		}
+		return (letra === letradni);
 	}
 	// Comprobacion de NIFs especiales
 	if (/^[KLM]{1}/.test(NIF)){
-		if (NIF[8] === String.fromCharCode(64 + n)){
-			return true;
-		}
-		else {
-			return false;
-		}
+		return (NIF[8] === String.fromCharCode(64 + n));
 	}
 
 	return false;
