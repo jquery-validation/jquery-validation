@@ -19,9 +19,9 @@ jQuery.validator.addMethod( "nieES", function ( value, element ) {
 		return ( 
 			value[ 8 ] === "TRWAGMYFPDXBNJZSQVHLCKE".charAt( 
 				value.replace( 'X', '0' )
-				.replace( 'Y', '1' )
-				.replace( 'Z', '2' )
-				.substring( 0, 8 ) % 23 
+					.replace( 'Y', '1' )
+					.replace( 'Z', '2' )
+					.substring( 0, 8 ) % 23 
 			) 
 		);
 	}
