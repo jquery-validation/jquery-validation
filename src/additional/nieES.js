@@ -2,9 +2,7 @@ jQuery.validator.addMethod("nieES",function(value, element) {
 
 	"use strict";
 
-	var n = 0, 
-		suma = 0,
-		pos = '',
+	var pos = '',
 		NIE = value.toUpperCase(),
 		cadenadni = "TRWAGMYFPDXBNJZSQVHLCKE";
 
@@ -22,10 +20,11 @@ jQuery.validator.addMethod("nieES",function(value, element) {
 
 	//XYZ
 	if (/^[XYZ]{1}/.test(NIE)){
-		pos = NIE.replace('X','0');
-		pos = pos.replace('Y','1');
-		pos = pos.replace('Z','2');
-		pos = pos.substring(0, 8) % 23;
+		pos = NIE.replace('X','0')
+				.replace('Y','1')
+				.replace('Z','2')
+				.substring(0, 8) % 23;
+
 		return (NIE[8] === cadenadni.substring(pos, pos + 1));
 	}
 

@@ -2,10 +2,7 @@ jQuery.validator.addMethod("nifES",function(value, element) {
 
 	"use strict";
 
-	var n = 0, 
-		suma = 0,
-		num = [],
-		NIF = value.toUpperCase(),
+	var NIF = value.toUpperCase(),
 		letradni=NIF.charAt(8),
 		cadenadni = "TRWAGMYFPDXBNJZSQVHLCKE",
 		posicion = NIF.substring(8,0) % 23,
@@ -22,7 +19,7 @@ jQuery.validator.addMethod("nifES",function(value, element) {
 	}
 	// Comprobacion de NIFs especiales
 	if (/^[KLM]{1}/.test(NIF)){
-		return (NIF[8] === String.fromCharCode(64 + n));
+		return (NIF[8] === String.fromCharCode(64));
 	}
 
 	return false;
