@@ -1,12 +1,6 @@
 jQuery.validator.addMethod( "nieES", function ( value, element ) {
 	"use strict";
 
-	var position = value.toUpperCase()
-				.replace( 'X', '0' )
-				.replace( 'Y', '1' )
-				.replace( 'Z', '2' )
-				.substring( 0, 8 ) % 23;
-
 	value = value.toUpperCase();
 
 	// Basic format test 
@@ -22,7 +16,14 @@ jQuery.validator.addMethod( "nieES", function ( value, element ) {
 
 	//XYZ
 	if ( /^[XYZ]{1}/.test( value ) ) {
-		return ( value[ 8 ] === "TRWAGMYFPDXBNJZSQVHLCKE".charAt( position ) );
+		return ( 
+			value[ 8 ] === "TRWAGMYFPDXBNJZSQVHLCKE".charAt( 
+				value.replace( 'X', '0' )
+				.replace( 'Y', '1' )
+				.replace( 'Z', '2' )
+				.substring( 0, 8 ) % 23 
+			) 
+		);
 	}
 
 	return false;
