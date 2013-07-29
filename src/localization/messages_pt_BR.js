@@ -21,6 +21,9 @@
 		rangelength: $.validator.format("Por favor, forne&ccedil;a um valor entre {0} e {1} caracteres de comprimento."),
 		range: $.validator.format("Por favor, forne&ccedil;a um valor entre {0} e {1}."),
 		max: $.validator.format("Por favor, forne&ccedil;a um valor menor ou igual a {0}."),
-		min: $.validator.format("Por favor, forne&ccedil;a um valor maior ou igual a {0}.")
+		min: $.validator.format("Por favor, forne&ccedil;a um valor maior ou igual a {0}."),
+		nifES: "Por favor, forne&ccedil;a um NIF v&aacute;lido.",
+		nieES: "Por favor, forne&ccedil;a um NIE v&aacute;lido.",
+		cifEE: "Por favor, forne&ccedil;a um CIF v&aacute;lido."
 	});
 }(jQuery));

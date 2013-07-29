@@ -20,6 +20,9 @@
 		rangelength: $.validator.format("Por favor, escribe un valor entre {0} y {1} caracteres."),
 		range: $.validator.format("Por favor, escribe un valor entre {0} y {1}."),
 		max: $.validator.format("Por favor, escribe un valor menor o igual a {0}."),
-		min: $.validator.format("Por favor, escribe un valor mayor o igual a {0}.")
+		min: $.validator.format("Por favor, escribe un valor mayor o igual a {0}."),
+		nifES: "Por favor, escribe un NIF válido.",
+		nieES: "Por favor, escribe un NIE válido.",
+		cifES: "Por favor, escribe un CIF válido."
 	});
 }(jQuery));
