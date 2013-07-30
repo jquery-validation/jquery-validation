@@ -19,7 +19,7 @@ $(document).ready(function() {
 				emails = ["glen@marketo.com", "george@bush.gov", "me@god.com", "aboutface@cooper.com", "steam@valve.com", "bill@gates.com"];
 			this.responseText = "true";
 			if ( $.inArray( email, emails ) !== -1 ) {
-				this.responseText = "That's already taken.";
+				this.responseText = "false";
 			}
 		},
 		responseTime: 500
