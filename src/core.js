@@ -487,7 +487,9 @@ $.extend($.validator, {
 					return false;
 				}
 
-				rulesCache[this.name] = true;
+				if ( this.name ) {
+					rulesCache[this.name] = true;
+				}
 				return true;
 			});
 		},
