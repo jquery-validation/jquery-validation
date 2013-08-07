@@ -289,6 +289,7 @@ $.extend($.validator, {
 		digits: "Please enter only digits.",
 		creditcard: "Please enter a valid credit card number.",
 		equalTo: "Please enter the same value again.",
+		pattern: "Invalid data format.",
 		maxlength: $.validator.format("Please enter no more than {0} characters."),
 		minlength: $.validator.format("Please enter at least {0} characters."),
 		rangelength: $.validator.format("Please enter a value between {0} and {1} characters long."),
@@ -951,6 +952,21 @@ $.extend($.validator, {
 				}
 			}
 		});
+		$.each(['pattern'], function() {
+			var parts;
+			if ( rules[this] ) {
+				if ( $.isArray(rules[this]) ) {
+					rules[this] = [Number(rules[this][0]), Number(rules[this][1])];
+				} else if ( typeof rules[this] === "string" ) {
+					parts = rules[this].match(/(\/[\s\S]*?\/)([giym]*)$/).splice(1);
+					if (parts[1]) {
+                    	rules[this] = [parts[0], parts[1]];
+					} else {
+                    	rules[this] = parts[0];
+					}
+				}
+			}
+		});
 
 		if ( $.validator.autoCreateRanges ) {
 			// auto-create ranges
@@ -1123,6 +1139,17 @@ $.extend($.validator, {
 			}
 			return value === target.val();
 		},
+
+        pattern: function( value, element, param ) {
+            param = [].concat( param );
+            var patternStr = param[0].replace(/^[\/]|[\/]$/g, "");
+            var flags = "i";
+            if (param.length == 2) {
+                flags = param[1];
+            }
+            var regexp = new RegExp(patternStr, flags);
+            return this.optional(element) || regexp.test(value);
+        },
 
 		// http://jqueryvalidation.org/remote-method/
 		remote: function( value, element, param ) {
