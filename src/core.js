@@ -225,6 +225,9 @@ $.extend($.validator, {
 		ignore: ":hidden",
 		ignoreTitle: false,
 		onfocusin: function( element, event ) {
+            this.settings.defaultOnfocusin.call(this, element, event);
+        },
+        defaultOnfocusin: function( element, event ) {
 			this.lastActive = element;
 
 			// hide error label and remove error class on focus if enabled
@@ -236,11 +239,17 @@ $.extend($.validator, {
 			}
 		},
 		onfocusout: function( element, event ) {
+            this.settings.defaultOnfocusout.call(this, element, event);
+        },
+        defaultOnfocusout: function( element, event ) {
 			if ( !this.checkable(element) && (element.name in this.submitted || !this.optional(element)) ) {
 				this.element(element);
 			}
 		},
 		onkeyup: function( element, event ) {
+            this.settings.defaultOnkeyup.call(this, element, event);
+        },
+        defaultOnkeyup :  function( element, event ) {
 			if ( event.which === 9 && this.elementValue(element) === "" ) {
 				return;
 			} else if ( element.name in this.submitted || element === this.lastElement ) {
@@ -248,6 +257,9 @@ $.extend($.validator, {
 			}
 		},
 		onclick: function( element, event ) {
+            this.settings.defaultOnclick.call(this, element, event);
+        },
+        defaultOnclick: function( element, event ) {
 			// click on selects, radiobuttons and checkboxes
 			if ( element.name in this.submitted ) {
 				this.element(element);
@@ -328,9 +340,10 @@ $.extend($.validator, {
 
 			function delegate(event) {
 				var validator = $.data(this[0].form, "validator"),
-					eventType = "on" + event.type.replace(/^validate/, "");
+					eventType = "on" + event.type.replace(/^validate/, ""),
+                    devaultEventType = "defaultOn" + event.type.replace(/^validate/, "");
 				if ( validator.settings[eventType] ) {
-					validator.settings[eventType].call(validator, this[0], event);
+                    typeof validator.settings[eventType] == 'function' ? validator.settings[eventType].call(validator, this[0], event) :  validator.settings[devaultEventType].call(validator, this[0], event);
 				}
 			}
 			$(this.currentForm)
