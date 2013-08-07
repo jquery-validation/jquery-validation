@@ -984,6 +984,13 @@ test("option: ignore", function() {
 	equal( 1, v.size() );
 });
 
+test("option: ignore individual element", function() {
+	var v = $("#testForm1").validate({
+		ignore: "[name=lastname]"
+	});
+  equal($('#lastname').valid(), true);
+});
+
 test("option: subformRequired", function() {
 	jQuery.validator.addMethod("billingRequired", function(value, element) {
 		if ($("#bill_to_co").is(":checked")) {
