@@ -552,6 +552,9 @@ $.extend($.validator, {
 			element = this.validationTargetFor( this.clean( element ) );
 
 			var rules = $(element).rules();
+			var rulesCount = $.map( rules, function(n, i) {
+				return i;
+			}).length;
 			var dependencyMismatch = false;
 			var val = this.elementValue(element);
 			var result;
@@ -564,7 +567,7 @@ $.extend($.validator, {
 
 					// if a method indicates that the field is optional and therefore valid,
 					// don't mark it as valid when there are no other rules
-					if ( result === "dependency-mismatch" ) {
+					if ( result === "dependency-mismatch" && rulesCount === 1 ) {
 						dependencyMismatch = true;
 						continue;
 					}
