@@ -19,7 +19,7 @@ jQuery.validator.addMethod("require_from_group", function(value, element, option
 		return validator.elementValue(this);
 	}).length >= options[0];
 
-	if(!$(element).data('being_validated')) {
+	if(!jQuery(element).data('being_validated')) {
 		var fields = jQuery(selector, element.form);
 		fields.data('being_validated', true);
 		fields.valid();

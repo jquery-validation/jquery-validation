@@ -26,7 +26,7 @@ jQuery.validator.addMethod("skip_or_fill_minimum", function(value, element, opti
 	var valid = numberFilled >= numberRequired || numberFilled === 0;
 
 	if(!jQuery(element).data('being_validated')) {
-		var fields = $(selector, element.form);
+		var fields = jQuery(selector, element.form);
 		fields.data('being_validated', true);
 		fields.valid();
 		fields.data('being_validated', false);
