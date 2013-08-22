@@ -21,6 +21,9 @@
 		rangelength: $.validator.format("Por favor, introduza entre {0} e {1} caracteres."),
 		range: $.validator.format("Por favor, introduza um valor entre {0} e {1}."),
 		max: $.validator.format("Por favor, introduza um valor menor ou igual a {0}."),
-		min: $.validator.format("Por favor, introduza um valor maior ou igual a {0}.")
+		min: $.validator.format("Por favor, introduza um valor maior ou igual a {0}."),
+		nifES: "Por favor, introduza um NIF v&aacute;lido.",
+		nieES: "Por favor, introduza um NIE v&aacute;lido.",
+		cifES: "Por favor, introduza um CIF v&aacute;lido."
 	});
 }(jQuery));
