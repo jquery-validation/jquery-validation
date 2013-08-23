@@ -25,6 +25,18 @@ $.mockjax({
 	responseTime: 1
 });
 $.mockjax({
+    url: "users3.php?user=abcd&password=efghijklmno",
+    responseText: 'false',
+    responseStatus: 200,
+    responseTime: 1
+});
+$.mockjax({
+    url: "users4.php?firstName1=John&lastName1=Reilly",
+    responseText: 'false',
+    responseStatus: 200,
+    responseTime: 1
+});
+$.mockjax({
 	url: "echo.php",
 	response: function(data) {
 		this.responseText = JSON.stringify(data.data);

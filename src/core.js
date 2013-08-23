@@ -1146,8 +1146,20 @@ $.extend($.validator, {
 			previous.old = value;
 			var validator = this;
 			this.startRequest(element);
+
 			var data = {};
 			data[element.name] = value;
+			if ( param.dataSelector ) {
+			    var dataToSend = $(element)
+			        .closest(param.dataSelector)
+			        .find(":input")
+			        .serializeArray();
+
+			    $.each( dataToSend, function () {
+			        data[this.name] = this.value;
+			    });
+			}
+
 			$.ajax($.extend(true, {
 				url: param,
 				mode: "abort",
