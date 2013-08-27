@@ -66,6 +66,7 @@ test("url2 (tld optional)", function() {
 test("email", function() {
 	var method = methodTest("email");
 	ok( method( "name@domain.tld" ), "Valid email" );
+	ok( method( "name@domain.tld  " ), "Valid email" );
 	ok( method( "name@domain.tl" ), "Valid email" );
 	ok( method( "bart+bart@tokbox.com" ), "Valid email" );
 	ok( method( "bart+bart@tokbox.travel" ), "Valid email" );
