@@ -1549,3 +1549,25 @@ test("Min and Max number set by attributes less", function() {
 	equal( label.text(), "Please enter a value greater than or equal to 50.", "Correct error label" );
 });
 
+test("Multiple forms", function() {
+	var opts = {
+		debug: true,
+		rules: {
+			first: 'required',
+			second: 'required'
+	}};
+	var forms = $('.multi');
+	var v = forms.validate(opts);
+
+	// Test without values and expect to fail
+	equal(forms.valid(), false, 'Validation fails without input');
+
+	// Set value and expect still to fail
+	forms.find('input[name="first"]').val('First');
+	equal(forms.valid(), false, 'Validation fails with only one input');
+
+	// Set second value and expect to pass
+	forms.find('input[name="second"]').val('Second');
+	equal(forms.valid(), true, 'Validation fails with both fields set');
+});
+
