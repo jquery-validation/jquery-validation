@@ -8,7 +8,7 @@
  *   http://www.opensource.org/licenses/mit-license.php
  */
 
-(function($) {
+;(function($) {
 
 $.extend($.fn, {
 	// http://jqueryvalidation.org/validate/
