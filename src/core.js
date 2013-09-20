@@ -236,7 +236,7 @@ $.extend($.validator, {
 			}
 		},
 		onfocusout: function( element, event ) {
-			if ( !this.checkable(element) && (element.name in this.submitted || !this.optional(element)) ) {
+			if ( !this.checkable(element) ) {
 				this.element(element);
 			}
 		},
@@ -769,7 +769,7 @@ $.extend($.validator, {
 
 		optional: function( element ) {
 			var val = this.elementValue(element);
-			return !$.validator.methods.required.call(this, val, element);
+			return !$.validator.methods.required.call(this, val, element)  && "dependency-mismatch";
 		},
 
 		startRequest: function( element ) {
