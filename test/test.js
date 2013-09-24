@@ -1549,3 +1549,15 @@ test("Min and Max number set by attributes less", function() {
 	equal( label.text(), "Please enter a value greater than or equal to 50.", "Correct error label" );
 });
 
+test( "Non-label errorElement label doesn't add 'for'", function() {
+	var form = $( "#errorElement" );
+	var errorElement = "span";
+	var validator = form.validate({
+		errorElement: errorElement
+	});
+
+	form.valid();
+	var replacementLabel = form.find( errorElement + ".error" );
+
+	ok( !replacementLabel.attr( "for" ), "No 'for' attribute" );
+});
