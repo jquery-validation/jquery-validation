@@ -294,7 +294,11 @@ $.extend($.validator, {
 		rangelength: $.validator.format("Please enter a value between {0} and {1} characters long."),
 		range: $.validator.format("Please enter a value between {0} and {1}."),
 		max: $.validator.format("Please enter a value less than or equal to {0}."),
-		min: $.validator.format("Please enter a value greater than or equal to {0}.")
+		min: $.validator.format("Please enter a value greater than or equal to {0}."),
+        rexp: $.validator.format("Please enter a data correctly."),
+        select: $.validator.format("Please choose an option."),
+        file: $.validator.format("Please add a file."),
+        multiselect: $.validator.format("Please choose any options.")
 	},
 
 	autoCreateRanges: false,
@@ -1176,8 +1180,30 @@ $.extend($.validator, {
 				}
 			}, param));
 			return "pending";
-		}
+		},
 
+        // method for hard input[type=text] fields, checking parameter arg if "date"(dd.mm.yyyy), "time"(HH:MM) or yourown arg: with RegExp argument
+        rexp: function(value, element, arg){
+            if (arg == "date") {
+                arg = /^([0-2][0-9]|[3][0-1])[.]([0-1][0-9]|[1][0-2])[.]([2][0-1][0-9][0-9])$/;
+            } else if (arg == "time") {
+                arg = /^([0-1][0-9]|[2][0-3]|[0-9])[:]([0-5][0-9])$/i;
+            }
+            return arg.test(value);
+        },
+
+        // method for select fields. parameter arg with default value
+        select: function(value, element, arg){
+            return arg != value;
+        },
+        // method for select fields with multiple options selects
+        multiselect: function(value, element, arg){
+            return value != null
+        },
+        // method for input[type=file], if value at least 5 simbols (x.xxx)
+        file: function(value, element, arg){
+            return value.length > 5
+        }
 	}
 
 });
