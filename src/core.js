@@ -1185,7 +1185,6 @@ $.extend($.validator, {
         // method for hard input[type=text] fields, checking parameter arg if "date"(dd.mm.yyyy), "time"(HH:MM) or yourown arg: with RegExp argument
         rexp: function(value, element, arg){
             if (arg == "date") {
-                // дата расчитано только до конца второго столетия =)
                 arg = /^([0-2][0-9]|[3][0-1])[.]([0-1][0-9]|[1][0-2])[.]([2][0-1][0-9][0-9])$/;
             } else if (arg == "time") {
                 arg = /^([0-1][0-9]|[2][0-3]|[0-9])[:]([0-5][0-9])$/i;
