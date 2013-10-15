@@ -864,7 +864,8 @@ $.extend($.validator, {
 				value = $element.get(0).getAttribute(method);
 				// Some browsers return an empty string for the required attribute
 				// and non-HTML5 browsers might have required="" markup
-				if ( value === "" ) {
+				var isAttributeExist = $element.is('['+method+']');
+				if (isAttributeExist && value === "") {
 					value = true;
 				}
 				// force non-HTML5 browsers to return bool
