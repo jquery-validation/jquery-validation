@@ -298,7 +298,8 @@ $.extend($.validator, {
 		rangelength: $.validator.format("Please enter a value between {0} and {1} characters long."),
 		range: $.validator.format("Please enter a value between {0} and {1}."),
 		max: $.validator.format("Please enter a value less than or equal to {0}."),
-		min: $.validator.format("Please enter a value greater than or equal to {0}.")
+		min: $.validator.format("Please enter a value greater than or equal to {0}."),
+		regex: "This field is in an invalid format."
 	},
 
 	autoCreateRanges: false,
@@ -1190,8 +1191,14 @@ $.extend($.validator, {
 				}
 			}, param));
 			return "pending";
-		}
-
+		},
+		
+		regex: function(value, element, param) {
+            if (param.constructor !== RegExp) {
+                throw "Invalid parameter. Must be a valid regular expression";
+            }
+            return this.optional(element) || param.test(value);
+        }
 	}
 
 });
