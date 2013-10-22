@@ -616,6 +616,20 @@ $.extend($.validator, {
 			var m = this.settings.messages[name];
 			return m && (m.constructor === String ? m : m[method]);
 		},
+		
+		//Retrieve the message attached to class rules
+		classMessage: function(element, method) {
+			var messages = {};
+			var classes = $(element).attr('class');
+			if ( classes ) {
+				$.each(classes.split(' '), function() {
+					if ($.validator.classMessageSettings[this]) {
+						$.extend(messages, $.validator.classMessageSettings[this]);
+					}
+				});
+			}
+			return messages[method];
+		},
 
 		// return the first defined argument, allowing empty strings
 		findDefined: function() {
@@ -629,6 +643,7 @@ $.extend($.validator, {
 
 		defaultMessage: function( element, method ) {
 			return this.findDefined(
+				this.classMessage( element, method ),
 				this.customMessage( element.name, method ),
 				this.customDataMessage( element, method ),
 				// title is never undefined, so handle empty string as undefined
@@ -878,6 +893,20 @@ $.extend($.validator, {
 			});
 		}
 		return rules;
+	},
+	
+	/*
+	* Support for messages defined by class
+	*/
+	
+	classMessageSettings: {},
+	
+	addClassMessages: function(className, messages) {
+		if ( className.constructor === String ) {
+			this.classMessageSettings[className] = messages;
+		} else {
+			$.extend(this.classMessageSettings, className);
+		}
 	},
 	
 	/*
