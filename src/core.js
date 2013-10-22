@@ -130,9 +130,14 @@ $.extend($.fn, {
 				$.extend(existingRules, $.validator.normalizeRule(argument));
 				// remove messages from rules, but allow them to be set separately
 				delete existingRules.messages;
+				delete existingRules.messageParameters;
 				staticRules[element.name] = existingRules;
 				if ( argument.messages ) {
 					settings.messages[element.name] = $.extend( settings.messages[element.name], argument.messages );
+				}
+				if ( argument.messageParameters ) {
+					settings.messageParameters[element.name] = $.extend( settings.messageParameters[name], argument.messageParameters);
+					
 				}
 				break;
 			case "remove":
@@ -217,6 +222,7 @@ $.extend($.validator, {
 
 	defaults: {
 		messages: {},
+		messageParameters: {},
 		groups: {},
 		rules: {},
 		errorClass: "error",
@@ -298,7 +304,11 @@ $.extend($.validator, {
 		rangelength: $.validator.format("Please enter a value between {0} and {1} characters long."),
 		range: $.validator.format("Please enter a value between {0} and {1}."),
 		max: $.validator.format("Please enter a value less than or equal to {0}."),
-		min: $.validator.format("Please enter a value greater than or equal to {0}.")
+		min: $.validator.format("Please enter a value greater than or equal to {0}."),
+		greaterthan: $.validator.format("{0} must be greater than {1}."),
+		greaterthanequal: $.validator.format("{0} must be greater than or equal to {1}."),
+		lessthan: $.validator.format("{0} must be less than {1}."),
+		lessthanequal: $.validator.format("{0} must be less than or equal to {1}.")
 	},
 
 	autoCreateRanges: false,
@@ -606,6 +616,20 @@ $.extend($.validator, {
 			var m = this.settings.messages[name];
 			return m && (m.constructor === String ? m : m[method]);
 		},
+		
+		//Retrieve the message attached to class rules
+		classMessage: function(element, method) {
+			var messages = {};
+			var classes = $(element).attr('class');
+			if ( classes ) {
+				$.each(classes.split(' '), function() {
+					if ($.validator.classMessageSettings[this]) {
+						$.extend(messages, $.validator.classMessageSettings[this]);
+					}
+				});
+			}
+			return messages[method];
+		},
 
 		// return the first defined argument, allowing empty strings
 		findDefined: function() {
@@ -619,6 +643,7 @@ $.extend($.validator, {
 
 		defaultMessage: function( element, method ) {
 			return this.findDefined(
+				this.classMessage( element, method ),
 				this.customMessage( element.name, method ),
 				this.customDataMessage( element, method ),
 				// title is never undefined, so handle empty string as undefined
@@ -627,14 +652,33 @@ $.extend($.validator, {
 				"<strong>Warning: No message defined for " + element.name + "</strong>"
 			);
 		},
+		
+		//Get the message parameters for the error message, first looking at overt message parameters; if those don't exist, use the rule's parameters
+		getMessageParameters: function(element, rule) {
+			var messageParameters = this.settings.messageParameters;
+			var name = element.name;
+			var method = rule.method;
+			var msg_parameters = this.findDefined(
+				messageParameters[name] ? messageParameters[name][method] : undefined,
+				$.validator.classMessageParameters(element, method),
+				rule.parameters
+			);
+			
+			if (typeof msg_parameters === "function") {
+				msg_parameters = msg_parameters.call(this, element);
+			}
+			
+			return msg_parameters;
+		},
 
 		formatAndAdd: function( element, rule ) {
 			var message = this.defaultMessage( element, rule.method ),
-				theregex = /\$?\{(\d+)\}/g;
+				theregex = /\$?\{(\d+)\}/g,
+				parameters = this.getMessageParameters(element, rule) || [];
 			if ( typeof message === "function" ) {
-				message = message.call(this, rule.parameters, element);
+				message = message.call(this, parameters, element);
 			} else if (theregex.test(message)) {
-				message = $.validator.format(message.replace(theregex, "{$1}"), rule.parameters);
+				message = $.validator.format(message.replace(theregex, "{$1}"), parameters);
 			}
 			this.errorList.push({
 				message: message,
@@ -850,6 +894,47 @@ $.extend($.validator, {
 		}
 		return rules;
 	},
+	
+	/*
+	* Support for messages defined by class
+	*/
+	
+	classMessageSettings: {},
+	
+	addClassMessages: function(className, messages) {
+		if ( className.constructor === String ) {
+			this.classMessageSettings[className] = messages;
+		} else {
+			$.extend(this.classMessageSettings, className);
+		}
+	},
+	
+	/*
+	 * Support for message parameters defined by class
+	*/
+	classMessageParameterSettings: {},
+	
+	addClassMessageParameters: function(className, messages) {
+		if ( className.constructor === String ) {
+			this.classMessageParameterSettings[className] = messages;
+		} else {
+			$.extend(this.classMessageParameterSettings, className);
+		}
+	},
+	
+	//Retrieve the message parameters attached to class rules
+	classMessageParameters: function(element, method) {
+		var messageParameters = {};
+		var classes = $(element).attr('class');
+		if ( classes ) {
+			$.each(classes.split(' '), function() {
+				if ($.validator.classMessageParameterSettings[this]) {
+					$.extend(messageParameters, $.validator.classMessageParameterSettings[this]);
+				}
+			});
+		}
+		return messageParameters[method];
+	},
 
 	attributeRules: function( element ) {
 		var rules = {};
@@ -1003,6 +1088,11 @@ $.extend($.validator, {
 			$.validator.addClassRules(name, $.validator.normalizeRule(name));
 		}
 	},
+	
+	//Convert a string to a number. This function can be overridden to account for different number formats
+	convertStringToNumber: function(str) {
+		return parseInt(str, 10);
+	},
 
 	methods: {
 
@@ -1112,16 +1202,17 @@ $.extend($.validator, {
 
 		// http://jqueryvalidation.org/min-method/
 		min: function( value, element, param ) {
-			return this.optional(element) || value >= param;
+			return this.optional(element) || $.validator.convertStringToNumber(value) >= param;
 		},
 
 		// http://jqueryvalidation.org/max-method/
 		max: function( value, element, param ) {
-			return this.optional(element) || value <= param;
+			return this.optional(element) || $.validator.convertStringToNumber(value) <= param;
 		},
 
 		// http://jqueryvalidation.org/range-method/
 		range: function( value, element, param ) {
+			value = $.validator.convertStringToNumber(value);
 			return this.optional(element) || ( value >= param[0] && value <= param[1] );
 		},
 
@@ -1190,6 +1281,58 @@ $.extend($.validator, {
 				}
 			}, param));
 			return "pending";
+		},
+		
+		lessthan: function(value, element, other) {
+			var target = $(other);
+			if (this.optional(element)) {
+				return true;
+			}
+			if (this.optional(target.get(0))) {
+				return true;
+			}
+			value = $.validator.convertStringToNumber(value);
+			other = $.validator.convertStringToNumber(target.val());
+			return value < other;
+		},
+		
+		lessthanequal: function(value, element, other) {
+			var target = $(other);
+			if (this.optional(element)) {
+				return true;
+			}
+			if (this.optional(target.get(0))) {
+				return true;
+			}
+			value = $.validator.convertStringToNumber(value);
+			other = $.validator.convertStringToNumber(target.val());
+			return value <= other;
+		},
+		
+		greaterthan: function(value, element, other) {
+			var target = $(other);
+			if (this.optional(element)) {
+				return true;
+			}
+			if (this.optional(target.get(0))) {
+				return true;
+			}
+			value = $.validator.convertStringToNumber(value);
+			other = $.validator.convertStringToNumber(target.val());
+			return value > other;
+		},
+		
+		greaterthanequal: function(value, element, other) {
+			var target = $(other);
+			if (this.optional(element)) {
+				return true;
+			}
+			if (this.optional(target.get(0))) {
+				return true;
+			}
+			value = $.validator.convertStringToNumber(value);
+			other = $.validator.convertStringToNumber(target.val());
+			return value >= other;
 		}
 
 	}
