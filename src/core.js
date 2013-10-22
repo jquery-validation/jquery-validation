@@ -304,7 +304,11 @@ $.extend($.validator, {
 		rangelength: $.validator.format("Please enter a value between {0} and {1} characters long."),
 		range: $.validator.format("Please enter a value between {0} and {1}."),
 		max: $.validator.format("Please enter a value less than or equal to {0}."),
-		min: $.validator.format("Please enter a value greater than or equal to {0}.")
+		min: $.validator.format("Please enter a value greater than or equal to {0}."),
+		greaterthan: $.validator.format("{0} must be greater than {1}."),
+		greaterthanequal: $.validator.format("{0} must be greater than or equal to {1}."),
+		lessthan: $.validator.format("{0} must be less than {1}."),
+		lessthanequal: $.validator.format("{0} must be less than or equal to {1}.")
 	},
 
 	autoCreateRanges: false,
@@ -1242,6 +1246,50 @@ $.extend($.validator, {
 				}
 			}, param));
 			return "pending";
+		},
+		
+		lessthan: function(value, element, other) {
+			var target = $(other);
+			if (this.optional(element)) {
+				return true;
+			}
+			if (this.optional(target.get(0))) {
+				return true;
+			}
+			return value < target.val();
+		},
+		
+		lessthanequal: function(value, element, other) {
+			var target = $(other);
+			if (this.optional(element)) {
+				return true;
+			}
+			if (this.optional(target.get(0))) {
+				return true;
+			}
+			return value <= target.val();
+		},
+		
+		greaterthan: function(value, element, other) {
+			var target = $(other);
+			if (this.optional(element)) {
+				return true;
+			}
+			if (this.optional(target.get(0))) {
+				return true;
+			}
+			return value > target.val();
+		},
+		
+		greaterthanequal: function(value, element, other) {
+			var target = $(other);
+			if (this.optional(element)) {
+				return true;
+			}
+			if (this.optional(target.get(0))) {
+				return true;
+			}
+			return value >= target.val();
 		}
 
 	}
