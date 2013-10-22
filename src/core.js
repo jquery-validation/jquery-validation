@@ -1173,16 +1173,17 @@ $.extend($.validator, {
 
 		// http://jqueryvalidation.org/min-method/
 		min: function( value, element, param ) {
-			return this.optional(element) || value >= param;
+			return this.optional(element) || $.validator.convertStringToNumber(value) >= param;
 		},
 
 		// http://jqueryvalidation.org/max-method/
 		max: function( value, element, param ) {
-			return this.optional(element) || value <= param;
+			return this.optional(element) || $.validator.convertStringToNumber(value) <= param;
 		},
 
 		// http://jqueryvalidation.org/range-method/
 		range: function( value, element, param ) {
+			var value = $.validator.convertStringToNumber(value);
 			return this.optional(element) || ( value >= param[0] && value <= param[1] );
 		},
 
