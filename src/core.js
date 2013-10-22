@@ -1212,7 +1212,7 @@ $.extend($.validator, {
 
 		// http://jqueryvalidation.org/range-method/
 		range: function( value, element, param ) {
-			var value = $.validator.convertStringToNumber(value);
+			value = $.validator.convertStringToNumber(value);
 			return this.optional(element) || ( value >= param[0] && value <= param[1] );
 		},
 
