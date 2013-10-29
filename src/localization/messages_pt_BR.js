@@ -25,6 +25,6 @@
 		nifES: "Por favor, forne&ccedil;a um NIF v&aacute;lido.",
 		nieES: "Por favor, forne&ccedil;a um NIE v&aacute;lido.",
 		cifEE: "Por favor, forne&ccedil;a um CIF v&aacute;lido.",
-		cpfBR: "Por favor, forne&ccedil;a um n&uacute;mero de CPF v&aacute;lido.",
+		cpfBR: "Por favor, forne&ccedil;a um CPF v&aacute;lido."
 	});
 }(jQuery));
