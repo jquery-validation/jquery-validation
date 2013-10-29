@@ -1,5 +1,7 @@
 jQuery.validator.addMethod("cpfBR", function(value, element, param) {
 
+  /* source: http://www.geradorcpf.com/javascript-validar-cpf.htm */
+
   var add, rev, i;
 
   // remove all non-digit values
