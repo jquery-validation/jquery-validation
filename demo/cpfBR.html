@@ -10,15 +10,14 @@
 
     <script>
       $(document).ready(function() {
-        $("#cnpjForm").validate({
+        $("#testForm").validate({
           rules: {
             cpf: {
-//              required: true,
               cpfBR: true,
             }
           }
         });
-        $("#cnpjForm").submit(function (e) {
+        $("#testForm").submit(function (e) {
           e.preventDefault();
         });
       });
@@ -27,7 +26,7 @@
 
   <body>
     <h1>CPF Demo</h1>
-    <form id="cnpjForm" method="get">
+    <form id="testForm" method="get">
       <p>
         <label for="cpf">CPF</label>
         <input id="cpf" name="cpf" type="text">
