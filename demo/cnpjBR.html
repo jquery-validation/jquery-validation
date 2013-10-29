@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>jQuery Validation Plugin - Method CNPJ</title>
+
+    <script src="../lib/jquery.js"></script>
+    <script src="../dist/jquery.validate.js"></script>
+    <script src="../dist/additional-methods.js"></script>
+
+    <script>
+      $(document).ready(function() {
+        $("#testForm").validate({
+          rules: {
+            cnpj: {
+              cnpjBR: true,
+            }
+          }
+        });
+        $("#testForm").submit(function (e) {
+          e.preventDefault();
+        });
+      });
+    </script>
+  </head>
+
+  <body>
+    <h1>CNPJ Demo</h1>
+    <form id="testForm" method="get">
+      <p>
+        <label for="cnpj">CNPJ</label>
+        <input id="cnpj" name="cnpj" type="text">
+      </p>
+      <button type="submit">Test</button>
+    </form>
+  </body>
+</html>
