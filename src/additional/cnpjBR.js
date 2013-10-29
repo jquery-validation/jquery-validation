@@ -34,7 +34,7 @@ jQuery.validator.addMethod("cnpjBR", function(value, element, param) {
     }
   }
   var result = total % 11 < 2 ? 0 : 11 - total % 11;
-  if (result !== parseInt(digits.charAt(0))) {
+  if (result !== parseInt(digits.charAt(0), 0)) {
     return false;
   }
 
@@ -51,7 +51,7 @@ jQuery.validator.addMethod("cnpjBR", function(value, element, param) {
     }
   }
   result = total % 11 < 2 ? 0 : 11 - total % 11;
-  if (result !== parseInt(digits.charAt(1))) {
+  if (result !== parseInt(digits.charAt(1), 0)) {
     return false;
   }
 
