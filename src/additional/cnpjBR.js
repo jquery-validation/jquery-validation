@@ -1,6 +1,6 @@
 jQuery.validator.addMethod("cnpjBR", function(value, element, param) {
 
-  var pos, i;
+  var length, values, digits, total, pos, i;
 
   // remove all non-digit values
   value = value.replace(/[^\d]+/g,'');
@@ -16,39 +16,44 @@ jQuery.validator.addMethod("cnpjBR", function(value, element, param) {
     value === "66666666666666" || 
     value === "77777777777777" || 
     value === "88888888888888" || 
-    value === "99999999999999")
+    value === "99999999999999") {
     return false;
+  }
 
   // validates checksum for the digits
-  var length = value.length - 2;
-  var values = value.substring(0, length);
-  var digits = value.substring(length);
-  var total  = 0;
+  length = value.length - 2;
+  values = value.substring(0, length);
+  digits = value.substring(length);
+  total  = 0;
 
   pos = length - 7;
   for (i=length;i>=1;i--) {
     total += values.charAt(length - i) * pos--;
-    if (pos < 2)
+    if (pos < 2) {
       pos = 9;
+    }
   }
   var result = total % 11 < 2 ? 0 : 11 - total % 11;
-  if (result != digits.charAt(0))
+  if (result !== parseInt(digits.charAt(0))) {
     return false;
+  }
 
   // validates checksum for the digits
-  var length = length + 1;
-  var values = value.substring(0, length);
-  var total  = 0;
+  length = length + 1;
+  values = value.substring(0, length);
+  total  = 0;
 
   pos = length - 7;
   for (i=length;i>=1;i--) {
     total += values.charAt(length - i) * pos--;
-    if (pos < 2)
+    if (pos < 2) {
       pos = 9;
+    }
   }
   result = total % 11 < 2 ? 0 : 11 - total % 11;
-  if (result != digits.charAt(1))
-      return false;
+  if (result !== parseInt(digits.charAt(1))) {
+    return false;
+  }
 
   return true;
 
