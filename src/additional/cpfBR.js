@@ -23,26 +23,26 @@ jQuery.validator.addMethod("cpfBR", function(value, element, param) {
   // validates checksum for the first digit
   add = 0;
   for (i=0; i < 9; i ++) {
-    add += parseInt(value.charAt(i)) * (10 - i);
+    add += parseInt(value.charAt(i), 0) * (10 - i);
   }
   rev = 11 - (add % 11);
   if (rev === 10 || rev === 11) {
     rev = 0;
   }
-  if (rev !== parseInt(value.charAt(9))) {
+  if (rev !== parseInt(value.charAt(9), 0)) {
     return false;
   }
    
   // validates checksum for the second digit
   add = 0;
   for (i = 0; i < 10; i ++) {
-    add += parseInt(value.charAt(i)) * (11 - i);
+    add += parseInt(value.charAt(i), 0) * (11 - i);
   }
   rev = 11 - (add % 11);
   if (rev === 10 || rev === 11) {
     rev = 0;
   }
-  if (rev !== parseInt(value.charAt(10))) {
+  if (rev !== parseInt(value.charAt(10), 0)) {
     return false;
   }
      
