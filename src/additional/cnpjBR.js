@@ -1,5 +1,7 @@
 jQuery.validator.addMethod("cnpjBR", function(value, element, param) {
 
+  /* source: http://www.geradorcnpj.com/javascript-validar-cnpj.htm */
+
   var length, values, digits, total, pos, i;
 
   // remove all non-digit values
