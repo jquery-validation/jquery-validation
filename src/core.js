@@ -879,7 +879,7 @@ $.extend($.validator, {
 				value = Number(value);
 			}
 
-			if ( value ) {
+			if ( value !== undefined ) {
 				rules[method] = value;
 			} else if ( type === method && type !== 'range' ) {
 				// exception: the jquery validate 'range' method
