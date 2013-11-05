@@ -122,7 +122,7 @@ $.extend($.fn, {
 		var element = this[0];
 
 		if ( command ) {
-			var settings = $.data(element.form, "validator").settings;
+			var settings = $.data(element.getForm(), "validator").settings;
 			var staticRules = settings.rules;
 			var existingRules = $.validator.staticRules(element);
 			switch(command) {
@@ -487,11 +487,22 @@ $.extend($.validator, {
 				rulesCache = {};
 
 			// select all valid inputs inside the form (no submit or reset buttons)
-			return $(this.currentForm)
+			var elements = $(this.currentForm)
 			.find("input, select, textarea")
 			.not(":submit, :reset, :image, [disabled]")
-			.not( this.settings.ignore )
-			.filter(function() {
+			.not( this.settings.ignore );
+			
+			var myForm = this.currentForm;
+			$.each(elements, function (ind, el) {
+			    el.getForm = function () {
+			        if (!el.form) {
+			            return myForm;
+			        }
+			        return el.form;
+			    }
+			});
+			
+			return elements.filter(function() {
 				if ( !this.name && validator.settings.debug && window.console ) {
 					console.error( "%o has no name assigned", this);
 				}
@@ -774,7 +785,7 @@ $.extend($.validator, {
 				return param;
 			},
 			"string": function( param, element ) {
-				return !!$(param, element.form).length;
+				return !!$(param, element.getForm()).length;
 			},
 			"function": function( param, element ) {
 				return param(element);
@@ -910,7 +921,7 @@ $.extend($.validator, {
 
 	staticRules: function( element ) {
 		var rules = {};
-		var validator = $.data(element.form, "validator");
+		var validator = $.data(element.getForm(), "validator");
 		if ( validator.settings.rules ) {
 			rules = $.validator.normalizeRule(validator.settings.rules[element.name]) || {};
 		}
@@ -929,7 +940,7 @@ $.extend($.validator, {
 				var keepRule = true;
 				switch (typeof val.depends) {
 				case "string":
-					keepRule = !!$(val.depends, element.form).length;
+					keepRule = !!$(val.depends, element.getForm()).length;
 					break;
 				case "function":
 					keepRule = val.depends.call(element, element);
