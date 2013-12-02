@@ -1001,6 +1001,25 @@ test('require_from_group', function() {
 	fillFormWithValuesAndExpect('#productInfo', [123, 'widget', 'red'], true);
 });
 
+test('require_from_group preserve other rules', function() {
+	$("#productInfo").validate({
+		rules: {
+			partnumber:  {require_from_group: [2,".productInfo"]},
+			description: {require_from_group: [2,".productInfo"]},
+			color: {require_from_group: [2,".productInfo"]},
+			supplier: {required: true}
+		}
+	});
+
+	fillFormWithValuesAndExpect('#productInfo', [], false);
+	fillFormWithValuesAndExpect('#productInfo', [123], false);
+	fillFormWithValuesAndExpect('#productInfo', [123, 'widget'], false);
+	fillFormWithValuesAndExpect('#productInfo', ['', '', '', 'Acme'], false);
+	fillFormWithValuesAndExpect('#productInfo', [123, '', '', 'Acme'], false);
+	fillFormWithValuesAndExpect('#productInfo', [123, 'widget', '', 'Acme'], true);
+	fillFormWithValuesAndExpect('#productInfo', [123, 'widget', 'red', 'Acme'], true);
+});
+
 test('skip_or_fill_minimum', function() {
 	$("#productInfo").validate({
 		rules: {
@@ -1014,6 +1033,23 @@ test('skip_or_fill_minimum', function() {
 	fillFormWithValuesAndExpect('#productInfo', [123], false);
 	fillFormWithValuesAndExpect('#productInfo', [123, 'widget'], true);
 	fillFormWithValuesAndExpect('#productInfo', [123, 'widget', 'red'], true);
+});
+
+test('skip_or_fill_minimum preserve other rules', function() {
+	$("#productInfo").validate({
+		rules: {
+			partnumber:  {skip_or_fill_minimum: [2,".productInfo"]},
+			description: {skip_or_fill_minimum: [2,".productInfo"]},
+			color:       {skip_or_fill_minimum: [2,".productInfo"]},
+			supplier: {required: true}
+		}
+	});
+
+	fillFormWithValuesAndExpect('#productInfo', [], false);
+	fillFormWithValuesAndExpect('#productInfo', ['', '', '', 'Acme'], true);
+	fillFormWithValuesAndExpect('#productInfo', [123, '', '', 'Acme'], false);
+	fillFormWithValuesAndExpect('#productInfo', [123, 'widget', '', 'Acme'], true);
+	fillFormWithValuesAndExpect('#productInfo', [123, 'widget', 'red', 'Acme'], true);
 });
 
 test("zipcodeUS", function() {
