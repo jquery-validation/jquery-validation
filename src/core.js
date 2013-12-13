@@ -293,6 +293,7 @@ $.extend($.validator, {
 		digits: "Please enter only digits.",
 		creditcard: "Please enter a valid credit card number.",
 		equalTo: "Please enter the same value again.",
+		notEqualTo: "Please enter a different value.",
 		maxlength: $.validator.format("Please enter no more than {0} characters."),
 		minlength: $.validator.format("Please enter at least {0} characters."),
 		rangelength: $.validator.format("Please enter a value between {0} and {1} characters long."),
@@ -1136,6 +1137,19 @@ $.extend($.validator, {
 				});
 			}
 			return value === target.val();
+		},
+
+		// http://jqueryvalidation.org/notEqualTo-method/
+		notEqualTo: function( value, element, param ) {
+			// bind to the blur event of the target in order to revalidate whenever the target field is updated
+			// TODO find a way to bind the event just once, avoiding the unbind-rebind overhead
+			var target = $(param);
+			if ( this.settings.onfocusout ) {
+				target.unbind(".validate-notEqualTo").bind("blur.validate-notEqualTo", function() {
+					$(element).valid();
+				});
+			}
+			return value !== target.val();
 		},
 
 		// http://jqueryvalidation.org/remote-method/

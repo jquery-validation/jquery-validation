@@ -338,6 +338,14 @@ test("equalTo", function() {
 	ok( method.call( v, "T", e[1], "#text2" ), "Another one" );
 });
 
+test("notEqualTo", function() {
+  var v = jQuery("#form").validate();
+  var method = $.validator.methods.notEqualTo,
+    e = $('#text1, #text2');
+  ok( method.call( v, "Test", e[0], "garbage" ), "Text input" );
+  ok( method.call( v, "T", e[1], "more" ), "Another one" );
+});
+
 test("creditcard", function() {
 	var method = methodTest("creditcard");
 	ok( method( "4111-1111-1111-1111" ), "Valid creditcard number" );
