@@ -222,6 +222,7 @@ $.extend($.validator, {
 		errorClass: "error",
 		validClass: "valid",
 		errorElement: "label",
+		errorAttribute: "for",
 		focusInvalid: true,
 		errorContainer: $([]),
 		errorLabelContainer: $([]),
@@ -699,7 +700,7 @@ $.extend($.validator, {
 			} else {
 				// create label
 				label = $("<" + this.settings.errorElement + ">")
-					.attr("for", this.idOrName(element))
+					.attr(this.settings.errorAttribute, this.idOrName(element))
 					.addClass(this.settings.errorClass)
 					.html(message || "");
 				if ( this.settings.wrapper ) {
@@ -728,8 +729,9 @@ $.extend($.validator, {
 
 		errorsFor: function( element ) {
 			var name = this.idOrName(element);
+			var errorAttribute = this.settings.errorAttribute;
 			return this.errors().filter(function() {
-				return $(this).attr("for") === name;
+				return $(this).attr(errorAttribute) === name;
 			});
 		},
 

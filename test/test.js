@@ -1549,3 +1549,32 @@ test("Min and Max number set by attributes less", function() {
 	equal( label.text(), "Please enter a value greater than or equal to 50.", "Correct error label" );
 });
 
+
+test("Using a custom errorElement and errorAttribute", function() {
+	var form = $('#customErrorAttribute');
+	var field = $('#errorAttributeDataFor');
+
+	form.validate({
+		errorElement: 'span',
+		errorAttribute: 'data-for'
+	});
+
+	form.get(0).reset();
+	field.valid();
+
+	var label = $('#customErrorAttribute span');
+	equal(label.text(), "This field is required.", "Correct error label");
+
+	// One issue with not using an errorAttribute at all is that errors will stack multiple times
+	// So let's test that if we validate the field again, there is still only one error message shown
+	field.valid();
+
+	label = $('#customErrorAttribute span');
+	equal(label.length, 1, "Only one error shown");
+
+	field.val('Test Value');
+	field.valid();
+
+	label = $('#customErrorAttribute span');
+	equal(label.css('display'), "none", "Label should be hidden when valid");
+});
