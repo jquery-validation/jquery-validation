@@ -15,11 +15,11 @@
 		creditcard: "Prašau įvesti teisingą kreditinės kortelės numerį.",
 		equalTo: "Prašau įvestį tą pačią reikšmę dar kartą.",
 		extension: "Prašau įvesti reikšmę su teisingu plėtiniu.",
-		maxlength: $.format("Prašau įvesti ne daugiau kaip {0} simbolių."),
-		minlength: $.format("Prašau įvesti bent {0} simbolius."),
-		rangelength: $.format("Prašau įvesti reikšmes, kurių ilgis nuo {0} iki {1} simbolių."),
-		range: $.format("Prašau įvesti reikšmę intervale nuo {0} iki {1}."),
-		max: $.format("Prašau įvesti reikšmę mažesnę arba lygią {0}."),
-		min: $.format("Prašau įvesti reikšmę didesnę arba lygią {0}.")
+		maxlength: $.validator.format("Prašau įvesti ne daugiau kaip {0} simbolių."),
+		minlength: $.validator.format("Prašau įvesti bent {0} simbolius."),
+		rangelength: $.validator.format("Prašau įvesti reikšmes, kurių ilgis nuo {0} iki {1} simbolių."),
+		range: $.validator.format("Prašau įvesti reikšmę intervale nuo {0} iki {1}."),
+		max: $.validator.format("Prašau įvesti reikšmę mažesnę arba lygią {0}."),
+		min: $.validator.format("Prašau įvesti reikšmę didesnę arba lygią {0}.")
 	});
 }(jQuery));

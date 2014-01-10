@@ -1196,8 +1196,9 @@ $.extend($.validator, {
 
 });
 
-// deprecated, use $.validator.format instead
-$.format = $.validator.format;
+$.format = function deprecated() {
+	throw "$.format has been deprecated. Please use $.validator.format instead.";
+};
 
 }(jQuery));
 
