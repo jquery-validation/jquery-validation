@@ -15,11 +15,11 @@
 		creditcard: "有効なクレジットカード番号を入力してください。",
 		equalTo: "同じ値をもう一度入力してください。",
 		extension: "有効な拡張子を含む値を入力してください。",
-		maxlength: $.format("{0} 文字以内で入力してください。"),
-		minlength: $.format("{0} 文字以上で入力してください。"),
-		rangelength: $.format("{0} 文字から {1} 文字までの値を入力してください。"),
-		range: $.format("{0} から {1} までの値を入力してください。"),
-		max: $.format("{0} 以下の値を入力してください。"),
-		min: $.format("{0} 以上の値を入力してください。")
+		maxlength: $.validator.format("{0} 文字以内で入力してください。"),
+		minlength: $.validator.format("{0} 文字以上で入力してください。"),
+		rangelength: $.validator.format("{0} 文字から {1} 文字までの値を入力してください。"),
+		range: $.validator.format("{0} から {1} までの値を入力してください。"),
+		max: $.validator.format("{0} 以下の値を入力してください。"),
+		min: $.validator.format("{0} 以上の値を入力してください。")
 	});
 }(jQuery));

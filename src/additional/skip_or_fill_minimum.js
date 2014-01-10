@@ -40,4 +40,4 @@ jQuery.validator.addMethod("skip_or_fill_minimum", function(value, element, opti
 		$fields.data('being_validated', false);
 	}
 	return isValid;
-}, jQuery.format("Please either skip these fields or fill at least {0} of them."));
+}, jQuery.validator.format("Please either skip these fields or fill at least {0} of them."));
