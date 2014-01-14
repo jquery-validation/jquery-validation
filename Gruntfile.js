@@ -131,5 +131,6 @@ grunt.loadNpmTasks('grunt-contrib-watch');
 
 grunt.registerTask('default', ['concat', 'jshint', 'qunit']);
 grunt.registerTask('release', ['default', 'uglify', 'compress']);
+grunt.registerTask('start', ['concat', 'watch']);
 
 };
