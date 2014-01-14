@@ -550,8 +550,11 @@ test("phone (us)", function() {
 	ok( method( "1(212)-999-2345" ), "Valid US phone number" );
 	ok( method( "212 999 2344" ), "Valid US phone number" );
 	ok( method( "212-999-0983" ), "Valid US phone number" );
-	ok(!method( "111-123-5434" ), "Invalid US phone number" );
-	ok(!method( "212 123 4567" ), "Invalid US phone number" );
+	ok(!method( "111-123-5434" ), "Invalid US phone number. Area Code cannot start with 1" );
+	ok(!method( "212 123 4567" ), "Invalid US phone number. NXX cannot start with 1" );
+	ok(!method( "234-911-5678" ), "Invalid US phone number, because the exchange code cannot be in the form N11" );
+	ok(!method( "911-333-5678" ), "Invalid US phone number, because the area code cannot be in the form N11" );
+	ok(method( "234-912-5678" ), "Valid US phone number" );
 });
 
 test("phoneUK", function() {
@@ -998,6 +1001,25 @@ test('require_from_group', function() {
 	fillFormWithValuesAndExpect('#productInfo', [123, 'widget', 'red'], true);
 });
 
+test('require_from_group preserve other rules', function() {
+	$("#productInfo").validate({
+		rules: {
+			partnumber:  {require_from_group: [2,".productInfo"]},
+			description: {require_from_group: [2,".productInfo"]},
+			color: {require_from_group: [2,".productInfo"]},
+			supplier: {required: true}
+		}
+	});
+
+	fillFormWithValuesAndExpect('#productInfo', [], false);
+	fillFormWithValuesAndExpect('#productInfo', [123], false);
+	fillFormWithValuesAndExpect('#productInfo', [123, 'widget'], false);
+	fillFormWithValuesAndExpect('#productInfo', ['', '', '', 'Acme'], false);
+	fillFormWithValuesAndExpect('#productInfo', [123, '', '', 'Acme'], false);
+	fillFormWithValuesAndExpect('#productInfo', [123, 'widget', '', 'Acme'], true);
+	fillFormWithValuesAndExpect('#productInfo', [123, 'widget', 'red', 'Acme'], true);
+});
+
 test('skip_or_fill_minimum', function() {
 	$("#productInfo").validate({
 		rules: {
@@ -1011,6 +1033,23 @@ test('skip_or_fill_minimum', function() {
 	fillFormWithValuesAndExpect('#productInfo', [123], false);
 	fillFormWithValuesAndExpect('#productInfo', [123, 'widget'], true);
 	fillFormWithValuesAndExpect('#productInfo', [123, 'widget', 'red'], true);
+});
+
+test('skip_or_fill_minimum preserve other rules', function() {
+	$("#productInfo").validate({
+		rules: {
+			partnumber:  {skip_or_fill_minimum: [2,".productInfo"]},
+			description: {skip_or_fill_minimum: [2,".productInfo"]},
+			color:       {skip_or_fill_minimum: [2,".productInfo"]},
+			supplier: {required: true}
+		}
+	});
+
+	fillFormWithValuesAndExpect('#productInfo', [], false);
+	fillFormWithValuesAndExpect('#productInfo', ['', '', '', 'Acme'], true);
+	fillFormWithValuesAndExpect('#productInfo', [123, '', '', 'Acme'], false);
+	fillFormWithValuesAndExpect('#productInfo', [123, 'widget', '', 'Acme'], true);
+	fillFormWithValuesAndExpect('#productInfo', [123, 'widget', 'red', 'Acme'], true);
 });
 
 test("zipcodeUS", function() {
@@ -1118,6 +1157,5 @@ test("cifES", function() {
 	ok(!method( "B43.522.192" ), "CIF invalid: dots" );
 	ok(!method( "B-43.522.192" ), "CIF invalid: dots and dash" );
 });
-
 
 })(jQuery);

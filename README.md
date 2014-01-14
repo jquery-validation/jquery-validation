@@ -16,6 +16,20 @@ You can find the plan for how to spend the money on the [pledgie page](http://pl
 
 ## Getting Started
 
+### Downloading the prebuilt files
+
+Prebuilt files can be downloaded from http://jqueryvalidation.org/
+
+### Downloading the latest changes
+
+The unreleased development files can be obtained by:
+
+ 1. [Downloading](https://github.com/jzaefferer/jquery-validation/archive/master.zip) or Forking this repository
+ 2. [Setup the build](CONTRIBUTING.md#build-setup)
+ 3. Run `grunt` to create the built files in the "dist" directory
+
+### Including it on your page
+
 Include jQuery and the plugin on a page. Then select a form to validate and call the `validate` method.
 
 ```html
@@ -35,21 +49,12 @@ For more information on how to setup a rules and customizations, [check the docu
 
 1. Make sure the problem you're addressing is reproducible.
 2. Use http://jsbin.com or http://jsfiddle.net to provide a test page.
-3. Indicate what browsers the issue can be reproduced in.
+3. Indicate what browsers the issue can be reproduced in. **Note: IE Compatibilty modes issues will not be addressed.**
 4. What version of the plug-in is the issue reproducible in. Is it reproducible after updating to the latest version.
 
 ## Contributing
-1. Follow the [jQuery style guide](http://contribute.jquery.com/style-guides/js), even if existing code doesn't.
-2. Add unit tests for any new or changed functionality.
-3. Lint and test your code using [Grunt](http://gruntjs.com/).
 
-### Additional Methods
-If you've wrote custom methods that you'd like to contribute to additional-methods.js:
-
-1. Create a branch
-2. Add the method as a new file in src/additional
-3. (Optional) Add translations to src/localization
-4. Send a pull request to the master branch.
+See the [Contributing Guide](CONTRIBUTING.md)
 
 ## License
 Copyright (c) 2013 Jörn Zaefferer

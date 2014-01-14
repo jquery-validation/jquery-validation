@@ -94,10 +94,7 @@ grunt.initConfig({
 			},
 			files: {
 				src: [
-					'test/test.js',
-					'test/rules.js',
-					'test/messages.js',
-					'test/methods.js'
+					'test/*.js'
 				]
 			}
 		},
@@ -116,11 +113,11 @@ grunt.initConfig({
 		},
 		src: {
 			files: '<%= jshint.files %>',
-			tasks: ['concat']
+			tasks: ['concat', 'qunit']
 		},
 		test: {
-			files: '<%= jshint.test.files.src %>',
-			tasks: ['jshint:test', 'qunit']
+			files: ['<%= jshint.test.files.src %>', 'test/index.html'],
+			tasks: ['jshint:test']
 		}
 	}
 });

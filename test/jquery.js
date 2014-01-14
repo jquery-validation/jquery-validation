@@ -15,11 +15,11 @@ for ( ; i < length; i++ ) {
 	}
 }
 
-if (version != "git") {
+if (version !== "git") {
 	file = "../lib/jquery-" + version + ".js";
 }
 
-
+//jshint -W060
 document.write( "<script src='" + file + "'></script>" );
 
 })();

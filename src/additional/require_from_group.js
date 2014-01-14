@@ -3,27 +3,35 @@
  *
  * The end result is that neither of these inputs:
  *
- *  <input class="productinfo" name="partnumber">
- *  <input class="productinfo" name="description">
+ *	<input class="productinfo" name="partnumber">
+ *	<input class="productinfo" name="description">
  *
- *  ...will validate unless at least one of them is filled.
+ *	...will validate unless at least one of them is filled.
  *
- * partnumber:  {require_from_group: [1,".productinfo"]},
+ * partnumber:	{require_from_group: [1,".productinfo"]},
  * description: {require_from_group: [1,".productinfo"]}
  *
+ * options[0]: number of fields that must be filled in the group
+ * options[1]: CSS selector that defines the group of conditionally required fields
  */
 jQuery.validator.addMethod("require_from_group", function(value, element, options) {
-	var validator = this;
-	var selector = options[1];
-	var validOrNot = jQuery(selector, element.form).filter(function() {
-		return validator.elementValue(this);
-	}).length >= options[0];
+	var $fields = $(options[1], element.form),
+		$fieldsFirst = $fields.eq(0),
+		validator = $fieldsFirst.data('valid_req_grp') ? $fieldsFirst.data('valid_req_grp') : $.extend({}, this),
+		isValid = $fields.filter(function() {
+			return validator.elementValue(this);
+		}).length >= options[0];
 
-	if(!$(element).data('being_validated')) {
-		var fields = jQuery(selector, element.form);
-		fields.data('being_validated', true);
-		fields.valid();
-		fields.data('being_validated', false);
+	// Store the cloned validator for future validation
+	$fieldsFirst.data('valid_req_grp', validator);
+
+	// If element isn't being validated, run each require_from_group field's validation rules
+	if (!$(element).data('being_validated')) {
+		$fields.data('being_validated', true);
+		$fields.each(function() {
+			validator.element(this);
+		});
+		$fields.data('being_validated', false);
 	}
-	return validOrNot;
+	return isValid;
 }, jQuery.format("Please fill at least {0} of these fields."));

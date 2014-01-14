@@ -128,7 +128,7 @@ $.extend($.fn, {
 			switch(command) {
 			case "add":
 				$.extend(existingRules, $.validator.normalizeRule(argument));
-				// remove messages from rules, but allow them to be set separetely
+				// remove messages from rules, but allow them to be set separately
 				delete existingRules.messages;
 				staticRules[element.name] = existingRules;
 				if ( argument.messages ) {
@@ -144,6 +144,9 @@ $.extend($.fn, {
 				$.each(argument.split(/\s/), function( index, method ) {
 					filtered[method] = existingRules[method];
 					delete existingRules[method];
+					if ( method === "required" ) {
+						$(element).removeAttr("aria-required");
+					}
 				});
 				return filtered;
 			}
@@ -163,6 +166,7 @@ $.extend($.fn, {
 			var param = data.required;
 			delete data.required;
 			data = $.extend({required: param}, data);
+			$(element).attr("aria-required", "true");
 		}
 
 		return data;
@@ -345,6 +349,10 @@ $.extend($.validator, {
 			if ( this.settings.invalidHandler ) {
 				$(this.currentForm).bind("invalid-form.validate", this.settings.invalidHandler);
 			}
+
+			// Add aria-required to any Static/Data/Class required fields before first validation
+			// Screen readers require this attribute to be present before the initial submission http://www.w3.org/TR/WCAG-TECHS/ARIA2.html
+			$(this.currentForm).find("[required], [data-rule-required], .required").attr("aria-required", "true");
 		},
 
 		// http://jqueryvalidation.org/Validator.form/
@@ -379,6 +387,9 @@ $.extend($.validator, {
 			} else {
 				this.invalid[element.name] = true;
 			}
+			//Add aria-invalid status for screen readers
+			$(element).attr("aria-invalid", !result);
+			
 			if ( !this.numberOfInvalids() ) {
 				// Hide error containers on last error
 				this.toHide = this.toHide.add( this.containers );
@@ -420,7 +431,10 @@ $.extend($.validator, {
 			this.lastElement = null;
 			this.prepareForm();
 			this.hideErrors();
-			this.elements().removeClass( this.settings.errorClass ).removeData( "previousValue" );
+			this.elements()
+					.removeClass( this.settings.errorClass )
+					.removeData( "previousValue" )
+					.removeAttr( "aria-invalid" );
 		},
 
 		numberOfInvalids: function() {
