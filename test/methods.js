@@ -70,44 +70,18 @@ test("email", function() {
 	ok( method( "bart+bart@tokbox.com" ), "Valid email" );
 	ok( method( "bart+bart@tokbox.travel" ), "Valid email" );
 	ok( method( "n@d.tld" ), "Valid email" );
-	ok( method( "ole@føtex.dk"), "Valid email" );
-	ok( method( "jörn@bassistance.de"), "Valid email" );
 	ok( method( "bla.blu@g.mail.com"), "Valid email" );
-	ok( method( "\"Scott Gonzalez\"@example.com" ), "Valid email" );
-	ok( method( "\"Scott González\"@example.com" ), "Valid email" );
-	ok( method( "\"name.\"@domain.tld" ), "Valid email" ); // valid without top label
-	ok( method( "\"name,\"@domain.tld" ), "Valid email" ); // valid without top label
-	ok( method( "\"name;\"@domain.tld" ), "Valid email" ); // valid without top label
+	ok( method( "name@domain" ), "Valid email" );
+	ok( method( "name.@domain.tld" ), "Valid email" );
+	ok(!method( "ole@føtex.dk"), "Invalid email" );
+	ok(!method( "jörn@bassistance.de"), "Invalid email" );
 	ok(!method( "name" ), "Invalid email" );
+	ok(!method( "test@test-.com" ), "Invalid email" );
+	ok(!method( "name@website.a" ), "Invalid email" );
 	ok(!method( "name@" ), "Invalid email" );
-	ok(!method( "name@domain" ), "Invalid email" );
-	ok(!method( "name.@domain.tld" ), "Invalid email" );
 	ok(!method( "name,@domain.tld" ), "Invalid email" );
 	ok(!method( "name;@domain.tld" ), "Invalid email" );
 	ok(!method( "name;@domain.tld." ), "Invalid email" );
-});
-
-test("email2 (tld optional)", function() {
-	var method = methodTest("email2");
-	ok( method( "name@domain.tld" ), "Valid email" );
-	ok( method( "name@domain.tl" ), "Valid email" );
-	ok( method( "bart+bart@tokbox.com" ), "Valid email" );
-	ok( method( "bart+bart@tokbox.travel" ), "Valid email" );
-	ok( method( "n@d.tld" ), "Valid email" );
-	ok( method( "ole@føtex.dk"), "Valid email" );
-	ok( method( "jörn@bassistance.de"), "Valid email" );
-	ok( method( "bla.blu@g.mail.com"), "Valid email" );
-	ok( method( "\"Scott Gonzalez\"@example.com" ), "Valid email" );
-	ok( method( "\"Scott González\"@example.com" ), "Valid email" );
-	ok( method( "\"name.\"@domain.tld" ), "Valid email" ); // valid without top label
-	ok( method( "\"name,\"@domain.tld" ), "Valid email" ); // valid without top label
-	ok( method( "\"name;\"@domain.tld" ), "Valid email" ); // valid without top label
-	ok(!method( "name" ), "Invalid email" );
-	ok(!method( "name@" ), "Invalid email" );
-	ok( method( "name@domain" ), "Invalid email" );
-	ok(!method( "name.@domain.tld" ), "Invalid email" );
-	ok(!method( "name,@domain.tld" ), "Invalid email" );
-	ok(!method( "name;@domain.tld" ), "Invalid email" );
 });
 
 test("number", function() {
