@@ -15,7 +15,7 @@
 		creditcard : "Unesite ispravan broj kreditne kartice.",
 		equalTo : "Unesite istu vrednost ponovo.",
 		extension : "Unesite vrednost sa odgovarajućom ekstenzijom.",
-		maxlength : $.validator.format("Unesite manje od {0}karaktera."),
+		maxlength : $.validator.format("Unesite manje od {0} karaktera."),
 		minlength : $.validator.format("Unesite barem {0} karaktera."),
 		rangelength : $.validator.format("Unesite vrednost dugačku između {0} i {1} karaktera."),
 		range : $.validator.format("Unesite vrednost između {0} i {1}."),
