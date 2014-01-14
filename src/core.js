@@ -577,6 +577,10 @@ $.extend($.validator, {
 			var val = this.elementValue(element);
 			var result;
 
+			if ($(element).not(this.settings.ignore).size() === 0) {
+				rules = [];
+			}
+
 			for (var method in rules ) {
 				var rule = { method: method, parameters: rules[method] };
 				try {
