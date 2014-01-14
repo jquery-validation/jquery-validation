@@ -609,7 +609,7 @@ $.extend($.validator, {
 		// return the custom message for the given element and validation method
 		// specified in the element's HTML5 data attribute
 		customDataMessage: function( element, method ) {
-			return $(element).data("msg" + method[0].toUpperCase() + method.substring(1).toLowerCase());
+			return $( element ).data( "msg" + method[ 0 ].toUpperCase() + method.substring( 1 ).toLowerCase() );
 
 		},
 
@@ -910,11 +910,11 @@ $.extend($.validator, {
 
 	dataRules: function( element ) {
 		var method, value,
-			rules = {}, $element = $(element);
-		for (method in $.validator.methods) {
-			value = $element.data("rule" + method[0].toUpperCase() + method.substring(1).toLowerCase());
+			rules = {}, $element = $( element );
+		for ( method in $.validator.methods ) {
+			value = $element.data( "rule" + method[ 0 ].toUpperCase() + method.substring( 1 ).toLowerCase() );
 			if ( value !== undefined ) {
-				rules[method] = value;
+				rules[ method ] = value;
 			}
 		}
 		return rules;
