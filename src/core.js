@@ -696,7 +696,7 @@ $.extend($.validator, {
 			var label = this.errorsFor( element );
 			if ( label.length ) {
 				// refresh error/success class
-				label.removeClass( this.settings.validClass ).addClass( this.settings.errorClass );
+				label.removeClass( this.settings.validClass ).addClass( this.settings.errorClass ).show();
 				// replace message on existing label
 				label.html(message);
 			} else {
