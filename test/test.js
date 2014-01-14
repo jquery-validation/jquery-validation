@@ -902,7 +902,8 @@ test("successlist", function() {
 	equal(0, v.successList.length);
 });
 
-test("success isn't called for optional elements", function() {
+
+test("success isn't called for optional elements with no other rules", function() {
 	expect(4);
 	equal( "", $("#firstname").removeAttr("data-rule-required").removeAttr("data-rule-minlength").val() );
 	$("#something").remove();
@@ -913,7 +914,7 @@ test("success isn't called for optional elements", function() {
 			ok( false, "don't call success for optional elements!" );
 		},
 		rules: {
-			firstname: "email"
+			firstname: { required: false }
 		}
 	});
 	equal( 0, $("#testForm1 label").size() );
@@ -922,6 +923,31 @@ test("success isn't called for optional elements", function() {
 	$("#firstname").valid();
 	equal( 0, $("#testForm1 label").size() );
 });
+
+test("success is called for optional elements with other rules", function() {
+	expect(1);
+
+	$.validator.addMethod("custom1", function() {
+		return true;
+	}, "");
+
+	var v = $("#testForm1clean").validate({
+		success: function() {
+			ok( true, "success called correctly!" );
+		},
+		rules: {
+			firstname: {
+				required: false,
+				custom1: true
+			}
+		}
+	});
+
+	$("#firstnamec").valid();
+
+	delete $.validator.methods.custom1;
+});
+
 
 test("success callback with element", function() {
 	expect(1);
