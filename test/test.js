@@ -479,14 +479,16 @@ test("option: errorClass with multiple classes", function() {
 	form.validate({
 		focusCleanup: true,
 		wrapper: "span",
-		errorClass: "error error1"
+		errorClass: "error error1 error2"
 	});
 	form.valid();
 	ok( form.is(":has(span:visible:has(label.error[for=username]))") );
 	ok( form.is(":has(span:visible:has(label.error1[for=username]))") );
+	ok( form.is(":has(span:visible:has(label.error2[for=username]))") );
 	$("#username").focus().trigger("focusin");
 	ok( !form.is(":has(span:visible:has(label.error[for=username]))") );
 	ok( !form.is(":has(span:visible:has(label.error1[for=username]))") );
+	ok( !form.is(":has(span:visible:has(label.error2[for=username]))") );
 });
 
 test("elements() order", function() {
