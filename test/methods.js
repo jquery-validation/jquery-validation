@@ -73,11 +73,11 @@ test("email", function() {
 	ok( method( "bla.blu@g.mail.com"), "Valid email" );
 	ok( method( "name@domain" ), "Valid email" );
 	ok( method( "name.@domain.tld" ), "Valid email" );
+	ok( method( "name@website.a" ), "Valid email" );
 	ok(!method( "ole@føtex.dk"), "Invalid email" );
 	ok(!method( "jörn@bassistance.de"), "Invalid email" );
 	ok(!method( "name" ), "Invalid email" );
 	ok(!method( "test@test-.com" ), "Invalid email" );
-	ok(!method( "name@website.a" ), "Invalid email" );
 	ok(!method( "name@" ), "Invalid email" );
 	ok(!method( "name,@domain.tld" ), "Invalid email" );
 	ok(!method( "name;@domain.tld" ), "Invalid email" );
