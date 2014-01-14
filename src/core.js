@@ -391,11 +391,11 @@ $.extend($.validator, {
 
 			this.lastElement = checkElement;
 
-			if (checkElement === undefined) {
-				delete this.invalid[cleanElement.name];
+			if ( checkElement === undefined ) {
+				delete this.invalid[ cleanElement.name ];
 			} else {
 				this.prepareElement( checkElement );
-				this.currentElements = $(checkElement);
+				this.currentElements = $( checkElement );
 
 				result = this.check( checkElement ) !== false;
 				if (result) {
@@ -404,8 +404,8 @@ $.extend($.validator, {
 					this.invalid[checkElement.name] = true;
 				}
 			}
-			//Add aria-invalid status for screen readers
-			$(element).attr("aria-invalid", !result);
+			// Add aria-invalid status for screen readers
+			$( element ).attr( "aria-invalid", !result );
 
 			if ( !this.numberOfInvalids() ) {
 				// Hide error containers on last error
