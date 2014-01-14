@@ -71,22 +71,22 @@ $(document).ready(function() {
 			lastname: "Enter your lastname",
 			username: {
 				required: "Enter a username",
-				minlength: jQuery.format("Enter at least {0} characters"),
-				remote: jQuery.format("{0} is already in use")
+				minlength: jQuery.validator.format("Enter at least {0} characters"),
+				remote: jQuery.validator.format("{0} is already in use")
 			},
 			password: {
 				required: "Provide a password",
-				rangelength: jQuery.format("Enter at least {0} characters")
+				rangelength: jQuery.validator.format("Enter at least {0} characters")
 			},
 			password_confirm: {
 				required: "Repeat your password",
-				minlength: jQuery.format("Enter at least {0} characters"),
+				minlength: jQuery.validator.format("Enter at least {0} characters"),
 				equalTo: "Enter the same password as above"
 			},
 			email: {
 				required: "Please enter a valid email address",
 				minlength: "Please enter a valid email address",
-				remote: jQuery.format("{0} is already in use")
+				remote: jQuery.validator.format("{0} is already in use")
 			},
 			dateformat: "Choose your preferred dateformat",
 			terms: " "
