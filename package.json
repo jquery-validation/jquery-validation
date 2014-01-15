@@ -3,7 +3,7 @@
   "title": "jQuery Validation Plugin",
   "description": "Form validation made easy",
   "version": "1.12.0pre",
-  "homepage": "https://github.com/jzaefferer/jquery-validation",
+  "homepage": "http://jqueryvalidation.org/",
   "author": {
     "name": "Jörn Zaefferer",
     "email": "joern.zaefferer@gmail.com",
