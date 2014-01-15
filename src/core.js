@@ -370,7 +370,7 @@ $.extend($.validator, {
 			$.extend(this.submitted, this.errorMap);
 			this.invalid = $.extend({}, this.errorMap);
 			if ( !this.valid() ) {
-				$(this.currentForm).triggerHandler("invalid-form", [this]);
+				$(this.currentForm).triggerHandler("invalid-form", [ this ]);
 			}
 			this.showErrors();
 			return this.valid();
@@ -827,7 +827,7 @@ $.extend($.validator, {
 				$(this.currentForm).submit();
 				this.formSubmitted = false;
 			} else if (!valid && this.pendingRequest === 0 && this.formSubmitted) {
-				$(this.currentForm).triggerHandler("invalid-form", [this]);
+				$(this.currentForm).triggerHandler("invalid-form", [ this ]);
 				this.formSubmitted = false;
 			}
 		},
@@ -972,19 +972,19 @@ $.extend($.validator, {
 		});
 
 		// clean number parameters
-		$.each(['minlength', 'maxlength'], function() {
+		$.each([ 'minlength', 'maxlength' ], function() {
 			if ( rules[this] ) {
 				rules[this] = Number(rules[this]);
 			}
 		});
-		$.each(['rangelength', 'range'], function() {
+		$.each([ 'rangelength', 'range' ], function() {
 			var parts;
 			if ( rules[this] ) {
 				if ( $.isArray(rules[this]) ) {
-					rules[this] = [Number(rules[this][0]), Number(rules[this][1])];
+					rules[this] = [ Number(rules[this][0]), Number(rules[this][1]) ];
 				} else if ( typeof rules[this] === "string" ) {
 					parts = rules[this].split(/[\s,]+/);
-					rules[this] = [Number(parts[0]), Number(parts[1])];
+					rules[this] = [ Number(parts[0]), Number(parts[1]) ];
 				}
 			}
 		});
@@ -992,12 +992,12 @@ $.extend($.validator, {
 		if ( $.validator.autoCreateRanges ) {
 			// auto-create ranges
 			if ( rules.min && rules.max ) {
-				rules.range = [rules.min, rules.max];
+				rules.range = [ rules.min, rules.max ];
 				delete rules.min;
 				delete rules.max;
 			}
 			if ( rules.minlength && rules.maxlength ) {
-				rules.rangelength = [rules.minlength, rules.maxlength];
+				rules.rangelength = [ rules.minlength, rules.maxlength ];
 				delete rules.minlength;
 				delete rules.maxlength;
 			}
