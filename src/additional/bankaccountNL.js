@@ -15,9 +15,9 @@ jQuery.validator.addMethod("bankaccountNL", function(value, element) {
 	var account = value.replace(/ /g,''); // remove spaces
 	var sum = 0;
 	var len = account.length;
-	for (var pos=0; pos<len; pos++) {
+	for (var pos = 0; pos < len; pos++) {
 		var factor = len - pos;
-		var digit = account.substring(pos, pos+1);
+		var digit = account.substring(pos, pos + 1);
 		sum = sum + factor * digit;
 	}
 	return sum % 11 === 0;

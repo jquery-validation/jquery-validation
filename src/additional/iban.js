@@ -103,7 +103,7 @@ jQuery.validator.addMethod("iban", function(value, element) {
 	var ibancheckdigits = "";
 	var leadingZeroes = true;
 	var charAt;
-	for (var i =0; i<ibancheck.length; i++) {
+	for (var i = 0; i < ibancheck.length; i++) {
 		charAt = ibancheck.charAt(i);
 		if (charAt !== "0") {
 			leadingZeroes = false;
@@ -116,7 +116,7 @@ jQuery.validator.addMethod("iban", function(value, element) {
 	// calculate the result of: ibancheckdigits % 97
     var cRest = '';
     var cOperator = '';
-	for (var p=0; p<ibancheckdigits.length; p++) {
+	for (var p = 0; p < ibancheckdigits.length; p++) {
 		var cChar = ibancheckdigits.charAt(p);
 		cOperator = '' + cRest + '' + cChar;
 		cRest = cOperator % 97;
