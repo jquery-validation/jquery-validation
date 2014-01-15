@@ -7,6 +7,9 @@ jQuery.validator.addMethod("iban", function(value, element) {
 	if (this.optional(element)) {
 		return true;
 	}
+    // trim trailing whitespaces
+    value = jQuery.trim(value);
+
 	if (!(/^([a-zA-Z0-9]{4} ){2,8}[a-zA-Z0-9]{1,4}|[a-zA-Z0-9]{12,34}$/.test(value))) {
 		return false;
 	}
