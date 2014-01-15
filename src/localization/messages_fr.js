@@ -2,7 +2,7 @@
  * Translated default messages for the jQuery validation plugin.
  * Locale: FR (French; français)
  */
-(function ($) {
+(function($) {
 	$.extend($.validator.messages, {
 		required: "Ce champ est obligatoire.",
 		remote: "Veuillez corriger ce champ.",

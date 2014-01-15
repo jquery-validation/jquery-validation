@@ -1,7 +1,7 @@
 /*
  * The número de identidad de extranjero ( NIE )is a code used to identify the non-nationals in Spain
  */
-jQuery.validator.addMethod( "nieES", function ( value, element ) {
+jQuery.validator.addMethod( "nieES", function( value, element ) {
 	"use strict";
 
 	value = value.toUpperCase();

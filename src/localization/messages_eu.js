@@ -2,7 +2,7 @@
  * Translated default messages for the jQuery validation plugin.
  * Locale: EU (Basque; euskara, euskera)
  */
-(function ($) {
+(function($) {
 	$.extend($.validator.messages, {
 		required: "Eremu hau beharrezkoa da.",
 		remote: "Mesedez, bete eremu hau.",

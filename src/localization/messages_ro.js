@@ -2,7 +2,7 @@
  * Translated default messages for the jQuery validation plugin.
  * Locale: RO (Romanian, limba română)
  */
-(function ($) {
+(function($) {
 	$.extend($.validator.messages, {
 		required: "Acest câmp este obligatoriu.",
 		remote: "Te rugăm să completezi acest câmp.",

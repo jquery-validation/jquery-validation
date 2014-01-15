@@ -2,7 +2,7 @@
  * Translated default messages for the jQuery validation plugin.
  * Locale: JA (Japanese; 日本語)
  */
-(function ($) {
+(function($) {
 	$.extend($.validator.messages, {
 		required: "このフィールドは必須です。",
 		remote: "このフィールドを修正してください。",

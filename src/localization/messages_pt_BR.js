@@ -3,7 +3,7 @@
  * Locale: PT (Portuguese; português)
  * Region: BR (Brazil)
  */
-(function ($) {
+(function($) {
 	$.extend($.validator.messages, {
 		required: "Este campo &eacute; requerido.",
 		remote: "Por favor, corrija este campo.",

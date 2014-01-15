@@ -2,7 +2,7 @@
  * Translated default messages for the jQuery validation plugin.
  * Locale: IS (Icelandic; íslenska)
  */
-(function ($) {
+(function($) {
 	$.extend($.validator.messages, {
 		required: "Þessi reitur er nauðsynlegur.",
 		remote: "Lagaðu þennan reit.",

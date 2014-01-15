@@ -2,7 +2,7 @@
  * Translated default messages for the jQuery validation plugin.
  * Language: SL (Slovenian; slovenski jezik)
  */
-(function ($) {
+(function($) {
 	$.extend($.validator.messages, {
 		required: "To polje je obvezno.",
 		remote: "Prosimo popravite to polje.",

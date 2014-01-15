@@ -2,7 +2,7 @@
  * Translated default messages for the jQuery validation plugin.
  * Locale: MY (Malay; Melayu)
  */
-(function ($) {
+(function($) {
 	$.extend($.validator.messages, {
 		required: "Medan ini diperlukan.",
 		remote: "Sila betulkan medan ini.",

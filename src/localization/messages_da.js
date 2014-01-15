@@ -2,7 +2,7 @@
  * Translated default messages for the jQuery validation plugin.
  * Locale: DA (Danish; dansk)
  */
-(function ($) {
+(function($) {
 	$.extend($.validator.messages, {
 		required: "Dette felt er påkrævet.",
 		maxlength: $.validator.format("Indtast højst {0} tegn."),
