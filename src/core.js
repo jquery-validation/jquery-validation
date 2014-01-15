@@ -1177,7 +1177,7 @@ $.extend($.validator, {
 			previous.originalMessage = this.settings.messages[element.name].remote;
 			this.settings.messages[element.name].remote = previous.message;
 
-			param = typeof param === "string" && {url:param} || param;
+			param = typeof param === "string" && {url: param} || param;
 
 			if ( previous.old === value ) {
 				return previous.valid;
