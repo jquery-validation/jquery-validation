@@ -413,6 +413,49 @@ test("remote, customized ajax options", function() {
 	$("#userForm").valid();
 });
 
+test("remote, dataSelector gets all form :inputs", function () {
+    expect(1);
+    stop();
+    var v = $("#signupForm").validate({
+        rules: {
+            user: {
+                remote: {
+                    url: "users3.php",
+                    dataSelector: "form",
+                    beforeSend: function (request, settings) {
+                        deepEqual(settings.url, "users3.php?user=abcd&password=efghijklmno");
+                    },
+                    complete: function () {
+                        start();
+                    }
+                }
+            }
+        }
+    });
+    $("#user").val("abcd");
+    $("#password").val("efghijklmno");
+    $("#signupForm").valid();
+});
+
+test("remote, dataSelector gets all :inputs in li selector", function () {
+    expect(1);
+    stop();
+
+    var rule = $("#firstName1").data("ruleRemote");
+    $.extend(rule, {
+        beforeSend: function (request, settings) {
+            deepEqual(settings.url, "users4.php?firstName1=John&lastName1=Reilly");
+        },
+        complete: function () {
+            start();
+        }
+    });
+
+    var v = $("#remoteUnobtrusiveForm").validate();
+    $("#firstName1").val("John");
+    $("#lastName1").val("Reilly");
+    $("#remoteUnobtrusiveForm").valid();
+});
 
 test("remote extensions", function() {
 	expect(5);

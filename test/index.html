@@ -80,6 +80,17 @@
 			<input type="password" name="password" id="password" data-rule-required="true" data-rule-minlength="5" />
 		</form>
 
+		<form id="remoteUnobtrusiveForm">
+			<input id="dontWantToSeeThis" name="dontWantToSeeThis" value="ShouldNotSeeMe" />
+			<ul>
+				<li>
+					<input id="firstName1" name="firstName1" data-rule-required="true" 
+						data-rule-remote="{&quot;url&quot;:&quot;users4.php&quot;,&quot;dataSelector&quot;:&quot;li&quot;}" />
+					<input id="lastName1" name="lastName1" />
+				</li>
+			</ul>
+		</form>
+
 		<form id="testForm2">
 			<input data-rule-required="true" type="radio" name="agree" id="agb" />
 			<label for="agree" id="agreeLabel" class="xerror">error for agb</label>
