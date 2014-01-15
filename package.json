@@ -33,7 +33,8 @@
     "grunt-contrib-uglify": "~0.2.7",
     "grunt-contrib-concat": "~0.3.0",
     "grunt-contrib-compress": "~0.6.0",
-    "grunt-contrib-watch": "~0.5.3"
+    "grunt-contrib-watch": "~0.5.3",
+    "grunt-jscs-checker": "~0.3.2"
   },
   "keywords": [
     "forms",
