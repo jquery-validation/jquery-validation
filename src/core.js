@@ -162,11 +162,19 @@ $.extend($.fn, {
 		), element);
 
 		// make sure required is at front
+		var param;
 		if ( data.required ) {
-			var param = data.required;
+			param = data.required;
 			delete data.required;
-			data = $.extend({required: param}, data);
-			$(element).attr("aria-required", "true");
+			data = $.extend({ required: param }, data );
+			$(element).attr( "aria-required", "true" );
+		}
+
+		// make sure remote is at back
+		if ( data.remote ) {
+			param = data.remote;
+			delete data.remote;
+			data = $.extend( data, { remote: param });
 		}
 
 		return data;
@@ -332,9 +340,10 @@ $.extend($.validator, {
 
 			function delegate(event) {
 				var validator = $.data(this[0].form, "validator"),
-					eventType = "on" + event.type.replace(/^validate/, "");
-				if ( validator.settings[eventType] ) {
-					validator.settings[eventType].call(validator, this[0], event);
+					eventType = "on" + event.type.replace(/^validate/, ""),
+					settings = validator.settings;
+				if ( settings[eventType] && !this.is( settings.ignore ) ) {
+					settings[eventType].call(validator, this[0], event);
 				}
 			}
 			$(this.currentForm)
@@ -377,19 +386,28 @@ $.extend($.validator, {
 
 		// http://jqueryvalidation.org/Validator.element/
 		element: function( element ) {
-			element = this.validationTargetFor( this.clean( element ) );
-			this.lastElement = element;
-			this.prepareElement( element );
-			this.currentElements = $(element);
-			var result = this.check( element ) !== false;
-			if ( result ) {
-				delete this.invalid[element.name];
+			var cleanElement = this.clean( element );
+			var checkElement = this.validationTargetFor( cleanElement );
+			var result = true;
+
+			this.lastElement = checkElement;
+
+			if ( checkElement === undefined ) {
+				delete this.invalid[ cleanElement.name ];
 			} else {
-				this.invalid[element.name] = true;
+				this.prepareElement( checkElement );
+				this.currentElements = $( checkElement );
+
+				result = this.check( checkElement ) !== false;
+				if (result) {
+					delete this.invalid[checkElement.name];
+				} else {
+					this.invalid[checkElement.name] = true;
+				}
 			}
-			//Add aria-invalid status for screen readers
-			$(element).attr("aria-invalid", !result);
-			
+			// Add aria-invalid status for screen readers
+			$( element ).attr( "aria-invalid", !result );
+
 			if ( !this.numberOfInvalids() ) {
 				// Hide error containers on last error
 				this.toHide = this.toHide.add( this.containers );
@@ -511,7 +529,7 @@ $.extend($.validator, {
 		},
 
 		errors: function() {
-			var errorClass = this.settings.errorClass.replace(" ", ".");
+			var errorClass = this.settings.errorClass.split(" ").join('.');
 			return $(this.settings.errorElement + "." + errorClass, this.errorContext);
 		},
 
@@ -552,6 +570,9 @@ $.extend($.validator, {
 			element = this.validationTargetFor( this.clean( element ) );
 
 			var rules = $(element).rules();
+			var rulesCount = $.map( rules, function(n, i) {
+				return i;
+			}).length;
 			var dependencyMismatch = false;
 			var val = this.elementValue(element);
 			var result;
@@ -564,7 +585,7 @@ $.extend($.validator, {
 
 					// if a method indicates that the field is optional and therefore valid,
 					// don't mark it as valid when there are no other rules
-					if ( result === "dependency-mismatch" ) {
+					if ( result === "dependency-mismatch" && rulesCount === 1 ) {
 						dependencyMismatch = true;
 						continue;
 					}
@@ -597,8 +618,10 @@ $.extend($.validator, {
 
 		// return the custom message for the given element and validation method
 		// specified in the element's HTML5 data attribute
+		// return the generic message if present and no method specific message is present
 		customDataMessage: function( element, method ) {
-			return $(element).data("msg-" + method.toLowerCase()) || (element.attributes && $(element).attr("data-msg-" + method.toLowerCase()));
+			return $( element ).data( "msg" + method[ 0 ].toUpperCase() +
+				method.substring( 1 ).toLowerCase() ) || $( element ).data("msg");
 		},
 
 		// return the custom message for the given element name and validation method
@@ -898,11 +921,11 @@ $.extend($.validator, {
 
 	dataRules: function( element ) {
 		var method, value,
-			rules = {}, $element = $(element);
-		for (method in $.validator.methods) {
-			value = $element.data("rule-" + method.toLowerCase());
+			rules = {}, $element = $( element );
+		for ( method in $.validator.methods ) {
+			value = $element.data( "rule" + method[ 0 ].toUpperCase() + method.substring( 1 ).toLowerCase() );
 			if ( value !== undefined ) {
-				rules[method] = value;
+				rules[ method ] = value;
 			}
 		}
 		return rules;
@@ -1025,8 +1048,11 @@ $.extend($.validator, {
 
 		// http://jqueryvalidation.org/email-method/
 		email: function( value, element ) {
-			// contributed by Scott Gonzalez: http://projects.scottsplayground.com/email_address_validation/
-			return this.optional(element) || /^((([a-z]|\d|[!#\$%&'\*\+\-\/=\?\^_`{\|}~]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+(\.([a-z]|\d|[!#\$%&'\*\+\-\/=\?\^_`{\|}~]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+)*)|((\x22)((((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(([\x01-\x08\x0b\x0c\x0e-\x1f\x7f]|\x21|[\x23-\x5b]|[\x5d-\x7e]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(\\([\x01-\x09\x0b\x0c\x0d-\x7f]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]))))*(((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(\x22)))@((([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.)+(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))$/i.test(value);
+			// From http://www.whatwg.org/specs/web-apps/current-work/multipage/states-of-the-type-attribute.html#e-mail-state-%28type=email%29
+			// Retrieved 2014-01-14
+			// If you have a problem with this implementation, report a bug against the above spec
+			// Or use custom methods to implement your own email validation
+			return this.optional(element) || /^[a-zA-Z0-9.!#$%&'*+\/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/.test(value);
 		},
 
 		// http://jqueryvalidation.org/url-method/
@@ -1168,6 +1194,7 @@ $.extend($.validator, {
 				port: "validate" + element.name,
 				dataType: "json",
 				data: data,
+				context: validator.currentForm,
 				success: function( response ) {
 					validator.settings.messages[element.name].remote = previous.originalMessage;
 					var valid = response === true || response === "true";
@@ -1196,8 +1223,9 @@ $.extend($.validator, {
 
 });
 
-// deprecated, use $.validator.format instead
-$.format = $.validator.format;
+$.format = function deprecated() {
+	throw "$.format has been deprecated. Please use $.validator.format instead.";
+};
 
 }(jQuery));
 

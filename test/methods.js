@@ -70,44 +70,18 @@ test("email", function() {
 	ok( method( "bart+bart@tokbox.com" ), "Valid email" );
 	ok( method( "bart+bart@tokbox.travel" ), "Valid email" );
 	ok( method( "n@d.tld" ), "Valid email" );
-	ok( method( "ole@føtex.dk"), "Valid email" );
-	ok( method( "jörn@bassistance.de"), "Valid email" );
 	ok( method( "bla.blu@g.mail.com"), "Valid email" );
-	ok( method( "\"Scott Gonzalez\"@example.com" ), "Valid email" );
-	ok( method( "\"Scott González\"@example.com" ), "Valid email" );
-	ok( method( "\"name.\"@domain.tld" ), "Valid email" ); // valid without top label
-	ok( method( "\"name,\"@domain.tld" ), "Valid email" ); // valid without top label
-	ok( method( "\"name;\"@domain.tld" ), "Valid email" ); // valid without top label
+	ok( method( "name@domain" ), "Valid email" );
+	ok( method( "name.@domain.tld" ), "Valid email" );
+	ok( method( "name@website.a" ), "Valid email" );
+	ok(!method( "ole@føtex.dk"), "Invalid email" );
+	ok(!method( "jörn@bassistance.de"), "Invalid email" );
 	ok(!method( "name" ), "Invalid email" );
+	ok(!method( "test@test-.com" ), "Invalid email" );
 	ok(!method( "name@" ), "Invalid email" );
-	ok(!method( "name@domain" ), "Invalid email" );
-	ok(!method( "name.@domain.tld" ), "Invalid email" );
 	ok(!method( "name,@domain.tld" ), "Invalid email" );
 	ok(!method( "name;@domain.tld" ), "Invalid email" );
 	ok(!method( "name;@domain.tld." ), "Invalid email" );
-});
-
-test("email2 (tld optional)", function() {
-	var method = methodTest("email2");
-	ok( method( "name@domain.tld" ), "Valid email" );
-	ok( method( "name@domain.tl" ), "Valid email" );
-	ok( method( "bart+bart@tokbox.com" ), "Valid email" );
-	ok( method( "bart+bart@tokbox.travel" ), "Valid email" );
-	ok( method( "n@d.tld" ), "Valid email" );
-	ok( method( "ole@føtex.dk"), "Valid email" );
-	ok( method( "jörn@bassistance.de"), "Valid email" );
-	ok( method( "bla.blu@g.mail.com"), "Valid email" );
-	ok( method( "\"Scott Gonzalez\"@example.com" ), "Valid email" );
-	ok( method( "\"Scott González\"@example.com" ), "Valid email" );
-	ok( method( "\"name.\"@domain.tld" ), "Valid email" ); // valid without top label
-	ok( method( "\"name,\"@domain.tld" ), "Valid email" ); // valid without top label
-	ok( method( "\"name;\"@domain.tld" ), "Valid email" ); // valid without top label
-	ok(!method( "name" ), "Invalid email" );
-	ok(!method( "name@" ), "Invalid email" );
-	ok( method( "name@domain" ), "Invalid email" );
-	ok(!method( "name.@domain.tld" ), "Invalid email" );
-	ok(!method( "name,@domain.tld" ), "Invalid email" );
-	ok(!method( "name;@domain.tld" ), "Invalid email" );
 });
 
 test("number", function() {
@@ -613,6 +587,7 @@ test("mobileUK", function() {
 test("dateITA", function() {
 	var method = methodTest("dateITA");
 	ok( method( "01/01/1900" ), "Valid date ITA" );
+	ok( method( "17/10/2010" ), "Valid date ITA" );
 	ok(!method( "01/13/1990" ), "Invalid date ITA" );
 	ok(!method( "01.01.1900" ), "Invalid date ITA" );
 	ok(!method( "01/01/199" ), "Invalid date ITA" );
@@ -911,7 +886,7 @@ test("pattern", function() {
 function testCardTypeByNumber(number, cardname, expected) {
 	$("#cardnumber").val(number);
 	var actual = $("#ccform").valid();
-	equal(actual, expected, $.format("Expect card number {0} to validate to {1}, actually validated to ", number, expected));
+	equal(actual, expected, $.validator.format("Expect card number {0} to validate to {1}, actually validated to ", number, expected));
 }
 
 test('creditcardtypes, all', function() {
@@ -978,7 +953,7 @@ function fillFormWithValuesAndExpect(formSelector, inputValues, expected) {
 		$(formSelector + ' input:eq(' + i + ')').val(inputValues[i]);
 	}
 	var actual = $(formSelector).valid();
-	equal(actual, expected, $.format("Filled inputs of form '{0}' with {1} values ({2})", formSelector, inputValues.length, inputValues.toString()));
+	equal(actual, expected, $.validator.format("Filled inputs of form '{0}' with {1} values ({2})", formSelector, inputValues.length, inputValues.toString()));
 
 }
 
@@ -1001,6 +976,25 @@ test('require_from_group', function() {
 	fillFormWithValuesAndExpect('#productInfo', [123, 'widget', 'red'], true);
 });
 
+test('require_from_group preserve other rules', function() {
+	$("#productInfo").validate({
+		rules: {
+			partnumber:  {require_from_group: [2,".productInfo"]},
+			description: {require_from_group: [2,".productInfo"]},
+			color: {require_from_group: [2,".productInfo"]},
+			supplier: {required: true}
+		}
+	});
+
+	fillFormWithValuesAndExpect('#productInfo', [], false);
+	fillFormWithValuesAndExpect('#productInfo', [123], false);
+	fillFormWithValuesAndExpect('#productInfo', [123, 'widget'], false);
+	fillFormWithValuesAndExpect('#productInfo', ['', '', '', 'Acme'], false);
+	fillFormWithValuesAndExpect('#productInfo', [123, '', '', 'Acme'], false);
+	fillFormWithValuesAndExpect('#productInfo', [123, 'widget', '', 'Acme'], true);
+	fillFormWithValuesAndExpect('#productInfo', [123, 'widget', 'red', 'Acme'], true);
+});
+
 test('skip_or_fill_minimum', function() {
 	$("#productInfo").validate({
 		rules: {
@@ -1014,6 +1008,23 @@ test('skip_or_fill_minimum', function() {
 	fillFormWithValuesAndExpect('#productInfo', [123], false);
 	fillFormWithValuesAndExpect('#productInfo', [123, 'widget'], true);
 	fillFormWithValuesAndExpect('#productInfo', [123, 'widget', 'red'], true);
+});
+
+test('skip_or_fill_minimum preserve other rules', function() {
+	$("#productInfo").validate({
+		rules: {
+			partnumber:  {skip_or_fill_minimum: [2,".productInfo"]},
+			description: {skip_or_fill_minimum: [2,".productInfo"]},
+			color:       {skip_or_fill_minimum: [2,".productInfo"]},
+			supplier: {required: true}
+		}
+	});
+
+	fillFormWithValuesAndExpect('#productInfo', [], false);
+	fillFormWithValuesAndExpect('#productInfo', ['', '', '', 'Acme'], true);
+	fillFormWithValuesAndExpect('#productInfo', [123, '', '', 'Acme'], false);
+	fillFormWithValuesAndExpect('#productInfo', [123, 'widget', '', 'Acme'], true);
+	fillFormWithValuesAndExpect('#productInfo', [123, 'widget', 'red', 'Acme'], true);
 });
 
 test("zipcodeUS", function() {
@@ -1120,6 +1131,63 @@ test("cifES", function() {
 	ok(!method( "Basdasdas" ), "CIF invalid: all letters" );
 	ok(!method( "B43.522.192" ), "CIF invalid: dots" );
 	ok(!method( "B-43.522.192" ), "CIF invalid: dots and dash" );
+});
+
+test("maxWords", function(){
+	var method = methodTest("maxWords");
+	var maxWords = 6;
+	ok( method( "I am a sentence", maxWords), "Max Words");
+	ok(!method( "I'm way too long for this sentence!", maxWords), "Too many words");
+	ok(method( "Don’t “count” me as too long", maxWords), "Right amount of words with smartquotes");
+	ok(!method( "But you can “count” me as too long", maxWords), "Too many words with smartquotes");
+	ok(method( "<div>Don’t “count” me as too long</div>", maxWords), "Right amount of words with smartquotes w/ HTML");
+	ok(!method( "<div>But you can “count” me as too long</div>", maxWords), "Too many words with smartquotes w/ HTML");
+});
+
+test("minWords", function(){
+	var method = methodTest("minWords");
+	var minWords = 6;
+	ok(!method( "I am a short sentence", minWords), "Max Words");
+	ok( method( "I'm way too long for this sentence!", minWords), "Too many words");
+	ok(!method( "Don’t “count” me as short.", minWords), "Right amount of words with smartquotes");
+	ok( method( "But you can “count” me as too short", minWords), "Too many words with smartquotes");
+	ok(!method( "<div>“Count” me as too short.</div>", minWords), "Right amount of words with smartquotes w/ HTML");
+	ok( method( "<div>But you can “count” me as too long</div>", minWords), "Too many words with smartquotes w/ HTML");
+});
+
+test("rangeWords", function(){
+	var method = methodTest("rangeWords");
+	var rangeWords = [3,6];
+	ok(!method( "I'm going to be longer than “six words!”", rangeWords), "Longer than 6 with smartquotes");
+	ok( method( "I'm just the right amount!", rangeWords), "In between");
+	ok( method( "Super short sentence’s.", rangeWords), "Low end");
+	ok(!method( "I", rangeWords), "Too short");
+	ok( method( "<div>“Count” me as perfect.</div>", rangeWords), "Right amount of words with smartquotes w/ HTML");
+	ok(!method( "<div>But you can “count” me as too long</div>", rangeWords), "Too many words with smartquotes w/ HTML");
+});
+
+test("currency", function() { // Works with any symbol
+    var method = methodTest( "currency" );
+    ok( method( "£9", '£'), "Valid currency" );
+    ok( method( "£9.9", '£'), "Valid currency" );
+    ok( method( "£9.99", '£'), "Valid currency" );
+    ok( method( "£9.90", '£'), "Valid currency" );
+    ok( method( "£9,999.9", '£'), "Valid currency" );
+    ok( method( "£9,999.99", '£'), "Valid currency" );
+    ok( method( "£9,999,999.9", '£'), "Valid currency" );
+    ok( method( "9", ['£', false]), "Valid currency" );
+    ok( method( "9.9", ['£', false]), "Valid currency" );
+    ok( method( "9.99", ['£', false]), "Valid currency" );
+    ok( method( "9.90", ['£', false]), "Valid currency" );
+    ok( method( "9,999.9", ['£', false]), "Valid currency" );
+    ok( method( "9,999.99", ['£', false]), "Valid currency" );
+    ok( method( "9,999,999.9", ['£', false]), "Valid currency" );
+    ok(!method( "9,", '£'), "Invalid currency" );
+    ok(!method( "9,99.99", '£'), "Invalid currency" );
+    ok(!method( "9,", '£'), "Invalid currency" );
+    ok(!method( "9.999", '£'), "Invalid currency" );
+    ok(!method( "9.999", '£'), "Invalid currency" );
+    ok(!method( "9.99,9", '£'), "Invalid currency" );
 });
 
 })(jQuery);

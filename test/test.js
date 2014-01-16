@@ -479,14 +479,16 @@ test("option: errorClass with multiple classes", function() {
 	form.validate({
 		focusCleanup: true,
 		wrapper: "span",
-		errorClass: "error error1"
+		errorClass: "error error1 error2"
 	});
 	form.valid();
 	ok( form.is(":has(span:visible:has(label.error[for=username]))") );
 	ok( form.is(":has(span:visible:has(label.error1[for=username]))") );
+	ok( form.is(":has(span:visible:has(label.error2[for=username]))") );
 	$("#username").focus().trigger("focusin");
 	ok( !form.is(":has(span:visible:has(label.error[for=username]))") );
 	ok( !form.is(":has(span:visible:has(label.error1[for=username]))") );
+	ok( !form.is(":has(span:visible:has(label.error2[for=username]))") );
 });
 
 test("elements() order", function() {
@@ -900,7 +902,8 @@ test("successlist", function() {
 	equal(0, v.successList.length);
 });
 
-test("success isn't called for optional elements", function() {
+
+test("success isn't called for optional elements with no other rules", function() {
 	expect(4);
 	equal( "", $("#firstname").removeAttr("data-rule-required").removeAttr("data-rule-minlength").val() );
 	$("#something").remove();
@@ -911,7 +914,7 @@ test("success isn't called for optional elements", function() {
 			ok( false, "don't call success for optional elements!" );
 		},
 		rules: {
-			firstname: "email"
+			firstname: { required: false }
 		}
 	});
 	equal( 0, $("#testForm1 label").size() );
@@ -920,6 +923,31 @@ test("success isn't called for optional elements", function() {
 	$("#firstname").valid();
 	equal( 0, $("#testForm1 label").size() );
 });
+
+test("success is called for optional elements with other rules", function() {
+	expect(1);
+
+	$.validator.addMethod("custom1", function() {
+		return true;
+	}, "");
+
+	var v = $("#testForm1clean").validate({
+		success: function() {
+			ok( true, "success called correctly!" );
+		},
+		rules: {
+			firstname: {
+				required: false,
+				custom1: true
+			}
+		}
+	});
+
+	$("#firstnamec").valid();
+
+	delete $.validator.methods.custom1;
+});
+
 
 test("success callback with element", function() {
 	expect(1);
@@ -1451,6 +1479,20 @@ test("Min and Max strings set by attributes valid", function() {
 	equal( label.text(), "", "Correct error label" );
 });
 
+test( "calling blur on ignored element", function() {
+	var form = $( "#ignoredElements" );
+
+	form.validate({
+		ignore: '.ignore',
+		submitHandler: $.noop,
+		invalidHandler: function() {
+			$( "#ss1" ).blur();
+		}
+	});
+
+	form.trigger( "submit" );
+	equal( form.valid(), false, "valid() should return false" );
+});
 
 
 test("Min and Max type absent set by attributes greater", function() {

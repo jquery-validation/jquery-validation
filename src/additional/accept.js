@@ -30,4 +30,4 @@ jQuery.validator.addMethod("accept", function(value, element, param) {
 	// Either return true because we've validated each file, or because the
 	// browser does not support element.files and the FileList feature
 	return true;
-}, jQuery.format("Please enter a value with a valid mimetype."));
+}, jQuery.validator.format("Please enter a value with a valid mimetype."));

@@ -137,6 +137,7 @@
 
 		<form id="testForm9">
 			<input id="testEmail9" data-rule-required="true" data-rule-email="true" data-msg-required="required" data-msg-email="email" />
+			<input id="testGeneric9" data-rule-required="true" data-rule-email="true" data-msg="generic" data-msg-email="email" />
 		</form>
 
 		<form id="testForm10">
@@ -289,6 +290,7 @@
 			<input class="productInfo" name="partnumber">
 			<input class="productInfo" name="description">
 			<input class="productInfo" name="color">
+			<input name="supplier">
 			<input class="productInfo" type="checkbox" name="discount" />
 		</form>
 
@@ -344,16 +346,25 @@
 				<input id="bypassSubmitWithNoValidate1" type="submit" formnovalidate value="bypass1"/>
 				<input id="bypassSubmitWithNoValidate2" type="submit" formnovalidate="formnovalidate" value="bypass2"/>
 		</form>
-		
+
 		<form id="ariaInvalid">
 			<input type="text" name="ariaInvalidFirstName" id="ariaInvalidFirstName" />
 		</form>
-		
+
 		<form id="ariaRequired">
 			<input type="text" name="ariaRequiredDynamic" id="ariaRequiredDynamic" />
 			<input type="text" name="ariaRequiredStatic" id="ariaRequiredStatic" required="" />
 			<input type="text" name="ariaRequiredData" id="ariaRequiredData" data-rule-required="true" />
 			<input type="text" name="ariaRequiredClass" id="ariaRequiredClass" class="required" />
+		</form>
+
+		<form id="ignoredElements">
+			<select id="ss1" class="ignore">
+				<option value="1">option 1</option>
+				<option value="2">option 2</option>
+			</select>
+			<br />
+			<input name="test" class="required" value=""/>
 		</form>
 	</div>
 

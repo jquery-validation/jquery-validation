@@ -25,7 +25,7 @@ jQuery.validator.addMethod("dateITA", function(value, element) {
 		var gg = parseInt(adata[0],10);
 		var mm = parseInt(adata[1],10);
 		var aaaa = parseInt(adata[2],10);
-		var xdata = new Date(aaaa,mm-1,gg);
+		var xdata = new Date(aaaa, mm-1, gg, 12, 0, 0, 0);
 		if ( ( xdata.getFullYear() === aaaa ) && ( xdata.getMonth() === mm - 1 ) && ( xdata.getDate() === gg ) ){
 			check = true;
 		} else {
