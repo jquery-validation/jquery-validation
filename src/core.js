@@ -96,16 +96,18 @@ $.extend($.fn, {
 	},
 	// http://jqueryvalidation.org/valid/
 	valid: function() {
+		var valid, validator;
+
 		if ( $(this[0]).is("form")) {
-			return this.validate().form();
+			valid = this.validate().form();
 		} else {
-			var valid = true;
-			var validator = $(this[0].form).validate();
+			valid = true;
+			validator = $(this[0].form).validate();
 			this.each(function() {
 				valid = validator.element(this) && valid;
 			});
-			return valid;
 		}
+		return valid;
 	},
 	// attributes: space separated list of attributes to retrieve and remove
 	removeAttrs: function( attributes ) {
@@ -119,12 +121,13 @@ $.extend($.fn, {
 	},
 	// http://jqueryvalidation.org/rules/
 	rules: function( command, argument ) {
-		var element = this[0];
+		var element = this[0],
+			settings, staticRules, existingRules, data, param;
 
 		if ( command ) {
-			var settings = $.data(element.form, "validator").settings;
-			var staticRules = settings.rules;
-			var existingRules = $.validator.staticRules(element);
+			settings = $.data(element.form, "validator").settings;
+			staticRules = settings.rules;
+			existingRules = $.validator.staticRules(element);
 			switch (command) {
 			case "add":
 				$.extend(existingRules, $.validator.normalizeRule(argument));
@@ -152,7 +155,7 @@ $.extend($.fn, {
 			}
 		}
 
-		var data = $.validator.normalizeRules(
+		data = $.validator.normalizeRules(
 		$.extend(
 			{},
 			$.validator.classRules(element),
@@ -162,7 +165,6 @@ $.extend($.fn, {
 		), element);
 
 		// make sure required is at front
-		var param;
 		if ( data.required ) {
 			param = data.required;
 			delete data.required;
@@ -386,9 +388,9 @@ $.extend($.validator, {
 
 		// http://jqueryvalidation.org/Validator.element/
 		element: function( element ) {
-			var cleanElement = this.clean( element );
-			var checkElement = this.validationTargetFor( cleanElement );
-			var result = true;
+			var cleanElement = this.clean( element ),
+				checkElement = this.validationTargetFor( cleanElement ),
+				result = true;
 
 			this.lastElement = checkElement;
 
@@ -569,16 +571,16 @@ $.extend($.validator, {
 		check: function( element ) {
 			element = this.validationTargetFor( this.clean( element ) );
 
-			var rules = $(element).rules();
-			var rulesCount = $.map( rules, function(n, i) {
-				return i;
-			}).length;
-			var dependencyMismatch = false;
-			var val = this.elementValue(element);
-			var result;
+			var rules = $(element).rules(),
+				rulesCount = $.map( rules, function(n, i) {
+					return i;
+				}).length,
+				dependencyMismatch = false,
+				val = this.elementValue(element),
+				result, method, rule;
 
-			for (var method in rules ) {
-				var rule = { method: method, parameters: rules[method] };
+			for (method in rules ) {
+				rule = { method: method, parameters: rules[method] };
 				try {
 
 					result = $.validator.methods[method].call( this, val, element, rule.parameters );
@@ -862,8 +864,9 @@ $.extend($.validator, {
 	},
 
 	classRules: function( element ) {
-		var rules = {};
-		var classes = $(element).attr("class");
+		var rules = {},
+			classes = $(element).attr("class");
+
 		if ( classes ) {
 			$.each(classes.split(" "), function() {
 				if ( this in $.validator.classRuleSettings ) {
@@ -875,12 +878,12 @@ $.extend($.validator, {
 	},
 
 	attributeRules: function( element ) {
-		var rules = {};
-		var $element = $(element);
-		var type = $element[0].getAttribute("type");
+		var rules = {},
+			$element = $(element),
+			type = $element[0].getAttribute("type"),
+			method, value;
 
-		for (var method in $.validator.methods) {
-			var value;
+		for (method in $.validator.methods) {
 
 			// support for <input required> in both html5 and older browsers
 			if ( method === "required" ) {
@@ -932,8 +935,9 @@ $.extend($.validator, {
 	},
 
 	staticRules: function( element ) {
-		var rules = {};
-		var validator = $.data(element.form, "validator");
+		var rules = {},
+			validator = $.data(element.form, "validator");
+
 		if ( validator.settings.rules ) {
 			rules = $.validator.normalizeRule(validator.settings.rules[element.name]) || {};
 		}
@@ -1196,8 +1200,10 @@ $.extend($.validator, {
 				data: data,
 				context: validator.currentForm,
 				success: function( response ) {
+					var valid = response === true || response === "true",
+						errors, message;
+
 					validator.settings.messages[element.name].remote = previous.originalMessage;
-					var valid = response === true || response === "true";
 					if ( valid ) {
 						var submitted = validator.formSubmitted;
 						validator.prepareElement(element);
@@ -1206,8 +1212,8 @@ $.extend($.validator, {
 						delete validator.invalid[element.name];
 						validator.showErrors();
 					} else {
-						var errors = {};
-						var message = response || validator.defaultMessage( element, "remote" );
+						errors = {};
+						message = response || validator.defaultMessage( element, "remote" );
 						errors[element.name] = previous.message = $.isFunction(message) ? message(value) : message;
 						validator.invalid[element.name] = true;
 						validator.showErrors(errors);
