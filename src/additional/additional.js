@@ -26,8 +26,8 @@
 	}, jQuery.validator.format("Please enter at least {0} words."));
 
 	jQuery.validator.addMethod("rangeWords", function(value, element, params) {
-		var valueStripped = stripHtml(value);
-		var regex = /\b\w+\b/g;
+		var valueStripped = stripHtml(value),
+			regex = /\b\w+\b/g;
 		return this.optional(element) || valueStripped.match(regex).length >= params[0] && valueStripped.match(regex).length <= params[1];
 	}, jQuery.validator.format("Please enter between {0} and {1} words."));
 

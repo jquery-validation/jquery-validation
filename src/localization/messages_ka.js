@@ -2,7 +2,7 @@
  * Translated default messages for the jQuery validation plugin.
  * Locale: KA (Georgian; ქართული)
  */
-(function ($) {
+(function($) {
 	$.extend($.validator.messages, {
 		required: "ამ ველის შევსება აუცილებელია.",
 		remote: "გთხოვთ მიუთითოთ სწორი მნიშვნელობა.",

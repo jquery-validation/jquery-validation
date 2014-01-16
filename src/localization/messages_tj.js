@@ -2,7 +2,7 @@
  * Translated default messages for the jQuery validation plugin.
  * Locale: TJ (Tajikistan; Забони тоҷикӣ)
  */
-(function ($) {
+(function($) {
 	$.extend($.validator.messages, {
 		required: "Ворид кардани ин филд маҷбури аст.",
 		remote: "Илтимос, маълумоти саҳеҳ ворид кунед.",

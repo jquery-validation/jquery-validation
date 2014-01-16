@@ -3,7 +3,7 @@
  * Locale: ZH (Chinese; 中文 (Zhōngwén), 汉语, 漢語)
  * Region: TW (Taiwan)
  */
-(function ($) {
+(function($) {
 	$.extend($.validator.messages, {
 		required: "必須填寫",
 		remote: "請修正此欄位",

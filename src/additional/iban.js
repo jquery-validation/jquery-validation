@@ -7,17 +7,22 @@ jQuery.validator.addMethod("iban", function(value, element) {
 	if (this.optional(element)) {
 		return true;
 	}
-    // trim trailing whitespaces
-    value = jQuery.trim(value);
 
-	if (!(/^([a-zA-Z0-9]{4} ){2,8}[a-zA-Z0-9]{1,4}|[a-zA-Z0-9]{12,34}$/.test(value))) {
+	// remove spaces and to upper case
+	var iban = value.replace(/ /g,'').toUpperCase(),
+		ibancheckdigits = "",
+		leadingZeroes = true,
+		cRest = '',
+		cOperator = '',
+		countrycode, ibancheck, charAt, cChar, bbanpattern, bbancountrypatterns, ibanregexp, i, p;
+
+	if (!(/^([a-zA-Z0-9]{4} ){2,8}[a-zA-Z0-9]{1,4}|[a-zA-Z0-9]{12,34}$/.test(iban))) {
 		return false;
 	}
 
 	// check the country code and find the country specific format
-	var iban = value.replace(/ /g,'').toUpperCase(); // remove spaces and to upper case
-	var countrycode = iban.substring(0,2);
-	var bbancountrypatterns = {
+	countrycode = iban.substring(0,2);
+	bbancountrypatterns = {
 		'AL': "\\d{8}[\\dA-Z]{16}",
 		'AD': "\\d{8}[\\dA-Z]{12}",
 		'AT': "\\d{16}",
@@ -83,7 +88,8 @@ jQuery.validator.addMethod("iban", function(value, element) {
 		'GB': "[A-Z]{4}\\d{14}",
 		'VG': "[\\dA-Z]{4}\\d{16}"
 	};
-	var bbanpattern = bbancountrypatterns[countrycode];
+
+	bbanpattern = bbancountrypatterns[countrycode];
 	// As new countries will start using IBAN in the
 	// future, we only check if the countrycode is known.
 	// This prevents false negatives, while almost all
@@ -92,18 +98,15 @@ jQuery.validator.addMethod("iban", function(value, element) {
 	// Strict checking should return FALSE for unknown
 	// countries.
 	if (typeof bbanpattern !== 'undefined') {
-		var ibanregexp = new RegExp("^[A-Z]{2}\\d{2}" + bbanpattern + "$", "");
+		ibanregexp = new RegExp("^[A-Z]{2}\\d{2}" + bbanpattern + "$", "");
 		if (!(ibanregexp.test(iban))) {
 			return false; // invalid country specific format
 		}
 	}
 
 	// now check the checksum, first convert to digits
-	var ibancheck = iban.substring(4,iban.length) + iban.substring(0,4);
-	var ibancheckdigits = "";
-	var leadingZeroes = true;
-	var charAt;
-	for (var i =0; i<ibancheck.length; i++) {
+	ibancheck = iban.substring(4,iban.length) + iban.substring(0,4);
+	for (i = 0; i < ibancheck.length; i++) {
 		charAt = ibancheck.charAt(i);
 		if (charAt !== "0") {
 			leadingZeroes = false;
@@ -114,12 +117,10 @@ jQuery.validator.addMethod("iban", function(value, element) {
 	}
 
 	// calculate the result of: ibancheckdigits % 97
-    var cRest = '';
-    var cOperator = '';
-	for (var p=0; p<ibancheckdigits.length; p++) {
-		var cChar = ibancheckdigits.charAt(p);
+	for (p = 0; p < ibancheckdigits.length; p++) {
+		cChar = ibancheckdigits.charAt(p);
 		cOperator = '' + cRest + '' + cChar;
 		cRest = cOperator % 97;
-    }
+	}
 	return cRest === 1;
 }, "Please specify a valid IBAN");

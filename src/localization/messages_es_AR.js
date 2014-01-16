@@ -3,7 +3,7 @@
  * Locale: ES (Spanish; Español)
  * Region: AR (Argentina)
  */
-(function ($) {
+(function($) {
 	$.extend($.validator.messages, {
 		required: "Este campo es obligatorio.",
 		remote: "Por favor, completá este campo.",

@@ -119,6 +119,14 @@ grunt.initConfig({
 			files: ['<%= jshint.test.files.src %>', 'test/index.html'],
 			tasks: ['jshint:test']
 		}
+	},
+	jscs: {
+		all: {
+			options: {
+				preset: 'jquery'
+			},
+			src: 'src/**/*.*'
+		}
 	}
 });
 
@@ -128,8 +136,9 @@ grunt.loadNpmTasks('grunt-contrib-uglify');
 grunt.loadNpmTasks('grunt-contrib-concat');
 grunt.loadNpmTasks('grunt-contrib-compress');
 grunt.loadNpmTasks('grunt-contrib-watch');
+grunt.loadNpmTasks('grunt-jscs-checker');
 
-grunt.registerTask('default', ['concat', 'jshint', 'qunit']);
+grunt.registerTask('default', ['jscs', 'concat', 'jshint', 'qunit']);
 grunt.registerTask('release', ['default', 'uglify', 'compress']);
 grunt.registerTask('start', ['concat', 'watch']);
 

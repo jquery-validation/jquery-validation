@@ -2,7 +2,7 @@
  * Translated default messages for the jQuery validation plugin.
  * Locale: HE (Hebrew; עברית)
  */
-(function ($) {
+(function($) {
 	$.extend($.validator.messages, {
 		required: "השדה הזה הינו שדה חובה",
 		remote: "נא לתקן שדה זה",
