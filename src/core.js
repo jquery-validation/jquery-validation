@@ -1228,4 +1228,3 @@ $.format = function deprecated() {
 };
 
 }(jQuery));
-

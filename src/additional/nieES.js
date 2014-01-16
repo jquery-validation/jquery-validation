@@ -32,4 +32,3 @@ jQuery.validator.addMethod( "nieES", function( value, element ) {
 	return false;
 
 }, "Please specify a valid NIE number." );
-
