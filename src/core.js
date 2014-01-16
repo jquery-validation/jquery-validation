@@ -843,14 +843,14 @@ $.extend($.validator, {
 	},
 
 	classRuleSettings: {
-		required: {required: true},
-		email: {email: true},
-		url: {url: true},
-		date: {date: true},
-		dateISO: {dateISO: true},
-		number: {number: true},
-		digits: {digits: true},
-		creditcard: {creditcard: true}
+		required: { required: true },
+		email: { email: true },
+		url: { url: true },
+		date: { date: true },
+		dateISO: { dateISO: true },
+		number: { number: true },
+		digits: { digits: true },
+		creditcard: { creditcard: true }
 	},
 
 	addClassRules: function( className, rules ) {
@@ -1177,7 +1177,7 @@ $.extend($.validator, {
 			previous.originalMessage = this.settings.messages[element.name].remote;
 			this.settings.messages[element.name].remote = previous.message;
 
-			param = typeof param === "string" && {url: param} || param;
+			param = typeof param === "string" && { url: param } || param;
 
 			if ( previous.old === value ) {
 				return previous.valid;
