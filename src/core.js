@@ -125,7 +125,7 @@ $.extend($.fn, {
 			var settings = $.data(element.form, "validator").settings;
 			var staticRules = settings.rules;
 			var existingRules = $.validator.staticRules(element);
-			switch(command) {
+			switch (command) {
 			case "add":
 				$.extend(existingRules, $.validator.normalizeRule(argument));
 				// remove messages from rules, but allow them to be set separately
@@ -632,7 +632,7 @@ $.extend($.validator, {
 
 		// return the first defined argument, allowing empty strings
 		findDefined: function() {
-			for(var i = 0; i < arguments.length; i++) {
+			for (var i = 0; i < arguments.length; i++) {
 				if ( arguments[i] !== undefined ) {
 					return arguments[i];
 				}
@@ -777,7 +777,7 @@ $.extend($.validator, {
 		},
 
 		getLength: function( value, element ) {
-			switch( element.nodeName.toLowerCase() ) {
+			switch ( element.nodeName.toLowerCase() ) {
 			case "select":
 				return $("option:selected", element).length;
 			case "input":

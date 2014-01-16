@@ -19,7 +19,7 @@ jQuery.validator.addMethod("vinUS", function(v) {
 	var VL = [ 1, 2, 3, 4, 5, 6, 7, 8, 1, 2, 3, 4, 5, 7, 9, 2, 3, 4, 5, 6, 7, 8, 9 ];
 	var FL = [ 8, 7, 6, 5, 4, 3, 2, 10, 0, 9, 8, 7, 6, 5, 4, 3, 2 ];
 	var rs = 0;
-	for(i = 0; i < 17; i++){
+	for (i = 0; i < 17; i++){
 		f = FL[i];
 		d = v.slice(i,i + 1);
 		if (i === 8) {
