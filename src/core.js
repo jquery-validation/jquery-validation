@@ -263,9 +263,9 @@ $.extend($.validator, {
 			// click on selects, radiobuttons and checkboxes
 			if ( element.name in this.submitted ) {
 				this.element(element);
-			}
+
 			// or option elements, check parent select in that case
-			else if ( element.parentNode.name in this.submitted ) {
+			} else if ( element.parentNode.name in this.submitted ) {
 				this.element(element.parentNode);
 			}
 		},
