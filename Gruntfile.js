@@ -119,7 +119,8 @@ grunt.initConfig({
 			files: ['<%= jshint.test.files.src %>', 'test/index.html'],
 			tasks: ['jshint:test']
 		}
-	}
+	},
+	jscoverage: {}
 });
 
 grunt.loadNpmTasks('grunt-contrib-jshint');
@@ -132,5 +133,22 @@ grunt.loadNpmTasks('grunt-contrib-watch');
 grunt.registerTask('default', ['concat', 'jshint', 'qunit']);
 grunt.registerTask('release', ['default', 'uglify', 'compress']);
 grunt.registerTask('start', ['concat', 'watch']);
+
+
+grunt.registerTask("jscoverage", "Grunt task for jscoverage; which will parse your source code and generate an instrumented version allowing testing tools to generate code coverage reports", function() {
+
+	var jscoverage = require('jscoverage');
+
+	jscoverage.processFile('dist/jquery.validate.js', 'dist/jquery.validate.js');
+	jscoverage.processFile('dist/additional-methods.js', 'dist/additional-methods.js');
+
+	var lcovResults = '';
+	//TODO: QUnit hook to report coverage
+
+	var coveralls = require('coveralls').handleInput;
+
+	coveralls(lcovResults);
+
+});
 
 };
