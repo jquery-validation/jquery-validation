@@ -176,6 +176,11 @@ grunt.registerTask("coverage", "Grunt task for coverage; which will parse your s
 
 			lcovResults += 'end_of_record\n';
 		}
+
+		// Restore file contents
+		grunt.file.write('dist/jquery.validate.js', validate);
+		grunt.file.write('dist/additional-methods.js', additional);
+
 		coveralls(lcovResults);
 	});
 
