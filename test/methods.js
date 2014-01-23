@@ -460,7 +460,7 @@ test("remote radio correct value sent", function() {
 					url: "echo.php",
 					dataType: "json",
 					success: function(data) {
-						equal( data["testForm10Radio"], "2", " correct radio value sent" );
+						equal( data.testForm10Radio, "2", " correct radio value sent" );
 						start();
 					}
 				}

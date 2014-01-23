@@ -780,7 +780,7 @@ test("message from title", function() {
 test("ignoreTitle", function() {
 	var v = $("#withTitle").validate({ignoreTitle:true});
     v.checkForm();
-	equal(v.errorList[0].message, $.validator.messages["required"], "title used when it should have been ignored");
+	equal(v.errorList[0].message, $.validator.messages.required, "title used when it should have been ignored");
 });
 
 test("ajaxSubmit", function() {
