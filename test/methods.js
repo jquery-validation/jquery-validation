@@ -172,7 +172,7 @@ test("dateDE", function() {
 test("required", function() {
 	var v = jQuery("#form").validate(),
 		method = $.validator.methods.required,
-		e = $('#text1, #text1b, #hidden2, #select1, #select2');
+		e = $("#text1, #text1b, #hidden2, #select1, #select2");
 	ok( method.call( v, e[0].value, e[0]), "Valid text input" );
 	ok(!method.call( v, e[1].value, e[1]), "Invalid text input" );
 	ok(!method.call( v, e[1].value, e[2]), "Invalid text input" );
@@ -180,22 +180,22 @@ test("required", function() {
 	ok(!method.call( v, e[2].value, e[3]), "Invalid select" );
 	ok( method.call( v, e[3].value, e[4]), "Valid select" );
 
-	e = $('#area1, #area2, #pw1, #pw2');
+	e = $("#area1, #area2, #pw1, #pw2");
 	ok( method.call( v, e[0].value, e[0]), "Valid textarea" );
 	ok(!method.call( v, e[1].value, e[1]), "Invalid textarea" );
 	ok( method.call( v, e[2].value, e[2]), "Valid password input" );
 	ok(!method.call( v, e[3].value, e[3]), "Invalid password input" );
 
-	e = $('#radio1, #radio2, #radio3');
+	e = $("#radio1, #radio2, #radio3");
 	ok(!method.call( v, e[0].value, e[0]), "Invalid radio" );
 	ok( method.call( v, e[1].value, e[1]), "Valid radio" );
 	ok( method.call( v, e[2].value, e[2]), "Valid radio" );
 
-	e = $('#check1, #check2');
+	e = $("#check1, #check2");
 	ok( method.call( v, e[0].value, e[0]), "Valid checkbox" );
 	ok(!method.call( v, e[1].value, e[1]), "Invalid checkbox" );
 
-	e = $('#select1, #select2, #select3, #select4');
+	e = $("#select1, #select2, #select3, #select4");
 	ok(!method.call( v, e[0].value, e[0]), "Invalid select" );
 	ok( method.call( v, e[1].value, e[1]), "Valid select" );
 	ok( method.call( v, e[2].value, e[2]), "Valid select" );
@@ -205,7 +205,7 @@ test("required", function() {
 test("required with dependencies", function() {
 	var v = jQuery("#form").validate(),
 		method = $.validator.methods.required,
-		e = $('#hidden2, #select1, #area2, #radio1, #check2');
+		e = $("#hidden2, #select1, #area2, #radio1, #check2");
 	ok( method.call( v, e[0].value, e[0], "asffsaa" ), "Valid text input due to dependency not met" );
 	ok(!method.call( v, e[0].value, e[0], "input" ), "Invalid text input" );
 	ok( method.call( v, e[0].value, e[0], function() { return false; }), "Valid text input due to dependency not met" );
@@ -224,18 +224,18 @@ test("minlength", function() {
 	var v = jQuery("#form").validate(),
 		method = $.validator.methods.minlength,
 		param = 2,
-		e = $('#text1, #text1c, #text2, #text3');
+		e = $("#text1, #text1c, #text2, #text3");
 	ok( method.call( v, e[0].value, e[0], param), "Valid text input" );
 	ok(!method.call( v, e[1].value, e[1], param), "Invalid text input" );
 	ok(!method.call( v, e[2].value, e[2], param), "Invalid text input" );
 	ok( method.call( v, e[3].value, e[3], param), "Valid text input" );
 
-	e = $('#check1, #check2, #check3');
+	e = $("#check1, #check2, #check3");
 	ok(!method.call( v, e[0].value, e[0], param), "Valid checkbox" );
 	ok( method.call( v, e[1].value, e[1], param), "Valid checkbox" );
 	ok( method.call( v, e[2].value, e[2], param), "Invalid checkbox" );
 
-	e = $('#select1, #select2, #select3, #select4, #select5');
+	e = $("#select1, #select2, #select3, #select4, #select5");
 	ok(method.call( v, e[0].value, e[0], param), "Valid select " + e[0].id );
 	ok(!method.call( v, e[1].value, e[1], param), "Invalid select " + e[1].id );
 	ok( method.call( v, e[2].value, e[2], param), "Valid select " + e[2].id );
@@ -247,17 +247,17 @@ test("maxlength", function() {
 	var v = jQuery("#form").validate();
 	var method = $.validator.methods.maxlength,
 		param = 4,
-		e = $('#text1, #text2, #text3');
+		e = $("#text1, #text2, #text3");
 	ok( method.call( v, e[0].value, e[0], param), "Valid text input" );
 	ok( method.call( v, e[1].value, e[1], param), "Valid text input" );
 	ok(!method.call( v, e[2].value, e[2], param), "Invalid text input" );
 
-	e = $('#check1, #check2, #check3');
+	e = $("#check1, #check2, #check3");
 	ok( method.call( v, e[0].value, e[0], param), "Valid checkbox" );
 	ok( method.call( v, e[1].value, e[1], param), "Invalid checkbox" );
 	ok(!method.call( v, e[2].value, e[2], param), "Invalid checkbox" );
 
-	e = $('#select1, #select2, #select3, #select4');
+	e = $("#select1, #select2, #select3, #select4");
 	ok( method.call( v, e[0].value, e[0], param), "Valid select" );
 	ok( method.call( v, e[1].value, e[1], param), "Valid select" );
 	ok( method.call( v, e[2].value, e[2], param), "Valid select" );
@@ -268,7 +268,7 @@ test("rangelength", function() {
 	var v = jQuery("#form").validate();
 	var method = $.validator.methods.rangelength,
 		param = [2, 4],
-		e = $('#text1, #text2, #text3');
+		e = $("#text1, #text2, #text3");
 	ok( method.call( v, e[0].value, e[0], param), "Valid text input" );
 	ok(!method.call( v, e[1].value, e[1], param), "Invalid text input" );
 	ok(!method.call( v, e[2].value, e[2], param), "Invalid text input" );
@@ -278,7 +278,7 @@ test("min", function() {
 	var v = jQuery("#form").validate();
 	var method = $.validator.methods.min,
 		param = 8,
-		e = $('#value1, #value2, #value3');
+		e = $("#value1, #value2, #value3");
 	ok(!method.call( v, e[0].value, e[0], param), "Invalid text input" );
 	ok( method.call( v, e[1].value, e[1], param), "Valid text input" );
 	ok( method.call( v, e[2].value, e[2], param), "Valid text input" );
@@ -288,7 +288,7 @@ test("max", function() {
 	var v = jQuery("#form").validate();
 	var method = $.validator.methods.max,
 		param = 12,
-		e = $('#value1, #value2, #value3');
+		e = $("#value1, #value2, #value3");
 	ok( method.call( v, e[0].value, e[0], param), "Valid text input" );
 	ok( method.call( v, e[1].value, e[1], param), "Valid text input" );
 	ok(!method.call( v, e[2].value, e[2], param), "Invalid text input" );
@@ -298,7 +298,7 @@ test("range", function() {
 	var v = jQuery("#form").validate();
 	var method = $.validator.methods.range,
 		param = [4,12],
-		e = $('#value1, #value2, #value3');
+		e = $("#value1, #value2, #value3");
 	ok(!method.call( v, e[0].value, e[0], param), "Invalid text input" );
 	ok( method.call( v, e[1].value, e[1], param), "Valid text input" );
 	ok(!method.call( v, e[2].value, e[2], param), "Invalid text input" );
@@ -307,7 +307,7 @@ test("range", function() {
 test("equalTo", function() {
 	var v = jQuery("#form").validate();
 	var method = $.validator.methods.equalTo,
-		e = $('#text1, #text2');
+		e = $("#text1, #text2");
 	ok( method.call( v, "Test", e[0], "#text1" ), "Text input" );
 	ok( method.call( v, "T", e[1], "#text2" ), "Another one" );
 });
@@ -330,7 +330,7 @@ test("extension", function() {
 
 	var v = jQuery("#form").validate();
 	method = function(value, param) {
-		return $.validator.methods.extension.call(v, value, $('#text1')[0], param);
+		return $.validator.methods.extension.call(v, value, $("#text1")[0], param);
 	};
 	ok( method( "picture.doc", "doc" ), "Valid custom accept type" );
 	ok( method( "picture.pdf", "doc|pdf" ), "Valid custom accept type" );
@@ -451,7 +451,7 @@ test("remote radio correct value sent", function() {
 	expect(1);
 	stop();
 	var e = $("#testForm10Radio2");
-	e.attr('checked', 'checked');
+	e.attr("checked", "checked");
 	var v = $("#testForm10").validate({
 		rules: {
 			testForm10Radio: {
@@ -460,7 +460,7 @@ test("remote radio correct value sent", function() {
 					url: "echo.php",
 					dataType: "json",
 					success: function(data) {
-						equal( data['testForm10Radio'], '2', ' correct radio value sent' );
+						equal( data["testForm10Radio"], "2", " correct radio value sent" );
 						start();
 					}
 				}
@@ -483,7 +483,7 @@ test("remote reset clear old value", function() {
 					url: "echo.php",
 					dataFilter: function(data) {
 						var json = JSON.parse(data);
-						if(json.username === 'asdf') {
+						if(json.username === "asdf") {
 							return "\"asdf is already taken\"";
 						}
 						return "\"" + true + "\"";
@@ -889,7 +889,7 @@ function testCardTypeByNumber(number, cardname, expected) {
 	equal(actual, expected, $.validator.format("Expect card number {0} to validate to {1}, actually validated to ", number, expected));
 }
 
-test('creditcardtypes, all', function() {
+test("creditcardtypes, all", function() {
 	$("#ccform").validate({
 		rules: {
 			cardnumber: {
@@ -912,7 +912,7 @@ test('creditcardtypes, all', function() {
 	testCardTypeByNumber( "3777-7777-7777-7777", "AMEX", false );
 });
 
-test('creditcardtypes, visa', function() {
+test("creditcardtypes, visa", function() {
 	$("#ccform").validate({
 		rules: {
 			cardnumber: {
@@ -930,7 +930,7 @@ test('creditcardtypes, visa', function() {
 	testCardTypeByNumber( "3400-0000-0000-009", "AMEX", false );
 });
 
-test('creditcardtypes, mastercard', function() {
+test("creditcardtypes, mastercard", function() {
 	$("#ccform").validate({
 		rules: {
 			cardnumber: {
@@ -950,52 +950,52 @@ test('creditcardtypes, mastercard', function() {
 
 function fillFormWithValuesAndExpect(formSelector, inputValues, expected) {
 	for (var i=0; i < inputValues.length; i++) {
-		$(formSelector + ' input:eq(' + i + ')').val(inputValues[i]);
+		$(formSelector + " input:eq(" + i + ")").val(inputValues[i]);
 	}
 	var actual = $(formSelector).valid();
 	equal(actual, expected, $.validator.format("Filled inputs of form '{0}' with {1} values ({2})", formSelector, inputValues.length, inputValues.toString()));
 
 }
 
-test('require_from_group', function() {
+test("require_from_group", function() {
 	$("#productInfo").validate({
 		rules: {
-			partnumber:  {require_from_group: [2,".productInfo"]},
+			partnumber: {require_from_group: [2,".productInfo"]},
 			description: {require_from_group: [2,".productInfo"]},
 			discount: {require_from_group: [2,".productInfo"]}
 		}
 	});
 
-	fillFormWithValuesAndExpect('#productInfo', [], false);
-	fillFormWithValuesAndExpect('#productInfo', [123], false);
-	$('#productInfo input[type="checkbox"]').attr('checked', 'checked');
-	fillFormWithValuesAndExpect('#productInfo', [123], true);
-	$('#productInfo input[type="checkbox"]').removeAttr('checked');
-	fillFormWithValuesAndExpect('#productInfo', [123, 'widget'], true);
-	fillFormWithValuesAndExpect('#productInfo', [123, 'widget', 'red'], true);
-	fillFormWithValuesAndExpect('#productInfo', [123, 'widget', 'red'], true);
+	fillFormWithValuesAndExpect("#productInfo", [], false);
+	fillFormWithValuesAndExpect("#productInfo", [123], false);
+	$("#productInfo input[type='checkbox']").attr("checked", "checked");
+	fillFormWithValuesAndExpect("#productInfo", [123], true);
+	$("#productInfo input[type='checkbox']").removeAttr("checked");
+	fillFormWithValuesAndExpect("#productInfo", [123, "widget"], true);
+	fillFormWithValuesAndExpect("#productInfo", [123, "widget", "red"], true);
+	fillFormWithValuesAndExpect("#productInfo", [123, "widget", "red"], true);
 });
 
-test('require_from_group preserve other rules', function() {
+test("require_from_group preserve other rules", function() {
 	$("#productInfo").validate({
 		rules: {
-			partnumber:  {require_from_group: [2,".productInfo"]},
+			partnumber: {require_from_group: [2,".productInfo"]},
 			description: {require_from_group: [2,".productInfo"]},
 			color: {require_from_group: [2,".productInfo"]},
 			supplier: {required: true}
 		}
 	});
 
-	fillFormWithValuesAndExpect('#productInfo', [], false);
-	fillFormWithValuesAndExpect('#productInfo', [123], false);
-	fillFormWithValuesAndExpect('#productInfo', [123, 'widget'], false);
-	fillFormWithValuesAndExpect('#productInfo', ['', '', '', 'Acme'], false);
-	fillFormWithValuesAndExpect('#productInfo', [123, '', '', 'Acme'], false);
-	fillFormWithValuesAndExpect('#productInfo', [123, 'widget', '', 'Acme'], true);
-	fillFormWithValuesAndExpect('#productInfo', [123, 'widget', 'red', 'Acme'], true);
+	fillFormWithValuesAndExpect("#productInfo", [], false);
+	fillFormWithValuesAndExpect("#productInfo", [123], false);
+	fillFormWithValuesAndExpect("#productInfo", [123, "widget"], false);
+	fillFormWithValuesAndExpect("#productInfo", ["", "", "", "Acme"], false);
+	fillFormWithValuesAndExpect("#productInfo", [123, "", "", "Acme"], false);
+	fillFormWithValuesAndExpect("#productInfo", [123, "widget", "", "Acme"], true);
+	fillFormWithValuesAndExpect("#productInfo", [123, "widget", "red", "Acme"], true);
 });
 
-test('skip_or_fill_minimum', function() {
+test("skip_or_fill_minimum", function() {
 	$("#productInfo").validate({
 		rules: {
 			partnumber:  {skip_or_fill_minimum: [2,".productInfo"]},
@@ -1004,13 +1004,13 @@ test('skip_or_fill_minimum', function() {
 		}
 	});
 
-	fillFormWithValuesAndExpect('#productInfo', [], true);
-	fillFormWithValuesAndExpect('#productInfo', [123], false);
-	fillFormWithValuesAndExpect('#productInfo', [123, 'widget'], true);
-	fillFormWithValuesAndExpect('#productInfo', [123, 'widget', 'red'], true);
+	fillFormWithValuesAndExpect("#productInfo", [], true);
+	fillFormWithValuesAndExpect("#productInfo", [123], false);
+	fillFormWithValuesAndExpect("#productInfo", [123, "widget"], true);
+	fillFormWithValuesAndExpect("#productInfo", [123, "widget", "red"], true);
 });
 
-test('skip_or_fill_minimum preserve other rules', function() {
+test("skip_or_fill_minimum preserve other rules", function() {
 	$("#productInfo").validate({
 		rules: {
 			partnumber:  {skip_or_fill_minimum: [2,".productInfo"]},
@@ -1020,11 +1020,11 @@ test('skip_or_fill_minimum preserve other rules', function() {
 		}
 	});
 
-	fillFormWithValuesAndExpect('#productInfo', [], false);
-	fillFormWithValuesAndExpect('#productInfo', ['', '', '', 'Acme'], true);
-	fillFormWithValuesAndExpect('#productInfo', [123, '', '', 'Acme'], false);
-	fillFormWithValuesAndExpect('#productInfo', [123, 'widget', '', 'Acme'], true);
-	fillFormWithValuesAndExpect('#productInfo', [123, 'widget', 'red', 'Acme'], true);
+	fillFormWithValuesAndExpect("#productInfo", [], false);
+	fillFormWithValuesAndExpect("#productInfo", ["", "", "", "Acme"], true);
+	fillFormWithValuesAndExpect("#productInfo", [123, "", "", "Acme"], false);
+	fillFormWithValuesAndExpect("#productInfo", [123, "widget", "", "Acme"], true);
+	fillFormWithValuesAndExpect("#productInfo", [123, "widget", "red", "Acme"], true);
 });
 
 test("zipcodeUS", function() {
@@ -1168,26 +1168,26 @@ test("rangeWords", function(){
 
 test("currency", function() { // Works with any symbol
     var method = methodTest( "currency" );
-    ok( method( "£9", '£'), "Valid currency" );
-    ok( method( "£9.9", '£'), "Valid currency" );
-    ok( method( "£9.99", '£'), "Valid currency" );
-    ok( method( "£9.90", '£'), "Valid currency" );
-    ok( method( "£9,999.9", '£'), "Valid currency" );
-    ok( method( "£9,999.99", '£'), "Valid currency" );
-    ok( method( "£9,999,999.9", '£'), "Valid currency" );
-    ok( method( "9", ['£', false]), "Valid currency" );
-    ok( method( "9.9", ['£', false]), "Valid currency" );
-    ok( method( "9.99", ['£', false]), "Valid currency" );
-    ok( method( "9.90", ['£', false]), "Valid currency" );
-    ok( method( "9,999.9", ['£', false]), "Valid currency" );
-    ok( method( "9,999.99", ['£', false]), "Valid currency" );
-    ok( method( "9,999,999.9", ['£', false]), "Valid currency" );
-    ok(!method( "9,", '£'), "Invalid currency" );
-    ok(!method( "9,99.99", '£'), "Invalid currency" );
-    ok(!method( "9,", '£'), "Invalid currency" );
-    ok(!method( "9.999", '£'), "Invalid currency" );
-    ok(!method( "9.999", '£'), "Invalid currency" );
-    ok(!method( "9.99,9", '£'), "Invalid currency" );
+    ok( method( "£9", "£"), "Valid currency" );
+    ok( method( "£9.9", "£"), "Valid currency" );
+    ok( method( "£9.99", "£"), "Valid currency" );
+    ok( method( "£9.90", "£"), "Valid currency" );
+    ok( method( "£9,999.9", "£"), "Valid currency" );
+    ok( method( "£9,999.99", "£"), "Valid currency" );
+    ok( method( "£9,999,999.9", "£"), "Valid currency" );
+    ok( method( "9", ["£", false]), "Valid currency" );
+    ok( method( "9.9", ["£", false]), "Valid currency" );
+    ok( method( "9.99", ["£", false]), "Valid currency" );
+    ok( method( "9.90", ["£", false]), "Valid currency" );
+    ok( method( "9,999.9", ["£", false]), "Valid currency" );
+    ok( method( "9,999.99", ["£", false]), "Valid currency" );
+    ok( method( "9,999,999.9", ["£", false]), "Valid currency" );
+    ok(!method( "9,", "£"), "Invalid currency" );
+    ok(!method( "9,99.99", "£"), "Invalid currency" );
+    ok(!method( "9,", "£"), "Invalid currency" );
+    ok(!method( "9.999", "£"), "Invalid currency" );
+    ok(!method( "9.999", "£"), "Invalid currency" );
+    ok(!method( "9.99,9", "£"), "Invalid currency" );
 });
 
 })(jQuery);

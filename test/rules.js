@@ -1,14 +1,14 @@
 module("rules");
 
 test("rules() - internal - input", function() {
-	var element = $('#firstname');
-	var v = $('#testForm1').validate();
+	var element = $("#firstname");
+	var v = $("#testForm1").validate();
 	deepEqual( element.rules(), { required: true, minlength: 2 } );
 });
 
 test("rules(), ignore method:false", function() {
-	var element = $('#firstnamec');
-	var v = $('#testForm1clean').validate({
+	var element = $("#firstnamec");
+	var v = $("#testForm1clean").validate({
 		rules: {
 			firstname: { required: false, minlength: 2 }
 		}
@@ -17,20 +17,20 @@ test("rules(), ignore method:false", function() {
 });
 
 test("rules() HTML5 required (no value)", function() {
-	var element = $('#testForm11text1');
-	var v = $('#testForm11').validate();
+	var element = $("#testForm11text1");
+	var v = $("#testForm11").validate();
 	deepEqual( element.rules(), { required: true } );
 });
 
 test("rules() - internal - select", function() {
-	var element = $('#meal');
-	var v = $('#testForm3').validate();
+	var element = $("#meal");
+	var v = $("#testForm3").validate();
 	deepEqual( element.rules(), {required: true} );
 });
 
 test("rules() - external", function() {
-	var element = $('#text1');
-	var v = $('#form').validate({
+	var element = $("#text1");
+	var v = $("#form").validate({
 		rules: {
 			action: {date: true, min: 5}
 		}
@@ -48,7 +48,7 @@ test("rules() - external - complete form", function() {
 		ok( true, "method executed" );
 		return true;
 	});
-	var v = $('#form').validate({
+	var v = $("#form").validate({
 		rules: {
 			action: {verifyTest: true}
 		}
@@ -60,8 +60,8 @@ test("rules() - external - complete form", function() {
 });
 
 test("rules() - internal - input", function() {
-	var element = $('#form8input');
-	var v = $('#testForm8').validate();
+	var element = $("#form8input");
+	var v = $("#testForm8").validate();
 	deepEqual( element.rules(), {required: true, number: true, rangelength: [2, 8]});
 });
 
@@ -138,7 +138,7 @@ test("rules(), class and attribute combinations", function() {
 	}, "");
 	var v = $("#v2").validate({
 		rules: {
-			'v2-i7': {
+			"v2-i7": {
 				required: true,
 				minlength: 2,
 				customMethod: true
@@ -187,7 +187,7 @@ test("rules(), dependency checks", function() {
 	var rules = $("#firstnamec").rules();
 	equal( 0, v.objectLength(rules) );
 
-	$("#firstnamec").val('ab');
+	$("#firstnamec").val("ab");
 	deepEqual( $("#firstnamec").rules(), {min:5});
 
 	deepEqual( $("#lastnamec").rules(), {max:12, email:true});
