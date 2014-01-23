@@ -13,5 +13,10 @@
 	"undef": true,
 	"unused": true,
 
-	"jquery": true
+	"jquery": true,
+	"browser": true,
+
+	"globals": {
+		"console": true
+	}
 }
