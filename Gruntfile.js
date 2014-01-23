@@ -56,42 +56,12 @@ grunt.initConfig({
 	},
 	jshint: {
 		options: {
-			curly: true,
-			eqeqeq: true,
-			immed: true,
-			latedef: true,
-			newcap: true,
-			noarg: true,
-			sub: true,
-			undef: true,
-			eqnull: true,
-			browser: true,
-			globals: {
-				jQuery: true,
-				$: true,
-				console: true
-			}
+			jshintrc: true
 		},
 		files: [
 			'src/**/*.js'
 		],
 		test: {
-			options: {
-				globals: {
-					jQuery: true,
-					$: true,
-					QUnit: true,
-					module: true,
-					test: true,
-					start: true,
-					stop: true,
-					expect: true,
-					ok: true,
-					equal: true,
-					deepEqual: true,
-					strictEqual: true
-				}
-			},
 			files: {
 				src: [
 					'test/*.js'
