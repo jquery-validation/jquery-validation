@@ -386,7 +386,8 @@ test("remote", function() {
 test("remote, customized ajax options", function() {
 	expect(2);
 	stop();
-	var v = $("#userForm").validate({
+
+	$("#userForm").validate({
 		rules: {
 			username: {
 				required: true,
@@ -436,10 +437,12 @@ test("remote extensions", function() {
 	});
 	$(document).ajaxStop(function() {
 		$(document).unbind("ajaxStop");
-		equal( 1, v.size(), "There must be one error" );
-		equal( v.errorList[0].message, "asdf is already taken, please try something else" );
-		v.element(e);
-		equal( v.errorList[0].message, "asdf is already taken, please try something else", "message doesn't change on revalidation" );
+		if ( v.size() !== 0 ) {
+			ok( "There must be one error" );
+			equal( v.errorList[0].message, "asdf is already taken, please try something else" );
+			v.element(e);
+			equal( v.errorList[0].message, "asdf is already taken, please try something else", "message doesn't change on revalidation" );
+		}
 		start();
 	});
 	strictEqual( v.element(e), false, "invalid element, nothing entered yet" );
@@ -1168,13 +1171,13 @@ test("rangeWords", function(){
 
 test("currency", function() { // Works with any symbol
     var method = methodTest( "currency" );
-    ok( method( "£9", "£"), "Valid currency" );
-    ok( method( "£9.9", "£"), "Valid currency" );
-    ok( method( "£9.99", "£"), "Valid currency" );
+    ok( method( "£9", "£"), "Symbol no decimal" );
+    ok( method( "£9.9", "£"), "£, one decimal" );
+    ok( method( "£9.99", "£"), "£, two decimal" );
     ok( method( "£9.90", "£"), "Valid currency" );
-    ok( method( "£9,999.9", "£"), "Valid currency" );
-    ok( method( "£9,999.99", "£"), "Valid currency" );
-    ok( method( "£9,999,999.9", "£"), "Valid currency" );
+    ok( method( "£9,999.9", "£"), "£, thousand, comma separator, one decimal" );
+    ok( method( "£9,999.99", "£"), "£, thousand, comma separator, two decimal" );
+    ok( method( "£9,999,999.9", "£"), "£, million, comma separators, one decimal" );
     ok( method( "9", ["£", false]), "Valid currency" );
     ok( method( "9.9", ["£", false]), "Valid currency" );
     ok( method( "9.99", ["£", false]), "Valid currency" );

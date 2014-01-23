@@ -20,7 +20,7 @@ $.mockjax({
 $.mockjax({
 	url: "users2.php",
 	data: { username: "asdf"},
-	responseText: "'asdf is already taken, please try something else'",
+	responseText: "\"asdf is already taken, please try something else\"",
 	responseStatus: 200,
 	responseTime: 1
 });
@@ -95,7 +95,7 @@ test("addMethod", function() {
 
 test("addMethod2", function() {
 	expect( 4 );
-	$.validator.addMethod("complicatedPassword", function(value, element, param) {
+	$.validator.addMethod("complicatedPassword", function(value, element) {
 		return this.optional(element) || /\D/.test(value) && /\d/.test(value);
 	}, "Your password must contain at least one number and one letter");
 	var v = jQuery("#form").validate({
@@ -103,8 +103,7 @@ test("addMethod2", function() {
 			action: { complicatedPassword: true }
 		}
 	});
-	var rule = $.validator.methods.complicatedPassword,
-		e = $("#text1")[0];
+	var e = $("#text1")[0];
 	e.value = "";
 	strictEqual( v.element(e), true, "Rule is optional, valid" );
 	equal( 0, v.size() );
@@ -241,7 +240,6 @@ test("hide(): errorWrapper", function() {
 test("hide(): container", function() {
 	expect(4);
 	var errorLabel = $("#errorContainer");
-	var element = $("#testForm3")[0];
 	var v = $("#testForm3").validate({ errorWrapper: "li", errorContainer: $("#errorContainer") });
 	v.form();
 	ok( errorLabel.is(":visible"), "Error label visible after validation" );
@@ -293,7 +291,6 @@ test("submitHandler keeps submitting button", function() {
 test("showErrors()", function() {
 	expect( 4 );
 	var errorLabel = $("#errorFirstname").hide();
-	var element = $("#firstname")[0];
 	var v = $("#testForm1").validate();
 	ok( errorLabel.is(":hidden") );
 	equal( 0, $("label.error[for=lastname]").size() );
@@ -618,7 +615,7 @@ test("error containers, with labelcontainer I", function() {
 	equal( 2, labelcontainer.find("li").length, "There should be two error lis in the labelcontainer" );
 	ok( container.is(":visible"), "Check that the container is visible" );
 	ok( labelcontainer.is(":visible"), "Check that the labelcontainer is visible" );
-	var labels = labelcontainer.find("label").each(function() {
+	labelcontainer.find("label").each(function() {
 		ok( $(this).is(":visible"), "Check that each label is visible1" );
 		equal( "li", $(this).parent()[0].tagName.toLowerCase(), "Check that each label is wrapped in an li" );
 		ok( $(this).parent("li").is(":visible"), "Check that each parent li is visible" );
@@ -661,7 +658,7 @@ test("errorcontainer, show/hide only on submit", function() {
 
 test("option invalidHandler", function() {
 	expect(1);
-	var v = $("#testForm1clean").validate({
+	$("#testForm1clean").validate({
 		invalidHandler: function() {
 			ok( true, "invalid-form event triggered called" );
 			start();
@@ -931,7 +928,7 @@ test("success is called for optional elements with other rules", function() {
 		return true;
 	}, "");
 
-	var v = $("#testForm1clean").validate({
+	$("#testForm1clean").validate({
 		success: function() {
 			ok( true, "success called correctly!" );
 		},
@@ -1248,7 +1245,7 @@ test("correct checkbox receives the error", function(){
 		element.valid();
 	}
 	var e1 = $("#check1").attr("checked", false);
-	var e2 = $("#check1b").attr("checked", false);
+	$("#check1b").attr("checked", false);
     var v = $("#form").find("[type=checkbox]").attr("checked", false).end().validate({
         rules:{
             check: {
@@ -1332,7 +1329,8 @@ test("ignore hidden elements at start", function(){
 test("Specify error messages through data attributes", function() {
 	var form = $("#dataMessages");
 	var name = $("#dataMessagesName");
-	var v = form.validate();
+
+	form.validate();
 
 	form.get(0).reset();
 	name.valid();
@@ -1345,10 +1343,10 @@ test("Updates pre-existing label if has error class", function() {
 	var form = $("#updateLabel"),
 		input = $("#updateLabelInput"),
 		label = $("#targetLabel"),
-		v = form.validate(),
 		labelsBefore = form.find("label").length,
 		labelsAfter;
 
+	form.validate();
 	input.val("");
 	input.valid();
 	labelsAfter = form.find("label").length;
@@ -1362,8 +1360,8 @@ test("Updates pre-existing label if has error class", function() {
 test("Min date set by attribute", function() {
 	var form = $("#rangesMinDateInvalid");
 	var name = $("#minDateInvalid");
-	var v = form.validate();
 
+	form.validate();
 	form.get(0).reset();
 	name.valid();
 
@@ -1374,8 +1372,8 @@ test("Min date set by attribute", function() {
 test("Max date set by attribute", function() {
 	var form = $("#ranges");
 	var name = $("#maxDateInvalid");
-	var v = form.validate();
 
+	form.validate();
 	form.get(0).reset();
 	name.valid();
 
@@ -1386,8 +1384,8 @@ test("Max date set by attribute", function() {
 test("Min and Max date set by attributes greater", function() {
 	var form = $("#ranges");
 	var name = $("#rangeDateInvalidGreater");
-	var v = form.validate();
 
+	form.validate();
 	form.get(0).reset();
 	name.valid();
 
@@ -1398,8 +1396,8 @@ test("Min and Max date set by attributes greater", function() {
 test("Min and Max date set by attributes less", function() {
 	var form = $("#ranges");
 	var name = $("#rangeDateInvalidLess");
-	var v = form.validate();
 
+	form.validate();
 	form.get(0).reset();
 	name.valid();
 
@@ -1410,8 +1408,8 @@ test("Min and Max date set by attributes less", function() {
 test("Min date set by attribute valid", function() {
 	var form = $("#rangeMinDateValid");
 	var name = $("#minDateValid");
-	var v = form.validate();
 
+	form.validate();
 	form.get(0).reset();
 	name.valid();
 
@@ -1422,8 +1420,8 @@ test("Min date set by attribute valid", function() {
 test("Max date set by attribute valid", function() {
 	var form = $("#ranges");
 	var name = $("#maxDateValid");
-	var v = form.validate();
 
+	form.validate();
 	form.get(0).reset();
 	name.valid();
 
@@ -1434,8 +1432,8 @@ test("Max date set by attribute valid", function() {
 test("Min and Max date set by attributes valid", function() {
 	var form = $("#ranges");
 	var name = $("#rangeDateValid");
-	var v = form.validate();
 
+	form.validate();
 	form.get(0).reset();
 	name.valid();
 
@@ -1446,8 +1444,8 @@ test("Min and Max date set by attributes valid", function() {
 test("Min and Max strings set by attributes greater", function() {
 	var form = $("#ranges");
 	var name = $("#rangeTextInvalidGreater");
-	var v = form.validate();
 
+	form.validate();
 	form.get(0).reset();
 	name.valid();
 
@@ -1458,8 +1456,8 @@ test("Min and Max strings set by attributes greater", function() {
 test("Min and Max strings set by attributes less", function() {
 	var form = $("#ranges");
 	var name = $("#rangeTextInvalidLess");
-	var v = form.validate();
 
+	form.validate();
 	form.get(0).reset();
 	name.valid();
 
@@ -1470,8 +1468,8 @@ test("Min and Max strings set by attributes less", function() {
 test("Min and Max strings set by attributes valid", function() {
 	var form = $("#ranges");
 	var name = $("#rangeTextValid");
-	var v = form.validate();
 
+	form.validate();
 	form.get(0).reset();
 	name.valid();
 
@@ -1498,8 +1496,8 @@ test( "calling blur on ignored element", function() {
 test("Min and Max type absent set by attributes greater", function() {
 	var form = $("#ranges");
 	var name = $("#rangeAbsentInvalidGreater");
-	var v = form.validate();
 
+	form.validate();
 	form.get(0).reset();
 	name.valid();
 
@@ -1510,8 +1508,8 @@ test("Min and Max type absent set by attributes greater", function() {
 test("Min and Max type absent set by attributes less", function() {
 	var form = $("#ranges");
 	var name = $("#rangeAbsentInvalidLess");
-	var v = form.validate();
 
+	form.validate();
 	form.get(0).reset();
 	name.valid();
 
@@ -1522,8 +1520,8 @@ test("Min and Max type absent set by attributes less", function() {
 test("Min and Max type absent set by attributes valid", function() {
 	var form = $("#ranges");
 	var name = $("#rangeAbsentValid");
-	var v = form.validate();
 
+	form.validate();
 	form.get(0).reset();
 	name.valid();
 
@@ -1543,8 +1541,8 @@ test("Min and Max range set by attributes valid", function() {
 	//
 	var form = $("#ranges");
 	var name = $("#rangeRangeValid");
-	var v = form.validate();
 
+	form.validate();
 	form.get(0).reset();
 	name.valid();
 
@@ -1556,8 +1554,8 @@ test("Min and Max range set by attributes valid", function() {
 test("Min and Max number set by attributes valid", function() {
 	var form = $("#ranges");
 	var name = $("#rangeNumberValid");
-	var v = form.validate();
 
+	form.validate();
 	form.get(0).reset();
 	name.valid();
 
@@ -1569,8 +1567,8 @@ test("Min and Max number set by attributes valid", function() {
 test("Min and Max number set by attributes greater", function() {
 	var form = $("#ranges");
 	var name = $("#rangeNumberInvalidGreater");
-	var v = form.validate();
 
+	form.validate();
 	form.get(0).reset();
 	name.valid();
 
@@ -1582,8 +1580,8 @@ test("Min and Max number set by attributes greater", function() {
 test("Min and Max number set by attributes less", function() {
 	var form = $("#ranges");
 	var name = $("#rangeNumberInvalidLess");
-	var v = form.validate();
 
+	form.validate();
 	form.get(0).reset();
 	name.valid();
 

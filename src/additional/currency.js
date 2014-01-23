@@ -27,9 +27,9 @@
  *  }
  */
 jQuery.validator.addMethod("currency", function(value, element, param) {
-    var paramType = typeof param === "string",
-        symbol = paramType ? param : param[0],
-        soft = paramType ? true : param[1],
+    var isParamString = typeof param === "string",
+        symbol = isParamString ? param : param[0],
+        soft = isParamString ? true : param[1],
         regex;
 
     symbol = symbol.replace(/,/g, "");

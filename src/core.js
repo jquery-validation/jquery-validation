@@ -238,7 +238,7 @@ $.extend($.validator, {
 		onsubmit: true,
 		ignore: ":hidden",
 		ignoreTitle: false,
-		onfocusin: function( element, event ) {
+		onfocusin: function( element ) {
 			this.lastActive = element;
 
 			// hide error label and remove error class on focus if enabled
@@ -249,7 +249,7 @@ $.extend($.validator, {
 				this.addWrapper(this.errorsFor(element)).hide();
 			}
 		},
-		onfocusout: function( element, event ) {
+		onfocusout: function( element ) {
 			if ( !this.checkable(element) && (element.name in this.submitted || !this.optional(element)) ) {
 				this.element(element);
 			}
@@ -261,7 +261,7 @@ $.extend($.validator, {
 				this.element(element);
 			}
 		},
-		onclick: function( element, event ) {
+		onclick: function( element ) {
 			// click on selects, radiobuttons and checkboxes
 			if ( element.name in this.submitted ) {
 				this.element(element);
@@ -462,6 +462,7 @@ $.extend($.validator, {
 		},
 
 		objectLength: function( obj ) {
+			/* jshint unused: false */
 			var count = 0;
 			for ( var i in obj ) {
 				count++;
@@ -795,7 +796,7 @@ $.extend($.validator, {
 		},
 
 		dependTypes: {
-			"boolean": function( param, element ) {
+			"boolean": function( param ) {
 				return param;
 			},
 			"string": function( param, element ) {
