@@ -35,8 +35,9 @@ $.mockjax({
 module("validator");
 
 test("Constructor", function() {
-	var v1 = $("#testForm1").validate();
-	var v2 = $("#testForm1").validate();
+	var v1 = $("#testForm1").validate(),
+		v2 = $("#testForm1").validate();
+
 	equal( v1, v2, "Calling validate() multiple times must return the same validator instance" );
 	equal( v1.elements().length, 3, "validator elements" );
 });
@@ -46,20 +47,23 @@ test("validate() without elements, with non-form elements", 0, function() {
 });
 
 test("valid() plugin method", function() {
-	var form = $("#userForm");
+	var form = $("#userForm"),
+		input = $("#username");
+
 	form.validate();
 	ok ( !form.valid(), "Form isn't valid yet" );
-	var input = $("#username");
 	ok ( !input.valid(), "Input isn't valid either" );
+
 	input.val("Hello world");
 	ok ( form.valid(), "Form is now valid" );
 	ok ( input.valid(), "Input is valid, too" );
 });
 
 test("valid() plugin method, multiple inputs", function() {
-	var form = $("#testForm1");
-	var validator = form.validate();
-	var inputs = form.find("input");
+	var form = $("#testForm1"),
+		validator = form.validate(),
+		inputs = form.find("input");
+
 	ok( !inputs.valid(), "all invalid" );
 	inputs.not(":first").val("ok");
 	equal( validator.numberOfInvalids(), 2 );
@@ -99,11 +103,12 @@ test("addMethod2", function() {
 		return this.optional(element) || /\D/.test(value) && /\d/.test(value);
 	}, "Your password must contain at least one number and one letter");
 	var v = jQuery("#form").validate({
-		rules: {
-			action: { complicatedPassword: true }
-		}
-	});
-	var e = $("#text1")[0];
+			rules: {
+				action: { complicatedPassword: true }
+			}
+		}),
+		e = $("#text1")[0];
+
 	e.value = "";
 	strictEqual( v.element(e), true, "Rule is optional, valid" );
 	equal( 0, v.size() );
@@ -115,8 +120,9 @@ test("addMethod2", function() {
 
 test("form(): simple", function() {
 	expect( 2 );
-	var form = $("#testForm1")[0];
-	var v = $(form).validate();
+	var form = $("#testForm1")[0],
+		v = $(form).validate();
+
 	ok( !v.form(), "Invalid form" );
 	$("#firstname").val("hi");
 	$("#lastname").val("hi");
@@ -125,8 +131,9 @@ test("form(): simple", function() {
 
 test("form(): checkboxes: min/required", function() {
 	expect( 3 );
-	var form = $("#testForm6")[0];
-	var v = $(form).validate();
+	var form = $("#testForm6")[0],
+		v = $(form).validate();
+
 	ok( !v.form(), "Invalid form" );
 	$("#form6check1").attr("checked", true);
 	ok( !v.form(), "Invalid form" );
@@ -136,9 +143,9 @@ test("form(): checkboxes: min/required", function() {
 
 test("form(): radio buttons: required", function () {
 	expect( 6 );
-	var form = $("#testForm10")[0];
+	var form = $("#testForm10")[0],
+		v = $(form).validate({ rules: { testForm10Radio: "required"} });
 
-	var v = $(form).validate({ rules: { testForm10Radio: "required"} });
 	ok(!v.form(), "Invalid Form");
 	equal($("#testForm10Radio1").attr("class"), "error");
 	equal($("#testForm10Radio2").attr("class"), "error");
@@ -152,8 +159,9 @@ test("form(): radio buttons: required", function () {
 
 test("form(): selects: min/required", function() {
 	expect( 3 );
-	var form = $("#testForm7")[0];
-	var v = $(form).validate();
+	var form = $("#testForm7")[0],
+		v = $(form).validate();
+
 	ok( !v.form(), "Invalid form" );
 	$("#optionxa").attr("selected", true);
 	ok( !v.form(), "Invalid form" );
@@ -163,8 +171,9 @@ test("form(): selects: min/required", function() {
 
 test("form(): with equalTo", function() {
 	expect( 2 );
-	var form = $("#testForm5")[0];
-	var v = $(form).validate();
+	var form = $("#testForm5")[0],
+		v = $(form).validate();
+
 	ok( !v.form(), "Invalid form" );
 	$("#x1, #x2").val("hi");
 	ok( v.form(), "Valid form" );
@@ -172,14 +181,15 @@ test("form(): with equalTo", function() {
 
 test("form(): with equalTo and onfocusout=false", function() {
 	expect( 4 );
-	var form = $("#testForm5")[0];
-	var v = $(form).validate({
-		onfocusout: false,
-		showErrors: function() {
-			ok(true, "showErrors should only be called twice");
-			this.defaultShowErrors();
-		}
-	});
+	var form = $("#testForm5")[0],
+		v = $(form).validate({
+			onfocusout: false,
+			showErrors: function() {
+				ok(true, "showErrors should only be called twice");
+				this.defaultShowErrors();
+			}
+		});
+
 	$("#x1, #x2").val("hi");
 	ok( v.form(), "Valid form" );
 	$("#x2").val("not equal").blur();
@@ -189,8 +199,9 @@ test("form(): with equalTo and onfocusout=false", function() {
 
 test("check(): simple", function() {
 	expect( 3 );
-	var element = $("#firstname")[0];
-	var v = $("#testForm1").validate();
+	var element = $("#firstname")[0],
+		v = $("#testForm1").validate();
+
 	ok( v.size() === 0, "No errors yet" );
 	v.check(element);
 	ok( v.size() === 1, "error exists" );
@@ -202,11 +213,14 @@ test("check(): simple", function() {
 
 test("hide(): input", function() {
 	expect( 3 );
-	var errorLabel = $("#errorFirstname");
-	var element = $("#firstname")[0];
+	var errorLabel = $("#errorFirstname"),
+		element = $("#firstname")[0],
+		v;
+
 	element.value ="bla";
-	var v = $("#testForm1").validate();
+	v = $("#testForm1").validate();
 	errorLabel.show();
+
 	ok( errorLabel.is(":visible"), "Error label visible before validation" );
 	ok( v.element(element) );
 	ok( errorLabel.is(":hidden"), "Error label not visible after validation" );
@@ -214,11 +228,14 @@ test("hide(): input", function() {
 
 test("hide(): radio", function() {
 	expect( 2 );
-	var errorLabel = $("#agreeLabel");
-	var element = $("#agb")[0];
+	var errorLabel = $("#agreeLabel"),
+		element = $("#agb")[0],
+		v;
+
 	element.checked = true;
-	var v = $("#testForm2").validate({ errorClass: "xerror" });
+	v = $("#testForm2").validate({ errorClass: "xerror" });
 	errorLabel.show();
+
 	ok( errorLabel.is(":visible"), "Error label visible after validation" );
 	v.element(element);
 	ok( errorLabel.is(":hidden"), "Error label not visible after hiding it" );
@@ -226,21 +243,24 @@ test("hide(): radio", function() {
 
 test("hide(): errorWrapper", function() {
 	expect(2);
-	var errorLabel = $("#errorWrapper");
-	var element = $("#meal")[0];
-	element.selectedIndex = 1;
+	var errorLabel = $("#errorWrapper"),
+		element = $("#meal")[0],
+		v;
 
+	element.selectedIndex = 1;
 	errorLabel.show();
+
 	ok( errorLabel.is(":visible"), "Error label visible after validation" );
-	var v = $("#testForm3").validate({ wrapper: "li", errorLabelContainer: $("#errorContainer") });
+	v = $("#testForm3").validate({ wrapper: "li", errorLabelContainer: $("#errorContainer") });
 	v.element(element);
 	ok( errorLabel.is(":hidden"), "Error label not visible after hiding it" );
 });
 
 test("hide(): container", function() {
 	expect(4);
-	var errorLabel = $("#errorContainer");
-	var v = $("#testForm3").validate({ errorWrapper: "li", errorContainer: $("#errorContainer") });
+	var errorLabel = $("#errorContainer"),
+		v = $("#testForm3").validate({ errorWrapper: "li", errorContainer: $("#errorContainer") });
+
 	v.form();
 	ok( errorLabel.is(":visible"), "Error label visible after validation" );
 	$("#meal")[0].selectedIndex = 1;
@@ -256,8 +276,9 @@ test("hide(): container", function() {
 
 test("valid()", function() {
 	expect(4);
-	var errorList = [{name:"meal",message:"foo", element:$("#meal")[0]}];
-	var v = $("#testForm3").validate();
+	var errorList = [{name:"meal",message:"foo", element:$("#meal")[0]}],
+		v = $("#testForm3").validate();
+
 	ok( v.valid(), "No errors, must be valid" );
 	v.errorList = errorList;
 	ok( !v.valid(), "One error, must be invalid" );
@@ -271,6 +292,8 @@ test("valid()", function() {
 });
 
 test("submitHandler keeps submitting button", function() {
+	var button, event;
+
 	$("#userForm").validate({
 		debug: true,
 		submitHandler: function(form) {
@@ -281,17 +304,18 @@ test("submitHandler keeps submitting button", function() {
 		}
 	});
 	$("#username").val("bla");
-	var button = $("#userForm :submit")[0];
-  var event = $.Event("click");
-  event.preventDefault();
-  $.event.trigger(event, null, button);
+	button = $("#userForm :submit")[0];
+	event = $.Event("click");
+	event.preventDefault();
+	$.event.trigger(event, null, button);
 	$("#userForm").submit();
 });
 
 test("showErrors()", function() {
 	expect( 4 );
-	var errorLabel = $("#errorFirstname").hide();
-	var v = $("#testForm1").validate();
+	var errorLabel = $("#errorFirstname").hide(),
+		v = $("#testForm1").validate();
+
 	ok( errorLabel.is(":hidden") );
 	equal( 0, $("label.error[for=lastname]").size() );
 	v.showErrors({"firstname": "required", "lastname": "bla"});
@@ -328,14 +352,17 @@ test("showErrors(), allow empty string and null as default message", function() 
 
 test("showErrors() - external messages", function() {
 	expect( 4 );
-	var methods = $.extend({}, $.validator.methods);
-	var messages = $.extend({}, $.validator.messages);
+	var methods = $.extend({}, $.validator.methods),
+		messages = $.extend({}, $.validator.messages),
+		form, v;
+
 	$.validator.addMethod("foo", function() { return false; });
 	$.validator.addMethod("bar", function() { return false; });
 	equal( 0, $("#testForm4 label.error[for=f1]").size() );
 	equal( 0, $("#testForm4 label.error[for=f2]").size() );
-	var form = $("#testForm4")[0];
-	var v = $(form).validate({
+
+	form = $("#testForm4")[0];
+	v = $(form).validate({
 		messages: {
 			f1: "Please!",
 			f2: "Wohoo!"
@@ -416,6 +443,7 @@ test("option: (un)highlight, custom", function() {
 
 test("option: (un)highlight, custom2", function() {
 	expect(6);
+	var e, l;
 	$("#testForm1").validate({
 		highlight: function(element, errorClass) {
 			$(element).addClass(errorClass);
@@ -427,8 +455,10 @@ test("option: (un)highlight, custom2", function() {
 		},
 		errorClass: "invalid"
 	});
-	var e = $("#firstname");
-	var l = $("#errorFirstname");
+
+	e = $("#firstname");
+	l = $("#errorFirstname");
+
 	ok( !e.is(".invalid") );
 	ok( !l.is(".invalid") );
 	e.valid();
@@ -489,11 +519,12 @@ test("option: errorClass with multiple classes", function() {
 });
 
 test("elements() order", function() {
-	var container = $("#orderContainer");
-	var v = $("#elementsOrder").validate({
-		errorLabelContainer: container,
-		wrap: "li"
-	});
+	var container = $("#orderContainer"),
+		v = $("#elementsOrder").validate({
+			errorLabelContainer: container,
+			wrap: "li"
+		});
+
 	deepEqual( v.elements().map(function() {
 		return $(this).attr("id");
 	}).get(), ["order1", "order2", "order3", "order4", "order5", "order6"], "elements must be in document order" );
@@ -510,8 +541,9 @@ test("defaultMessage(), empty title is ignored", function() {
 
 test("formatAndAdd", function() {
 	expect(4);
-	var v = $("#form").validate();
-	var fakeElement = { form: $("#form")[0], name: "bar" };
+	var v = $("#form").validate(),
+		fakeElement = { form: $("#form")[0], name: "bar" };
+
 	v.formatAndAdd(fakeElement, {method: "maxlength", parameters: 2});
 	equal( "Please enter no more than 2 characters.", v.errorList[0].message );
 	equal( "bar", v.errorList[0].element.name );
@@ -525,8 +557,9 @@ test("formatAndAdd", function() {
 
 test("formatAndAdd2", function() {
 	expect(3);
-	var v = $("#form").validate();
-	var fakeElement = { form: $("#form")[0], name: "bar" };
+	var v = $("#form").validate(),
+		fakeElement = { form: $("#form")[0], name: "bar" };
+
 	jQuery.validator.messages.test1 = function(param, element) {
 		equal( v, this );
 		equal( 0, param );
@@ -557,14 +590,14 @@ test("formatAndAdd, auto detect substitution string", function() {
 
 test("error containers, simple", function() {
 	expect(14);
-	var container = $("#simplecontainer");
-	var v = $("#form").validate({
-		errorLabelContainer: container,
-		showErrors: function() {
-			container.find("h3").html( jQuery.validator.format("There are {0} errors in your form.", this.size()) );
-			this.defaultShowErrors();
-		}
-	});
+	var container = $("#simplecontainer"),
+		v = $("#form").validate({
+			errorLabelContainer: container,
+			showErrors: function() {
+				container.find("h3").html( jQuery.validator.format("There are {0} errors in your form.", this.size()) );
+				this.defaultShowErrors();
+			}
+		});
 
 	v.prepareForm();
 	ok( v.valid(), "form is valid" );
@@ -595,12 +628,12 @@ test("error containers, simple", function() {
 test("error containers, with labelcontainer I", function() {
 	expect(16);
 	var container = $("#container"),
-		labelcontainer = $("#labelcontainer");
-	var v = $("#form").validate({
-		errorContainer: container,
-		errorLabelContainer: labelcontainer,
-		wrapper: "li"
-	});
+		labelcontainer = $("#labelcontainer"),
+		v = $("#form").validate({
+			errorContainer: container,
+			errorLabelContainer: labelcontainer,
+			wrapper: "li"
+		});
 
 	ok( v.valid(), "form is valid" );
 	equal( 0, container.find("label").length, "There should be no error labels in the container" );
@@ -624,19 +657,20 @@ test("error containers, with labelcontainer I", function() {
 
 test("errorcontainer, show/hide only on submit", function() {
 	expect(14);
-	var container = $("#container");
-	var labelContainer = $("#labelcontainer");
-	var v = $("#testForm1").bind("invalid-form.validate", function() {
-		ok( true, "invalid-form event triggered called" );
-	}).validate({
-		errorContainer: container,
-		errorLabelContainer: labelContainer,
-		showErrors: function() {
-			container.html( jQuery.validator.format("There are {0} errors in your form.", this.numberOfInvalids()) );
-			ok( true, "showErrors called" );
-			this.defaultShowErrors();
-		}
-	});
+	var container = $("#container"),
+		labelContainer = $("#labelcontainer"),
+		v = $("#testForm1").bind("invalid-form.validate", function() {
+			ok( true, "invalid-form event triggered called" );
+		}).validate({
+			errorContainer: container,
+			errorLabelContainer: labelContainer,
+			showErrors: function() {
+				container.html( jQuery.validator.format("There are {0} errors in your form.", this.numberOfInvalids()) );
+				ok( true, "showErrors called" );
+				this.defaultShowErrors();
+			}
+		});
+
 	equal( "", container.html(), "must be empty" );
 	equal( "", labelContainer.html(), "must be empty" );
 	// validate whole form, both showErrors and invalidHandler must be called once
@@ -678,34 +712,41 @@ test("focusInvalid()", function() {
 	// TODO when using 1.4 focusin, triggered twice; fix once not testing against 1.3 anymore
 	// expect(1);
 	var inputs = $("#testForm1 input").focus(function() {
-		equal( inputs[0], this, "focused first element" );
-	});
-	var v = $("#testForm1").validate();
+			equal( inputs[0], this, "focused first element" );
+		}),
+		v = $("#testForm1").validate();
+
 	v.form();
 	v.focusInvalid();
 });
 
 test("findLastActive()", function() {
 	expect(3);
-	var v = $("#testForm1").validate();
+	var v = $("#testForm1").validate(),
+		lastActive;
+
 	ok( !v.findLastActive() );
 	v.form();
 	v.focusInvalid();
 	equal( v.findLastActive(), $("#firstname")[0] );
-	var lastActive = $("#lastname").trigger("focus").trigger("focusin")[0];
+	lastActive = $("#lastname").trigger("focus").trigger("focusin")[0];
+
 	equal( v.lastActive, lastActive );
 });
 
 test("validating multiple checkboxes with 'required'", function() {
 	expect(3);
-	var checkboxes = $("#form input[name=check3]").prop("checked", false);
+	var checkboxes = $("#form input[name=check3]").prop("checked", false),
+		v;
 	equal(checkboxes.size(), 5);
-	var v = $("#form").validate({
+
+	v = $("#form").validate({
 		rules: {
 			check3: "required"
 		}
 	});
 	v.form();
+
 	equal(v.size(), 1);
 	checkboxes.filter(":last").prop("checked", true);
 	v.form();
@@ -713,14 +754,16 @@ test("validating multiple checkboxes with 'required'", function() {
 });
 
 test("dynamic form", function() {
-	var counter = 0;
+	var counter = 0,
+		v;
 	function add() {
 		$("<input data-rule-required='true' name='list" + counter++ + "' />").appendTo("#testForm2");
 	}
 	function errors(expected, message) {
 		equal(expected, v.size(), message );
 	}
-	var v = $("#testForm2").validate();
+
+	v = $("#testForm2").validate();
 	v.form();
 	errors(1);
 	add();
@@ -770,13 +813,13 @@ test("resetForm()", function() {
 
 test("message from title", function() {
 	var v = $("#withTitle").validate();
-    v.checkForm();
+	v.checkForm();
 	equal(v.errorList[0].message, "fromtitle", "title not used");
 });
 
 test("ignoreTitle", function() {
 	var v = $("#withTitle").validate({ignoreTitle:true});
-    v.checkForm();
+	v.checkForm();
 	equal(v.errorList[0].message, $.validator.messages.required, "title used when it should have been ignored");
 });
 
@@ -799,31 +842,31 @@ test("ajaxSubmit", function() {
 });
 
 test("validating groups settings parameter", function() {
-    var form = $("<form>");
-    var validate = form.validate({
-        groups: {
-            arrayGroup: ["input one", "input-two", "input three"],
-            stringGroup: "input-four input-five input-six"
-        }
-    });
-    equal(validate.groups["input one"], "arrayGroup");
-    equal(validate.groups["input-two"], "arrayGroup");
-    equal(validate.groups["input three"], "arrayGroup");
-    equal(validate.groups["input-four"], "stringGroup");
-    equal(validate.groups["input-five"], "stringGroup");
-    equal(validate.groups["input-six"], "stringGroup");
+	var form = $("<form>"),
+		validate = form.validate({
+			groups: {
+				arrayGroup: ["input one", "input-two", "input three"],
+				stringGroup: "input-four input-five input-six"
+			}
+		});
+
+	equal(validate.groups["input one"], "arrayGroup");
+	equal(validate.groups["input-two"], "arrayGroup");
+	equal(validate.groups["input three"], "arrayGroup");
+	equal(validate.groups["input-four"], "stringGroup");
+	equal(validate.groups["input-five"], "stringGroup");
+	equal(validate.groups["input-six"], "stringGroup");
 });
 
 test("bypassing validation on form submission",function () {
-	var form = $("#bypassValidation");
-	var normalSubmission = $("form#bypassValidation :input[id=normalSubmit]");
-	var bypassSubmitWithCancel = $("form#bypassValidation :input[id=bypassSubmitWithCancel]");
-	var bypassSubmitWithNoValidate1 = $("form#bypassValidation :input[id=bypassSubmitWithNoValidate1]");
-	var bypassSubmitWithNoValidate2 = $("form#bypassValidation :input[id=bypassSubmitWithNoValidate2]");
-
-	var $v = form.validate({
-		debug : true
-	});
+	var form = $("#bypassValidation"),
+		normalSubmission = $("form#bypassValidation :input[id=normalSubmit]"),
+		bypassSubmitWithCancel = $("form#bypassValidation :input[id=bypassSubmitWithCancel]"),
+		bypassSubmitWithNoValidate1 = $("form#bypassValidation :input[id=bypassSubmitWithNoValidate1]"),
+		bypassSubmitWithNoValidate2 = $("form#bypassValidation :input[id=bypassSubmitWithNoValidate2]"),
+		$v = form.validate({
+			debug : true
+		});
 
 	bypassSubmitWithCancel.click();
 	equal($v.numberOfInvalids(), 0, "Validation was bypassed using CSS 'cancel' class.");
@@ -848,9 +891,10 @@ test("success option", function() {
 	expect(7);
 	equal( "", $("#firstname").val() );
 	var v = $("#testForm1").validate({
-		success: "valid"
-	});
-	var label = $("#testForm1 label");
+			success: "valid"
+		}),
+		label = $("#testForm1 label");
+
 	ok( label.is(".error") );
 	ok( !label.is(".valid") );
 	v.form();
@@ -866,9 +910,10 @@ test("success option2", function() {
 	expect(5);
 	equal( "", $("#firstname").val() );
 	var v = $("#testForm1").validate({
-		success: "valid"
-	});
-	var label = $("#testForm1 label");
+			success: "valid"
+		}),
+		label = $("#testForm1 label");
+
 	ok( label.is(".error") );
 	ok( !label.is(".valid") );
 	$("#firstname").val("hi");
@@ -882,12 +927,15 @@ test("success option3", function() {
 	equal( "", $("#firstname").val() );
 	$("#errorFirstname").remove();
 	var v = $("#testForm1").validate({
-		success: "valid"
-	});
+			success: "valid"
+		}),
+		labels;
+
 	equal( 0, $("#testForm1 label").size() );
 	$("#firstname").val("hi");
 	v.form();
-	var labels = $("#testForm1 label");
+	labels = $("#testForm1 label");
+
 	equal( 3, labels.size() );
 	ok( labels.eq(0).is(".valid") );
 	ok( !labels.eq(1).is(".valid") );
@@ -1073,8 +1121,9 @@ test("validate on blur", function() {
 		target.trigger("blur").trigger("focusout");
 	}
 	$("#errorFirstname").hide();
-	var e = $("#firstname");
-	var v = $("#testForm1").validate();
+	var e = $("#firstname"),
+		v = $("#testForm1").validate();
+
 	$("#something").val("");
 	blur(e);
 	errors(0, "No value yet, required is skipped on blur");
@@ -1111,8 +1160,9 @@ test("validate on keyup", function() {
 	function keyup(target) {
 		target.trigger("keyup");
 	}
-	var e = $("#firstname");
-	var v = $("#testForm1").validate();
+	var e = $("#firstname"),
+		v = $("#testForm1").validate();
+
 	keyup(e);
 	errors(0, "No value, no errors");
 	e.val("a");
@@ -1138,10 +1188,11 @@ test("validate on not keyup, only blur", function() {
 	function errors(expected, message) {
 		equal(expected, v.size(), message );
 	}
-	var e = $("#firstname");
-	var v = $("#testForm1").validate({
-		onkeyup: false
-	});
+	var e = $("#firstname"),
+		v = $("#testForm1").validate({
+			onkeyup: false
+		});
+
 	errors(0);
 	e.val("a");
 	e.trigger("keyup");
@@ -1155,8 +1206,9 @@ test("validate on keyup and blur", function() {
 	function errors(expected, message) {
 		equal(expected, v.size(), message );
 	}
-	var e = $("#firstname");
-	var v = $("#testForm1").validate();
+	var e = $("#firstname"),
+		v = $("#testForm1").validate();
+
 	errors(0);
 	e.val("a");
 	e.trigger("keyup");
@@ -1169,8 +1221,9 @@ test("validate email on keyup and blur", function() {
 	function errors(expected, message) {
 		equal(expected, v.size(), message );
 	}
-	var e = $("#firstname");
-	var v = $("#testForm1").validate();
+	var e = $("#firstname"),
+		v = $("#testForm1").validate();
+
 	v.form();
 	errors(2);
 	e.val("a");
@@ -1190,12 +1243,13 @@ test("validate checkbox on click", function() {
 		// triggered click event screws up checked-state in 1.4
 		element.valid();
 	}
-	var e = $("#check2");
-	var v = $("#form").validate({
-		rules: {
-			check2: "required"
-		}
-	});
+	var e = $("#check2"),
+		v = $("#form").validate({
+			rules: {
+				check2: "required"
+			}
+		});
+
 	trigger(e);
 	errors(0);
 	trigger(e);
@@ -1216,16 +1270,17 @@ test("validate multiple checkbox on click", function() {
 		// triggered click event screws up checked-state in 1.4
 		element.valid();
 	}
-	var e1 = $("#check1").attr("checked", false);
-	var e2 = $("#check1b");
-	var v = $("#form").validate({
-		rules: {
-			check: {
-				required: true,
-				minlength: 2
+	var e1 = $("#check1").attr("checked", false),
+		e2 = $("#check1b"),
+		v = $("#form").validate({
+			rules: {
+				check: {
+					required: true,
+					minlength: 2
+				}
 			}
-		}
-	});
+		});
+
 	trigger(e1);
 	trigger(e2);
 	errors(0);
@@ -1244,20 +1299,23 @@ test("correct checkbox receives the error", function(){
 		// triggered click event screws up checked-state in 1.4
 		element.valid();
 	}
-	var e1 = $("#check1").attr("checked", false);
+	var e1 = $("#check1").attr("checked", false),
+		v;
+
 	$("#check1b").attr("checked", false);
-    var v = $("#form").find("[type=checkbox]").attr("checked", false).end().validate({
-        rules:{
-            check: {
-                    required: true,
-                    minlength: 2
-            }
-        }
-    });
-    equal(false, v.form());
-    trigger(e1);
-    equal(false, v.form());
-    ok(v.errorList[0].element.id === v.currentElements[0].id, "the proper checkbox has the error AND is present in currentElements");
+	v = $("#form").find("[type=checkbox]").attr("checked", false).end().validate({
+		rules:{
+			check: {
+					required: true,
+					minlength: 2
+			}
+		}
+	});
+
+	equal(false, v.form());
+	trigger(e1);
+	equal(false, v.form());
+	ok(v.errorList[0].element.id === v.currentElements[0].id, "the proper checkbox has the error AND is present in currentElements");
 });
 
 test("validate radio on click", function() {
@@ -1269,13 +1327,14 @@ test("validate radio on click", function() {
 		// triggered click event screws up checked-state in 1.4
 		element.valid();
 	}
-	var e1 = $("#radio1");
-	var e2 = $("#radio1a");
-	var v = $("#form").validate({
-		rules: {
-			radio1: "required"
-		}
-	});
+	var e1 = $("#radio1"),
+		e2 = $("#radio1a"),
+		v = $("#form").validate({
+			rules: {
+				radio1: "required"
+			}
+		});
+
 	errors(0);
 	equal( false, v.form() );
 	errors(1);
@@ -1289,8 +1348,9 @@ test("validate input with no type attribute, defaulting to text", function() {
 	function errors(expected, message) {
 		equal(expected, v.size(), message );
 	}
-	var v = $("#testForm12").validate();
-	var e = $("#testForm12text");
+	var v = $("#testForm12").validate(),
+		e = $("#testForm12text");
+
 	errors(0);
 	e.valid();
 	errors(1);
@@ -1300,42 +1360,45 @@ test("validate input with no type attribute, defaulting to text", function() {
 });
 
 test("ignore hidden elements", function(){
-    var form = $("#userForm");
-    var validate = form.validate({
-        rules:{
-            "username": "required"
-        }
-    });
-    form.get(0).reset();
-    ok(! validate.form(), "form should be initially invalid");
-    $("#userForm [name=username]").hide();
-    ok(validate.form(), "hidden elements should be ignored by default");
+	var form = $("#userForm"),
+		validate = form.validate({
+			rules:{
+				"username": "required"
+			}
+		});
+
+	form.get(0).reset();
+	ok(! validate.form(), "form should be initially invalid");
+	$("#userForm [name=username]").hide();
+	ok(validate.form(), "hidden elements should be ignored by default");
 });
 
 test("ignore hidden elements at start", function(){
-    var form = $("#userForm");
-    var validate = form.validate({
-        rules:{
-            "username": "required"
-        }
-    });
-    form.get(0).reset();
-    $("#userForm [name=username]").hide();
-    ok(validate.form(), "hidden elements should be ignored by default");
-    $("#userForm [name=username]").show();
-    ok(! validate.form(), "form should be invalid when required element is visible");
+	var form = $("#userForm"),
+		validate = form.validate({
+			rules:{
+				"username": "required"
+			}
+		});
+
+	form.get(0).reset();
+	$("#userForm [name=username]").hide();
+	ok(validate.form(), "hidden elements should be ignored by default");
+	$("#userForm [name=username]").show();
+	ok(! validate.form(), "form should be invalid when required element is visible");
 });
 
 test("Specify error messages through data attributes", function() {
-	var form = $("#dataMessages");
-	var name = $("#dataMessagesName");
+	var form = $("#dataMessages"),
+		name = $("#dataMessagesName"),
+		label;
 
 	form.validate();
 
 	form.get(0).reset();
 	name.valid();
 
-	var label = $("#dataMessages label");
+	label = $("#dataMessages label");
 	equal( label.text(), "You must enter a value here", "Correct error label" );
 });
 
@@ -1358,122 +1421,132 @@ test("Updates pre-existing label if has error class", function() {
 });
 
 test("Min date set by attribute", function() {
-	var form = $("#rangesMinDateInvalid");
-	var name = $("#minDateInvalid");
+	var form = $("#rangesMinDateInvalid"),
+		name = $("#minDateInvalid"),
+		label;
 
 	form.validate();
 	form.get(0).reset();
 	name.valid();
 
-	var label = $("#rangesMinDateInvalid label");
+	label = $("#rangesMinDateInvalid label");
 	equal( label.text(), "Please enter a value greater than or equal to 2012-12-21.", "Correct error label" );
 });
 
 test("Max date set by attribute", function() {
-	var form = $("#ranges");
-	var name = $("#maxDateInvalid");
+	var form = $("#ranges"),
+		name = $("#maxDateInvalid"),
+		label;
 
 	form.validate();
 	form.get(0).reset();
 	name.valid();
 
-	var label = $("#ranges label");
+	label = $("#ranges label");
 	equal( label.text(), "Please enter a value less than or equal to 2012-12-21.", "Correct error label" );
 });
 
 test("Min and Max date set by attributes greater", function() {
-	var form = $("#ranges");
-	var name = $("#rangeDateInvalidGreater");
+	var form = $("#ranges"),
+		name = $("#rangeDateInvalidGreater"),
+		label;
 
 	form.validate();
 	form.get(0).reset();
 	name.valid();
 
-	var label = $("#ranges label");
+	label = $("#ranges label");
 	equal( label.text(), "Please enter a value less than or equal to 2013-01-21.", "Correct error label" );
 });
 
 test("Min and Max date set by attributes less", function() {
-	var form = $("#ranges");
-	var name = $("#rangeDateInvalidLess");
+	var form = $("#ranges"),
+		name = $("#rangeDateInvalidLess"),
+		label;
 
 	form.validate();
 	form.get(0).reset();
 	name.valid();
 
-	var label = $("#ranges label");
+	label = $("#ranges label");
 	equal( label.text(), "Please enter a value greater than or equal to 2012-11-21.", "Correct error label" );
 });
 
 test("Min date set by attribute valid", function() {
-	var form = $("#rangeMinDateValid");
-	var name = $("#minDateValid");
+	var form = $("#rangeMinDateValid"),
+		name = $("#minDateValid"),
+		label;
 
 	form.validate();
 	form.get(0).reset();
 	name.valid();
 
-	var label = $("#rangeMinDateValid label");
+	label = $("#rangeMinDateValid label");
 	equal( label.text(), "", "Correct error label" );
 });
 
 test("Max date set by attribute valid", function() {
-	var form = $("#ranges");
-	var name = $("#maxDateValid");
+	var form = $("#ranges"),
+		name = $("#maxDateValid"),
+		label;
 
 	form.validate();
 	form.get(0).reset();
 	name.valid();
 
-	var label = $("#ranges label");
+	label = $("#ranges label");
 	equal( label.text(), "", "Correct error label" );
 });
 
 test("Min and Max date set by attributes valid", function() {
-	var form = $("#ranges");
-	var name = $("#rangeDateValid");
+	var form = $("#ranges"),
+		name = $("#rangeDateValid"),
+		label;
 
 	form.validate();
 	form.get(0).reset();
 	name.valid();
 
-	var label = $("#ranges label");
+	label = $("#ranges label");
 	equal( label.text(), "", "Correct error label" );
 });
 
 test("Min and Max strings set by attributes greater", function() {
-	var form = $("#ranges");
-	var name = $("#rangeTextInvalidGreater");
+	var form = $("#ranges"),
+		name = $("#rangeTextInvalidGreater"),
+		label;
 
 	form.validate();
 	form.get(0).reset();
 	name.valid();
 
-	var label = $("#ranges label");
+	label = $("#ranges label");
 	equal( label.text(), "Please enter a value less than or equal to 200.", "Correct error label" );
 });
 
 test("Min and Max strings set by attributes less", function() {
-	var form = $("#ranges");
-	var name = $("#rangeTextInvalidLess");
+	var form = $("#ranges"),
+		name = $("#rangeTextInvalidLess"),
+		label;
 
 	form.validate();
 	form.get(0).reset();
 	name.valid();
 
-	var label = $("#ranges label");
+	label = $("#ranges label");
 	equal( label.text(), "Please enter a value greater than or equal to 200.", "Correct error label" );
 });
 
 test("Min and Max strings set by attributes valid", function() {
-	var form = $("#ranges");
-	var name = $("#rangeTextValid");
+	var form = $("#ranges"),
+		name = $("#rangeTextValid"),
+		label;
 
 	form.validate();
 	form.get(0).reset();
 	name.valid();
 
-	var label = $("#ranges label");
+	label = $("#ranges label");
 	equal( label.text(), "", "Correct error label" );
 });
 
@@ -1494,38 +1567,41 @@ test( "calling blur on ignored element", function() {
 
 
 test("Min and Max type absent set by attributes greater", function() {
-	var form = $("#ranges");
-	var name = $("#rangeAbsentInvalidGreater");
+	var form = $("#ranges"),
+		name = $("#rangeAbsentInvalidGreater"),
+		label;
 
 	form.validate();
 	form.get(0).reset();
 	name.valid();
 
-	var label = $("#ranges label");
+	label = $("#ranges label");
 	equal( label.text(), "Please enter a value less than or equal to 200.", "Correct error label" );
 });
 
 test("Min and Max type absent set by attributes less", function() {
-	var form = $("#ranges");
-	var name = $("#rangeAbsentInvalidLess");
+	var form = $("#ranges"),
+		name = $("#rangeAbsentInvalidLess"),
+		label;
 
 	form.validate();
 	form.get(0).reset();
 	name.valid();
 
-	var label = $("#ranges label");
+	label = $("#ranges label");
 	equal( label.text(), "Please enter a value greater than or equal to 200.", "Correct error label" );
 });
 
 test("Min and Max type absent set by attributes valid", function() {
-	var form = $("#ranges");
-	var name = $("#rangeAbsentValid");
+	var form = $("#ranges"),
+		name = $("#rangeAbsentValid"),
+		label;
 
 	form.validate();
 	form.get(0).reset();
 	name.valid();
 
-	var label = $("#ranges label");
+	label = $("#ranges label");
 	equal( label.text(), "", "Correct error label" );
 });
 
@@ -1539,53 +1615,57 @@ test("Min and Max range set by attributes valid", function() {
 	// floating-point number that represents the minimum.
 	// http://www.w3.org/TR/html5/forms.html#range-state-%28type=range%29
 	//
-	var form = $("#ranges");
-	var name = $("#rangeRangeValid");
+	var form = $("#ranges"),
+		name = $("#rangeRangeValid"),
+		label;
 
 	form.validate();
 	form.get(0).reset();
 	name.valid();
 
-	var label = $("#ranges label");
+	label = $("#ranges label");
 	equal( label.text(), "", "Correct error label" );
 });
 
 
 test("Min and Max number set by attributes valid", function() {
-	var form = $("#ranges");
-	var name = $("#rangeNumberValid");
+	var form = $("#ranges"),
+		name = $("#rangeNumberValid"),
+		label;
 
 	form.validate();
 	form.get(0).reset();
 	name.valid();
 
-	var label = $("#ranges label");
+	label = $("#ranges label");
 	equal( label.text(), "", "Correct error label" );
 });
 
 
 test("Min and Max number set by attributes greater", function() {
-	var form = $("#ranges");
-	var name = $("#rangeNumberInvalidGreater");
+	var form = $("#ranges"),
+		name = $("#rangeNumberInvalidGreater"),
+		label;
 
 	form.validate();
 	form.get(0).reset();
 	name.valid();
 
-	var label = $("#ranges label");
+	label = $("#ranges label");
 	equal( label.text(), "Please enter a value less than or equal to 200.", "Correct error label" );
 });
 
 
 test("Min and Max number set by attributes less", function() {
-	var form = $("#ranges");
-	var name = $("#rangeNumberInvalidLess");
+	var form = $("#ranges"),
+		name = $("#rangeNumberInvalidLess"),
+		label;
 
 	form.validate();
 	form.get(0).reset();
 	name.valid();
 
-	var label = $("#ranges label");
+	label = $("#ranges label");
 	equal( label.text(), "Please enter a value greater than or equal to 50.", "Correct error label" );
 });
 

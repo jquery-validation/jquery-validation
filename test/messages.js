@@ -40,15 +40,17 @@ test("group error messages", function() {
 });
 
 test("read messages from metadata", function() {
-	var form = $("#testForm9");
+	var form = $("#testForm9"),
+		e, g;
+
 	form.validate();
-	var e = $("#testEmail9");
+	e = $("#testEmail9");
 	e.valid();
 	equal( form.find("label[for=testEmail9]").text(), "required" );
 	e.val("bla").valid();
 	equal( form.find("label[for=testEmail9]").text(), "email" );
 
-	var g = $("#testGeneric9");
+	g = $("#testGeneric9");
 	g.valid();
 	equal( form.find("label[for=testGeneric9]").text(), "generic");
 	g.val("bla").valid();

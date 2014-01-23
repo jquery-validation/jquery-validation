@@ -1,8 +1,9 @@
 module("aria");
 
 test("Invalid field adds aria-invalid=true", function() {
-	var ariaInvalidFirstName = $("#ariaInvalidFirstName");
-	var form = $("#ariaInvalid");
+	var ariaInvalidFirstName = $("#ariaInvalidFirstName"),
+		form = $("#ariaInvalid");
+
 	form.validate({
 		rules: {
 			ariaInvalidFirstName: "required"
@@ -14,8 +15,9 @@ test("Invalid field adds aria-invalid=true", function() {
 });
 
 test("Valid field adds aria-invalid=false", function() {
-	var ariaInvalidFirstName = $("#ariaInvalidFirstName");
-	var form = $("#ariaInvalid");
+	var ariaInvalidFirstName = $("#ariaInvalidFirstName"),
+		form = $("#ariaInvalid");
+
 	form.validate({
 		rules: {
 			ariaInvalidFirstName: "required"
@@ -28,13 +30,14 @@ test("Valid field adds aria-invalid=false", function() {
 });
 
 test("resetForm(): removes all aria-invalid attributes", function() {
-	var ariaInvalidFirstName = $("#ariaInvalidFirstName");
-	var form = $("#ariaInvalid");
-	var validator = form.validate({
-		rules: {
-			ariaInvalidFirstName: "required"
-		}
-	});
+	var ariaInvalidFirstName = $("#ariaInvalidFirstName"),
+		form = $("#ariaInvalid"),
+		validator = form.validate({
+			rules: {
+				ariaInvalidFirstName: "required"
+			}
+		});
+
 	ariaInvalidFirstName.val("not empty");
 	ariaInvalidFirstName.valid();
 	validator.resetForm();
@@ -42,29 +45,33 @@ test("resetForm(): removes all aria-invalid attributes", function() {
 });
 
 test("Static required field adds aria-required", function() {
-	var ariaRequiredStatic = $("#ariaRequiredStatic");
-	var form = $("#ariaRequired");
+	var ariaRequiredStatic = $("#ariaRequiredStatic"),
+		form = $("#ariaRequired");
+
 	form.validate();
 	equal(ariaRequiredStatic.attr("aria-required"), "true");
 });
 
 test("Data required field adds aria-required", function() {
-	var ariaRequiredData = $("#ariaRequiredData");
-	var form = $("#ariaRequired");
+	var ariaRequiredData = $("#ariaRequiredData"),
+		form = $("#ariaRequired");
+
 	form.validate();
 	equal(ariaRequiredData.attr("aria-required"), "true");
 });
 
 test("Class required field adds aria-required", function() {
-	var ariaRequiredClass = $("#ariaRequiredClass");
-	var form = $("#ariaRequired");
+	var ariaRequiredClass = $("#ariaRequiredClass"),
+		form = $("#ariaRequired");
+
 	form.validate();
 	equal(ariaRequiredClass.attr("aria-required"), "true");
 });
 
 test("Dynamically required field adds aria-required after valid()", function() {
-	var ariaRequiredDynamic = $("#ariaRequiredDynamic");
-	var form = $("#ariaRequired");
+	var ariaRequiredDynamic = $("#ariaRequiredDynamic"),
+		form = $("#ariaRequired");
+
 	form.resetForm();
 	form.validate({
 		rules: {

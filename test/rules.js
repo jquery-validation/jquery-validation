@@ -51,14 +51,15 @@ test("rules() - external", function() {
 test("rules() - external - complete form", function() {
 	expect(1);
 
-	var methods = $.extend({}, $.validator.methods);
-	var messages = $.extend({}, $.validator.messages);
+	var methods = $.extend({}, $.validator.methods),
+		messages = $.extend({}, $.validator.messages),
+		v;
 
 	$.validator.addMethod("verifyTest", function() {
 		ok( true, "method executed" );
 		return true;
 	});
-	var v = $("#form").validate({
+	v = $("#form").validate({
 		rules: {
 			action: {verifyTest: true}
 		}
@@ -182,27 +183,27 @@ test("rules(), class and attribute combinations", function() {
 
 test("rules(), dependency checks", function() {
 	var v = $("#testForm1clean").validate({
-		rules: {
-			firstname: {
-				min: {
-					param: 5,
-					depends: function(el) {
-						return (/^a/).test($(el).val());
+			rules: {
+				firstname: {
+					min: {
+						param: 5,
+						depends: function(el) {
+							return (/^a/).test($(el).val());
+						}
+					}
+				},
+				lastname: {
+					max: {
+						param: 12
+					},
+					email: {
+						depends: function() { return true; }
 					}
 				}
-			},
-			lastname: {
-				max: {
-					param: 12
-				},
-				email: {
-					depends: function() { return true; }
-				}
 			}
-		}
-	});
+		}),
+		rules = $("#firstnamec").rules();
 
-	var rules = $("#firstnamec").rules();
 	equal( 0, v.objectLength(rules) );
 
 	$("#firstnamec").val("ab");

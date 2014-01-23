@@ -1,9 +1,10 @@
 (function($) {
 
 function methodTest( methodName ) {
-	var v = jQuery("#form").validate();
-	var method = $.validator.methods[methodName];
-	var element = $("#firstname")[0];
+	var v = jQuery("#form").validate(),
+		method = $.validator.methods[methodName],
+		element = $("#firstname")[0];
+
 	return function(value, param) {
 		element.value = value;
 		return method.call( v, value, element, param );
@@ -244,10 +245,11 @@ test("minlength", function() {
 });
 
 test("maxlength", function() {
-	var v = jQuery("#form").validate();
-	var method = $.validator.methods.maxlength,
+	var v = jQuery("#form").validate(),
+		method = $.validator.methods.maxlength,
 		param = 4,
 		e = $("#text1, #text2, #text3");
+
 	ok( method.call( v, e[0].value, e[0], param), "Valid text input" );
 	ok( method.call( v, e[1].value, e[1], param), "Valid text input" );
 	ok(!method.call( v, e[2].value, e[2], param), "Invalid text input" );
@@ -265,49 +267,54 @@ test("maxlength", function() {
 });
 
 test("rangelength", function() {
-	var v = jQuery("#form").validate();
-	var method = $.validator.methods.rangelength,
+	var v = jQuery("#form").validate(),
+		method = $.validator.methods.rangelength,
 		param = [2, 4],
 		e = $("#text1, #text2, #text3");
+
 	ok( method.call( v, e[0].value, e[0], param), "Valid text input" );
 	ok(!method.call( v, e[1].value, e[1], param), "Invalid text input" );
 	ok(!method.call( v, e[2].value, e[2], param), "Invalid text input" );
 });
 
 test("min", function() {
-	var v = jQuery("#form").validate();
-	var method = $.validator.methods.min,
+	var v = jQuery("#form").validate(),
+		method = $.validator.methods.min,
 		param = 8,
 		e = $("#value1, #value2, #value3");
+
 	ok(!method.call( v, e[0].value, e[0], param), "Invalid text input" );
 	ok( method.call( v, e[1].value, e[1], param), "Valid text input" );
 	ok( method.call( v, e[2].value, e[2], param), "Valid text input" );
 });
 
 test("max", function() {
-	var v = jQuery("#form").validate();
-	var method = $.validator.methods.max,
+	var v = jQuery("#form").validate(),
+		method = $.validator.methods.max,
 		param = 12,
 		e = $("#value1, #value2, #value3");
+
 	ok( method.call( v, e[0].value, e[0], param), "Valid text input" );
 	ok( method.call( v, e[1].value, e[1], param), "Valid text input" );
 	ok(!method.call( v, e[2].value, e[2], param), "Invalid text input" );
 });
 
 test("range", function() {
-	var v = jQuery("#form").validate();
-	var method = $.validator.methods.range,
+	var v = jQuery("#form").validate(),
+		method = $.validator.methods.range,
 		param = [4,12],
 		e = $("#value1, #value2, #value3");
+
 	ok(!method.call( v, e[0].value, e[0], param), "Invalid text input" );
 	ok( method.call( v, e[1].value, e[1], param), "Valid text input" );
 	ok(!method.call( v, e[2].value, e[2], param), "Invalid text input" );
 });
 
 test("equalTo", function() {
-	var v = jQuery("#form").validate();
-	var method = $.validator.methods.equalTo,
+	var v = jQuery("#form").validate(),
+		method = $.validator.methods.equalTo,
 		e = $("#text1, #text2");
+
 	ok( method.call( v, "Test", e[0], "#text1" ), "Text input" );
 	ok( method.call( v, "T", e[1], "#text2" ), "Another one" );
 });
@@ -321,14 +328,15 @@ test("creditcard", function() {
 });
 
 test("extension", function() {
-	var method = methodTest("extension");
+	var method = methodTest("extension"),
+		v;
 	ok( method( "picture.gif" ), "Valid default accept type" );
 	ok( method( "picture.jpg" ), "Valid default accept type" );
 	ok( method( "picture.jpeg" ), "Valid default accept type" );
 	ok( method( "picture.png" ), "Valid default accept type" );
 	ok(!method( "picture.pgn" ), "Invalid default accept type" );
 
-	var v = jQuery("#form").validate();
+	v = jQuery("#form").validate();
 	method = function(value, param) {
 		return $.validator.methods.extension.call(v, value, $("#text1")[0], param);
 	};
@@ -346,24 +354,25 @@ test("extension", function() {
 test("remote", function() {
 	expect(7);
 	stop();
-	var e = $("#username");
-	var v = $("#userForm").validate({
-		rules: {
-			username: {
-				required: true,
-				remote: "users.php"
+	var e = $("#username"),
+		v = $("#userForm").validate({
+			rules: {
+				username: {
+					required: true,
+					remote: "users.php"
+				}
+			},
+			messages: {
+				username: {
+					required: "Please",
+					remote: jQuery.validator.format("{0} in use")
+				}
+			},
+			submitHandler: function() {
+				ok( false, "submitHandler may never be called when validating only elements");
 			}
-		},
-		messages: {
-			username: {
-				required: "Please",
-				remote: jQuery.validator.format("{0} in use")
-			}
-		},
-		submitHandler: function() {
-			ok( false, "submitHandler may never be called when validating only elements");
-		}
-	});
+		});
+
 	$(document).ajaxStop(function() {
 		$(document).unbind("ajaxStop");
 		equal( 1, v.size(), "There must be one error" );
@@ -418,23 +427,24 @@ test("remote, customized ajax options", function() {
 test("remote extensions", function() {
 	expect(5);
 	stop();
-	var e = $("#username");
-	var v = $("#userForm").validate({
-		rules: {
-			username: {
-				required: true,
-				remote: "users2.php"
+	var e = $("#username"),
+		v = $("#userForm").validate({
+			rules: {
+				username: {
+					required: true,
+					remote: "users2.php"
+				}
+			},
+			messages: {
+				username: {
+					required: "Please"
+				}
+			},
+			submitHandler: function() {
+				ok( false, "submitHandler may never be called when validating only elements");
 			}
-		},
-		messages: {
-			username: {
-				required: "Please"
-			}
-		},
-		submitHandler: function() {
-			ok( false, "submitHandler may never be called when validating only elements");
-		}
-	});
+		});
+
 	$(document).ajaxStop(function() {
 		$(document).unbind("ajaxStop");
 		if ( v.size() !== 0 ) {
@@ -453,9 +463,11 @@ test("remote extensions", function() {
 test("remote radio correct value sent", function() {
 	expect(1);
 	stop();
-	var e = $("#testForm10Radio2");
+	var e = $("#testForm10Radio2"),
+		v;
+
 	e.attr("checked", "checked");
-	var v = $("#testForm10").validate({
+	v = $("#testForm10").validate({
 		rules: {
 			testForm10Radio: {
 				required: true,
@@ -477,24 +489,25 @@ test("remote radio correct value sent", function() {
 test("remote reset clear old value", function() {
 	expect(1);
 	stop();
-	var e = $("#username");
-	var v = $("#userForm").validate({
-		rules: {
-			username: {
-				required: true,
-				remote: {
-					url: "echo.php",
-					dataFilter: function(data) {
-						var json = JSON.parse(data);
-						if(json.username === "asdf") {
-							return "\"asdf is already taken\"";
+	var e = $("#username"),
+		v = $("#userForm").validate({
+			rules: {
+				username: {
+					required: true,
+					remote: {
+						url: "echo.php",
+						dataFilter: function(data) {
+							var json = JSON.parse(data);
+							if(json.username === "asdf") {
+								return "\"asdf is already taken\"";
+							}
+							return "\"" + true + "\"";
 						}
-						return "\"" + true + "\"";
 					}
 				}
 			}
-		}
-	});
+		});
+
 	$(document).ajaxStop(function() {
 		var waitTimeout;
 
@@ -952,10 +965,12 @@ test("creditcardtypes, mastercard", function() {
 });
 
 function fillFormWithValuesAndExpect(formSelector, inputValues, expected) {
-	for (var i=0; i < inputValues.length; i++) {
+	var i, actual;
+
+	for (i = 0; i < inputValues.length; i++) {
 		$(formSelector + " input:eq(" + i + ")").val(inputValues[i]);
 	}
-	var actual = $(formSelector).valid();
+	actual = $(formSelector).valid();
 	equal(actual, expected, $.validator.format("Filled inputs of form '{0}' with {1} values ({2})", formSelector, inputValues.length, inputValues.toString()));
 
 }
@@ -1137,8 +1152,9 @@ test("cifES", function() {
 });
 
 test("maxWords", function(){
-	var method = methodTest("maxWords");
-	var maxWords = 6;
+	var method = methodTest("maxWords"),
+		maxWords = 6;
+
 	ok( method( "I am a sentence", maxWords), "Max Words");
 	ok(!method( "I'm way too long for this sentence!", maxWords), "Too many words");
 	ok(method( "Don’t “count” me as too long", maxWords), "Right amount of words with smartquotes");
@@ -1148,8 +1164,9 @@ test("maxWords", function(){
 });
 
 test("minWords", function(){
-	var method = methodTest("minWords");
-	var minWords = 6;
+	var method = methodTest("minWords"),
+		minWords = 6;
+
 	ok(!method( "I am a short sentence", minWords), "Max Words");
 	ok( method( "I'm way too long for this sentence!", minWords), "Too many words");
 	ok(!method( "Don’t “count” me as short.", minWords), "Right amount of words with smartquotes");
@@ -1159,8 +1176,9 @@ test("minWords", function(){
 });
 
 test("rangeWords", function(){
-	var method = methodTest("rangeWords");
-	var rangeWords = [3,6];
+	var method = methodTest("rangeWords"),
+		rangeWords = [3,6];
+
 	ok(!method( "I'm going to be longer than “six words!”", rangeWords), "Longer than 6 with smartquotes");
 	ok( method( "I'm just the right amount!", rangeWords), "In between");
 	ok( method( "Super short sentence’s.", rangeWords), "Low end");
