@@ -12,7 +12,7 @@ jQuery.validator.addMethod( "cifES", function( value, element ) {
 	value = value.toUpperCase();
 
 	// Quick format test
-	if ( !value.match( '((^[A-Z]{1}[0-9]{7}[A-Z0-9]{1}$|^[T]{1}[A-Z0-9]{8}$)|^[0-9]{8}[A-Z]{1}$)' ) ) {
+	if ( !value.match( "((^[A-Z]{1}[0-9]{7}[A-Z0-9]{1}$|^[T]{1}[A-Z0-9]{8}$)|^[0-9]{8}[A-Z]{1}$)" ) ) {
 		return false;
 	}
 
@@ -26,7 +26,7 @@ jQuery.validator.addMethod( "cifES", function( value, element ) {
 		var tmp = ( 2 * num[ count ] ).toString(),
 			secondDigit = tmp.charAt( 1 );
 
-		sum += parseInt( tmp.charAt( 0 ), 10 ) + ( secondDigit === '' ? 0 : parseInt( secondDigit, 10 ) );
+		sum += parseInt( tmp.charAt( 0 ), 10 ) + ( secondDigit === "" ? 0 : parseInt( secondDigit, 10 ) );
 	}
 
 	/* The first (position 1) is a letter following the following criteria:
@@ -51,7 +51,7 @@ jQuery.validator.addMethod( "cifES", function( value, element ) {
 	 *	W. Permanent establishments of non-resident in Spain
 	 */
 	if ( /^[ABCDEFGHJNPQRSUVW]{1}/.test( value ) ) {
-		sum += '';
+		sum += "";
 		controlDigit = 10 - parseInt( sum.charAt( sum.length - 1 ), 10 );
 		value += controlDigit;
 		return ( num[ 8 ].toString() === String.fromCharCode( 64 + controlDigit ) || num[ 8 ].toString() === value.charAt( value.length - 1 ) );

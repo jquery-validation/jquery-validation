@@ -12,7 +12,7 @@ jQuery.validator.addMethod("bankaccountNL", function(value, element) {
 		return false;
 	}
 	// now '11 check'
-	var account = value.replace(/ /g,''), // remove spaces
+	var account = value.replace(/ /g, ""), // remove spaces
 		sum = 0,
 		len = account.length,
 		pos, factor, digit;

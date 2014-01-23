@@ -7,7 +7,7 @@ jQuery.validator.addMethod( "nieES", function( value, element ) {
 	value = value.toUpperCase();
 
 	// Basic format test
-	if ( !value.match( '((^[A-Z]{1}[0-9]{7}[A-Z0-9]{1}$|^[T]{1}[A-Z0-9]{8}$)|^[0-9]{8}[A-Z]{1}$)' ) ) {
+	if ( !value.match( "((^[A-Z]{1}[0-9]{7}[A-Z0-9]{1}$|^[T]{1}[A-Z0-9]{8}$)|^[0-9]{8}[A-Z]{1}$)" ) ) {
 		return false;
 	}
 
@@ -21,9 +21,9 @@ jQuery.validator.addMethod( "nieES", function( value, element ) {
 	if ( /^[XYZ]{1}/.test( value ) ) {
 		return (
 			value[ 8 ] === "TRWAGMYFPDXBNJZSQVHLCKE".charAt(
-				value.replace( 'X', '0' )
-					.replace( 'Y', '1' )
-					.replace( 'Z', '2' )
+				value.replace( "X", "0" )
+					.replace( "Y", "1" )
+					.replace( "Z", "2" )
 					.substring( 0, 8 ) % 23
 			)
 		);

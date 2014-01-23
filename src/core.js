@@ -531,7 +531,7 @@ $.extend($.validator, {
 		},
 
 		errors: function() {
-			var errorClass = this.settings.errorClass.split(" ").join('.');
+			var errorClass = this.settings.errorClass.split(" ").join(".");
 			return $(this.settings.errorElement + "." + errorClass, this.errorContext);
 		},
 
@@ -907,7 +907,7 @@ $.extend($.validator, {
 
 			if ( value ) {
 				rules[method] = value;
-			} else if ( type === method && type !== 'range' ) {
+			} else if ( type === method && type !== "range" ) {
 				// exception: the jquery validate 'range' method
 				// does not test for the html5 'range' type
 				rules[method] = true;
@@ -976,12 +976,12 @@ $.extend($.validator, {
 		});
 
 		// clean number parameters
-		$.each([ 'minlength', 'maxlength' ], function() {
+		$.each([ "minlength", "maxlength" ], function() {
 			if ( rules[this] ) {
 				rules[this] = Number(rules[this]);
 			}
 		});
-		$.each([ 'rangelength', 'range' ], function() {
+		$.each([ "rangelength", "range" ], function() {
 			var parts;
 			if ( rules[this] ) {
 				if ( $.isArray(rules[this]) ) {
