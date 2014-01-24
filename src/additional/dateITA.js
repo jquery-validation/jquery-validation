@@ -22,7 +22,7 @@ jQuery.validator.addMethod("dateITA", function(value, element) {
 		re = /^\d{1,2}\/\d{1,2}\/\d{4}$/,
 		adata, gg, mm, aaaa, xdata;
 	if ( re.test(value)) {
-		adata = value.split('/');
+		adata = value.split("/");
 		gg = parseInt(adata[0],10);
 		mm = parseInt(adata[1],10);
 		aaaa = parseInt(adata[2],10);

@@ -2,7 +2,8 @@
 // usage: $.ajax({ mode: "abort"[, port: "uniqueport"]});
 // if mode:"abort" is used, the previous request on that port (port can be undefined) is aborted via XMLHttpRequest.abort()
 (function($) {
-	var pendingRequests = {};
+	var pendingRequests = {},
+		ajax;
 	// Use a prefilter if available (1.5+)
 	if ( $.ajaxPrefilter ) {
 		$.ajaxPrefilter(function( settings, _, xhr ) {
@@ -16,7 +17,7 @@
 		});
 	} else {
 		// Proxy ajax
-		var ajax = $.ajax;
+		ajax = $.ajax;
 		$.ajax = function( settings ) {
 			var mode = ( "mode" in settings ? settings : $.ajaxSettings ).mode,
 				port = ( "port" in settings ? settings : $.ajaxSettings ).port;
