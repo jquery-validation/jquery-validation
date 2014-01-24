@@ -5,9 +5,8 @@
 jQuery.validator.addMethod( "cifES", function( value ) {
 	"use strict";
 
-	var sum,
-		num = [],
-		controlDigit;
+	var num = [],
+		controlDigit, sum, i, count, tmp, secondDigit;
 
 	value = value.toUpperCase();
 
@@ -16,15 +15,15 @@ jQuery.validator.addMethod( "cifES", function( value ) {
 		return false;
 	}
 
-	for ( var i = 0; i < 9; i++ ) {
+	for ( i = 0; i < 9; i++ ) {
 		num[ i ] = parseInt( value.charAt( i ), 10 );
 	}
 
 	// Algorithm for checking CIF codes
 	sum = num[ 2 ] + num[ 4 ] + num[ 6 ];
-	for ( var count = 1; count < 8; count += 2 ) {
-		var tmp = ( 2 * num[ count ] ).toString(),
-			secondDigit = tmp.charAt( 1 );
+	for ( count = 1; count < 8; count += 2 ) {
+		tmp = ( 2 * num[ count ] ).toString();
+		secondDigit = tmp.charAt( 1 );
 
 		sum += parseInt( tmp.charAt( 0 ), 10 ) + ( secondDigit === "" ? 0 : parseInt( secondDigit, 10 ) );
 	}

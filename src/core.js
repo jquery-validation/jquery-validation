@@ -122,7 +122,7 @@ $.extend($.fn, {
 	// http://jqueryvalidation.org/rules/
 	rules: function( command, argument ) {
 		var element = this[0],
-			settings, staticRules, existingRules, data, param;
+			settings, staticRules, existingRules, data, param, filtered;
 
 		if ( command ) {
 			settings = $.data(element.form, "validator").settings;
@@ -143,7 +143,7 @@ $.extend($.fn, {
 					delete staticRules[element.name];
 					return existingRules;
 				}
-				var filtered = {};
+				filtered = {};
 				$.each(argument.split(/\s/), function( index, method ) {
 					filtered[method] = existingRules[method];
 					delete existingRules[method];
@@ -326,7 +326,8 @@ $.extend($.validator, {
 			this.invalid = {};
 			this.reset();
 
-			var groups = (this.groups = {});
+			var groups = (this.groups = {}),
+				rules;
 			$.each(this.settings.groups, function( key, value ) {
 				if ( typeof value === "string" ) {
 					value = value.split(/\s/);
@@ -335,7 +336,7 @@ $.extend($.validator, {
 					groups[name] = key;
 				});
 			});
-			var rules = this.settings.rules;
+			rules = this.settings.rules;
 			$.each(rules, function( key, value ) {
 				rules[key] = $.validator.normalizeRule(value);
 			});
@@ -463,8 +464,9 @@ $.extend($.validator, {
 
 		objectLength: function( obj ) {
 			/* jshint unused: false */
-			var count = 0;
-			for ( var i in obj ) {
+			var count = 0,
+				i;
+			for ( i in obj ) {
 				count++;
 			}
 			return count;
@@ -679,9 +681,9 @@ $.extend($.validator, {
 		},
 
 		defaultShowErrors: function() {
-			var i, elements;
+			var i, elements, error;
 			for ( i = 0; this.errorList[i]; i++ ) {
-				var error = this.errorList[i];
+				error = this.errorList[i];
 				if ( this.settings.highlight ) {
 					this.settings.highlight.call( this, error.element, this.settings.errorClass, this.settings.validClass );
 				}
@@ -1098,7 +1100,8 @@ $.extend($.validator, {
 			}
 			var nCheck = 0,
 				nDigit = 0,
-				bEven = false;
+				bEven = false,
+				n, cDigit;
 
 			value = value.replace(/\D/g, "");
 
@@ -1108,8 +1111,8 @@ $.extend($.validator, {
 				return false;
 			}
 
-			for (var n = value.length - 1; n >= 0; n--) {
-				var cDigit = value.charAt(n);
+			for ( n = value.length - 1; n >= 0; n--) {
+				cDigit = value.charAt(n);
 				nDigit = parseInt(cDigit, 10);
 				if ( bEven ) {
 					if ( (nDigit *= 2) > 9 ) {
@@ -1175,7 +1178,9 @@ $.extend($.validator, {
 				return "dependency-mismatch";
 			}
 
-			var previous = this.previousValue(element);
+			var previous = this.previousValue(element),
+				validator, data;
+
 			if (!this.settings.messages[element.name] ) {
 				this.settings.messages[element.name] = {};
 			}
@@ -1189,9 +1194,9 @@ $.extend($.validator, {
 			}
 
 			previous.old = value;
-			var validator = this;
+			validator = this;
 			this.startRequest(element);
-			var data = {};
+			data = {};
 			data[element.name] = value;
 			$.ajax($.extend(true, {
 				url: param,
@@ -1202,11 +1207,11 @@ $.extend($.validator, {
 				context: validator.currentForm,
 				success: function( response ) {
 					var valid = response === true || response === "true",
-						errors, message;
+						errors, message, submitted;
 
 					validator.settings.messages[element.name].remote = previous.originalMessage;
 					if ( valid ) {
-						var submitted = validator.formSubmitted;
+						submitted = validator.formSubmitted;
 						validator.prepareElement(element);
 						validator.formSubmitted = submitted;
 						validator.successList.push(element);
