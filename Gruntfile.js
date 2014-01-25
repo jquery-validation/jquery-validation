@@ -108,7 +108,7 @@ grunt.loadNpmTasks("grunt-contrib-compress");
 grunt.loadNpmTasks("grunt-contrib-watch");
 grunt.loadNpmTasks("grunt-jscs-checker");
 
-grunt.registerTask("default", ["jscs", "concat", "jshint", "qunit"]);
+grunt.registerTask("default", ["concat", "jscs", "jshint", "qunit"]);
 grunt.registerTask("release", ["default", "uglify", "compress"]);
 grunt.registerTask("start", ["concat", "watch"]);
 
