@@ -1223,6 +1223,7 @@ $.extend($.validator, {
 						errors[element.name] = previous.message = $.isFunction(message) ? message(value) : message;
 						validator.invalid[element.name] = true;
 						validator.showErrors(errors);
+						validator.submitted[element.name] = message;
 					}
 					previous.valid = valid;
 					validator.stopRequest(element, valid);
