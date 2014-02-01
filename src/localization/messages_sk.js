@@ -7,7 +7,7 @@
 		required: "Povinné zadať.",
 		maxlength: $.validator.format("Maximálne {0} znakov."),
 		minlength: $.validator.format("Minimálne {0} znakov."),
-		rangelength: $.validator.format("Minimálne {0} a Maximálne {0} znakov."),
+		rangelength: $.validator.format("Minimálne {0} a Maximálne {1} znakov."),
 		email: "E-mailová adresa musí byť platná.",
 		url: "URL musí byť platný.",
 		date: "Musí byť dátum.",
