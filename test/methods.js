@@ -1242,4 +1242,16 @@ test("postalCodeCA", function() {
 	ok( !method( "h0h 0h0"), "Invalid CA Postal Code; Only upper case characters" );
 });
 
+test("stateUS", function() {
+	var method = methodTest("stateUS");
+	ok( method( "AZ" ), "Valid US state" );
+	ok( method( "OH" ), "Valid US state" );
+	ok( method( "DC" ), "Valid US state" );
+	ok( method( "PR", { includeTerritories: true } ), "Valid US territory" );
+	ok( method( "AA", { includeMilitary: true } ), "Valid US military zone" );
+	ok( method( "me", { caseSensitive: false } ), "Valid US state" );
+	ok(!method( "az", { caseSensitive: true } ), "Must be capital letters" );
+	ok(!method( "mp", { caseSensitive: false, includeTerritories: false } ), "US territories not allowed" );
+});
+
 })(jQuery);
