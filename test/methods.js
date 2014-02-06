@@ -1211,4 +1211,16 @@ test("currency", function() { // Works with any symbol
     ok(!method( "9.99,9", "£"), "Invalid currency" );
 });
 
+test("stateUS", function() {
+	var method = methodTest("stateUS");
+	ok( method( "AZ" ), "Valid US state" );
+	ok( method( "OH" ), "Valid US state" );
+	ok( method( "DC" ), "Valid US state" );
+	ok( method( "PR", { includeTerritories: true } ), "Valid US territory" );
+	ok( method( "AA", { includeMilitary: true } ), "Valid US military zone" );
+	ok( method( "me", { caseSensitive: false } ), "Valid US state" );
+	ok(!method( "az", { caseSensitive: true } ), "Must be capital letters" );
+	ok(!method( "mp", { caseSensitive: false, includeTerritories: false } ), "US territories not allowed" );
+});
+
 })(jQuery);
