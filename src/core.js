@@ -360,6 +360,8 @@ $.extend($.validator, {
 
 			if ( this.settings.invalidHandler ) {
 				$(this.currentForm).bind("invalid-form.validate", this.settings.invalidHandler);
+			} else {
+				$(this.currentForm).unbind("invalid-form.validate");
 			}
 
 			// Add aria-required to any Static/Data/Class required fields before first validation
