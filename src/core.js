@@ -1070,7 +1070,12 @@ $.extend($.validator, {
 
 		// http://jqueryvalidation.org/date-method/
 		date: function( value, element ) {
-			return this.optional(element) || !/Invalid|NaN/.test(new Date(value).toString());
+			var dCheck = !/Invalid|NaN/.test(new Date(value).toString());
+			if ( !dCheck &&  /^\d{4}[\/\-]\d{1,2}[\/\-]\d{1,2}$/.test(value) ) {
+				var date = value.split('-');
+				dCheck = !/Invalid|NaN/.test(new Date(date[0],date[1]-1,date[2]).toString());
+			} 
+			return this.optional(element) || dCheck;
 		},
 
 		// http://jqueryvalidation.org/dateISO-method/
