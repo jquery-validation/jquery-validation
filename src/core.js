@@ -1395,7 +1395,7 @@ $.extend( $.validator, {
 			if ( !this.settings.messages[ element.name ] ) {
 				this.settings.messages[ element.name ] = {};
 			}
-			previous.originalMessage = this.settings.messages[ element.name ].remote;
+			previous.originalMessage = previous.originalMessage || this.settings.messages[ element.name ].remote;
 			this.settings.messages[ element.name ].remote = previous.message;
 
 			param = typeof param === "string" && { url: param } || param;
