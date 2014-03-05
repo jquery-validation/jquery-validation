@@ -1669,3 +1669,41 @@ test("Min and Max number set by attributes less", function() {
 	equal( label.text(), "Please enter a value greater than or equal to 50.", "Correct error label" );
 });
 
+test("Rules allowed to have a value of zero invalid", function() {
+	var form = $("#ranges"),
+		name = $("#rangeMinZeroInvalidLess"),
+		label;
+
+	form.validate();
+	form.get(0).reset();
+	name.valid();
+
+	label = $("#ranges label");
+	equal( label.text(), "Please enter a value greater than or equal to 0.", "Correct error label" );
+});
+
+test("Rules allowed to have a value of zero valid equal", function() {
+	var form = $("#ranges"),
+		name = $("#rangeMinZeroValidEqual"),
+		label;
+
+	form.validate();
+	form.get(0).reset();
+	name.valid();
+
+	label = $("#ranges label");
+	equal( label.text(), "", "Correct error label" );
+});
+
+test("Rules allowed to have a value of zero valid greater", function() {
+	var form = $("#ranges"),
+		name = $("#rangeMinZeroValidGreater"),
+		label;
+
+	form.validate();
+	form.get(0).reset();
+	name.valid();
+
+	label = $("#ranges label");
+	equal( label.text(), "", "Correct error label" );
+});
