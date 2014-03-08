@@ -319,15 +319,6 @@ test("equalTo", function() {
 	ok( method.call( v, "T", e[1], "#text2" ), "Another one" );
 });
 
-test("notEqualTo", function() {
-	var v = jQuery("#form").validate(),
-		method = $.validator.methods.notEqualTo,
-		e = $("#text1, #text2");
-
-	ok( !method.call( v, "Test", e[0], "#text1" ), "Text input" );
-	ok( !method.call( v, "T", e[1], "#text2" ), "Another one" );
-});
-
 test("creditcard", function() {
 	var method = methodTest("creditcard");
 	ok( method( "4111-1111-1111-1111" ), "Valid creditcard number" );
@@ -1218,6 +1209,19 @@ test("currency", function() { // Works with any symbol
     ok(!method( "9.999", "£"), "Invalid currency" );
     ok(!method( "9.999", "£"), "Invalid currency" );
     ok(!method( "9.99,9", "£"), "Invalid currency" );
+});
+
+test("notEqualTo", function() {
+
+	var v = $( "#notEqualTo" ).validate(),
+		method = $.validator.methods.notEqualTo,
+		e = $( "#email1, #email2, #email3" ),
+		id = [ "#email1Backup", "#email2Backup", "#email3Backup" ];
+
+	ok ( method.call( v, e[0].value, e[0], id[0] ), "Backup email is different than the primary." );
+	ok (!method.call( v, e[1].value, e[1], id[1] ), "Backup email is the same as the primary." );
+	ok ( method.call( v, e[2].value, e[2], id[2] ), "Optional, empty values won't be compared." );
+
 });
 
 })(jQuery);
