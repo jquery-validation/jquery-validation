@@ -667,7 +667,7 @@ $.extend($.validator, {
 			this.errorList.push({
 				message: message,
 				element: element,
-				method = rule.Method
+				method = rule.method
 			});
 
 			this.errorMap[element.name] = message;
