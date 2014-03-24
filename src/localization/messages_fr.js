@@ -36,6 +36,7 @@
 		phoneUS: "Veuillez fournir un numéro de téléphone valide.",
 		phoneUK: "Veuillez fournir un numéro de téléphone valide.",
 		mobileUK: "Veuillez fournir un numéro de téléphone mobile valide.",
+        postcodeCA: "Veuillez fournir un code postal canadien valide.",
 		strippedminlength: $.validator.format("Veuillez fournir au moins {0} caractères."),
 		email2: "Veuillez fournir une adresse électronique valide.",
 		url2: "Veuillez fournir une adresse URL valide.",
