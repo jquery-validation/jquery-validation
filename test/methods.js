@@ -737,6 +737,26 @@ test("postcodeUK", function() {
 	ok(!method( "99999" ), "Invalid postcode" );
 });
 
+test("postcodeCA", function() {
+	var method = methodTest("postcodeUK");
+	ok( method( "A0A 0A0" ), "Valid postcode" );
+	ok( method( "A0A0A0" ), "Valid postcode" );
+	ok( method( "Z9Z 9Z9" ), "Valid postcode" );
+	ok( method( "a0a 0a0"),"Valid postcode");
+	ok( method( "z9z 9z9"),"Valid postcode");
+
+	ok(!method( "AAAAA" ), "Invalid postcode" );
+	ok(!method( "AAA AAA" ), "Invalid postcode" );
+	ok(!method( "AOA AOA" ), "Invalid postcode" );
+	ok(!method( "aoa oao" ), "Invalid postcode" );
+	ok(!method( "999 999" ), "Invalid postcode" );
+	ok(!method( "A0A0A" ), "Invalid postcode" );
+	ok(!method( "0A0A0A" ), "Invalid postcode" );
+	ok(!method( "A00000" ), "Invalid postcode" );
+	ok(!method( "A00 000" ), "Invalid postcode" );
+	ok(!method( "A00000" ), "Invalid postcode" );
+});
+
 test("dateNL", function() {
 	var method = methodTest("dateNL");
 	ok( method( "01-01-1900" ), "Valid date NL" );
