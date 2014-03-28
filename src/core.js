@@ -685,7 +685,7 @@ $.extend($.validator, {
 			for ( i = 0; this.errorList[i]; i++ ) {
 				error = this.errorList[i];
 				if ( this.settings.highlight ) {
-					this.settings.highlight.call( this, error.element, this.settings.errorClass, this.settings.validClass );
+					this.settings.highlight.call( this, error.element, this.settings.errorClass, this.settings.validClass, error.message );
 				}
 				this.showLabel( error.element, error.message );
 			}
