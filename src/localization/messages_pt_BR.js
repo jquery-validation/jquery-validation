@@ -6,18 +6,18 @@
 
 // UMD (Universal Module Definition) patterns for JavaScript modules that work everywhere.
 // https://github.com/umdjs/umd/blob/master/jqueryPluginCommonjs.js
-(function(factory) {
-	if (typeof define === 'function' && define.amd) {
+(function( factory ) {
+	if ( typeof define === "function" && define.amd ) {
 		// AMD. Register as an anonymous module.
-		define(['jquery'], factory);
-	} else if (typeof exports === 'object') {
+		define( [ "jquery" ], factory );
+	} else if ( typeof exports === "object" ) {
 		// Node/CommonJS
-		factory(require('jquery'));
+		factory( require( "jquery" ) );
 	} else {
 		// Browser globals
-		factory(jQuery);
+		factory( jQuery );
 	}
-}(function($) {
+}(function( $ ) {
 	$.extend($.validator.messages, {
 		required: "Este campo &eacute; requerido.",
 		remote: "Por favor, corrija este campo.",

@@ -10,7 +10,7 @@
 	"quotmark": "double",
 	"smarttabs": true,
 	"trailing": true,
-	"undef": true,
+	"undef": false,
 	"unused": true,
 
 	"jquery": true,
