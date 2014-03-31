@@ -3,7 +3,18 @@
  * Locale: PT (Portuguese; português)
  * Region: BR (Brazil)
  */
-(function($) {
+
+// UMD (Universal Module Definition) patterns for JavaScript modules that work everywhere.
+// https://github.com/umdjs/umd/blob/master/jqueryPlugin.js
+(function( factory ) {
+	if ( typeof define === "function" && define.amd ) {
+		// AMD. Register as an anonymous module.
+		define( [ "jquery", "../core" ], factory );
+	} else {
+		// Browser globals
+		factory( jQuery );
+	}
+}(function( $ ) {
 	$.extend($.validator.messages, {
 		required: "Este campo &eacute; requerido.",
 		remote: "Por favor, corrija este campo.",
@@ -26,4 +37,4 @@
 		nieES: "Por favor, forne&ccedil;a um NIE v&aacute;lido.",
 		cifEE: "Por favor, forne&ccedil;a um CIF v&aacute;lido."
 	});
-}(jQuery));
+}));
