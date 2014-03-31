@@ -883,14 +883,14 @@ $.extend($.validator, {
 	attributeRules: function( element ) {
 		var rules = {},
 			$element = $(element),
-			type = $element[0].getAttribute("type"),
+			type = element.getAttribute("type"),
 			method, value;
 
 		for (method in $.validator.methods) {
 
 			// support for <input required> in both html5 and older browsers
 			if ( method === "required" ) {
-				value = $element.get(0).getAttribute(method);
+				value = element.getAttribute(method);
 				// Some browsers return an empty string for the required attribute
 				// and non-HTML5 browsers might have required="" markup
 				if ( value === "" ) {
