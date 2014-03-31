@@ -1,7 +1,7 @@
 /*!
  * jQuery Validation Plugin 1.12.0pre
  *
- * http://jqueryvalidation.org//
+ * http://jqueryvalidation.org/
  *
  * Copyright 2013 Jörn Zaefferer
  * Released under the MIT license:
