@@ -1,6 +1,5 @@
 {
 	"name": "jquery-validation",
-	"version": "1.12.0pre",
 	"homepage": "http://jqueryvalidation.org/",
 	"repository": {
 		"type": "git",
