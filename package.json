@@ -1,44 +1,44 @@
 {
-  "name": "jquery-validation",
-  "title": "jQuery Validation Plugin",
-  "description": "Form validation made easy",
-  "version": "1.12.0pre",
-  "homepage": "http://jqueryvalidation.org/",
-  "author": {
-	"name": "Jörn Zaefferer",
-	"email": "joern.zaefferer@gmail.com",
-	"url": "http://bassistance.de"
-  },
-  "repository": {
-	"type": "git",
-	"url": "git://github.com/jzaefferer/jquery-validation.git"
-  },
-  "bugs": {
-	"url": "https://github.com/jzaefferer/jquery-validation/issues"
-  },
-  "licenses": [
-	{
-	  "type": "MIT",
-	  "url": "http://www.opensource.org/licenses/MIT"
-	}
-  ],
-  "scripts": {
-	"test": "grunt"
-  },
-  "dependencies": {},
-  "devDependencies": {
-	"grunt": "0.4.4",
-	"grunt-contrib-qunit": "0.4.0",
-	"grunt-contrib-jshint": "0.8.0",
-	"grunt-contrib-uglify": "0.4.0",
-	"grunt-contrib-concat": "0.3.0",
-	"grunt-contrib-compress": "0.7.0",
-	"grunt-contrib-watch": "0.6.0",
-	"grunt-jscs-checker": "0.4.0"
-  },
-  "keywords": [
-	"forms",
-	"validation",
-	"validate"
-  ]
+	"name": "jquery-validation",
+	"title": "jQuery Validation Plugin",
+	"description": "Form validation made easy",
+	"version": "1.12.0pre",
+	"homepage": "http://jqueryvalidation.org/",
+	"author": {
+		"name": "Jörn Zaefferer",
+		"email": "joern.zaefferer@gmail.com",
+		"url": "http://bassistance.de"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git://github.com/jzaefferer/jquery-validation.git"
+	},
+	"bugs": {
+		"url": "https://github.com/jzaefferer/jquery-validation/issues"
+	},
+	"licenses": [
+		{
+			"type": "MIT",
+			"url": "http://www.opensource.org/licenses/MIT"
+		}
+	],
+	"scripts": {
+		"test": "grunt"
+	},
+	"dependencies": {},
+	"devDependencies": {
+		"grunt": "0.4.4",
+		"grunt-contrib-qunit": "0.4.0",
+		"grunt-contrib-jshint": "0.8.0",
+		"grunt-contrib-uglify": "0.4.0",
+		"grunt-contrib-concat": "0.3.0",
+		"grunt-contrib-compress": "0.7.0",
+		"grunt-contrib-watch": "0.6.0",
+		"grunt-jscs-checker": "0.4.0"
+	},
+	"keywords": [
+		"forms",
+		"validation",
+		"validate"
+	]
 }
