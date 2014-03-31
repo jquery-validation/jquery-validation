@@ -558,13 +558,15 @@ $.extend($.validator, {
 		},
 
 		elementValue: function( element ) {
-			var type = $(element).attr("type"),
-				val = $(element).val();
+			var val,
+				$element = $(element),
+				type = $element.attr("type");
 
 			if ( type === "radio" || type === "checkbox" ) {
-				return $("input[name='" + $(element).attr("name") + "']:checked").val();
+				return $("input[name='" + $element.attr("name") + "']:checked").val();
 			}
 
+			val = $element.val();
 			if ( typeof val === "string" ) {
 				return val.replace(/\r/g, "");
 			}
