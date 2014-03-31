@@ -6,6 +6,16 @@ module.exports = function(grunt) {
 grunt.initConfig({
 	pkg: grunt.file.readJSON("package.json"),
 	concat: {
+		options: {
+			banner: "/*!\n" +
+				" * jQuery Validation Plugin v<%= pkg.version %>\n" +
+				" *\n" +
+				" * <%= pkg.homepage  %>\n" +
+				" *\n" +
+				" * Copyright (c) <%= grunt.template.today('yyyy') %> <%= pkg.author.name %>\n" +
+				" * Released under the <%= _.pluck(pkg.licenses, 'type').join(', ') %> license\n" +
+				" */\n"
+		},
 		// used to copy to dist folder
 		dist: {
 			files: {
