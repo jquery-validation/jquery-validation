@@ -24,5 +24,6 @@
 	"download": "http://bassistance.de/jquery-plugins/jquery-plugin-validation/",
 	"dependencies": {
 		"jquery": ">=1.4.4"
-	}
+	},
+	"version": "1.12.0"
 }
