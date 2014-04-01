@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html id="html">
 <head>
-	<meta charset="utf8" />
+	<meta charset="utf-8">
 	<title>jQuery - Validation Test Suite</title>
 	<link rel="stylesheet" href="qunit/qunit.css" />
 	<script src="jquery.js"></script>
@@ -269,9 +269,9 @@
 
 		<form id="subformRequired">
 			<div class="billingAddressControl">
-            	<input type="checkbox" id="bill_to_co" name="bill_to_co" class="toggleCheck" checked="checked" style="width: auto;" tabindex="1" />
-            	<label for="bill_to_co" style="cursor:pointer">Same as Company Address</label>
-          	</div>
+				<input type="checkbox" id="bill_to_co" name="bill_to_co" class="toggleCheck" checked="checked" style="width: auto;" tabindex="1" />
+				<label for="bill_to_co" style="cursor:pointer">Same as Company Address</label>
+			</div>
 			<div id="subform">
 				<input  maxlength="40" class="billingRequired" name="bill_first_name" size="20" type="text" tabindex="2" value="" />
 			</div>
@@ -311,11 +311,11 @@
 			<input type="date" id="rangeDateValid" name="rangeDateValid" min="2012-11-21" max="2013-01-21" value="2012-12-21"/>
 
 			<!-- input type text is not supposed to have min/max according to html5,
-			     but for backward compatibility with 1.10.0 we treat it as number.
-			     you can also use type="number", in which case the browser may also
-			     do validation, and mobile browsers may offer a numeric keypad to edit
-			     the value.
-			     Type absent is treated like type="text".
+				 but for backward compatibility with 1.10.0 we treat it as number.
+				 you can also use type="number", in which case the browser may also
+				 do validation, and mobile browsers may offer a numeric keypad to edit
+				 the value.
+				 Type absent is treated like type="text".
 			  -->
 			<input type="text" id="rangeTextInvalidGreater" name="rangeTextInvalidGreater" min="50" max="200" value="1000"/>
 			<input type="text" id="rangeTextInvalidLess" name="rangeTextInvalidLess" min="200" max="1000" value="50"/>
@@ -326,7 +326,7 @@
 			<input id="rangeAbsentValid" name="rangeAbsentValid" min="50" max="1000" value="200"/>
 
 			<!-- ranges are like numbers in html5, except that browser is not required
-			     to demand an exact value.  User interface could be a slider.
+				 to demand an exact value.  User interface could be a slider.
 			  -->
 			<input type="range" id="rangeRangeValid" name="rangeRangeValid" min="50" max="1000" value="200"/>
 
