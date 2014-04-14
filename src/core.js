@@ -1195,7 +1195,7 @@ $.extend($.validator, {
 				url: param,
 				mode: "abort",
 				port: "validate" + element.name,
-				dataType: "json",
+				dataType: "text",
 				data: data,
 				context: validator.currentForm,
 				success: function( response ) {
