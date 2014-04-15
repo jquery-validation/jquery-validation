@@ -21,6 +21,8 @@
 		rangelength: $.validator.format("لطفا مقداری بین {0} تا {1} حرف وارد کنید."),
 		range: $.validator.format("لطفا مقداری بین {0} تا {1} حرف وارد کنید."),
 		max: $.validator.format("لطفا مقداری کمتر از {0} حرف وارد کنید."),
-		min: $.validator.format("لطفا مقداری بیشتر از {0} حرف وارد کنید.")
+		min: $.validator.format("لطفا مقداری بیشتر از {0} حرف وارد کنید."),
+		minWords: $.validator.format("لطفا حداقل {0} کلمه وارد کنید."),
+		maxWords: $.validator.format("لطفا حداکثر {0} کلمه وارد کنید.")
 	});
 }(jQuery));
