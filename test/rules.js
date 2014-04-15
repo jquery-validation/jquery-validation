@@ -13,7 +13,7 @@ test("rules(), ignore method:false", function() {
 
 	$("#testForm1clean").validate({
 		rules: {
-			firstname: { required: false, minlength: 2 }
+			firstnamec: { required: false, minlength: 2 }
 		}
 	});
 
@@ -83,7 +83,7 @@ test("rules(), merge min/max to range, minlength/maxlength to rangelength", func
 
 	$("#testForm1clean").validate({
 		rules: {
-			firstname: {
+			firstnamec: {
 				min: 5,
 				max: 12
 			},
@@ -133,7 +133,7 @@ test("rules(), evaluate dynamic parameters", function() {
 
 	$("#testForm1clean").validate({
 		rules: {
-			firstname: {
+			firstnamec: {
 				min: function(element) {
 					equal( $("#firstnamec")[0], element );
 					return 12;
@@ -184,7 +184,7 @@ test("rules(), class and attribute combinations", function() {
 test("rules(), dependency checks", function() {
 	var v = $("#testForm1clean").validate({
 			rules: {
-				firstname: {
+				firstnamec: {
 					min: {
 						param: 5,
 						depends: function(el) {
@@ -237,7 +237,7 @@ test("rules(), add and remove static rules", function() {
 
 	$("#testForm1clean").validate({
 		rules: {
-			firstname: "required date"
+			firstnamec: "required date"
 		}
 	});
 
@@ -276,7 +276,7 @@ test("rules(), add messages", function() {
 	$("#firstnamec").attr("title", null);
 	var v = $("#testForm1clean").validate({
 		rules: {
-			firstname: "required"
+			firstnamec: "required"
 		}
 	});
 	$("#testForm1clean").valid();

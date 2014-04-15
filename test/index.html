@@ -15,6 +15,7 @@
 	<script src="messages.js"></script>
 	<script src="methods.js"></script>
 	<script src="aria.js"></script>
+	<script src="error-placement.js"></script>
 </head>
 <body id="body">
 <h1 id="qunit-header">
@@ -65,8 +66,8 @@
 		<input type="text" data-rule-required="true" title="something" name="something" id="something" value="something" />
 	</form>
 	<form id="testForm1clean">
-		<input title="buga" name="firstname" id="firstnamec" />
-		<label id="errorFirstname" for="firstname" class="error">error for firstname</label>
+		<input title="buga" name="firstnamec" id="firstnamec" />
+		<label id="errorFirstnamec" for="firstnamec" class="error">error for firstname</label>
 		<input title="buga" name="lastname" id="lastnamec" />
 		<input name="username" id="usernamec" />
 	</form>
@@ -148,6 +149,21 @@
 			<option value="vw_p">VW Polo</option>
 			<option value="t_s">Titanic Skoda</option>
 		</select>
+	</form>
+	<form id="testForm14">
+		<!-- test existing "label" error holder -->
+		<input name="testForm14text" id="testForm14text" data-rule-required="true" data-msg="required" />
+		<label for="testForm14text" class="error"></label>
+	</form>
+	<form id="testForm16">
+		<!-- test existing "label" attribute -->
+		<input name="testForm16text" id="testForm16text" data-rule-required="true" data-msg="missing" />
+		<label for="testForm16text" class="title">Field Label</label>
+	</form>
+	<form id="testForm15">
+		<!-- test existing non-label error holder -->
+		<input name="testForm15text" id="testForm15text" data-rule-required="true" data-msg="required" aria-describedby="testForm15text-error" />
+		<span id="testForm15text-error" class="error"></span>
 	</form>
 	<form id="dataMessages">
 		<input name="dataMessagesName" id="dataMessagesName" class="required" data-msg-required="You must enter a value here" />

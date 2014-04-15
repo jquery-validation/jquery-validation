@@ -27,16 +27,16 @@ test("group error messages", function() {
 	});
 	ok( !form.valid() );
 	equal( 1, form.find(".errorContainer *").length );
-	equal( "Please enter a valid date.", form.find(".errorContainer label.error").text() );
+	equal( "Please enter a valid date.", form.find(".errorContainer .error:not(input)").text() );
 
 	$("#fromDate").val("12/03/2006");
 	$("#toDate").val("12/01/2006");
 	ok( !form.valid() );
-	equal( "Please specify a correct date range.", form.find(".errorContainer label.error").text() );
+	equal( "Please specify a correct date range.", form.find(".errorContainer .error:not(input)").text() );
 
 	$("#toDate").val("12/04/2006");
 	ok( form.valid() );
-	ok( form.find(".errorContainer label.error").is(":hidden") );
+	ok( form.find(".errorContainer .error:not(input)").is(":hidden") );
 });
 
 test("read messages from metadata", function() {
@@ -46,15 +46,15 @@ test("read messages from metadata", function() {
 	form.validate();
 	e = $("#testEmail9");
 	e.valid();
-	equal( form.find("label[for=testEmail9]").text(), "required" );
+	equal( form.find("#testEmail9").next(".error:not(input)").text(), "required" );
 	e.val("bla").valid();
-	equal( form.find("label[for=testEmail9]").text(), "email" );
+	equal( form.find("#testEmail9").next(".error:not(input)").text(), "email" );
 
 	g = $("#testGeneric9");
 	g.valid();
-	equal( form.find("label[for=testGeneric9]").text(), "generic");
+	equal( form.find("#testGeneric9").next(".error:not(input)").text(), "generic");
 	g.val("bla").valid();
-	equal( form.find("label[for=testGeneric9]").text(), "email" );
+	equal( form.find("#testGeneric9").next(".error:not(input)").text(), "email" );
 });
 
 
@@ -63,7 +63,7 @@ test("read messages from metadata, with meta option specified, but no metadata i
 	form.validate({
 		meta: "validate",
 		rules: {
-			firstname: "required"
+			firstnamec: "required"
 		}
 	});
 	ok(!form.valid(), "not valid");
