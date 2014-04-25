@@ -1,0 +1,45 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<title>Test for jQuery validate() plugin</title>
+
+<script src="jquery.js" type="text/javascript"></script>
+<script src="../dist/jquery.validate.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function() {
+	$('#numberForm').validate();
+});
+</script>
+
+<style type="text/css">
+#numberForm { width: 500px; }
+#numberForm label { width: 250px; display: block; float: left; }
+#numberForm label.error, #commentForm input.submit { margin-left: 253px; }
+#numberForm label.error { background-color: red; }
+</style>
+
+</head>
+<body>
+<form class="cmxform" id="numberForm" method="get" action="">
+	<fieldset>
+		<legend>A simple comment form with submit validation and default messages</legend>
+		<p>
+			<label for="Digits">Number with digits</label>
+			<input id="NumberDigits" name="NumberDigits" class="digits" type="number" />
+		</p>
+		
+		<p>
+			<label for="Digits">Number with number</label>
+			<input id="NumberNumber" name="NumberNumber" class="number" type="number" />
+		</p>
+		
+		<p>
+			<input class="submit" type="submit" value="Submit"/>
+		</p>
+	</fieldset>
+</form>
+
+</body>
+</html>
