@@ -554,6 +554,8 @@ $.extend($.validator, {
 
 			if ( type === "radio" || type === "checkbox" ) {
 				return $("input[name='" + $element.attr("name") + "']:checked").val();
+			} else if ( type === "number" && typeof element.validity !== "undefined" ) {
+				return !element.validity.badInput ? $(element).val() : false;
 			}
 
 			val = $element.val();
