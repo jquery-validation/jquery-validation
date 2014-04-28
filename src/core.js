@@ -550,10 +550,10 @@ $.extend($.validator, {
 		elementValue: function( element ) {
 			var val,
 				$element = $(element),
-				type = $element.attr("type");
+				type = element.type;
 
 			if ( type === "radio" || type === "checkbox" ) {
-				return $("input[name='" + $element.attr("name") + "']:checked").val();
+				return $("input[name='" + element.name + "']:checked").val();
 			}
 
 			val = $element.val();
