@@ -690,7 +690,7 @@ test("errorcontainer, show/hide only on submit", function() {
 	ok( v.form(), "Form now valid, trigger showErrors but not invalid-form" );
 });
 
-test("option invalidHandler", function() {
+asyncTest("option invalidHandler", function() {
 	expect(1);
 	$("#testForm1clean").validate({
 		invalidHandler: function() {
@@ -699,7 +699,6 @@ test("option invalidHandler", function() {
 		}
 	});
 	$("#usernamec").val("asdf").rules("add", { required: true, minlength: 5 });
-	stop();
 	$("#testForm1clean").submit();
 });
 
@@ -823,9 +822,8 @@ test("ignoreTitle", function() {
 	equal(v.errorList[0].message, $.validator.messages.required, "title used when it should have been ignored");
 });
 
-test("ajaxSubmit", function() {
+asyncTest("ajaxSubmit", function() {
 	expect(1);
-	stop();
 	$("#user").val("Peter");
 	$("#password").val("foobar");
 	jQuery("#signupForm").validate({
