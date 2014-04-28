@@ -351,9 +351,9 @@ test("extension", function() {
 	ok(!method( "picture.pdf", "gop,top" ), "Invalid custom accept type, comma separated" );
 });
 
-test("remote", function() {
+asyncTest("remote", function() {
 	expect(7);
-	stop();
+	
 	var e = $("#username"),
 		v = $("#userForm").validate({
 			rules: {
@@ -392,9 +392,8 @@ test("remote", function() {
 	strictEqual( v.element(e), true, "still invalid, because remote validation must block until it returns; dependency-mismatch considered as valid though" );
 });
 
-test("remote, customized ajax options", function() {
+asyncTest("remote, customized ajax options", function() {
 	expect(2);
-	stop();
 
 	$("#userForm").validate({
 		rules: {
@@ -424,9 +423,9 @@ test("remote, customized ajax options", function() {
 });
 
 
-test("remote extensions", function() {
+asyncTest("remote extensions", function() {
 	expect(5);
-	stop();
+	
 	var e = $("#username"),
 		v = $("#userForm").validate({
 			rules: {
@@ -460,9 +459,9 @@ test("remote extensions", function() {
 	strictEqual( v.element(e), true, "still invalid, because remote validation must block until it returns; dependency-mismatch considered as valid though" );
 });
 
-test("remote radio correct value sent", function() {
+asyncTest("remote radio correct value sent", function() {
 	expect(1);
-	stop();
+	
 	var e = $("#testForm10Radio2"),
 		v;
 
@@ -486,9 +485,9 @@ test("remote radio correct value sent", function() {
 	v.element(e);
 });
 
-test("remote reset clear old value", function() {
+asyncTest("remote reset clear old value", function() {
 	expect(1);
-	stop();
+	
 	var e = $("#username"),
 		v = $("#userForm").validate({
 			rules: {
