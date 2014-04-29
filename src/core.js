@@ -763,7 +763,18 @@ $.extend($.validator, {
 		validationTargetFor: function( element ) {
 			// if radio/checkbox, validate first element in group instead
 			if ( this.checkable(element) ) {
-				element = this.findByName( element.name ).not(this.settings.ignore)[0];
+		                // Get all elements by name first
+		                var elements = this.findByName(element.name);
+		
+				// Should always be true, but just in case
+		                if (elements.length > 0) {
+		                // If there are elements where validation is not ignored, take the first element
+		                // Else, just take the first element (try not to return undefined)
+		                    element = elements.not(this.settings.ignore)[0];
+		                    if (element === undefined) {
+		                        element = elements[0];
+		                    }
+		                }
 			}
 			return element;
 		},
