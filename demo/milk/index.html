@@ -76,7 +76,7 @@ $(document).ready(function() {
 			},
 			password: {
 				required: "Provide a password",
-				rangelength: jQuery.validator.format("Enter at least {0} characters")
+				minlength: jQuery.validator.format("Enter at least {0} characters")
 			},
 			password_confirm: {
 				required: "Repeat your password",

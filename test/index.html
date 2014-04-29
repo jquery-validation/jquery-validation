@@ -155,6 +155,15 @@
 			<input name="testForm12text" id="testForm12text" data-rule-required="true" />
 		</form>
 
+		<form id="testForm13">
+		<select id="cars-select" name="cars" title="Please select at least two cars, but no more than three" required rangelength="[2,3]" multiple="multiple">
+				<option value="m_sl">Mercedes SL</option>
+				<option value="o_c">Opel Corsa</option>
+				<option value="vw_p">VW Polo</option>
+				<option value="t_s">Titanic Skoda</option>
+			</select>
+		</form>
+
 		<form id="dataMessages">
 			<input name="dataMessagesName" id="dataMessagesName" class="required" data-msg-required="You must enter a value here" />
 		</form>

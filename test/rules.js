@@ -296,3 +296,11 @@ test("rules(), add messages", function() {
 	$("#firstnamec").valid();
 	equal(v.errorList.length, 0);
 });
+
+test( "rules(), rangelength attribute as array", function() {
+	$("#testForm13").validate();
+	deepEqual( $("#cars-select").rules(), {
+		required: true,
+		rangelength: [2,3]
+	});
+});

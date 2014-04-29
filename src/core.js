@@ -985,7 +985,7 @@ $.extend($.validator, {
 				if ( $.isArray(rules[this]) ) {
 					rules[this] = [ Number(rules[this][0]), Number(rules[this][1]) ];
 				} else if ( typeof rules[this] === "string" ) {
-					parts = rules[this].split(/[\s,]+/);
+					parts = rules[this].replace(/[\[\]]/g, "").split(/[\s,]+/);
 					rules[this] = [ Number(parts[0]), Number(parts[1]) ];
 				}
 			}
