@@ -769,8 +769,9 @@ $.extend($.validator, {
 		                // If there are elements where validation is not ignored, take the first element
 		                // Else, just take the first element (try not to return undefined)
 		                    element = elements.not(this.settings.ignore)[0];
-		                    if (element === undefined)
+		                    if (element === undefined) {
 		                        element = elements[0];
+		                    }
 		                }
 			}
 			return element;
