@@ -699,7 +699,6 @@ asyncTest("option invalidHandler", function() {
 		}
 	});
 	$("#usernamec").val("asdf").rules("add", { required: true, minlength: 5 });
-	
 	$("#testForm1clean").submit();
 });
 
@@ -825,7 +824,6 @@ test("ignoreTitle", function() {
 
 asyncTest("ajaxSubmit", function() {
 	expect(1);
-
 	$("#user").val("Peter");
 	$("#password").val("foobar");
 	jQuery("#signupForm").validate({

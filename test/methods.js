@@ -353,7 +353,6 @@ test("extension", function() {
 
 asyncTest("remote", function() {
 	expect(7);
-	
 	var e = $("#username"),
 		v = $("#userForm").validate({
 			rules: {
@@ -394,7 +393,6 @@ asyncTest("remote", function() {
 
 asyncTest("remote, customized ajax options", function() {
 	expect(2);
-
 	$("#userForm").validate({
 		rules: {
 			username: {
@@ -425,7 +423,6 @@ asyncTest("remote, customized ajax options", function() {
 
 asyncTest("remote extensions", function() {
 	expect(5);
-	
 	var e = $("#username"),
 		v = $("#userForm").validate({
 			rules: {
@@ -461,7 +458,6 @@ asyncTest("remote extensions", function() {
 
 asyncTest("remote radio correct value sent", function() {
 	expect(1);
-	
 	var e = $("#testForm10Radio2"),
 		v;
 
@@ -487,7 +483,6 @@ asyncTest("remote radio correct value sent", function() {
 
 asyncTest("remote reset clear old value", function() {
 	expect(1);
-	
 	var e = $("#username"),
 		v = $("#userForm").validate({
 			rules: {
