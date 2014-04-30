@@ -21,7 +21,7 @@ $_SESSION['captcha_id'] = $str;
 	<meta name="keywords" content="AJAX,JHR,PHP,CAPTCHA,download,PHP CAPTCHA,AJAX CAPTCHA,AJAX PHP CAPTCHA,download AJAX CAPTCHA,download AJAX PHP CAPTCHA" />
 	<meta name="description" content="An AJAX CAPTCHA script, written in PHP" />
 	<script src="../../lib/jquery.js"></script>
-	<script src="../../jquery.validate.js"></script>
+	<script src="../../dist/jquery.validate.js"></script>
 	<script src="captcha.js"></script>
 	<link rel="stylesheet" href="style.css" />
 	<style>
