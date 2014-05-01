@@ -6,11 +6,11 @@
  * @example <input type="text" size="20" name="VehicleID" class="{required:true,vinUS:true}" />
  * @desc Declares a required input element whose value must be a valid vehicle identification number.
  *
- * @name jQuery.validator.methods.vinUS
+ * @name $.validator.methods.vinUS
  * @type Boolean
  * @cat Plugins/Validate/Methods
  */
-jQuery.validator.addMethod("vinUS", function(v) {
+$.validator.addMethod("vinUS", function(v) {
 	if (v.length !== 17) {
 		return false;
 	}

@@ -26,7 +26,7 @@
  *     currency: "$,£,¢"
  *  }
  */
-jQuery.validator.addMethod("currency", function(value, element, param) {
+$.validator.addMethod("currency", function(value, element, param) {
     var isParamString = typeof param === "string",
         symbol = isParamString ? param : param[0],
         soft = isParamString ? true : param[1],

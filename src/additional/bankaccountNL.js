@@ -4,7 +4,7 @@
  * We accept the notation with spaces, as that is common.
  * acceptable: 123456789 or 12 34 56 789
  */
-jQuery.validator.addMethod("bankaccountNL", function(value, element) {
+$.validator.addMethod("bankaccountNL", function(value, element) {
 	if (this.optional(element)) {
 		return true;
 	}

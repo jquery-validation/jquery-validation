@@ -1,5 +1,5 @@
 // Accept a value from a file input based on a required mimetype
-jQuery.validator.addMethod("accept", function(value, element, param) {
+$.validator.addMethod("accept", function(value, element, param) {
 	// Split mime on commas in case we have multiple types we can accept
 	var typeParam = typeof param === "string" ? param.replace(/\s/g, "").replace(/,/g, "|") : "image/*",
 	optionalValue = this.optional(element),
@@ -10,7 +10,7 @@ jQuery.validator.addMethod("accept", function(value, element, param) {
 		return optionalValue;
 	}
 
-	if (jQuery(element).attr("type") === "file") {
+	if ($(element).attr("type") === "file") {
 		// If we are using a wildcard, make it regex friendly
 		typeParam = typeParam.replace(/\*/g, ".*");
 
@@ -30,4 +30,4 @@ jQuery.validator.addMethod("accept", function(value, element, param) {
 	// Either return true because we've validated each file, or because the
 	// browser does not support element.files and the FileList feature
 	return true;
-}, jQuery.validator.format("Please enter a value with a valid mimetype."));
+}, $.validator.format("Please enter a value with a valid mimetype."));

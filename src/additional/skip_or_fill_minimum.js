@@ -19,7 +19,7 @@
  * options[1]: CSS selector that defines the group of conditionally required fields
  *
  */
-jQuery.validator.addMethod("skip_or_fill_minimum", function(value, element, options) {
+$.validator.addMethod("skip_or_fill_minimum", function(value, element, options) {
 	var $fields = $(options[1], element.form),
 		$fieldsFirst = $fields.eq(0),
 		validator = $fieldsFirst.data("valid_skip") ? $fieldsFirst.data("valid_skip") : $.extend({}, this),
@@ -40,4 +40,4 @@ jQuery.validator.addMethod("skip_or_fill_minimum", function(value, element, opti
 		$fields.data("being_validated", false);
 	}
 	return isValid;
-}, jQuery.validator.format("Please either skip these fields or fill at least {0} of them."));
+}, $.validator.format("Please either skip these fields or fill at least {0} of them."));
