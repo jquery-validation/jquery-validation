@@ -11,8 +11,8 @@ else
 	$str = $_SESSION['captcha_id'];
 
 // Set the content type
-//header('Content-type: image/png');
-header('Cache-control: no-cache');
+header('Content-Type: image/png');
+header('Cache-Control: no-cache');
 
 // Create an image from button.png
 $image = imagecreatefrompng('button.png');
@@ -31,5 +31,3 @@ imagettftext($image, 14, $rotate, 18, 30, $colour, $font, $str);
 
 // Output the image as a png
 imagepng($image);
-
-?>
