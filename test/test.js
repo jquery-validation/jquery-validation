@@ -1705,3 +1705,37 @@ test("Rules allowed to have a value of zero valid greater", function() {
 	label = $("#ranges label");
 	equal( label.text(), "", "Correct error label" );
 });
+
+test("issue #521", function ()
+{
+	$("#issue-521").validate();
+	$("#issue-521 input[name=email]").rules("add", "email");
+
+	$("#issue-521 input[name=email]").val("e").keyup();
+	equal($("#issue-521 label.error[for=email]:visible").length, 0, "Validation doesn't fire immediately after typing first character of email address.");
+
+	$("#issue-521 input[name=email]").blur();
+	equal($("#issue-521 label.error[for=email]:visible").length, 1, "Validation fires and reports invalid input after field loses focus.");
+
+	$("#issue-521 input[name=email]").val("ex").keyup();
+	equal($("#issue-521 label.error[for=email]:visible").length, 1, "Validation still reports invalid input after typing second character of email address.");
+
+	$("#issue-521 input[name=email]").val("example@example.com").keyup();
+	equal($("#issue-521 label.error[for=email]:visible").length, 0, "Validation fires and reports valid input immediately after typing last character of valid email address.");
+
+	$("#issue-521 input[name=email]").val("example@example.").keyup();
+	equal($("#issue-521 label.error[for=email]:visible").length, 1, "Validation fires and reports invalid input immediately after erasing last character of valid email address.");
+});
+
+test("issue #524", function ()
+{
+	$("#issue-524").validate();
+	$("#issue-524 input[name=name]").rules("add", "required");
+	$("#issue-524 input[name=email]").rules("add", "email");
+
+	$("#issue-524 input[name=name]").val("abc").keyup();
+	$("#issue-524 input[name=email]").focus();
+	$("#issue-524 input[name=name]").focus();
+	$("#issue-524 input[name=name]").val("").keyup();
+	equal($("#issue-524 label.error[for=name]:visible").length, 1, "Validation fires and reports invalid input after erasing input.");
+});
