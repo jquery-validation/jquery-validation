@@ -311,6 +311,45 @@ test("submitHandler keeps submitting button", function() {
 	$("#userForm").submit();
 });
 
+asyncTest("validation triggered on radio/checkbox when using keyboard", function() {
+    expect( 1 );
+	var input, i, events, triggeredEvents = 0;
+
+	$("#form").validate({
+		onfocusin: function() {
+			triggeredEvents++;
+		},
+		onfocusout: function() {
+			triggeredEvents++;
+		},
+		onkeyup: function() {
+			triggeredEvents++;
+		}
+	});
+    
+	events = [
+		$.Event("focusin"),
+		$.Event("focusout"),
+		$.Event("keyup")
+	];
+    
+	input = $("#form :radio:first");
+	for(i = 0; i < events.length; i++) {
+		input.trigger(events[i]);
+	}
+    
+	input = $("#form :checkbox:first");
+	for(i = 0; i < events.length; i++) {
+		input.trigger(events[i]);
+	}
+    
+	setTimeout(function() {
+		// assert all event handlers fired
+		equal(6, triggeredEvents);
+		start();
+	}, 50);
+});
+
 test("showErrors()", function() {
 	expect( 4 );
 	var errorLabel = $("#errorFirstname").hide(),
