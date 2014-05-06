@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<title>jQuery validation plug-in - ThemeRolldered demo</title>
-	<link rel="stylesheet" media="screen" href="http://code.jquery.com/ui/jquery-ui-git.css" />
+	<link rel="stylesheet" media="screen" href="http://code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.min.css">
 	<style>
 	body {
 		font-size: 62.5%;
@@ -118,9 +118,9 @@
 		</p>
 	</fieldset>
 </form>
-<script src="../lib/jquery-1.6.1.js"></script>
+<script src="../lib/jquery.js"></script>
 <script src="../dist/jquery.validate.js"></script>
-<script src="http://code.jquery.com/ui/jquery-ui-git.js"></script>
+<script src="http://code.jquery.com/ui/1.10.4/jquery-ui.min.js"></script>
 <script>
 $.validator.setDefaults({
 	submitHandler: function() {
@@ -230,14 +230,6 @@ $.validator.setDefaults({
 
 	$(":submit").button();
 })();
-</script>
-<script src="http://jqueryui.com/themeroller/themeswitchertool/"></script>
-<script>
-$.fn.themeswitcher && $('<div/>').css({
-	position: "absolute",
-	right: 10,
-	top: 10
-}).appendTo(document.body).themeswitcher();
 </script>
 </body>
 </html>
