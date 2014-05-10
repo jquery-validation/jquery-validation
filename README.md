@@ -48,6 +48,8 @@ For more information on how to setup a rules and customizations, [check the docu
 
 ## Reporting an Issue
 
+**IMPORTANT NOTE ABOUT EMAIL VALIDATION**. As of version 1.12.0 this plugin is using the same regular expression that the [HTML5 specification suggests for browsers to use](http://www.whatwg.org/specs/web-apps/current-work/multipage/states-of-the-type-attribute.html#e-mail-state-%28type=email%29). We will follow their lead and use the same check. If you think the specification is wrong, please report the issue to them.
+
 1. Make sure the problem you're addressing is reproducible.
 2. Use http://jsbin.com or http://jsfiddle.net to provide a test page.
 3. Indicate what browsers the issue can be reproduced in. **Note: IE Compatibilty modes issues will not be addressed.**
