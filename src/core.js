@@ -549,6 +549,7 @@ $.extend($.validator, {
 
 		elementValue: function( element ) {
 			var val,
+			    numberVal,
 				$element = $(element),
 				type = element.type;
 
@@ -560,7 +561,7 @@ $.extend($.validator, {
 			    }
 
 			    val = $element.val();
-			    var numberVal = Number(val);
+			    numberVal = Number(val);
 			    return !isNaN(numberVal) ? numberVal : val;
 			}
 
