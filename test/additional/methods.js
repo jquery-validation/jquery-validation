@@ -1,16 +1,3 @@
-(function($) {
-
-function methodTest( methodName ) {
-	var v = jQuery("#form").validate(),
-		method = $.validator.methods[methodName],
-		element = $("#firstname")[0];
-
-	return function(value, param) {
-		element.value = value;
-		return method.call( v, value, element, param );
-	};
-}
-
 module("methods");
 
 test("default messages", function() {
@@ -603,27 +590,6 @@ test("dateITA", function() {
 	ok(!method( "01/01/199" ), "Invalid date ITA" );
 });
 
-test("dateFA", function() {
-	var method = methodTest("dateFA");
-
-	ok( method( "1342/12/29" ), "Valid date FA" );
-	ok( method( "1342/12/30" ), "Valid date FA" );
-	ok( method( "1361/6/31" ), "Valid date FA" );
-	ok( method( "1321/11/30" ), "Valid date FA" );
-	ok( method( "1361/1/1" ), "Valid date FA" );
-	ok( method( "1020/3/3" ), "Valid date FA" );
-	ok( method( "1020/03/3" ), "Valid date FA" );
-	ok( method( "1020/3/03" ), "Valid date FA" );
-	ok( method( "1020/03/03" ), "Valid date FA" );
-	ok( method( "1001/7/30" ), "Valid date FA" );
-
-	ok(!method( "1000/1/32" ), "Invalid date FA" );
-	ok(!method( "1323/12/31" ), "Invalid date FA" );
-	ok(!method( "1361/0/11" ), "Invalid date FA" );
-	ok(!method( "63/4/4" ), "Invalid date FA" );
-	ok(!method( "15/6/1361" ), "Invalid date FA" );
-});
-
 test("iban", function() {
 	var method = methodTest("iban");
 	ok( method( "NL20INGB0001234567"), "Valid IBAN");
@@ -1165,75 +1131,3 @@ test("cifES", function() {
 	ok(!method( "B43.522.192" ), "CIF invalid: dots" );
 	ok(!method( "B-43.522.192" ), "CIF invalid: dots and dash" );
 });
-
-test("maxWords", function(){
-	var method = methodTest("maxWords"),
-		maxWords = 6;
-
-	ok( method( "I am a sentence", maxWords), "Max Words");
-	ok(!method( "I'm way too long for this sentence!", maxWords), "Too many words");
-	ok(method( "Don’t “count” me as too long", maxWords), "Right amount of words with smartquotes");
-	ok(!method( "But you can “count” me as too long", maxWords), "Too many words with smartquotes");
-	ok(method( "<div>Don’t “count” me as too long</div>", maxWords), "Right amount of words with smartquotes w/ HTML");
-	ok(!method( "<div>But you can “count” me as too long</div>", maxWords), "Too many words with smartquotes w/ HTML");
-});
-
-test("minWords", function(){
-	var method = methodTest("minWords"),
-		minWords = 6;
-
-	ok(!method( "I am a short sentence", minWords), "Max Words");
-	ok( method( "I'm way too long for this sentence!", minWords), "Too many words");
-	ok(!method( "Don’t “count” me as short.", minWords), "Right amount of words with smartquotes");
-	ok( method( "But you can “count” me as too short", minWords), "Too many words with smartquotes");
-	ok(!method( "<div>“Count” me as too short.</div>", minWords), "Right amount of words with smartquotes w/ HTML");
-	ok( method( "<div>But you can “count” me as too long</div>", minWords), "Too many words with smartquotes w/ HTML");
-});
-
-test("rangeWords", function(){
-	var method = methodTest("rangeWords"),
-		rangeWords = [3,6];
-
-	ok(!method( "I'm going to be longer than “six words!”", rangeWords), "Longer than 6 with smartquotes");
-	ok( method( "I'm just the right amount!", rangeWords), "In between");
-	ok( method( "Super short sentence’s.", rangeWords), "Low end");
-	ok(!method( "I", rangeWords), "Too short");
-	ok( method( "<div>“Count” me as perfect.</div>", rangeWords), "Right amount of words with smartquotes w/ HTML");
-	ok(!method( "<div>But you can “count” me as too long</div>", rangeWords), "Too many words with smartquotes w/ HTML");
-});
-
-test("currency", function() { // Works with any symbol
-	var method = methodTest( "currency" );
-	ok( method( "£9", "£"), "Symbol no decimal" );
-	ok( method( "£9.9", "£"), "£, one decimal" );
-	ok( method( "£9.99", "£"), "£, two decimal" );
-	ok( method( "£9.90", "£"), "Valid currency" );
-	ok( method( "£9,999.9", "£"), "£, thousand, comma separator, one decimal" );
-	ok( method( "£9,999.99", "£"), "£, thousand, comma separator, two decimal" );
-	ok( method( "£9,999,999.9", "£"), "£, million, comma separators, one decimal" );
-	ok( method( "9", ["£", false]), "Valid currency" );
-	ok( method( "9.9", ["£", false]), "Valid currency" );
-	ok( method( "9.99", ["£", false]), "Valid currency" );
-	ok( method( "9.90", ["£", false]), "Valid currency" );
-	ok( method( "9,999.9", ["£", false]), "Valid currency" );
-	ok( method( "9,999.99", ["£", false]), "Valid currency" );
-	ok( method( "9,999,999.9", ["£", false]), "Valid currency" );
-	ok(!method( "9,", "£"), "Invalid currency" );
-	ok(!method( "9,99.99", "£"), "Invalid currency" );
-	ok(!method( "9,", "£"), "Invalid currency" );
-	ok(!method( "9.999", "£"), "Invalid currency" );
-	ok(!method( "9.999", "£"), "Invalid currency" );
-	ok(!method( "9.99,9", "£"), "Invalid currency" );
-});
-
-test("postalCodeCA", function() {
-	var method = methodTest("postalCodeCA");
-	ok( method( "H0H 0H0"), "Valid CA Postal Code; Single space" );
-	ok( !method( "H0H0H0"), "Inalid CA Postal Code; No space" );
-	ok( !method( "H0H-0H0"), "Invalid CA Postal Code; Single dash" );
-	ok( !method( "H0H 0H"), "Invalid CA Postal Code; Too Short" );
-	ok( !method( "Z0H 0H"), "Invalid CA Postal Code; Only 'ABCEGHJKLMNPRSTVXY' are valid starting characters" );
-	ok( !method( "h0h 0h0"), "Invalid CA Postal Code; Only upper case characters" );
-});
-
-})(jQuery);

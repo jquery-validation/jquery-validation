@@ -35,6 +35,7 @@
 		"stop": false,
 		"test": false,
 		"TestHelpers": true,
-		"JSHINT": false
+		"JSHINT": false,
+		"methodTest": true
 	}
 }
