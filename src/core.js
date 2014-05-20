@@ -811,20 +811,22 @@ $.extend($.validator, {
 			return !$.validator.methods.required.call(this, val, element) && "dependency-mismatch";
 		},
 
-		startRequest: function( element ) {
-			if ( !this.pending[element.name] ) {
+		startRequest: function( element, value ) {
+			if ( !this.pending[element.name] || !this.pending[element.name][value] ) {
 				this.pendingRequest++;
-				this.pending[element.name] = true;
+				if ( !this.pending[element.name] )
+					this.pending[element.name] = {};
+				this.pending[element.name][value] = true;
 			}
 		},
 
-		stopRequest: function( element, valid ) {
+		stopRequest: function( element, value, valid ) {
 			this.pendingRequest--;
 			// sometimes synchronization fails, make sure pendingRequest is never < 0
 			if ( this.pendingRequest < 0 ) {
 				this.pendingRequest = 0;
 			}
-			delete this.pending[element.name];
+			delete this.pending[element.name][value];
 			if ( valid && this.pendingRequest === 0 && this.formSubmitted && this.form() ) {
 				$(this.currentForm).submit();
 				this.formSubmitted = false;
@@ -832,6 +834,10 @@ $.extend($.validator, {
 				$(this.currentForm).triggerHandler("invalid-form", [ this ]);
 				this.formSubmitted = false;
 			}
+		},
+
+		isRequestPending: function( element, value ) {
+			return this.pending[element.name] && this.pending[element.name][value];
 		},
 
 		previousValue: function( element ) {
@@ -1175,6 +1181,9 @@ $.extend($.validator, {
 				return "dependency-mismatch";
 			}
 
+			if ( this.isRequestPending(element, value) )
+				return "pending";
+
 			var previous = this.previousValue(element),
 				validator, data;
 
@@ -1192,7 +1201,7 @@ $.extend($.validator, {
 
 			previous.old = value;
 			validator = this;
-			this.startRequest(element);
+			this.startRequest(element, value);
 			data = {};
 			data[element.name] = value;
 			$.ajax($.extend(true, {
@@ -1222,7 +1231,7 @@ $.extend($.validator, {
 						validator.showErrors(errors);
 					}
 					previous.valid = valid;
-					validator.stopRequest(element, valid);
+					validator.stopRequest(element, value, valid);
 				}
 			}, param));
 			return "pending";
