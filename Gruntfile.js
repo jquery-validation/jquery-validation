@@ -62,7 +62,9 @@ grunt.initConfig({
 		}
 	},
 	qunit: {
-		files: ["test/index.html"]
+		files: [
+			"test/**/*.html"
+		]
 	},
 	jshint: {
 		options: {
@@ -74,7 +76,8 @@ grunt.initConfig({
 		test: {
 			files: {
 				src: [
-					"test/*.js"
+					"test/**/*.js",
+					"!test/qunit/*.*"
 				]
 			}
 		},
@@ -96,8 +99,8 @@ grunt.initConfig({
 			tasks: ["concat", "qunit"]
 		},
 		test: {
-			files: ["<%= jshint.test.files.src %>", "test/index.html"],
-			tasks: ["jshint:test"]
+			files: [ "<%= jshint.test.files.src %>", "test/**/*.html" ],
+			tasks: [ "jshint:test", "qunit" ]
 		}
 	},
 	jscs: {

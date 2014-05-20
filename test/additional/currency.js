@@ -1,0 +1,23 @@
+test("currency", function() { // Works with any symbol
+	var method = methodTest( "currency" );
+	ok( method( "£9", "£"), "Symbol no decimal" );
+	ok( method( "£9.9", "£"), "£, one decimal" );
+	ok( method( "£9.99", "£"), "£, two decimal" );
+	ok( method( "£9.90", "£"), "Valid currency" );
+	ok( method( "£9,999.9", "£"), "£, thousand, comma separator, one decimal" );
+	ok( method( "£9,999.99", "£"), "£, thousand, comma separator, two decimal" );
+	ok( method( "£9,999,999.9", "£"), "£, million, comma separators, one decimal" );
+	ok( method( "9", ["£", false]), "Valid currency" );
+	ok( method( "9.9", ["£", false]), "Valid currency" );
+	ok( method( "9.99", ["£", false]), "Valid currency" );
+	ok( method( "9.90", ["£", false]), "Valid currency" );
+	ok( method( "9,999.9", ["£", false]), "Valid currency" );
+	ok( method( "9,999.99", ["£", false]), "Valid currency" );
+	ok( method( "9,999,999.9", ["£", false]), "Valid currency" );
+	ok(!method( "9,", "£"), "Invalid currency" );
+	ok(!method( "9,99.99", "£"), "Invalid currency" );
+	ok(!method( "9,", "£"), "Invalid currency" );
+	ok(!method( "9.999", "£"), "Invalid currency" );
+	ok(!method( "9.999", "£"), "Invalid currency" );
+	ok(!method( "9.99,9", "£"), "Invalid currency" );
+});
