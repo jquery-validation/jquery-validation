@@ -945,6 +945,7 @@ $.extend($.validator, {
 	},
 
 	normalizeRules: function( rules, element ) {
+		var validator = $.data( element.form, "validator" );
 		// handle dependency check
 		$.each(rules, function( prop, val ) {
 			// ignore rule when param is explicitly false, eg. required:false
@@ -966,6 +967,9 @@ $.extend($.validator, {
 					rules[prop] = val.param !== undefined ? val.param : true;
 				} else {
 					delete rules[prop];
+					if ($( element ).hasClass( validator.settings.errorClass ) ) {
+						validator.settings.unhighlight.call( validator, element, validator.settings.errorClass, validator.settings.validClass );
+					}
 				}
 			}
 		});
