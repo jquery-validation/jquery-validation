@@ -239,26 +239,26 @@ $.extend($.validator, {
 				this.addWrapper(this.errorsFor(element)).hide();
 			}
 		},
-		onfocusout: function( element ) {
+		onfocusout: function( element, event ) {
 			if ( !this.checkable(element) && (element.name in this.submitted || !this.optional(element)) ) {
-				this.element(element);
+				this.element(element, event);
 			}
 		},
 		onkeyup: function( element, event ) {
 			if ( event.which === 9 && this.elementValue(element) === "" ) {
 				return;
 			} else if ( element.name in this.submitted || element === this.lastElement ) {
-				this.element(element);
+				this.element(element, event);
 			}
 		},
-		onclick: function( element ) {
+		onclick: function( element, event ) {
 			// click on selects, radiobuttons and checkboxes
 			if ( element.name in this.submitted ) {
-				this.element(element);
+				this.element(element, event);
 
 			// or option elements, check parent select in that case
 			} else if ( element.parentNode.name in this.submitted ) {
-				this.element(element.parentNode);
+				this.element(element.parentNode, event);
 			}
 		},
 		highlight: function( element, errorClass, validClass ) {
@@ -380,7 +380,7 @@ $.extend($.validator, {
 		},
 
 		// http://jqueryvalidation.org/Validator.element/
-		element: function( element ) {
+		element: function( element, event) {
 			var cleanElement = this.clean( element ),
 				checkElement = this.validationTargetFor( cleanElement ),
 				result = true;
@@ -393,7 +393,7 @@ $.extend($.validator, {
 				this.prepareElement( checkElement );
 				this.currentElements = $( checkElement );
 
-				result = this.check( checkElement ) !== false;
+				result = this.check( checkElement, event ) !== false;
 				if (result) {
 					delete this.invalid[checkElement.name];
 				} else {
@@ -567,7 +567,7 @@ $.extend($.validator, {
 			return val;
 		},
 
-		check: function( element ) {
+		check: function( element, event ) {
 			element = this.validationTargetFor( this.clean( element ) );
 
 			var rules = $(element).rules(),
@@ -582,7 +582,7 @@ $.extend($.validator, {
 				rule = { method: method, parameters: rules[method] };
 				try {
 
-					result = $.validator.methods[method].call( this, val, element, rule.parameters );
+					result = $.validator.methods[method].call( this, val, element, rule.parameters, event );
 
 					// if a method indicates that the field is optional and therefore valid,
 					// don't mark it as valid when there are no other rules
