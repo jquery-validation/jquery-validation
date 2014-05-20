@@ -10,7 +10,7 @@
 		url: "Por favor, escribe unha URL válida.",
 		date: "Por favor, escribe unha data válida.",
 		dateISO: "Por favor, escribe unha data (ISO) válida.",
-		number: "Por favor, escribe un número enteiro válido.",
+		number: "Por favor, escribe un número válido.",
 		digits: "Por favor, escribe só díxitos.",
 		creditcard: "Por favor, escribe un número de tarxeta válido.",
 		equalTo: "Por favor, escribe o mesmo valor de novo.",
