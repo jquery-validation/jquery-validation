@@ -14,7 +14,7 @@
  * options[0]: number of fields that must be filled in the group
  * options[1]: CSS selector that defines the group of conditionally required fields
  */
-jQuery.validator.addMethod("require_from_group", function(value, element, options) {
+$.validator.addMethod("require_from_group", function(value, element, options) {
 	var $fields = $(options[1], element.form),
 		$fieldsFirst = $fields.eq(0),
 		validator = $fieldsFirst.data("valid_req_grp") ? $fieldsFirst.data("valid_req_grp") : $.extend({}, this),
@@ -34,4 +34,4 @@ jQuery.validator.addMethod("require_from_group", function(value, element, option
 		$fields.data("being_validated", false);
 	}
 	return isValid;
-}, jQuery.validator.format("Please fill at least {0} of these fields."));
+}, $.validator.format("Please fill at least {0} of these fields."));

@@ -2,7 +2,7 @@
  * Redistributed under the the Apache License 2.0 at http://www.apache.org/licenses/LICENSE-2.0
  * Valid Types: mastercard, visa, amex, dinersclub, enroute, discover, jcb, unknown, all (overrides all other settings)
  */
-jQuery.validator.addMethod("creditcardtypes", function(value, element, param) {
+$.validator.addMethod("creditcardtypes", function(value, element, param) {
 	if (/[^0-9\-]+/.test(value)) {
 		return false;
 	}

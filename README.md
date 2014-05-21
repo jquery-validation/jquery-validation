@@ -38,10 +38,18 @@ Include jQuery and the plugin on a page. Then select a form to validate and call
 	<input required>
 </form>
 <script src="jquery.js"></script>
-<script src="jquery.validation.js"></script>
+<script src="jquery.validate.js"></script>
 <script>
 $("form").validate();
 </script>
+```
+
+Alternatively include jQuery and the plugin via requirejs in your module.
+
+```js
+define(["jquery", "jquery.validate"], function( $ ) {
+	$("form").validate();
+});
 ```
 
 For more information on how to setup a rules and customizations, [check the documentation](http://jqueryvalidation.org/documentation/).
