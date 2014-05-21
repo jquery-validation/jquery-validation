@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>jQuery Validation Plugin - Method CPF</title>
+
+    <script src="../lib/jquery.js"></script>
+    <script src="../dist/jquery.validate.js"></script>
+    <script src="../dist/additional-methods.js"></script>
+
+    <script>
+      $(document).ready(function() {
+        $("#testForm").validate({
+          rules: {
+            cpf: {
+              cpfBR: true,
+            }
+          }
+        });
+        $("#testForm").submit(function (e) {
+          e.preventDefault();
+        });
+      });
+    </script>
+  </head>
+
+  <body>
+    <h1>CPF Demo</h1>
+    <form id="testForm" method="get">
+      <p>
+        <label for="cpf">CPF</label>
+        <input id="cpf" name="cpf" type="text">
+      </p>
+      <button type="submit">Test</button>
+    </form>
+  </body>
+</html>
