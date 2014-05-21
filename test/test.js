@@ -931,26 +931,6 @@ test("all rules are evaluated even if one returns a dependency-mistmatch", funct
 	delete $.validator.messages.custom1;
 });
 
-test("messages", function() {
-	var m = jQuery.validator.messages;
-	equal( "Please enter no more than 0 characters.", m.maxlength(0) );
-	equal( "Please enter at least 1 characters.", m.minlength(1) );
-	equal( "Please enter a value between 1 and 2 characters long.", m.rangelength([1, 2]) );
-	equal( "Please enter a value less than or equal to 1.", m.max(1) );
-	equal( "Please enter a value greater than or equal to 0.", m.min(0) );
-	equal( "Please enter a value between 1 and 2.", m.range([1, 2]) );
-});
-
-test("jQuery.validator.format", function() {
-	equal( "Please enter a value between 0 and 1.", jQuery.validator.format("Please enter a value between {0} and {1}.", 0, 1) );
-	equal( "0 is too fast! Enter a value smaller then 0 and at least -15", jQuery.validator.format("{0} is too fast! Enter a value smaller then {0} and at least {1}", 0, -15) );
-	var template = jQuery.validator.format("{0} is too fast! Enter a value smaller then {0} and at least {1}");
-	equal( "0 is too fast! Enter a value smaller then 0 and at least -15", template(0, -15) );
-	template = jQuery.validator.format("Please enter a value between {0} and {1}.");
-	equal( "Please enter a value between 1 and 2.", template([1, 2]) );
-	equal( $.validator.format("{0}", "$0"), "$0" );
-});
-
 test("option: subformRequired", function() {
 	jQuery.validator.addMethod("billingRequired", function(value, element) {
 		if ($("#bill_to_co").is(":checked")) {

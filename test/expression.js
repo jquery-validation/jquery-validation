@@ -1,4 +1,4 @@
-module("expressions");
+module("expression");
 
 test("expression: :blank", function() {
 	var e = $("#lastname")[0];
