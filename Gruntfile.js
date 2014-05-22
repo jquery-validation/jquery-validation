@@ -127,7 +127,7 @@ grunt.initConfig({
 			files: {
 				src: [
 					"test/**/*.js",
-					"!test/qunit/*.*"
+					"!test/lib/**/*.js"
 				]
 			}
 		},

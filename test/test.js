@@ -1,7 +1,9 @@
 if ( window.sessionStorage ) {
 	sessionStorage.clear();
 }
+
 jQuery.validator.defaults.debug = true;
+
 $.mockjaxSettings.log = $.noop;
 
 $.mockjax({
@@ -10,6 +12,7 @@ $.mockjax({
 	responseStatus: 200,
 	responseTime: 1
 });
+
 $.mockjax({
 	url: "users.php",
 	data: { username: /Peter2?|asdf/},
@@ -17,6 +20,7 @@ $.mockjax({
 	responseStatus: 200,
 	responseTime: 1
 });
+
 $.mockjax({
 	url: "users2.php",
 	data: { username: "asdf"},
@@ -24,6 +28,7 @@ $.mockjax({
 	responseStatus: 200,
 	responseTime: 1
 });
+
 $.mockjax({
 	url: "echo.php",
 	response: function( data ) {
@@ -31,20 +36,6 @@ $.mockjax({
 	},
 	responseTime: 100
 });
-
-// Asserts that there is a visible error with the given text for the specified element
-QUnit.assert.hasError = function( element, text, message ) {
-	var errors = $( element ).closest( "form" ).validate().errorsFor( element[ 0 ] ),
-		actual = ( errors.length === 1 && errors.is( ":visible" ) ) ? errors.text() : "";
-	QUnit.push( actual, actual, text, message );
-};
-
-// Asserts that there is no visible error for the given element
-QUnit.assert.noErrorFor = function( element, message ) {
-	var errors = $( element ).closest( "form" ).validate().errorsFor( element[ 0 ] ),
-		hidden = ( errors.length === 0 ) || errors.is( ":hidden" ) || ( errors.text() === "" );
-	QUnit.push( hidden, hidden, true, message );
-};
 
 module( "validator" );
 
@@ -627,23 +618,6 @@ test( "ignoreTitle", function() {
 	equal( v.errorList[ 0 ].message, $.validator.messages.required, "title used when it should have been ignored" );
 });
 
-asyncTest( "ajaxSubmit", function() {
-	expect( 1 );
-	$( "#user" ).val( "Peter" );
-	$( "#password" ).val( "foobar" );
-	jQuery( "#signupForm" ).validate({
-		submitHandler: function( form ) {
-			jQuery( form ).ajaxSubmit({
-				success: function( response ) {
-					equal( "Hi Peter, welcome back.", response );
-					start();
-				}
-			});
-		}
-	});
-	jQuery( "#signupForm" ).triggerHandler( "submit" );
-});
-
 test( "validating groups settings parameter", function() {
 	var form = $( "<form>" ),
 		validate = form.validate({
@@ -660,33 +634,6 @@ test( "validating groups settings parameter", function() {
 	equal( validate.groups[ "input-five" ], "stringGroup" );
 	equal( validate.groups[ "input-six" ], "stringGroup" );
 });
-
-test( "bypassing validation on form submission",function () {
-	var form = $( "#bypassValidation" ),
-		normalSubmission = $( "form#bypassValidation :input[id=normalSubmit]" ),
-		bypassSubmitWithCancel = $( "form#bypassValidation :input[id=bypassSubmitWithCancel]" ),
-		bypassSubmitWithNoValidate1 = $( "form#bypassValidation :input[id=bypassSubmitWithNoValidate1]" ),
-		bypassSubmitWithNoValidate2 = $( "form#bypassValidation :input[id=bypassSubmitWithNoValidate2]" ),
-		$v = form.validate({
-			debug : true
-		});
-
-	bypassSubmitWithCancel.click();
-	equal($v.numberOfInvalids(), 0, "Validation was bypassed using CSS 'cancel' class." );
-	$v.resetForm();
-
-	bypassSubmitWithNoValidate1.click();
-	equal($v.numberOfInvalids(), 0, "Validation was bypassed using blank 'formnovalidate' attribute." );
-	$v.resetForm();
-
-	bypassSubmitWithNoValidate2.click();
-	equal($v.numberOfInvalids(), 0, "Validation was bypassed using 'formnovalidate=\"formnovalidate\"' attribute." );
-	$v.resetForm();
-
-	normalSubmission.click();
-	equal($v.numberOfInvalids(), 1, "Validation failed correctly" );
-});
-
 
 module( "misc" );
 
@@ -831,26 +778,6 @@ test( "all rules are evaluated even if one returns a dependency-mistmatch", func
 	delete $.validator.messages.custom1;
 });
 
-test( "messages", function() {
-	var m = jQuery.validator.messages;
-	equal( "Please enter no more than 0 characters.", m.maxlength( 0 ) );
-	equal( "Please enter at least 1 characters.", m.minlength( 1 ) );
-	equal( "Please enter a value between 1 and 2 characters long.", m.rangelength([1, 2]) );
-	equal( "Please enter a value less than or equal to 1.", m.max( 1 ) );
-	equal( "Please enter a value greater than or equal to 0.", m.min( 0 ) );
-	equal( "Please enter a value between 1 and 2.", m.range([1, 2]) );
-});
-
-test("jQuery.validator.format", function() {
-	equal( "Please enter a value between 0 and 1.", jQuery.validator.format("Please enter a value between {0} and {1}.", 0, 1) );
-	equal( "0 is too fast! Enter a value smaller then 0 and at least -15", jQuery.validator.format("{0} is too fast! Enter a value smaller then {0} and at least {1}", 0, -15) );
-	var template = jQuery.validator.format("{0} is too fast! Enter a value smaller then {0} and at least {1}");
-	equal( "0 is too fast! Enter a value smaller then 0 and at least -15", template(0, -15) );
-	template = jQuery.validator.format("Please enter a value between {0} and {1}.");
-	equal( "Please enter a value between 1 and 2.", template([1, 2]) );
-	equal( $.validator.format("{0}", "$0"), "$0" );
-});
-
 test("option: subformRequired", function() {
 	jQuery.validator.addMethod("billingRequired", function(value, element) {
 		if ($("#bill_to_co").is(":checked")) {
@@ -871,36 +798,7 @@ test("option: subformRequired", function() {
 
 module("events");
 
-test("validate on keyup", function() {
-	function errors(expected, message) {
-		equal(expected, v.size(), message );
-	}
-	function keyup( target ) {
-		target.trigger( "keyup" );
-	}
-	var e = $( "#firstname" ),
-		v = $( "#testForm1" ).validate();
 
-	keyup( e );
-	errors( 0, "No value, no errors" );
-	e.val( "a" );
-	keyup( e );
-	errors( 0, "Value, but not invalid" );
-	e.val( "" );
-	v.form();
-	errors(2, "Both invalid");
-	keyup(e);
-	errors(1, "Only one field validated, still invalid");
-	e.val("hh");
-	keyup(e);
-	errors(0, "Not invalid anymore");
-	e.val("h");
-	keyup(e);
-	errors(1, "Field didn't loose focus, so validate again, invalid");
-	e.val("hh");
-	keyup(e);
-	errors(0, "Valid");
-});
 
 test("validate input with no type attribute, defaulting to text", function() {
 	function errors(expected, message) {

@@ -1,0 +1,30 @@
+module("nieES");
+
+test("nieES", function() {
+	var method = methodTest("nieES");
+	ok( method( "X0093999K" ), "NIE valid" );
+	ok( method( "X1923000Q" ), "NIE valid" );
+	ok( method( "Z9669587R" ), "NIE valid" );
+	ok( method( "Z8945005B" ), "NIE valid" );
+	ok( method( "Z6663465W" ), "NIE valid" );
+	ok( method( "Y7875935J" ), "NIE valid" );
+	ok( method( "X3390130E" ), "NIE valid" );
+	ok( method( "Y7699182S" ), "NIE valid" );
+	ok( method( "Y1524243R" ), "NIE valid" );
+	ok( method( "X3744072V" ), "NIE valid" );
+	ok( method( "X7436800A" ), "NIE valid" );
+	ok( method( "y7875935j" ), "NIE valid: lower case" );
+	ok(!method( "X0093999 K" ), "NIE inválido: white space" );
+	ok(!method( "X 0093999 K" ), "NIE inválido:  white space" );
+	ok(!method( "11441059" ), "NIE inválido: no letter" );
+	ok(!method( "11441059PR" ), "NIE inválido: two letters" );
+	ok(!method( "11440059R" ), "NIE inválido: wrong number" );
+	ok(!method( "11441059S" ), "NIE inválido: wrong letter" );
+	ok(!method( "114410598R" ), "NIE inválido: > 8 digits" );
+	ok(!method( "11441059-R" ), "NIE inválido: dash" );
+	ok(!method( "asdasdasd" ), "NIE inválido: all letters" );
+	ok(!method( "11.144.059R" ), "NIE inválido: two dots" );
+	ok(!method( "05.122.654R" ), "NIE inválido: starts with 0 and dots" );
+	ok(!method( "5.122.654-R" ), "NIE inválido: dots and dash" );
+	ok(!method( "05.122.654-R" ), "NIE inválido: starts with zero and dot and dash" );
+});

@@ -8,4 +8,9 @@ test("rangeWords", function(){
 	ok(!method( "I", rangeWords), "Too short");
 	ok( method( "<div>“Count” me as perfect.</div>", rangeWords), "Right amount of words with smartquotes w/ HTML");
 	ok(!method( "<div>But you can “count” me as too long</div>", rangeWords), "Too many words with smartquotes w/ HTML");
+	ok( method( "hello", [0, 2] ), "plain text, valid" );
+	ok( method( "hello worlds", [0, 2] ), "plain text, valid" );
+	ok( method( "<b>hello</b> world", [0, 2] ), "html, valid" );
+	ok(!method( "hello worlds what is up", [0, 2] ), "plain text, invalid" );
+	ok(!method( "<b>Hello</b> <b>world</b> <b>hello</b>", [0, 2] ), "html, invalid" );
 });

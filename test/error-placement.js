@@ -85,6 +85,7 @@ test( "error containers, with labelcontainer I", function() {
 
 test( "errorcontainer, show/hide only on submit", function() {
 	expect( 14 );
+
 	var container = $( "#container" ),
 		labelContainer = $( "#labelcontainer" ),
 		v = $( "#testForm1" ).bind( "invalid-form.validate", function() {
@@ -122,7 +123,7 @@ test( "test label used as error container", function(assert) {
 	expect( 8 );
 	var form = $( "#testForm16" ),
 		field = $( "#testForm16text" );
-		
+
 	form.validate({
 		errorPlacement: function( error, element ) {
 			// Append error within linked label
@@ -130,7 +131,7 @@ test( "test label used as error container", function(assert) {
 		},
 		errorElement: "span"
 	});
-	
+
 	ok( !field.valid() );
 	equal( "Field Label", field.next( "label" ).contents( ":not(span)" ).text(), "container label isn't disrupted" );
 	assert.hasError(field, "missing");
@@ -147,11 +148,11 @@ test( "test error placed adjacent to descriptive label", function(assert) {
 	expect( 8 );
 	var form = $( "#testForm16" ),
 		field = $( "#testForm16text" );
-		
+
 	form.validate({
 		errorElement: "span"
 	});
-		
+
 	ok( !field.valid() );
 	equal( 1, form.find( "label" ).length );
 	equal( "Field Label", form.find( "label" ).text(), "container label isn't disrupted" );
@@ -168,11 +169,11 @@ test( "test descriptive label used alongside error label", function(assert) {
 	expect( 8 );
 	var form = $( "#testForm16" ),
 		field = $( "#testForm16text" );
-		
+
 	form.validate({
 		errorElement: "label"
 	});
-		
+
 	ok( !field.valid() );
 	equal( 1, form.find( "label.title" ).length );
 	equal( "Field Label", form.find( "label.title" ).text(), "container label isn't disrupted" );
@@ -189,14 +190,14 @@ test( "test custom errorElement", function(assert) {
 	expect( 4 );
 	var form = $( "#userForm" ),
 		field = $( "#username" );
-		
+
 	form.validate({
 		messages: {
 			username: "missing"
 		},
 		errorElement: "label"
 	});
-		
+
 	ok( !field.valid() );
 	assert.hasError( field, "missing", "Field should have error 'missing'" );
 	field.val( "foo" );
@@ -208,9 +209,9 @@ test( "test existing label used as error element", function(assert) {
 	expect( 4 );
 	var form = $( "#testForm14" ),
 		field = $( "#testForm14text" );
-		
+
 	form.validate({errorElement: "label"});
-		
+
 	ok( !field.valid() );
 	assert.hasError( field, "required" );
 
@@ -223,9 +224,9 @@ test( "test existing non-label used as error element", function(assert) {
 	expect( 4 );
 	var form = $( "#testForm15" ),
 		field = $( "#testForm15text" );
-		
+
 	form.validate({errorElement: "span"});
-		
+
 	ok( !field.valid() );
 	assert.hasError( field );
 

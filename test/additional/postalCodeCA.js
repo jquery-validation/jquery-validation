@@ -1,9 +1,12 @@
 module( "postalCodeCA", {
 	setup: function() {
 		var $fixture = $( "#qunit-fixture" ),
-			$form = $fixture.append( "<form id='form'></form>" );
+			$form = $fixture.append( "<form id='form_postalCodeCA'></form>" );
 
 		$form.append("<label for='test_postalCodeCA'>Canadian Postal Code</label><input id='test_postalCodeCA' name='test_postalCodeCA' type='text'>");
+	},
+	teardown: function() {
+		$( "#form_postalCodeCA" ).remove();
 	}
 });
 

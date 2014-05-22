@@ -1,4 +1,4 @@
-module( "Blur" );
+module( "Events: Blur" );
 
 test("validate on blur", function() {
 	function errors(expected, message) {
