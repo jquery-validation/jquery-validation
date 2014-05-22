@@ -1083,7 +1083,7 @@ $.extend( $.validator, {
 			}
 
 			// check for a value, and that it doesn't match the placeholder
-			return $.trim( value ).length > 0 && $.trim(value) !== $( element ).attr( 'placeholder' );
+			return $.trim( value ).length > 0 && $.trim(value) !== $( element ).attr( "placeholder" );
 		},
 
 		// http://jqueryvalidation.org/email-method/
