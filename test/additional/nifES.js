@@ -1,0 +1,30 @@
+module("nifES");
+
+test("nifES", function() {
+	var method = methodTest("nifES");
+	ok( method( "11441059P" ), "NIF valid" );
+	ok( method( "80054306T" ), "NIF valid" );
+	ok( method( "76048581R" ), "NIF valid" );
+	ok( method( "28950849J" ), "NIF valid" );
+	ok( method( "34048598L" ), "NIF valid" );
+	ok( method( "28311529R" ), "NIF valid" );
+	ok( method( "34673804Q" ), "NIF valid" );
+	ok( method( "92133247P" ), "NIF valid" );
+	ok( method( "77149717N" ), "NIF valid" );
+	ok( method( "15762034L" ), "NIF valid" );
+	ok( method( "05122654W" ), "NIF valid" );
+	ok( method( "05122654w" ), "NIF valid: lower case" );
+	ok(!method( "1144105R" ), "NIF invalid: less than 8 digits without zero" );
+	ok(!method( "11441059 R" ), "NIF invalid: white space" );
+	ok(!method( "11441059" ), "NIF invalid: no letter" );
+	ok(!method( "11441059PR" ), "NIF invalid: two letters" );
+	ok(!method( "11440059R" ), "NIF invalid: wrong number" );
+	ok(!method( "11441059S" ), "NIF invalid: wrong letter" );
+	ok(!method( "114410598R" ), "NIF invalid: > 8 digits" );
+	ok(!method( "11441059-R" ), "NIF invalid: dash" );
+	ok(!method( "asdasdasd" ), "NIF invalid: all letters" );
+	ok(!method( "11.144.059R" ), "NIF invalid: two dots" );
+	ok(!method( "05.122.654R" ), "NIF invalid: starts with 0 and dots" );
+	ok(!method( "5.122.654-R" ), "NIF invalid:  dots and dash" );
+	ok(!method( "05.122.654-R" ), "NIF invalid: starts with zero and dot and dash" );
+});

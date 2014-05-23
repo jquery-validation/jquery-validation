@@ -3,41 +3,16 @@
 <head>
 	<meta charset="utf-8">
 	<title>jQuery - Validation Test Suite</title>
-	<link rel="stylesheet" href="qunit/qunit.css" />
-	<script src="jquery.js"></script>
-	<script src="../lib/jquery.form.js"></script>
-	<script src="qunit/qunit.js"></script>
-	<script src="../lib/jquery.mockjax.js"></script>
-	<script src="../dist/jquery.validate.js"></script>
-	<script src="../dist/additional-methods.js"></script>
-	<script src="test.js"></script>
-	<script src="rules.js"></script>
-	<script src="messages.js"></script>
-	<script src="methods.js"></script>
-	<script src="aria.js"></script>
-	<script src="error-placement.js"></script>
+	<link rel="stylesheet" href="lib/qunit/qunit.css" />
 </head>
 <body id="body">
-<h1 id="qunit-header">
-	<a href="http://bassistance.de/jquery-plugins/jquery-plugin-validation/">jQuery Validation Plugin</a> Test Suite
-	<a href="?jquery=1.6.4">jQuery 1.6.4</a>
-	<a href="?jquery=1.7.2">jQuery 1.7.2</a>
-	<a href="?jquery=1.8.3">jQuery 1.8.3</a>
-	<a href="?jquery=1.9.1">jQuery 1.9.1</a>
-	<a href="?jquery=git">jQuery Latest (git)</a>
-</h1>
-<div>
-</div>
-<h2 id="qunit-banner"></h2>
-<div id="qunit-testrunner-toolbar"></div>
-<h2 id="qunit-userAgent"></h2>
-<ol id="qunit-tests"></ol>
-<!-- Test HTML -->
-<div id="other" style="display:none;">
-	<input type="password" name="pw1" id="pw1" value="engfeh" />
-	<input type="password" name="pw2" id="pw2" value="" />
-</div>
+<div id="qunit"></div>
 <div id="qunit-fixture">
+	<!-- Test HTML -->
+	<div id="other" style="display:none;">
+		<input type="password" name="pw1" id="pw1" value="engfeh" />
+		<input type="password" name="pw2" id="pw2" value="" />
+	</div>
 	<p id="firstp">See <a id="simon1" href="http://simon.incutio.com/archive/2003/03/25/#getElementsBySelector" rel="bookmark">this blog entry</a> for more information.</p>
 	<p id="ap">
 		Here are some links in a normal paragraph: <a id="google" href="http://www.google.com/" title="Google!">Google</a>,
@@ -347,5 +322,88 @@
 		<input name="test" class="required" value="" />
 	</form>
 </div>
+
+<!-- jQuery Loader -->
+<script src="lib/jquery.js"></script>
+<!-- Thrid party helpers -->
+<script src="../lib/jquery.form.js"></script>
+<script src="../lib/jquery.mockjax.js"></script>
+
+<!-- QUnit JS -->
+<script src="lib/qunit/qunit.js"></script>
+<script src="lib/qunit-config.js"></script>
+<script src="lib/methodTest.js"></script>
+
+<!-- jQuery Validation JS -->
+<script src="../dist/jquery.validate.js"></script>
+<script src="../dist/additional-methods.js"></script>
+
+<!-- Test suites -->
+<script src="rules.js"></script>
+<script src="test.js"></script>
+<script src="addMethod.js"></script>
+<script src="aria.js"></script>
+<script src="error-placement.js"></script>
+<script src="expression.js"></script>
+<script src="format.js"></script>
+<script src="ignored.js"></script>
+<script src="messages.js"></script>
+<script src="events/blur.js"></script>
+<script src="events/click.js"></script>
+<!-- <script src="events/focusin.js"></script> -->
+<!-- <script src="events/focusout.js"></script> -->
+<script src="events/keyup.js"></script>
+<script src="events/submit.js"></script>
+<script src="rules/creditcard.js"></script>
+<script src="rules/date.js"></script>
+<script src="rules/dateISO.js"></script>
+<script src="rules/email.js"></script>
+<script src="rules/equalTo.js"></script>
+<script src="rules/max.js"></script>
+<script src="rules/maxlength.js"></script>
+<script src="rules/min.js"></script>
+<script src="rules/minlength.js"></script>
+<script src="rules/minMax.js"></script>
+<script src="rules/number.js"></script>
+<script src="rules/range.js"></script>
+<script src="rules/rangelength.js"></script>
+<script src="rules/remote.js"></script>
+<script src="rules/required.js"></script>
+<script src="rules/url.js"></script>
+<script src="additional/bankaccountNL.js"></script>
+<script src="additional/bankorgiroaccountNL.js"></script>
+<script src="additional/bic.js"></script>
+<script src="additional/cifES.js"></script>
+<script src="additional/creditcardtypes.js"></script>
+<script src="additional/currency.js"></script>
+<script src="additional/dateFA.js"></script>
+<script src="additional/dateITA.js"></script>
+<script src="additional/dateNL.js"></script>
+<script src="additional/digits.js"></script>
+<script src="additional/extension.js"></script>
+<script src="additional/giroaccountNL.js"></script>
+<script src="additional/iban.js"></script>
+<script src="additional/maxWords.js"></script>
+<script src="additional/minWords.js"></script>
+<script src="additional/mobileNL.js"></script>
+<script src="additional/mobileUK.js"></script>
+<script src="additional/nieES.js"></script>
+<script src="additional/nifES.js"></script>
+<script src="additional/pattern.js"></script>
+<script src="additional/phoneNL.js"></script>
+<script src="additional/phoneUK.js"></script>
+<script src="additional/phoneUS.js"></script>
+<script src="additional/postalCodeCA.js"></script>
+<script src="additional/postalCodeNL.js"></script>
+<script src="additional/postalCodeUK.js"></script>
+<script src="additional/rangeWords.js"></script>
+<script src="additional/require_from_group.js"></script>
+<script src="additional/skip_or_fill_minimum.js"></script>
+<script src="additional/time.js"></script>
+<script src="additional/time12h.js"></script>
+<script src="additional/url2.js"></script>
+<script src="additional/zipcodeUS.js"></script>
+<script src="localization/messages.js"></script>
+<script src="localization/methods_de.js"></script>
 </body>
 </html>
