@@ -364,6 +364,37 @@ asyncTest("validation triggered on radio/checkbox when using keyboard", function
 	}, 50);
 });
 
+asyncTest("validation triggered on radio/checkbox when using mouseclick", function() {
+    expect( 1 );
+	var input, i, events, triggeredEvents = 0;
+
+	$("#form").validate({
+		onclick: function() {
+			triggeredEvents++;
+		}
+	});
+
+	events = [
+		$.Event("click")
+	];
+
+	input = $("#form :radio:first");
+	for(i = 0; i < events.length; i++) {
+		input.trigger(events[i]);
+	}
+
+	input = $("#form :checkbox:first");
+	for(i = 0; i < events.length; i++) {
+		input.trigger(events[i]);
+	}
+
+	setTimeout(function() {
+		// assert all event handlers fired
+		equal(2, triggeredEvents);
+		start();
+	}, 50);
+});
+
 test( "showErrors()", function() {
 	expect( 4 );
 	var errorLabel = $( "#errorFirstname" ).hide(),
