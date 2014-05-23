@@ -349,7 +349,7 @@ $.extend( $.validator, {
 					"focusin focusout keyup", delegate)
 				// Support: Chrome, oldIE
 				// "select" is provided as event.target when clicking a option
-				.validateDelegate("select, option", "click", delegate);
+				.validateDelegate("select, option, [type='radio'], [type='checkbox']", "click", delegate);
 
 			if ( this.settings.invalidHandler ) {
 				$( this.currentForm ).bind( "invalid-form.validate", this.settings.invalidHandler );
