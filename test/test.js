@@ -1694,3 +1694,24 @@ test( "Rules allowed to have a value of zero valid greater", function() {
 	label = $( "#ranges .error:not(input)" );
 	equal( label.text(), "", "Correct error label" );
 });
+
+test( "Validation triggered on radio and checkbox via click", function() {
+	expect( 2 );
+
+	var form = $( "#radiocheckbox" );
+
+	// init validate
+	form.validate();
+
+	// validate so we have errors
+	ok( !form.valid(), "Form invalid");
+
+	// simulate native click on first checkbox to trigger change-event
+	$( "#radiocheckbox-0-1" ).simulate( "click" );
+
+	// simulate native click on first radio to trigger change-event
+	$( "#radiocheckbox-1-1" ).simulate( "click" );
+
+	// test if there is no error anymore
+	ok( form.find( "input.error" ).length === 0, "Form valid" );
+});
