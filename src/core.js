@@ -177,11 +177,17 @@ $.extend($.fn, {
 // Custom selectors
 $.extend( $.expr[ ":" ], {
 	// http://jqueryvalidation.org/blank-selector/
-	blank: function( a ) { return !$.trim( "" + $( a ).val() ); },
+	blank: function( a ) {
+		return !$.trim( "" + $( a ).val() );
+	},
 	// http://jqueryvalidation.org/filled-selector/
-	filled: function( a ) { return !!$.trim( "" + $( a ).val() ); },
+	filled: function( a ) {
+		return !!$.trim( "" + $( a ).val() );
+	},
 	// http://jqueryvalidation.org/unchecked-selector/
-	unchecked: function( a ) { return !$( a ).prop( "checked" ); }
+	unchecked: function( a ) {
+		return !$( a ).prop( "checked" );
+	}
 });
 
 // constructor for validator
@@ -730,7 +736,7 @@ $.extend( $.validator, {
 					.attr( "id", elementID + "-error" )
 					.addClass( this.settings.errorClass )
 					.html( message || "" );
-			
+
 				// Maintain reference to the element to be placed into the DOM
 				place = error;
 				if ( this.settings.wrapper ) {
@@ -745,7 +751,7 @@ $.extend( $.validator, {
 				} else {
 					place.insertAfter( element );
 				}
-				
+
 				// Link error back to the element
 				if ( error.is( "label" ) ) {
 					// If the error is a label, then associate using 'for'
@@ -754,7 +760,7 @@ $.extend( $.validator, {
 					// If the element is not a child of an associated label, then it's necessary
 					// to explicitly apply aria-describedby
 					$( element ).attr( "aria-describedby", error.attr( "id" ) );
-				
+
 					// If this element is grouped, then assign to all elements in the same group
 					group = this.groups[ element.name ];
 					if ( group ) {

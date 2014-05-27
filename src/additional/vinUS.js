@@ -21,7 +21,7 @@ $.validator.addMethod("vinUS", function(v) {
 		rs = 0,
 		i, n, d, f, cd, cdv;
 
-	for (i = 0; i < 17; i++){
+	for (i = 0; i < 17; i++) {
 		f = FL[i];
 		d = v.slice(i,i + 1);
 		if (i === 8) {

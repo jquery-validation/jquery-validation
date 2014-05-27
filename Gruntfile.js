@@ -118,22 +118,20 @@ grunt.initConfig({
 		options: {
 			jshintrc: true
 		},
-		files: [
-			"src/**/*.js"
-		],
+		core: {
+			src: [
+				"src/**/*.js"
+			]
+		},
 		test: {
-			files: {
-				src: [
-					"test/*.js"
-				]
-			}
+			src: [
+				"test/*.js"
+			]
 		},
 		grunt: {
-			files: {
-				src: [
-					"Gruntfile.js"
-				]
-			}
+			src: [
+				"Gruntfile.js"
+			]
 		}
 	},
 	watch: {
@@ -142,20 +140,20 @@ grunt.initConfig({
 			tasks: ["jshint:grunt"]
 		},
 		src: {
-			files: "<%= jshint.files %>",
-			tasks: ["concat", "qunit"]
+			files: "<%= jshint.core.src %>",
+			tasks: ["jscs:core", "jshint:core", "concat", "qunit"]
 		},
 		test: {
-			files: ["<%= jshint.test.files.src %>", "test/index.html"],
-			tasks: ["jshint:test"]
+			files: ["<%= jshint.test.src %>", "test/index.html"],
+			tasks: ["jscs:test", "jshint:test"]
 		}
 	},
 	jscs: {
-		all: {
-			options: {
-				preset: "jquery"
-			},
-			src: "src/**/*.*"
+		core: {
+			src: "<%= jshint.core.src %>"
+		},
+		test: {
+			src: "<%= jshint.test.src %>"
 		}
 	},
 	copy: {

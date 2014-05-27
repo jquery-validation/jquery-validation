@@ -27,7 +27,7 @@ $.validator.addMethod("dateITA", function(value, element) {
 		mm = parseInt(adata[1],10);
 		aaaa = parseInt(adata[2],10);
 		xdata = new Date(aaaa, mm - 1, gg, 12, 0, 0, 0);
-		if ( ( xdata.getFullYear() === aaaa ) && ( xdata.getMonth() === mm - 1 ) && ( xdata.getDate() === gg ) ){
+		if ( ( xdata.getFullYear() === aaaa ) && ( xdata.getMonth() === mm - 1 ) && ( xdata.getDate() === gg ) ) {
 			check = true;
 		} else {
 			check = false;
