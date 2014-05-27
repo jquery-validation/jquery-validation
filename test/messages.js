@@ -11,7 +11,7 @@ test("predefined message not overwritten by addMethod(a, b, undefined)", functio
 
 test("group error messages", function() {
 	$.validator.addClassRules({
-		requiredDateRange: {required:true, date:true, dateRange:true}
+		requiredDateRange: { required: true, date: true, dateRange: true }
 	});
 	$.validator.addMethod("dateRange", function() {
 		return new Date($("#fromDate").val()) < new Date($("#toDate").val());
@@ -56,7 +56,6 @@ test("read messages from metadata", function() {
 	g.val("bla").valid();
 	equal( form.find("#testGeneric9").next(".error:not(input)").text(), "email" );
 });
-
 
 test("read messages from metadata, with meta option specified, but no metadata in there", function() {
 	var form = $("#testForm1clean");

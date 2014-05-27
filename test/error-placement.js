@@ -7,13 +7,36 @@ test( "elements() order", function() {
 			wrap: "li"
 		});
 
-	deepEqual( v.elements().map( function() {
-		return $( this ).attr( "id" );
-	}).get(), ["order1", "order2", "order3", "order4", "order5", "order6"], "elements must be in document order" );
+	deepEqual(
+		v.elements().map( function() {
+			return $( this ).attr( "id" );
+		}).get(),
+		[
+			"order1",
+			"order2",
+			"order3",
+			"order4",
+			"order5",
+			"order6"
+		],
+		"elements must be in document order"
+	);
+
 	v.form();
-	deepEqual( container.children().map( function() {
-		return $( this ).attr( "id" );
-	}).get(), ["order1-error", "order2-error", "order3-error", "order4-error", "order5-error", "order6-error"], "labels in error container must be in document order" );
+	deepEqual(
+		container.children().map( function() {
+			return $( this ).attr( "id" );
+		}).get(),
+		[
+			"order1-error",
+			"order2-error",
+			"order3-error",
+			"order4-error",
+			"order5-error",
+			"order6-error"
+		],
+		"labels in error container must be in document order"
+	);
 });
 
 test( "error containers, simple", function() {
@@ -33,7 +56,21 @@ test( "error containers, simple", function() {
 	equal( "", container.find( "h3" ).html() );
 
 	v.prepareForm();
-	v.errorList = [{message:"bar", element: {name:"foo"}}, {message: "necessary", element: {name:"required"}}];
+	v.errorList = [
+		{
+			message: "bar",
+			element: {
+				name: "foo"
+			}
+		},
+		{
+			message: "necessary",
+			element: {
+				name: "required"
+			}
+		}
+	];
+
 	ok( !v.valid(), "form is not valid after adding errors manually" );
 	v.showErrors();
 	equal( container.find( ".error:not(input)" ).length, 2, "There should be two error labels" );
@@ -68,7 +105,22 @@ test( "error containers, with labelcontainer I", function() {
 	equal( 0, labelcontainer.find( ".error:not(input)" ).length, "There should be no error labels in the labelcontainer" );
 	equal( 0, labelcontainer.find( "li" ).length, "There should be no lis labels in the labelcontainer" );
 
-	v.errorList = [{message:"bar", element: {name:"foo"}}, {name: "required", message: "necessary", element: {name:"required"}}];
+	v.errorList = [
+		{
+			message: "bar",
+			element: {
+				name: "foo"
+			}
+		},
+		{
+			name: "required",
+			message: "necessary",
+			element: {
+				name: "required"
+			}
+		}
+	];
+
 	ok( !v.valid(), "form is not valid after adding errors manually" );
 	v.showErrors();
 	equal( 0, container.find( ".error:not(input)" ).length, "There should be no error label in the container" );
@@ -110,7 +162,12 @@ test( "errorcontainer, show/hide only on submit", function() {
 	ok( container.is( ":visible" ), "must be visible" );
 
 	$( "#firstname" ).val( "hix" ).keyup();
-	$( "#testForm1" ).triggerHandler( "keyup", [jQuery.event.fix({ type: "keyup", target: $( "#firstname" )[0] })]);
+	$( "#testForm1" ).triggerHandler( "keyup", [
+			jQuery.event.fix({
+				type: "keyup",
+				target: $( "#firstname" )[ 0 ]
+			})
+		]);
 	equal( 1, labelContainer.find( ".error:visible" ).length );
 	equal( "There are 1 errors in your form.", container.html() );
 
@@ -122,7 +179,7 @@ test( "test label used as error container", function(assert) {
 	expect( 8 );
 	var form = $( "#testForm16" ),
 		field = $( "#testForm16text" );
-		
+
 	form.validate({
 		errorPlacement: function( error, element ) {
 			// Append error within linked label
@@ -130,7 +187,7 @@ test( "test label used as error container", function(assert) {
 		},
 		errorElement: "span"
 	});
-	
+
 	ok( !field.valid() );
 	equal( "Field Label", field.next( "label" ).contents( ":not(span)" ).text(), "container label isn't disrupted" );
 	assert.hasError(field, "missing");
@@ -147,11 +204,11 @@ test( "test error placed adjacent to descriptive label", function(assert) {
 	expect( 8 );
 	var form = $( "#testForm16" ),
 		field = $( "#testForm16text" );
-		
+
 	form.validate({
 		errorElement: "span"
 	});
-		
+
 	ok( !field.valid() );
 	equal( 1, form.find( "label" ).length );
 	equal( "Field Label", form.find( "label" ).text(), "container label isn't disrupted" );
@@ -168,11 +225,11 @@ test( "test descriptive label used alongside error label", function(assert) {
 	expect( 8 );
 	var form = $( "#testForm16" ),
 		field = $( "#testForm16text" );
-		
+
 	form.validate({
 		errorElement: "label"
 	});
-		
+
 	ok( !field.valid() );
 	equal( 1, form.find( "label.title" ).length );
 	equal( "Field Label", form.find( "label.title" ).text(), "container label isn't disrupted" );
@@ -189,14 +246,14 @@ test( "test custom errorElement", function(assert) {
 	expect( 4 );
 	var form = $( "#userForm" ),
 		field = $( "#username" );
-		
+
 	form.validate({
 		messages: {
 			username: "missing"
 		},
 		errorElement: "label"
 	});
-		
+
 	ok( !field.valid() );
 	assert.hasError( field, "missing", "Field should have error 'missing'" );
 	field.val( "foo" );
@@ -208,9 +265,9 @@ test( "test existing label used as error element", function(assert) {
 	expect( 4 );
 	var form = $( "#testForm14" ),
 		field = $( "#testForm14text" );
-		
-	form.validate({errorElement: "label"});
-		
+
+	form.validate({ errorElement: "label" });
+
 	ok( !field.valid() );
 	assert.hasError( field, "required" );
 
@@ -223,9 +280,9 @@ test( "test existing non-label used as error element", function(assert) {
 	expect( 4 );
 	var form = $( "#testForm15" ),
 		field = $( "#testForm15text" );
-		
-	form.validate({errorElement: "span"});
-		
+
+	form.validate({ errorElement: "span" });
+
 	ok( !field.valid() );
 	assert.hasError( field );
 

@@ -269,7 +269,7 @@ test("maxlength", function() {
 test("rangelength", function() {
 	var v = jQuery("#form").validate(),
 		method = $.validator.methods.rangelength,
-		param = [2, 4],
+		param = [ 2, 4 ],
 		e = $("#text1, #text2, #text3");
 
 	ok( method.call( v, e[0].value, e[0], param), "Valid text input" );
@@ -302,7 +302,7 @@ test("max", function() {
 test("range", function() {
 	var v = jQuery("#form").validate(),
 		method = $.validator.methods.range,
-		param = [4,12],
+		param = [ 4, 12 ],
 		e = $("#value1, #value2, #value3");
 
 	ok(!method.call( v, e[0].value, e[0], param), "Invalid text input" );
@@ -420,7 +420,6 @@ asyncTest("remote, customized ajax options", function() {
 	$("#userForm").valid();
 });
 
-
 asyncTest("remote extensions", function() {
 	expect(5);
 	var e = $("#username"),
@@ -492,7 +491,7 @@ asyncTest("remote reset clear old value", function() {
 						url: "echo.php",
 						dataFilter: function(data) {
 							var json = JSON.parse(data);
-							if(json.username === "asdf") {
+							if (json.username === "asdf") {
 								return "\"asdf is already taken\"";
 							}
 							return "\"" + true + "\"";
@@ -507,13 +506,11 @@ asyncTest("remote reset clear old value", function() {
 
 		$(document).unbind("ajaxStop");
 
-
 		$(document).ajaxStop(function() {
 			clearTimeout(waitTimeout);
 			ok( true, "Remote request sent to server" );
 			start();
 		});
-
 
 		v.resetForm();
 		e.val("asdf");
@@ -900,11 +897,11 @@ test("maxWords", function() {
 
 test("rangeWords", function() {
 	var method = methodTest("rangeWords");
-	ok( method( "hello", [0, 2] ), "plain text, valid" );
-	ok( method( "hello worlds", [0, 2] ), "plain text, valid" );
-	ok( method( "<b>hello</b> world", [0, 2] ), "html, valid" );
-	ok(!method( "hello worlds what is up", [0, 2] ), "plain text, invalid" );
-	ok(!method( "<b>Hello</b> <b>world</b> <b>hello</b>", [0, 2] ), "html, invalid" );
+	ok( method( "hello", [ 0, 2 ] ), "plain text, valid" );
+	ok( method( "hello worlds", [ 0, 2 ] ), "plain text, valid" );
+	ok( method( "<b>hello</b> world", [ 0, 2 ] ), "html, valid" );
+	ok(!method( "hello worlds what is up", [ 0, 2 ] ), "plain text, invalid" );
+	ok(!method( "<b>Hello</b> <b>world</b> <b>hello</b>", [ 0, 2 ] ), "html, invalid" );
 });
 
 test("pattern", function() {
@@ -993,71 +990,71 @@ function fillFormWithValuesAndExpect(formSelector, inputValues, expected) {
 test("require_from_group", function() {
 	$("#productInfo").validate({
 		rules: {
-			partnumber: {require_from_group: [2,".productInfo"]},
-			description: {require_from_group: [2,".productInfo"]},
-			discount: {require_from_group: [2,".productInfo"]}
+			partnumber: { require_from_group: [ 2,".productInfo" ] },
+			description: { require_from_group: [ 2,".productInfo" ] },
+			discount: { require_from_group: [ 2,".productInfo" ] }
 		}
 	});
 
 	fillFormWithValuesAndExpect("#productInfo", [], false);
-	fillFormWithValuesAndExpect("#productInfo", [123], false);
+	fillFormWithValuesAndExpect("#productInfo", [ 123 ], false);
 	$("#productInfo input[type='checkbox']").attr("checked", "checked");
-	fillFormWithValuesAndExpect("#productInfo", [123], true);
+	fillFormWithValuesAndExpect("#productInfo", [ 123 ], true);
 	$("#productInfo input[type='checkbox']").removeAttr("checked");
-	fillFormWithValuesAndExpect("#productInfo", [123, "widget"], true);
-	fillFormWithValuesAndExpect("#productInfo", [123, "widget", "red"], true);
-	fillFormWithValuesAndExpect("#productInfo", [123, "widget", "red"], true);
+	fillFormWithValuesAndExpect("#productInfo", [ 123, "widget" ], true);
+	fillFormWithValuesAndExpect("#productInfo", [ 123, "widget", "red" ], true);
+	fillFormWithValuesAndExpect("#productInfo", [ 123, "widget", "red" ], true);
 });
 
 test("require_from_group preserve other rules", function() {
 	$("#productInfo").validate({
 		rules: {
-			partnumber: {require_from_group: [2,".productInfo"]},
-			description: {require_from_group: [2,".productInfo"]},
-			color: {require_from_group: [2,".productInfo"]},
-			supplier: {required: true}
+			partnumber: { require_from_group: [ 2,".productInfo" ] },
+			description: { require_from_group: [ 2,".productInfo" ] },
+			color: { require_from_group: [ 2,".productInfo" ] },
+			supplier: { required: true }
 		}
 	});
 
 	fillFormWithValuesAndExpect("#productInfo", [], false);
-	fillFormWithValuesAndExpect("#productInfo", [123], false);
-	fillFormWithValuesAndExpect("#productInfo", [123, "widget"], false);
-	fillFormWithValuesAndExpect("#productInfo", ["", "", "", "Acme"], false);
-	fillFormWithValuesAndExpect("#productInfo", [123, "", "", "Acme"], false);
-	fillFormWithValuesAndExpect("#productInfo", [123, "widget", "", "Acme"], true);
-	fillFormWithValuesAndExpect("#productInfo", [123, "widget", "red", "Acme"], true);
+	fillFormWithValuesAndExpect("#productInfo", [ 123 ], false);
+	fillFormWithValuesAndExpect("#productInfo", [ 123, "widget" ], false);
+	fillFormWithValuesAndExpect("#productInfo", [ "", "", "", "Acme" ], false);
+	fillFormWithValuesAndExpect("#productInfo", [ 123, "", "", "Acme" ], false);
+	fillFormWithValuesAndExpect("#productInfo", [ 123, "widget", "", "Acme" ], true);
+	fillFormWithValuesAndExpect("#productInfo", [ 123, "widget", "red", "Acme" ], true);
 });
 
 test("skip_or_fill_minimum", function() {
 	$("#productInfo").validate({
 		rules: {
-			partnumber:  {skip_or_fill_minimum: [2,".productInfo"]},
-			description: {skip_or_fill_minimum: [2,".productInfo"]},
-			color:       {skip_or_fill_minimum: [2,".productInfo"]}
+			partnumber:  { skip_or_fill_minimum: [ 2,".productInfo" ] },
+			description: { skip_or_fill_minimum: [ 2,".productInfo" ] },
+			color:       { skip_or_fill_minimum: [ 2,".productInfo" ] }
 		}
 	});
 
 	fillFormWithValuesAndExpect("#productInfo", [], true);
-	fillFormWithValuesAndExpect("#productInfo", [123], false);
-	fillFormWithValuesAndExpect("#productInfo", [123, "widget"], true);
-	fillFormWithValuesAndExpect("#productInfo", [123, "widget", "red"], true);
+	fillFormWithValuesAndExpect("#productInfo", [ 123 ], false);
+	fillFormWithValuesAndExpect("#productInfo", [ 123, "widget" ], true);
+	fillFormWithValuesAndExpect("#productInfo", [ 123, "widget", "red" ], true);
 });
 
 test("skip_or_fill_minimum preserve other rules", function() {
 	$("#productInfo").validate({
 		rules: {
-			partnumber:  {skip_or_fill_minimum: [2,".productInfo"]},
-			description: {skip_or_fill_minimum: [2,".productInfo"]},
-			color:       {skip_or_fill_minimum: [2,".productInfo"]},
-			supplier: {required: true}
+			partnumber:  { skip_or_fill_minimum: [ 2,".productInfo" ] },
+			description: { skip_or_fill_minimum: [ 2,".productInfo" ] },
+			color:       { skip_or_fill_minimum: [ 2,".productInfo" ] },
+			supplier: { required: true }
 		}
 	});
 
 	fillFormWithValuesAndExpect("#productInfo", [], false);
-	fillFormWithValuesAndExpect("#productInfo", ["", "", "", "Acme"], true);
-	fillFormWithValuesAndExpect("#productInfo", [123, "", "", "Acme"], false);
-	fillFormWithValuesAndExpect("#productInfo", [123, "widget", "", "Acme"], true);
-	fillFormWithValuesAndExpect("#productInfo", [123, "widget", "red", "Acme"], true);
+	fillFormWithValuesAndExpect("#productInfo", [ "", "", "", "Acme" ], true);
+	fillFormWithValuesAndExpect("#productInfo", [ 123, "", "", "Acme" ], false);
+	fillFormWithValuesAndExpect("#productInfo", [ 123, "widget", "", "Acme" ], true);
+	fillFormWithValuesAndExpect("#productInfo", [ 123, "widget", "red", "Acme" ], true);
 });
 
 test("zipcodeUS", function() {
@@ -1166,7 +1163,7 @@ test("cifES", function() {
 	ok(!method( "B-43.522.192" ), "CIF invalid: dots and dash" );
 });
 
-test("maxWords", function(){
+test("maxWords", function() {
 	var method = methodTest("maxWords"),
 		maxWords = 6;
 
@@ -1178,7 +1175,7 @@ test("maxWords", function(){
 	ok(!method( "<div>But you can “count” me as too long</div>", maxWords), "Too many words with smartquotes w/ HTML");
 });
 
-test("minWords", function(){
+test("minWords", function() {
 	var method = methodTest("minWords"),
 		minWords = 6;
 
@@ -1190,9 +1187,9 @@ test("minWords", function(){
 	ok( method( "<div>But you can “count” me as too long</div>", minWords), "Too many words with smartquotes w/ HTML");
 });
 
-test("rangeWords", function(){
+test("rangeWords", function() {
 	var method = methodTest("rangeWords"),
-		rangeWords = [3,6];
+		rangeWords = [ 3, 6 ];
 
 	ok(!method( "I'm going to be longer than “six words!”", rangeWords), "Longer than 6 with smartquotes");
 	ok( method( "I'm just the right amount!", rangeWords), "In between");
@@ -1211,13 +1208,13 @@ test("currency", function() { // Works with any symbol
 	ok( method( "£9,999.9", "£"), "£, thousand, comma separator, one decimal" );
 	ok( method( "£9,999.99", "£"), "£, thousand, comma separator, two decimal" );
 	ok( method( "£9,999,999.9", "£"), "£, million, comma separators, one decimal" );
-	ok( method( "9", ["£", false]), "Valid currency" );
-	ok( method( "9.9", ["£", false]), "Valid currency" );
-	ok( method( "9.99", ["£", false]), "Valid currency" );
-	ok( method( "9.90", ["£", false]), "Valid currency" );
-	ok( method( "9,999.9", ["£", false]), "Valid currency" );
-	ok( method( "9,999.99", ["£", false]), "Valid currency" );
-	ok( method( "9,999,999.9", ["£", false]), "Valid currency" );
+	ok( method( "9", [ "£", false ]), "Valid currency" );
+	ok( method( "9.9", [ "£", false ]), "Valid currency" );
+	ok( method( "9.99", [ "£", false ]), "Valid currency" );
+	ok( method( "9.90", [ "£", false ]), "Valid currency" );
+	ok( method( "9,999.9", [ "£", false ]), "Valid currency" );
+	ok( method( "9,999.99", [ "£", false ]), "Valid currency" );
+	ok( method( "9,999,999.9", [ "£", false ]), "Valid currency" );
 	ok(!method( "9,", "£"), "Invalid currency" );
 	ok(!method( "9,99.99", "£"), "Invalid currency" );
 	ok(!method( "9,", "£"), "Invalid currency" );
