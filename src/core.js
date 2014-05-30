@@ -1186,4 +1186,3 @@ $.extend($.validator, {
 $.format = $.validator.format;
 
 }(jQuery));
-
