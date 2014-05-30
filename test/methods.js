@@ -189,6 +189,7 @@ test("dateISO", function() {
 	ok(!method( "1990-13-01" ), "Invalid date" );
 	ok(!method( "1990-01-00" ), "Invalid date" );
 	ok(!method( "1990-01-32" ), "Invalid date" );
+	ok(!method( "1990-13-32" ), "Invalid date" );
 });
 
 /* disabled for now, need to figure out how to test localized methods
