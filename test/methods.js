@@ -176,11 +176,19 @@ test("date", function() {
 test("dateISO", function() {
 	var method = methodTest("dateISO");
 	ok( method( "1990-06-06" ), "Valid date" );
+	ok( method( "1990-01-01" ), "Valid date" );
+	ok( method( "1990-01-31" ), "Valid date" );
+	ok( method( "1990-12-01" ), "Valid date" );
+	ok( method( "1990-12-31" ), "Valid date" );
 	ok( method( "1990/06/06" ), "Valid date" );
 	ok( method( "1990-6-6" ), "Valid date" );
 	ok( method( "1990/6/6" ), "Valid date" );
 	ok(!method( "1990-106-06" ), "Invalid date" );
 	ok(!method( "190-06-06" ), "Invalid date" );
+	ok(!method( "1990-00-06" ), "Invalid date" );
+	ok(!method( "1990-13-01" ), "Invalid date" );
+	ok(!method( "1990-01-00" ), "Invalid date" );
+	ok(!method( "1990-01-32" ), "Invalid date" );
 });
 
 /* disabled for now, need to figure out how to test localized methods
