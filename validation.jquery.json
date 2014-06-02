@@ -21,7 +21,7 @@
 	"bugs": "https://github.com/jzaefferer/jquery-validation/issues",
 	"homepage": "https://github.com/jzaefferer/jquery-validation",
 	"docs": "http://docs.jquery.com/Plugins/Validation",
-	"download": "http://bassistance.de/jquery-plugins/jquery-plugin-validation/",
+	"download": "https://github.com/jzaefferer/jquery-validation/releases",
 	"dependencies": {
 		"jquery": ">=1.4.4"
 	}

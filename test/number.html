@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Test for jQuery validate() plugin</title>
+	<script src="jquery.js"></script>
+	<script src="../dist/jquery.validate.js"></script>
+	<script>
+	$(document).ready(function() {
+		$('#numberForm').validate({
+			submitHandler: function() {
+				alert("All valid");
+			}
+		});
+	});
+	</script>
+	<style>
+	#numberForm {
+		width: 500px;
+	}
+	#numberForm label {
+		width: 250px;
+		display: block;
+		float: left;
+	}
+	#numberForm label.error, #commentForm input.submit {
+		margin-left: 253px;
+	}
+	#numberForm label.error {
+		background-color: red;
+	}
+	</style>
+</head>
+<body>
+<form id="numberForm" method="get" action="">
+	<fieldset>
+		<legend>Testing type="number"</legend>
+		<p>
+			<label for="Digits">Number with digits</label>
+			<input id="NumberDigits" name="NumberDigits" class="digits" type="number" required>
+		</p>
+
+		<p>
+			<label for="Digits">Number with number</label>
+			<input id="NumberNumber" name="NumberNumber" class="number" type="number" required>
+		</p>
+
+		<p>
+			<input class="submit" type="submit" value="Submit">
+		</p>
+	</fieldset>
+</form>
+</body>
+</html>

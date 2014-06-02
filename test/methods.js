@@ -151,11 +151,20 @@ test("date", function() {
 test("dateISO", function() {
 	var method = methodTest("dateISO");
 	ok( method( "1990-06-06" ), "Valid date" );
+	ok( method( "1990-01-01" ), "Valid date" );
+	ok( method( "1990-01-31" ), "Valid date" );
+	ok( method( "1990-12-01" ), "Valid date" );
+	ok( method( "1990-12-31" ), "Valid date" );
 	ok( method( "1990/06/06" ), "Valid date" );
 	ok( method( "1990-6-6" ), "Valid date" );
 	ok( method( "1990/6/6" ), "Valid date" );
 	ok(!method( "1990-106-06" ), "Invalid date" );
 	ok(!method( "190-06-06" ), "Invalid date" );
+	ok(!method( "1990-00-06" ), "Invalid date" );
+	ok(!method( "1990-13-01" ), "Invalid date" );
+	ok(!method( "1990-01-00" ), "Invalid date" );
+	ok(!method( "1990-01-32" ), "Invalid date" );
+	ok(!method( "1990-13-32" ), "Invalid date" );
 });
 
 /* disabled for now, need to figure out how to test localized methods
@@ -269,7 +278,7 @@ test("maxlength", function() {
 test("rangelength", function() {
 	var v = jQuery("#form").validate(),
 		method = $.validator.methods.rangelength,
-		param = [2, 4],
+		param = [ 2, 4 ],
 		e = $("#text1, #text2, #text3");
 
 	ok( method.call( v, e[0].value, e[0], param), "Valid text input" );
@@ -302,7 +311,7 @@ test("max", function() {
 test("range", function() {
 	var v = jQuery("#form").validate(),
 		method = $.validator.methods.range,
-		param = [4,12],
+		param = [ 4, 12 ],
 		e = $("#value1, #value2, #value3");
 
 	ok(!method.call( v, e[0].value, e[0], param), "Invalid text input" );
@@ -351,9 +360,8 @@ test("extension", function() {
 	ok(!method( "picture.pdf", "gop,top" ), "Invalid custom accept type, comma separated" );
 });
 
-test("remote", function() {
+asyncTest("remote", function() {
 	expect(7);
-	stop();
 	var e = $("#username"),
 		v = $("#userForm").validate({
 			rules: {
@@ -392,10 +400,8 @@ test("remote", function() {
 	strictEqual( v.element(e), true, "still invalid, because remote validation must block until it returns; dependency-mismatch considered as valid though" );
 });
 
-test("remote, customized ajax options", function() {
+asyncTest("remote, customized ajax options", function() {
 	expect(2);
-	stop();
-
 	$("#userForm").validate({
 		rules: {
 			username: {
@@ -423,10 +429,8 @@ test("remote, customized ajax options", function() {
 	$("#userForm").valid();
 });
 
-
-test("remote extensions", function() {
+asyncTest("remote extensions", function() {
 	expect(5);
-	stop();
 	var e = $("#username"),
 		v = $("#userForm").validate({
 			rules: {
@@ -460,9 +464,8 @@ test("remote extensions", function() {
 	strictEqual( v.element(e), true, "still invalid, because remote validation must block until it returns; dependency-mismatch considered as valid though" );
 });
 
-test("remote radio correct value sent", function() {
+asyncTest("remote radio correct value sent", function() {
 	expect(1);
-	stop();
 	var e = $("#testForm10Radio2"),
 		v;
 
@@ -486,9 +489,8 @@ test("remote radio correct value sent", function() {
 	v.element(e);
 });
 
-test("remote reset clear old value", function() {
+asyncTest("remote reset clear old value", function() {
 	expect(1);
-	stop();
 	var e = $("#username"),
 		v = $("#userForm").validate({
 			rules: {
@@ -498,7 +500,7 @@ test("remote reset clear old value", function() {
 						url: "echo.php",
 						dataFilter: function(data) {
 							var json = JSON.parse(data);
-							if(json.username === "asdf") {
+							if (json.username === "asdf") {
 								return "\"asdf is already taken\"";
 							}
 							return "\"" + true + "\"";
@@ -513,13 +515,11 @@ test("remote reset clear old value", function() {
 
 		$(document).unbind("ajaxStop");
 
-
 		$(document).ajaxStop(function() {
 			clearTimeout(waitTimeout);
 			ok( true, "Remote request sent to server" );
 			start();
 		});
-
 
 		v.resetForm();
 		e.val("asdf");
@@ -607,6 +607,27 @@ test("dateITA", function() {
 	ok(!method( "01/13/1990" ), "Invalid date ITA" );
 	ok(!method( "01.01.1900" ), "Invalid date ITA" );
 	ok(!method( "01/01/199" ), "Invalid date ITA" );
+});
+
+test("dateFA", function() {
+	var method = methodTest("dateFA");
+
+	ok( method( "1342/12/29" ), "Valid date FA" );
+	ok( method( "1342/12/30" ), "Valid date FA" );
+	ok( method( "1361/6/31" ), "Valid date FA" );
+	ok( method( "1321/11/30" ), "Valid date FA" );
+	ok( method( "1361/1/1" ), "Valid date FA" );
+	ok( method( "1020/3/3" ), "Valid date FA" );
+	ok( method( "1020/03/3" ), "Valid date FA" );
+	ok( method( "1020/3/03" ), "Valid date FA" );
+	ok( method( "1020/03/03" ), "Valid date FA" );
+	ok( method( "1001/7/30" ), "Valid date FA" );
+
+	ok(!method( "1000/1/32" ), "Invalid date FA" );
+	ok(!method( "1323/12/31" ), "Invalid date FA" );
+	ok(!method( "1361/0/11" ), "Invalid date FA" );
+	ok(!method( "63/4/4" ), "Invalid date FA" );
+	ok(!method( "15/6/1361" ), "Invalid date FA" );
 });
 
 test("iban", function() {
@@ -885,11 +906,11 @@ test("maxWords", function() {
 
 test("rangeWords", function() {
 	var method = methodTest("rangeWords");
-	ok( method( "hello", [0, 2] ), "plain text, valid" );
-	ok( method( "hello worlds", [0, 2] ), "plain text, valid" );
-	ok( method( "<b>hello</b> world", [0, 2] ), "html, valid" );
-	ok(!method( "hello worlds what is up", [0, 2] ), "plain text, invalid" );
-	ok(!method( "<b>Hello</b> <b>world</b> <b>hello</b>", [0, 2] ), "html, invalid" );
+	ok( method( "hello", [ 0, 2 ] ), "plain text, valid" );
+	ok( method( "hello worlds", [ 0, 2 ] ), "plain text, valid" );
+	ok( method( "<b>hello</b> world", [ 0, 2 ] ), "html, valid" );
+	ok(!method( "hello worlds what is up", [ 0, 2 ] ), "plain text, invalid" );
+	ok(!method( "<b>Hello</b> <b>world</b> <b>hello</b>", [ 0, 2 ] ), "html, invalid" );
 });
 
 test("pattern", function() {
@@ -978,71 +999,71 @@ function fillFormWithValuesAndExpect(formSelector, inputValues, expected) {
 test("require_from_group", function() {
 	$("#productInfo").validate({
 		rules: {
-			partnumber: {require_from_group: [2,".productInfo"]},
-			description: {require_from_group: [2,".productInfo"]},
-			discount: {require_from_group: [2,".productInfo"]}
+			partnumber: { require_from_group: [ 2,".productInfo" ] },
+			description: { require_from_group: [ 2,".productInfo" ] },
+			discount: { require_from_group: [ 2,".productInfo" ] }
 		}
 	});
 
 	fillFormWithValuesAndExpect("#productInfo", [], false);
-	fillFormWithValuesAndExpect("#productInfo", [123], false);
+	fillFormWithValuesAndExpect("#productInfo", [ 123 ], false);
 	$("#productInfo input[type='checkbox']").attr("checked", "checked");
-	fillFormWithValuesAndExpect("#productInfo", [123], true);
+	fillFormWithValuesAndExpect("#productInfo", [ 123 ], true);
 	$("#productInfo input[type='checkbox']").removeAttr("checked");
-	fillFormWithValuesAndExpect("#productInfo", [123, "widget"], true);
-	fillFormWithValuesAndExpect("#productInfo", [123, "widget", "red"], true);
-	fillFormWithValuesAndExpect("#productInfo", [123, "widget", "red"], true);
+	fillFormWithValuesAndExpect("#productInfo", [ 123, "widget" ], true);
+	fillFormWithValuesAndExpect("#productInfo", [ 123, "widget", "red" ], true);
+	fillFormWithValuesAndExpect("#productInfo", [ 123, "widget", "red" ], true);
 });
 
 test("require_from_group preserve other rules", function() {
 	$("#productInfo").validate({
 		rules: {
-			partnumber: {require_from_group: [2,".productInfo"]},
-			description: {require_from_group: [2,".productInfo"]},
-			color: {require_from_group: [2,".productInfo"]},
-			supplier: {required: true}
+			partnumber: { require_from_group: [ 2,".productInfo" ] },
+			description: { require_from_group: [ 2,".productInfo" ] },
+			color: { require_from_group: [ 2,".productInfo" ] },
+			supplier: { required: true }
 		}
 	});
 
 	fillFormWithValuesAndExpect("#productInfo", [], false);
-	fillFormWithValuesAndExpect("#productInfo", [123], false);
-	fillFormWithValuesAndExpect("#productInfo", [123, "widget"], false);
-	fillFormWithValuesAndExpect("#productInfo", ["", "", "", "Acme"], false);
-	fillFormWithValuesAndExpect("#productInfo", [123, "", "", "Acme"], false);
-	fillFormWithValuesAndExpect("#productInfo", [123, "widget", "", "Acme"], true);
-	fillFormWithValuesAndExpect("#productInfo", [123, "widget", "red", "Acme"], true);
+	fillFormWithValuesAndExpect("#productInfo", [ 123 ], false);
+	fillFormWithValuesAndExpect("#productInfo", [ 123, "widget" ], false);
+	fillFormWithValuesAndExpect("#productInfo", [ "", "", "", "Acme" ], false);
+	fillFormWithValuesAndExpect("#productInfo", [ 123, "", "", "Acme" ], false);
+	fillFormWithValuesAndExpect("#productInfo", [ 123, "widget", "", "Acme" ], true);
+	fillFormWithValuesAndExpect("#productInfo", [ 123, "widget", "red", "Acme" ], true);
 });
 
 test("skip_or_fill_minimum", function() {
 	$("#productInfo").validate({
 		rules: {
-			partnumber:  {skip_or_fill_minimum: [2,".productInfo"]},
-			description: {skip_or_fill_minimum: [2,".productInfo"]},
-			color:       {skip_or_fill_minimum: [2,".productInfo"]}
+			partnumber:  { skip_or_fill_minimum: [ 2,".productInfo" ] },
+			description: { skip_or_fill_minimum: [ 2,".productInfo" ] },
+			color:       { skip_or_fill_minimum: [ 2,".productInfo" ] }
 		}
 	});
 
 	fillFormWithValuesAndExpect("#productInfo", [], true);
-	fillFormWithValuesAndExpect("#productInfo", [123], false);
-	fillFormWithValuesAndExpect("#productInfo", [123, "widget"], true);
-	fillFormWithValuesAndExpect("#productInfo", [123, "widget", "red"], true);
+	fillFormWithValuesAndExpect("#productInfo", [ 123 ], false);
+	fillFormWithValuesAndExpect("#productInfo", [ 123, "widget" ], true);
+	fillFormWithValuesAndExpect("#productInfo", [ 123, "widget", "red" ], true);
 });
 
 test("skip_or_fill_minimum preserve other rules", function() {
 	$("#productInfo").validate({
 		rules: {
-			partnumber:  {skip_or_fill_minimum: [2,".productInfo"]},
-			description: {skip_or_fill_minimum: [2,".productInfo"]},
-			color:       {skip_or_fill_minimum: [2,".productInfo"]},
-			supplier: {required: true}
+			partnumber:  { skip_or_fill_minimum: [ 2,".productInfo" ] },
+			description: { skip_or_fill_minimum: [ 2,".productInfo" ] },
+			color:       { skip_or_fill_minimum: [ 2,".productInfo" ] },
+			supplier: { required: true }
 		}
 	});
 
 	fillFormWithValuesAndExpect("#productInfo", [], false);
-	fillFormWithValuesAndExpect("#productInfo", ["", "", "", "Acme"], true);
-	fillFormWithValuesAndExpect("#productInfo", [123, "", "", "Acme"], false);
-	fillFormWithValuesAndExpect("#productInfo", [123, "widget", "", "Acme"], true);
-	fillFormWithValuesAndExpect("#productInfo", [123, "widget", "red", "Acme"], true);
+	fillFormWithValuesAndExpect("#productInfo", [ "", "", "", "Acme" ], true);
+	fillFormWithValuesAndExpect("#productInfo", [ 123, "", "", "Acme" ], false);
+	fillFormWithValuesAndExpect("#productInfo", [ 123, "widget", "", "Acme" ], true);
+	fillFormWithValuesAndExpect("#productInfo", [ 123, "widget", "red", "Acme" ], true);
 });
 
 test("zipcodeUS", function() {
@@ -1151,7 +1172,7 @@ test("cifES", function() {
 	ok(!method( "B-43.522.192" ), "CIF invalid: dots and dash" );
 });
 
-test("maxWords", function(){
+test("maxWords", function() {
 	var method = methodTest("maxWords"),
 		maxWords = 6;
 
@@ -1163,7 +1184,7 @@ test("maxWords", function(){
 	ok(!method( "<div>But you can “count” me as too long</div>", maxWords), "Too many words with smartquotes w/ HTML");
 });
 
-test("minWords", function(){
+test("minWords", function() {
 	var method = methodTest("minWords"),
 		minWords = 6;
 
@@ -1175,9 +1196,9 @@ test("minWords", function(){
 	ok( method( "<div>But you can “count” me as too long</div>", minWords), "Too many words with smartquotes w/ HTML");
 });
 
-test("rangeWords", function(){
+test("rangeWords", function() {
 	var method = methodTest("rangeWords"),
-		rangeWords = [3,6];
+		rangeWords = [ 3, 6 ];
 
 	ok(!method( "I'm going to be longer than “six words!”", rangeWords), "Longer than 6 with smartquotes");
 	ok( method( "I'm just the right amount!", rangeWords), "In between");
@@ -1196,19 +1217,29 @@ test("currency", function() { // Works with any symbol
 	ok( method( "£9,999.9", "£"), "£, thousand, comma separator, one decimal" );
 	ok( method( "£9,999.99", "£"), "£, thousand, comma separator, two decimal" );
 	ok( method( "£9,999,999.9", "£"), "£, million, comma separators, one decimal" );
-	ok( method( "9", ["£", false]), "Valid currency" );
-	ok( method( "9.9", ["£", false]), "Valid currency" );
-	ok( method( "9.99", ["£", false]), "Valid currency" );
-	ok( method( "9.90", ["£", false]), "Valid currency" );
-	ok( method( "9,999.9", ["£", false]), "Valid currency" );
-	ok( method( "9,999.99", ["£", false]), "Valid currency" );
-	ok( method( "9,999,999.9", ["£", false]), "Valid currency" );
+	ok( method( "9", [ "£", false ]), "Valid currency" );
+	ok( method( "9.9", [ "£", false ]), "Valid currency" );
+	ok( method( "9.99", [ "£", false ]), "Valid currency" );
+	ok( method( "9.90", [ "£", false ]), "Valid currency" );
+	ok( method( "9,999.9", [ "£", false ]), "Valid currency" );
+	ok( method( "9,999.99", [ "£", false ]), "Valid currency" );
+	ok( method( "9,999,999.9", [ "£", false ]), "Valid currency" );
 	ok(!method( "9,", "£"), "Invalid currency" );
 	ok(!method( "9,99.99", "£"), "Invalid currency" );
 	ok(!method( "9,", "£"), "Invalid currency" );
 	ok(!method( "9.999", "£"), "Invalid currency" );
 	ok(!method( "9.999", "£"), "Invalid currency" );
 	ok(!method( "9.99,9", "£"), "Invalid currency" );
+});
+
+test("postalCodeCA", function() {
+	var method = methodTest("postalCodeCA");
+	ok( method( "H0H 0H0"), "Valid CA Postal Code; Single space" );
+	ok( !method( "H0H0H0"), "Inalid CA Postal Code; No space" );
+	ok( !method( "H0H-0H0"), "Invalid CA Postal Code; Single dash" );
+	ok( !method( "H0H 0H"), "Invalid CA Postal Code; Too Short" );
+	ok( !method( "Z0H 0H"), "Invalid CA Postal Code; Only 'ABCEGHJKLMNPRSTVXY' are valid starting characters" );
+	ok( !method( "h0h 0h0"), "Invalid CA Postal Code; Only upper case characters" );
 });
 
 })(jQuery);

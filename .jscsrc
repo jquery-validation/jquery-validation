@@ -1,0 +1,24 @@
+{
+	"preset": "jquery",
+	"disallowSpacesInNamedFunctionExpression": {
+		"beforeOpeningRoundBrace": true
+	},
+	"requireSpacesInNamedFunctionExpression": {
+		"beforeOpeningCurlyBrace": true
+	},
+	"disallowSpacesInAnonymousFunctionExpression": {
+		"beforeOpeningRoundBrace": true
+	},
+	"requireSpacesInAnonymousFunctionExpression": {
+		"beforeOpeningCurlyBrace": true
+	},
+	"disallowTrailingComma": true,
+	"requireMultipleVarDecl": "onevar",
+	"disallowTrailingWhitespace": true,
+	"validateQuoteMarks": "\"",
+	"requireSpacesInsideArrayBrackets": "allButNested",
+	"excludeFiles": [
+		"node_modules/**",
+		"dist/**"
+	]
+}

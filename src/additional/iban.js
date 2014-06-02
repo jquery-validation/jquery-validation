@@ -2,7 +2,7 @@
  * IBAN is the international bank account number.
  * It has a country - specific format, that is checked here too
  */
-jQuery.validator.addMethod("iban", function(value, element) {
+$.validator.addMethod("iban", function(value, element) {
 	// some quick simple tests to prevent needless work
 	if (this.optional(element)) {
 		return true;
