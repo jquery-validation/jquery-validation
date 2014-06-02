@@ -14,9 +14,5 @@
 	},
 	"disallowTrailingComma": true,
 	"validateQuoteMarks": "\"",
-	"requireSpacesInsideArrayBrackets": "allButNested",
-	"excludeFiles": [
-		"node_modules/**",
-		"dist/**"
-	]
+	"requireSpacesInsideArrayBrackets": "allButNested"
 }
