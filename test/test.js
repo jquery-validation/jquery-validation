@@ -49,7 +49,7 @@ QUnit.assert.hasError = function( element, text, message ) {
 // Asserts that there is no visible error for the given element
 QUnit.assert.noErrorFor = function( element, message ) {
 	var errors = $( element ).closest( "form" ).validate().errorsFor( element[ 0 ] ),
-		hidden = ( errors.length === 0 ) || errors.is( ":hidden" ) || ( errors.text() === "" );
+		hidden = ( errors.length === 0 ) || (errors.is( ":hidden" ) && ( errors.text() === "" ));
 	QUnit.push( hidden, hidden, true, message );
 };
 

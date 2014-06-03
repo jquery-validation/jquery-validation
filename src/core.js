@@ -243,7 +243,7 @@ $.extend( $.validator, {
 				if ( this.settings.unhighlight ) {
 					this.settings.unhighlight.call( this, element, this.settings.errorClass, this.settings.validClass );
 				}
-				this.addWrapper( this.errorsFor( element ) ).hide();
+				this.hideThese( this.errorsFor( element ) );
 			}
 		},
 		onfocusout: function( element ) {
@@ -472,7 +472,12 @@ $.extend( $.validator, {
 		},
 
 		hideErrors: function() {
-			this.addWrapper( this.toHide ).hide();
+			this.hideThese( this.toHide );
+		},
+
+		hideThese: function( errors ) {
+			errors.not( this.containers ).text( "" );
+			this.addWrapper( errors ).hide();
 		},
 
 		valid: function() {
@@ -722,9 +727,10 @@ $.extend( $.validator, {
 		},
 
 		showLabel: function( element, message ) {
-			var place, group,
+			var place, group, errorID,
 				error = this.errorsFor( element ),
-				elementID = this.idOrName( element );
+				elementID = this.idOrName( element ),
+				describedBy = $( element ).attr( "aria-describedby" );
 			if ( error.length ) {
 				// refresh error/success class
 				error.removeClass( this.settings.validClass ).addClass( this.settings.errorClass );
@@ -759,7 +765,16 @@ $.extend( $.validator, {
 				} else if ( error.parents( "label[for='" + elementID + "']" ).length === 0 ) {
 					// If the element is not a child of an associated label, then it's necessary
 					// to explicitly apply aria-describedby
-					$( element ).attr( "aria-describedby", error.attr( "id" ) );
+
+					errorID = error.attr( "id" );
+					// Respect existing non-error aria-describedby
+					if ( !describedBy ) {
+						describedBy = errorID;
+					} else if ( !describedBy.match( new RegExp( "\b" + errorID + "\b" ) ) ) {
+						// Add to end of list if not already present
+						describedBy += " " + errorID;
+					}
+					$( element ).attr( "aria-describedby", describedBy );
 
 					// If this element is grouped, then assign to all elements in the same group
 					group = this.groups[ element.name ];
@@ -786,16 +801,15 @@ $.extend( $.validator, {
 
 		errorsFor: function( element ) {
 			var name = this.idOrName( element ),
-				describer = $( element ).attr( "aria-describedby" );
+				describer = $( element ).attr( "aria-describedby" ),
+				selector = "label[for='" + name + "'], label[for='" + name + "'] *";
+			// aria-describedby should directly reference the error element
 			if ( describer ) {
-				// aria-describedby should directly reference the error element
-				return $( "#" + describer, this.errorContext );
-			} else {
-				// If no describer is used then errors are either associated labels, or children of non-error labels
-				return this
-					.errors()
-					.filter( "label[for='" + name + "'], label[for='" + name + "'] *" );
+				selector = selector + ", #" + describer.replace( /\s+/g, ", #" );
 			}
+			return this
+				.errors()
+				.filter( selector );
 		},
 
 		idOrName: function( element ) {
