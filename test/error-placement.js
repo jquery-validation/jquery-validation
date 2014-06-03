@@ -284,9 +284,29 @@ test( "test existing non-label used as error element", function(assert) {
 	form.validate({ errorElement: "span" });
 
 	ok( !field.valid() );
-	assert.hasError( field );
+	assert.hasError( field, "required" );
 
 	field.val( "foo" );
 	ok( field.valid() );
 	assert.noErrorFor( field );
+});
+
+test( "test existing non-error aria-describedby", function( assert ) {
+	expect( 8 );
+	var form = $( "#testForm17" ),
+		field = $( "#testForm17text" );
+
+	equal( field.attr( "aria-describedby" ), "testForm17text-description" );
+	form.validate({ errorElement: "span" });
+
+	ok( !field.valid() );
+	equal( field.attr( "aria-describedby" ), "testForm17text-description testForm17text-error" );
+	assert.hasError( field, "required" );
+
+	field.val( "foo" );
+	ok( field.valid() );
+	assert.noErrorFor( field );
+
+	strictEqual( "This is where you enter your data", $("#testForm17text-description").text() );
+	strictEqual( "", $("#testForm17text-error").text(), "Error label is empty for valid field" );
 });

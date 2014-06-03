@@ -167,6 +167,12 @@
 		<input name="testForm15text" id="testForm15text" data-rule-required="true" data-msg="required" aria-describedby="testForm15text-error" />
 		<span id="testForm15text-error" class="error"></span>
 	</form>
+	<form id="testForm17">
+		<!-- test existing non-error aria-describedby -->
+		<label for="testForm17text">My Label</label>
+		<input name="testForm17text" id="testForm17text" data-rule-required="true" data-msg="required" aria-describedby="testForm17text-description" />
+		<span id="testForm17text-description">This is where you enter your data</span>
+	</form>
 	<form id="dataMessages">
 		<input name="dataMessagesName" id="dataMessagesName" class="required" data-msg-required="You must enter a value here" />
 	</form>
