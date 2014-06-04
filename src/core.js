@@ -635,7 +635,13 @@ $.extend( $.validator, {
 		// return the custom message for the given element name and validation method
 		customMessage: function( name, method ) {
 			var m = this.settings.messages[ name ];
-			return m && ( m.constructor === String ? m : m[ method ]);
+			if (m && m.constructor !== String) {
+				m = m[ method ];
+			}
+			if ( m === undefined ) {
+				m = this.settings.messages[ method ];
+			}
+			return m;
 		},
 
 		// return the first defined argument, allowing empty strings
