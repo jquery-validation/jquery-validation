@@ -135,6 +135,9 @@ grunt.initConfig({
 		}
 	},
 	watch: {
+		options: {
+			atBegin: true
+		},
 		gruntfile: {
 			files: "Gruntfile.js",
 			tasks: ["jshint:grunt"]
