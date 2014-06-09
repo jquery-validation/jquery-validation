@@ -189,13 +189,13 @@ test( "test label used as error container", function(assert) {
 	});
 
 	ok( !field.valid() );
-	equal( "Field Label", field.next( "label" ).contents( ":not(span)" ).text(), "container label isn't disrupted" );
+	equal( "Field Label", field.next( "label" ).contents().first().text(), "container label isn't disrupted" );
 	assert.hasError(field, "missing");
 	ok( !field.attr( "aria-describedby" ), "field does not require aria-describedby attribute" );
 
 	field.val( "foo" );
 	ok( field.valid() );
-	equal( "Field Label", field.next( "label" ).contents( ":not(span)" ).text(), "container label isn't disrupted" );
+	equal( "Field Label", field.next( "label" ).contents().first().text(), "container label isn't disrupted" );
 	ok( !field.attr( "aria-describedby" ), "field does not require aria-describedby attribute" );
 	assert.noErrorFor(field);
 });
