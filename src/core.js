@@ -983,14 +983,14 @@ $.extend( $.validator, {
 	},
 
 	staticRules: function( element ) {
+		var validator,
+			rules = {};
+
 		if ( element.form ) {
 			validator = $.data( element.form, "validator" );
 		} else {
 			validator = $.data( $( element ).closest( "div[form='true']" ).get( 0 ), "validator");
 		}
-
-		var rules = {},
-			validator = validator;
 
 		if ( validator.settings.rules ) {
 			rules = $.validator.normalizeRule( validator.settings.rules[ element.name ] ) || {};
