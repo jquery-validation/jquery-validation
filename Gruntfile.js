@@ -14,7 +14,7 @@ var banner,
 banner = "/*!\n" +
 	" * jQuery Validation Plugin v<%= pkg.version %>\n" +
 	" *\n" +
-	" * <%= pkg.homepage  %>\n" +
+	" * <%= pkg.homepage %>\n" +
 	" *\n" +
 	" * Copyright (c) <%= grunt.template.today('yyyy') %> <%= pkg.author.name %>\n" +
 	" * Released under the <%= _.pluck(pkg.licenses, 'type').join(', ') %> license\n" +
@@ -49,7 +49,7 @@ grunt.initConfig({
 				footer: umdEnd
 			},
 			files: {
-				"dist/jquery.validate.js": ["src/core.js", "src/*.js"]
+				"dist/jquery.validate.js": [ "src/core.js", "src/*.js" ]
 			}
 		},
 		extra: {
@@ -61,7 +61,7 @@ grunt.initConfig({
 				footer: umdEnd
 			},
 			files: {
-				"dist/additional-methods.js": ["src/additional/additional.js", "src/additional/*.js"]
+				"dist/additional-methods.js": [ "src/additional/additional.js", "src/additional/*.js" ]
 			}
 		}
 	},
@@ -70,24 +70,22 @@ grunt.initConfig({
 			preserveComments: false,
 			banner: "/*! <%= pkg.title || pkg.name %> - v<%= pkg.version %> - " +
 				"<%= grunt.template.today('m/d/yyyy') %>\n" +
-				" * <%= pkg.homepage  %>\n" +
+				" * <%= pkg.homepage %>\n" +
 				" * Copyright (c) <%= grunt.template.today('yyyy') %> <%= pkg.author.name %>;" +
 				" Licensed <%= _.pluck(pkg.licenses, 'type').join(', ') %> */\n"
 		},
 		dist: {
 			files: {
-				"dist/additional-methods.min.js": ["dist/additional-methods.js"],
-				"dist/jquery.validate.min.js": ["dist/jquery.validate.js"]
+				"dist/additional-methods.min.js": "dist/additional-methods.js",
+				"dist/jquery.validate.min.js": "dist/jquery.validate.js"
 			}
 		},
 		all: {
-			files: [{
-				expand: true,
-				cwd: "dist/localization",
-				src: "**/*.js",
-				dest: "dist/localization",
-				ext: ".min.js"
-			}]
+			expand: true,
+			cwd: "dist/localization",
+			src: "**/*.js",
+			dest: "dist/localization",
+			ext: ".min.js"
 		}
 	},
 	compress: {
@@ -99,39 +97,33 @@ grunt.initConfig({
 				pretty: true
 			},
 			src: [
-				"dist/**/*.js",
-				"README.md",
 				"changelog.txt",
-				"Gruntfile.js",
-				"package.json",
 				"demo/**/*.*",
+				"dist/**/*.js",
+				"Gruntfile.js",
 				"lib/**/*.*",
+				"package.json",
+				"README.md",
 				"src/**/*.*",
 				"test/**/*.*"
 			]
 		}
 	},
 	qunit: {
-		files: ["test/index.html"]
+		files: "test/index.html"
 	},
 	jshint: {
 		options: {
 			jshintrc: true
 		},
 		core: {
-			src: [
-				"src/**/*.js"
-			]
+			src: "src/**/*.js"
 		},
 		test: {
-			src: [
-				"test/*.js"
-			]
+			src: "test/*.js"
 		},
 		grunt: {
-			src: [
-				"Gruntfile.js"
-			]
+			src: "Gruntfile.js"
 		}
 	},
 	watch: {
@@ -139,16 +131,30 @@ grunt.initConfig({
 			atBegin: true
 		},
 		gruntfile: {
-			files: "Gruntfile.js",
-			tasks: ["jshint:grunt"]
+			files: "<%= jshint.grunt.src %>",
+			tasks: [
+				"jscs:grunt",
+				"jshint:grunt"
+			]
 		},
 		src: {
 			files: "<%= jshint.core.src %>",
-			tasks: ["jscs:core", "jshint:core", "concat", "qunit"]
+			tasks: [
+				"jscs:core",
+				"jshint:core",
+				"concat",
+				"qunit"
+			]
 		},
 		test: {
-			files: ["<%= jshint.test.src %>", "test/index.html"],
-			tasks: ["jscs:test", "jshint:test"]
+			files: [
+				"<%= jshint.test.src %>",
+				"test/index.html"
+			],
+			tasks: [
+				"jscs:test",
+				"jshint:test"
+			]
 		}
 	},
 	jscs: {
@@ -157,33 +163,36 @@ grunt.initConfig({
 		},
 		test: {
 			src: "<%= jshint.test.src %>"
+		},
+		grunt: {
+			src: "<%= jshint.grunt.src %>"
 		}
 	},
 	copy: {
 		dist: {
 			options: {
 				// append UMD wrapper
-				process: function ( content ) {
+				process: function( content ) {
 					return umdStart + umdLocalizationDefine + umdMiddle + content + umdEnd;
 				}
 			},
-			files: [{
-				src: ["src/localization/*"],
-				dest: "dist/localization",
-				expand: true,
-				flatten: true,
-				filter: "isFile"
-			}]
+			src: "src/localization/*",
+			dest: "dist/localization",
+			expand: true,
+			flatten: true,
+			filter: "isFile"
 		}
 	},
 	replace: {
 		dist: {
-			src: ["dist/**/*.min.js"],
+			src: "dist/**/*.min.js",
 			overwrite: true,
-			replacements: [{
-				from: "./jquery.validate",
-				to: "./jquery.validate.min"
-			}]
+			replacements: [
+				{
+					from: "./jquery.validate",
+					to: "./jquery.validate.min"
+				}
+			]
 		}
 	}
 });
@@ -198,8 +207,8 @@ grunt.loadNpmTasks("grunt-jscs-checker");
 grunt.loadNpmTasks("grunt-contrib-copy");
 grunt.loadNpmTasks("grunt-text-replace");
 
-grunt.registerTask("default", ["concat", "copy", "jscs", "jshint", "qunit"]);
-grunt.registerTask("release", ["default", "uglify", "replace", "compress"]);
-grunt.registerTask("start", ["concat", "watch"]);
+grunt.registerTask("default", [ "concat", "copy", "jscs", "jshint", "qunit" ]);
+grunt.registerTask("release", [ "default", "uglify", "replace", "compress" ]);
+grunt.registerTask("start", [ "concat", "watch" ]);
 
 };
