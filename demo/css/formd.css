@@ -1,0 +1,27 @@
+/* --- Form D --- */
+.form.d p {
+	position:relative;
+	margin:0;
+	width:310px; /* IE6 Fix */
+}
+.form.d label.error {
+	position:absolute;
+	top:-18px;
+	right:-50px;
+	margin:0;
+	background:red;
+	opacity:.6;
+	filter:alpha(opacity=60);
+	color:#fff;
+	-moz-box-shadow:0 0 7px #000;
+	-webkit-box-shadow:0 0 7px #000;
+	box-shadow:0 0 7px #000;
+	border:2px solid #fff;
+	padding:5px 10px;
+}
+.form.d label.error:before {
+	content:url(http://visitus.dnsalias.com/dashboard/images/triangle.png);
+	position:absolute;
+	bottom:-36px;
+	height:36px;
+}
