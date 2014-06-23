@@ -70,8 +70,8 @@ $_SESSION['captcha_id'] = $str;
 	<fieldset>
 		<div id="captchaimage"><a href="<?php echo $_SERVER['PHP_SELF']; ?>" id="refreshimg" title="Click to refresh image"><img src="images/image.php?<?php echo time(); ?>" width="132" height="46" alt="Captcha image" /></a></div>
 		<label for="captcha">Enter the characters as seen on the image above (case insensitive):</label>
-		<input type="text" maxlength="6" name="captcha" id="captcha" />
-		<input type="submit" name="submit" id="submit" value="Check" />
+		<input type="text" maxlength="6" name="captcha" id="captcha">
+		<input type="submit" name="submit" id="submit" value="Check">
 	</fieldset>
 </form>
 <p>If you can&#39;t decipher the text on the image, click it to dynamically generate a new one.</p>
