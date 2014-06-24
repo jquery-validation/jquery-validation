@@ -16,7 +16,15 @@ $.validator.addMethod("pattern", function(value, element, param) {
 		return true;
 	}
 	if (typeof param === "string") {
-		param = new RegExp(param);
+		// checks for beginning and ending of regex with possible i,g,m modifiers
+		var modReg = new RegExp("^([^\w0-9])(.*)\\1([igm]{1,3})$"),
+			modifier = "";
+		if (modReg.test(param)) {
+			var matches = modReg.exec(param);
+			param = matches[2];
+			modifier = matches[3];
+		}
+		param = new RegExp(param, modifier);
 	}
 	return param.test(value);
 }, "Invalid format.");
