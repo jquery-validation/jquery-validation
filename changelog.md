@@ -1,3 +1,34 @@
+1.13.0 / 2014-07-01
+==================
+
+## All
+* Add plugin UMD wrapper
+
+## Core
+* Respect non-error aria-describedby and empty hidden errors
+* Improve dateISO RegExp
+* Added radio/checkbox to delegate click-event
+* Use aria-describedby for non-label elements
+* Register focusin, focusout and keyup also on radio/checkbox
+* Fix normalization for rangelength attribute value
+* Update elementValue method to deal with type="number" fields
+* Use charAt instead of array notation on strings, to support IE8(?)
+
+## Localization
+* Fix sk translation of rangelength method
+* Add Finnish methods
+* Fixed GL number validation message
+* Fixed ES number method validation message
+* Added galician (GL)
+* Fixed French messages for min and max methods
+
+## Additionals
+* Add statesUS method
+* Fix dateITA method to deal with DST bug
+* Add persian date method
+* Add postalCodeCA method
+* Add postalcodeIT method
+
 1.12.0 / 2014-04-01
 ==================
 
@@ -10,7 +41,7 @@
 * Additionals: Update IBAN method, trim trailing whitespaces ([#970](https://github.com/jzaefferer/jquery-validation/issues/970), [347b04a](https://github.com/jzaefferer/jquery-validation/commit/347b04a7d4e798227405246a5de3fc57451d52e1))
 * BIC method: Improve RegEx, {1} is always redundant. Closes gh-744 ([5cad6b4](https://github.com/jzaefferer/jquery-validation/commit/5cad6b493575e8a9a82470d17e0900c881130873))
 * Bower: Add Bower.json for package registration ([e86ccb0](https://github.com/jzaefferer/jquery-validation/commit/e86ccb06e301613172d472cf15dd4011ff71b398))
-* Changes references from '$' to 'jQuery', for compability with jQuery.noConflict. Closes gh-754 ([2049afe](https://github.com/jzaefferer/jquery-validation/commit/2049afe46c1be7b3b89b1d9f0690f5bebf4fbf68))
+* Changes dollar references to 'jQuery', for compability with jQuery.noConflict. Closes gh-754 ([2049afe](https://github.com/jzaefferer/jquery-validation/commit/2049afe46c1be7b3b89b1d9f0690f5bebf4fbf68))
 * Core: Add "method" field to error list entry ([89a15c7](https://github.com/jzaefferer/jquery-validation/commit/89a15c7a4b17fa2caaf4ff817f09b04c094c3884))
 * Core: Added support for generic messages via data-msg attribute ([5bebaa5](https://github.com/jzaefferer/jquery-validation/commit/5bebaa5c55c73f457c0e0181ec4e3b0c409e2a9d))
 * Core: Allow attributes to have a value of zero (eg min='0') ([#854](https://github.com/jzaefferer/jquery-validation/issues/854), [9dc0d1d](https://github.com/jzaefferer/jquery-validation/commit/9dc0d1dd946b2c6178991fb16df0223c76162579))
