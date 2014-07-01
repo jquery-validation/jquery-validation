@@ -1101,7 +1101,9 @@ $.extend( $.validator, {
 			if ( this.checkable( element ) ) {
 				return this.getLength( value, element ) > 0;
 			}
-			return $.trim( value ).length > 0;
+
+			// check for a value, and that it doesn't match the placeholder
+			return $.trim( value ).length > 0 && $.trim(value) !== $( element ).attr( "placeholder" );
 		},
 
 		// http://jqueryvalidation.org/email-method/
