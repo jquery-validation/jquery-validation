@@ -15,5 +15,7 @@
 	"excludeFiles": [
 		"node_modules/**",
 		"dist/**"
-	]
+	],
+	"maximumLineLength": null,
+	"requireCamelCaseOrUpperCaseIdentifiers": null
 }

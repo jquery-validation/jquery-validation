@@ -496,7 +496,7 @@ $.extend( $.validator, {
 					.focus()
 					// manually trigger focusin event; without it, focusin handler isn't called, findLastActive won't have anything to find
 					.trigger( "focusin" );
-				} catch( e ) {
+				} catch ( e ) {
 					// ignore IE throwing errors when focusing hidden elements
 				}
 			}
@@ -613,7 +613,7 @@ $.extend( $.validator, {
 						this.formatAndAdd( element, rule );
 						return false;
 					}
-				} catch( e ) {
+				} catch ( e ) {
 					if ( this.settings.debug && window.console ) {
 						console.log( "Exception occurred when checking element " + element.id + ", check the '" + rule.method + "' method.", e );
 					}

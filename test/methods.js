@@ -999,9 +999,9 @@ function fillFormWithValuesAndExpect(formSelector, inputValues, expected) {
 test("require_from_group", function() {
 	$("#productInfo").validate({
 		rules: {
-			partnumber: { require_from_group: [ 2,".productInfo" ] },
-			description: { require_from_group: [ 2,".productInfo" ] },
-			discount: { require_from_group: [ 2,".productInfo" ] }
+			partnumber: { require_from_group: [ 2, ".productInfo" ] },
+			description: { require_from_group: [ 2, ".productInfo" ] },
+			discount: { require_from_group: [ 2, ".productInfo" ] }
 		}
 	});
 
@@ -1018,9 +1018,9 @@ test("require_from_group", function() {
 test("require_from_group preserve other rules", function() {
 	$("#productInfo").validate({
 		rules: {
-			partnumber: { require_from_group: [ 2,".productInfo" ] },
-			description: { require_from_group: [ 2,".productInfo" ] },
-			color: { require_from_group: [ 2,".productInfo" ] },
+			partnumber: { require_from_group: [ 2, ".productInfo" ] },
+			description: { require_from_group: [ 2, ".productInfo" ] },
+			color: { require_from_group: [ 2, ".productInfo" ] },
 			supplier: { required: true }
 		}
 	});
@@ -1037,9 +1037,9 @@ test("require_from_group preserve other rules", function() {
 test("skip_or_fill_minimum", function() {
 	$("#productInfo").validate({
 		rules: {
-			partnumber:  { skip_or_fill_minimum: [ 2,".productInfo" ] },
-			description: { skip_or_fill_minimum: [ 2,".productInfo" ] },
-			color:       { skip_or_fill_minimum: [ 2,".productInfo" ] }
+			partnumber:  { skip_or_fill_minimum: [ 2, ".productInfo" ] },
+			description: { skip_or_fill_minimum: [ 2, ".productInfo" ] },
+			color:       { skip_or_fill_minimum: [ 2, ".productInfo" ] }
 		}
 	});
 
@@ -1052,9 +1052,9 @@ test("skip_or_fill_minimum", function() {
 test("skip_or_fill_minimum preserve other rules", function() {
 	$("#productInfo").validate({
 		rules: {
-			partnumber:  { skip_or_fill_minimum: [ 2,".productInfo" ] },
-			description: { skip_or_fill_minimum: [ 2,".productInfo" ] },
-			color:       { skip_or_fill_minimum: [ 2,".productInfo" ] },
+			partnumber:  { skip_or_fill_minimum: [ 2, ".productInfo" ] },
+			description: { skip_or_fill_minimum: [ 2, ".productInfo" ] },
+			color:       { skip_or_fill_minimum: [ 2, ".productInfo" ] },
 			supplier: { required: true }
 		}
 	});

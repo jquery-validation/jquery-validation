@@ -195,7 +195,7 @@ grunt.loadNpmTasks("grunt-contrib-uglify");
 grunt.loadNpmTasks("grunt-contrib-concat");
 grunt.loadNpmTasks("grunt-contrib-compress");
 grunt.loadNpmTasks("grunt-contrib-watch");
-grunt.loadNpmTasks("grunt-jscs-checker");
+grunt.loadNpmTasks("grunt-jscs");
 grunt.loadNpmTasks("grunt-contrib-copy");
 grunt.loadNpmTasks("grunt-text-replace");
 
