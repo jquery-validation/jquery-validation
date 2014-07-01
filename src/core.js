@@ -21,6 +21,7 @@ $.extend($.fn, {
 
 		validator = new $.validator( options, this[ 0 ] );
 		$.data( this[ 0 ], "validator", validator );
+		$.attr( this[ 0 ], "data-validator", true );
 
 		if ( validator.settings.onsubmit ) {
 
@@ -93,7 +94,7 @@ $.extend($.fn, {
 			valid = this.validate().form();
 		} else {
 			valid = true;
-			validator = $( this[ 0 ].form ).validate();
+			validator = this.closest( "[data-validator]" ).validate();
 			this.each( function() {
 				valid = validator.element( this ) && valid;
 			});
@@ -116,7 +117,7 @@ $.extend($.fn, {
 			settings, staticRules, existingRules, data, param, filtered;
 
 		if ( command ) {
-			settings = $.data( element.form, "validator" ).settings;
+			settings = $( element ).closest( "[data-validator]" ).data( "validator" ).settings;
 			staticRules = settings.rules;
 			existingRules = $.validator.staticRules( element );
 			switch ( command ) {
@@ -339,7 +340,7 @@ $.extend( $.validator, {
 			});
 
 			function delegate( event ) {
-				var validator = $.data( this[ 0 ].form, "validator" ),
+				var validator = this.closest( "[data-validator]" ).data( "validator" ),
 					eventType = "on" + event.type.replace( /^validate/, "" ),
 					settings = validator.settings;
 				if ( settings[ eventType ] && !this.is( settings.ignore ) ) {
@@ -853,7 +854,7 @@ $.extend( $.validator, {
 				return param;
 			},
 			"string": function( param, element ) {
-				return !!$( param, element.form ).length;
+				return !!$( param, $( element ).closest( "[data-validator]" ) ).length;
 			},
 			"function": function( param, element ) {
 				return param( element );
@@ -990,7 +991,7 @@ $.extend( $.validator, {
 
 	staticRules: function( element ) {
 		var rules = {},
-			validator = $.data( element.form, "validator" );
+			validator = $( element ).closest( "[data-validator]" ).data( "validator" );
 
 		if ( validator.settings.rules ) {
 			rules = $.validator.normalizeRule( validator.settings.rules[ element.name ] ) || {};
@@ -1009,8 +1010,8 @@ $.extend( $.validator, {
 			if ( val.param || val.depends ) {
 				var keepRule = true;
 				switch ( typeof val.depends ) {
-				case "string":
-					keepRule = !!$( val.depends, element.form ).length;
+				case "string":					
+					keepRule = !!$( val.depends, $( element ).closest( "[data-validator]" ) ).length;
 					break;
 				case "function":
 					keepRule = val.depends.call( element, element );
