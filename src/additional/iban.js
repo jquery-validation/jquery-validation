@@ -2,14 +2,14 @@
  * IBAN is the international bank account number.
  * It has a country - specific format, that is checked here too
  */
-jQuery.validator.addMethod("iban", function(value, element) {
+$.validator.addMethod("iban", function(value, element) {
 	// some quick simple tests to prevent needless work
 	if (this.optional(element)) {
 		return true;
 	}
 
 	// remove spaces and to upper case
-	var iban = value.replace(/ /g,"").toUpperCase(),
+	var iban = value.replace(/ /g, "").toUpperCase(),
 		ibancheckdigits = "",
 		leadingZeroes = true,
 		cRest = "",
@@ -21,7 +21,7 @@ jQuery.validator.addMethod("iban", function(value, element) {
 	}
 
 	// check the country code and find the country specific format
-	countrycode = iban.substring(0,2);
+	countrycode = iban.substring(0, 2);
 	bbancountrypatterns = {
 		"AL": "\\d{8}[\\dA-Z]{16}",
 		"AD": "\\d{8}[\\dA-Z]{12}",
@@ -105,7 +105,7 @@ jQuery.validator.addMethod("iban", function(value, element) {
 	}
 
 	// now check the checksum, first convert to digits
-	ibancheck = iban.substring(4,iban.length) + iban.substring(0,4);
+	ibancheck = iban.substring(4, iban.length) + iban.substring(0, 4);
 	for (i = 0; i < ibancheck.length; i++) {
 		charAt = ibancheck.charAt(i);
 		if (charAt !== "0") {

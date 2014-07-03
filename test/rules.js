@@ -13,7 +13,7 @@ test("rules(), ignore method:false", function() {
 
 	$("#testForm1clean").validate({
 		rules: {
-			firstname: { required: false, minlength: 2 }
+			firstnamec: { required: false, minlength: 2 }
 		}
 	});
 
@@ -33,7 +33,7 @@ test("rules() - internal - select", function() {
 
 	$("#testForm3").validate();
 
-	deepEqual( element.rules(), {required: true} );
+	deepEqual( element.rules(), { required: true } );
 });
 
 test("rules() - external", function() {
@@ -41,11 +41,11 @@ test("rules() - external", function() {
 
 	$("#form").validate({
 		rules: {
-			action: {date: true, min: 5}
+			action: { date: true, min: 5 }
 		}
 	});
 
-	deepEqual( element.rules(), {date: true, min: 5} );
+	deepEqual( element.rules(), { date: true, min: 5 } );
 });
 
 test("rules() - external - complete form", function() {
@@ -61,7 +61,7 @@ test("rules() - external - complete form", function() {
 	});
 	v = $("#form").validate({
 		rules: {
-			action: {verifyTest: true}
+			action: { verifyTest: true }
 		}
 	});
 	v.form();
@@ -75,7 +75,7 @@ test("rules() - internal - input", function() {
 
 	$("#testForm8").validate();
 
-	deepEqual( element.rules(), {required: true, number: true, rangelength: [2, 8]});
+	deepEqual( element.rules(), { required: true, number: true, rangelength: [ 2, 8 ] } );
 });
 
 test("rules(), merge min/max to range, minlength/maxlength to rangelength", function() {
@@ -83,7 +83,7 @@ test("rules(), merge min/max to range, minlength/maxlength to rangelength", func
 
 	$("#testForm1clean").validate({
 		rules: {
-			firstname: {
+			firstnamec: {
 				min: 5,
 				max: 12
 			},
@@ -94,9 +94,9 @@ test("rules(), merge min/max to range, minlength/maxlength to rangelength", func
 		}
 	});
 
-	deepEqual( $("#firstnamec").rules(), {range: [5, 12]});
+	deepEqual( $("#firstnamec").rules(), { range: [ 5, 12 ] } );
 
-	deepEqual( $("#lastnamec").rules(), {rangelength: [2, 8]} );
+	deepEqual( $("#lastnamec").rules(), { rangelength: [ 2, 8 ] } );
 	jQuery.validator.autoCreateRanges = false;
 });
 
@@ -133,7 +133,7 @@ test("rules(), evaluate dynamic parameters", function() {
 
 	$("#testForm1clean").validate({
 		rules: {
-			firstname: {
+			firstnamec: {
 				min: function(element) {
 					equal( $("#firstnamec")[0], element );
 					return 12;
@@ -142,7 +142,7 @@ test("rules(), evaluate dynamic parameters", function() {
 		}
 	});
 
-	deepEqual( $("#firstnamec").rules(), {min:12});
+	deepEqual( $("#firstnamec").rules(), { min: 12 });
 });
 
 test("rules(), class and attribute combinations", function() {
@@ -170,8 +170,8 @@ test("rules(), class and attribute combinations", function() {
 	deepEqual( $("#v2-i4").rules(), { required: true, minlength: 2 });
 	deepEqual( $("#v2-i5").rules(), { required: true, minlength: 2, maxlength: 5, customMethod1: "123" });
 	jQuery.validator.autoCreateRanges = true;
-	deepEqual( $("#v2-i5").rules(), { required: true, customMethod1: "123", rangelength: [2, 5] });
-	deepEqual( $("#v2-i6").rules(), { required: true, customMethod2: true, rangelength: [2, 5] });
+	deepEqual( $("#v2-i5").rules(), { required: true, customMethod1: "123", rangelength: [ 2, 5 ] });
+	deepEqual( $("#v2-i6").rules(), { required: true, customMethod2: true, rangelength: [ 2, 5 ] });
 	jQuery.validator.autoCreateRanges = false;
 	deepEqual( $("#v2-i7").rules(), { required: true, minlength: 2, customMethod: true });
 
@@ -184,7 +184,7 @@ test("rules(), class and attribute combinations", function() {
 test("rules(), dependency checks", function() {
 	var v = $("#testForm1clean").validate({
 			rules: {
-				firstname: {
+				firstnamec: {
 					min: {
 						param: 5,
 						depends: function(el) {
@@ -207,9 +207,9 @@ test("rules(), dependency checks", function() {
 	equal( 0, v.objectLength(rules) );
 
 	$("#firstnamec").val("ab");
-	deepEqual( $("#firstnamec").rules(), {min:5});
+	deepEqual( $("#firstnamec").rules(), { min: 5 });
 
-	deepEqual( $("#lastnamec").rules(), {max:12, email:true});
+	deepEqual( $("#lastnamec").rules(), { max: 12, email: true });
 });
 
 test("rules(), add and remove", function() {
@@ -223,7 +223,7 @@ test("rules(), add and remove", function() {
 	$("#v2-i5").addClass("required").attr(removedAttrs);
 	deepEqual( $("#v2-i5").rules(), { required: true, minlength: 2, maxlength: 5, customMethod1: "123" });
 
-	$("#v2-i5").addClass("email").attr({min: 5});
+	$("#v2-i5").addClass("email").attr({ min: 5 });
 	deepEqual( $("#v2-i5").rules(), { required: true, email: true, minlength: 2, maxlength: 5, min: 5, customMethod1: "123" });
 
 	$("#v2-i5").removeClass("required email").removeAttrs("minlength maxlength customMethod1 min");
@@ -237,7 +237,7 @@ test("rules(), add and remove static rules", function() {
 
 	$("#testForm1clean").validate({
 		rules: {
-			firstname: "required date"
+			firstnamec: "required date"
 		}
 	});
 
@@ -257,14 +257,12 @@ test("rules(), add and remove static rules", function() {
 	$("#firstnamec").rules("add", "required email");
 	deepEqual( $("#firstnamec").rules(), { required: true, email: true } );
 
-
 	deepEqual( $("#lastnamec").rules(), {} );
 	$("#lastnamec").rules("add", "required");
 	$("#lastnamec").rules("add", {
 		minlength: 2
 	});
 	deepEqual( $("#lastnamec").rules(), { required: true, minlength: 2 } );
-
 
 	var removedRules = $("#lastnamec").rules("remove", "required email");
 	deepEqual( $("#lastnamec").rules(), { minlength: 2 } );
@@ -276,7 +274,7 @@ test("rules(), add messages", function() {
 	$("#firstnamec").attr("title", null);
 	var v = $("#testForm1clean").validate({
 		rules: {
-			firstname: "required"
+			firstnamec: "required"
 		}
 	});
 	$("#testForm1clean").valid();
@@ -295,4 +293,12 @@ test("rules(), add messages", function() {
 	$("#firstnamec").val("test");
 	$("#firstnamec").valid();
 	equal(v.errorList.length, 0);
+});
+
+test( "rules(), rangelength attribute as array", function() {
+	$("#testForm13").validate();
+	deepEqual( $("#cars-select").rules(), {
+		required: true,
+		rangelength: [ 2, 3 ]
+	});
 });

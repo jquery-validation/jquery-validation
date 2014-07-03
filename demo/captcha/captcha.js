@@ -1,10 +1,10 @@
 $(function(){
-	$("#refreshimg").click(function(){
-		$.post('newsession.php');
-		$("#captchaimage").load('image_req.php');
+	$("body").on("click", "#refreshimg", function(){
+		$.post("newsession.php");
+		$("#captchaimage").load("image_req.php");
 		return false;
 	});
-	
+
 	$("#captchaform").validate({
 		rules: {
 			captcha: {
@@ -13,7 +13,7 @@ $(function(){
 			}
 		},
 		messages: {
-			captcha: "Correct captcha is required. Click the captcha to generate a new one"	
+			captcha: "Correct captcha is required. Click the captcha to generate a new one"
 		},
 		submitHandler: function() {
 			alert("Correct captcha!");
@@ -23,5 +23,5 @@ $(function(){
 		},
 		onkeyup: false
 	});
-	
+
 });

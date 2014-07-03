@@ -1,0 +1,21 @@
+{
+	"preset": "jquery",
+	"disallowSpacesInNamedFunctionExpression": {
+		"beforeOpeningRoundBrace": true
+	},
+	"requireSpacesInNamedFunctionExpression": {
+		"beforeOpeningCurlyBrace": true
+	},
+	"disallowSpacesInAnonymousFunctionExpression": {
+		"beforeOpeningRoundBrace": true
+	},
+	"requireSpacesInAnonymousFunctionExpression": {
+		"beforeOpeningCurlyBrace": true
+	},
+	"excludeFiles": [
+		"node_modules/**",
+		"dist/**"
+	],
+	"maximumLineLength": null,
+	"requireCamelCaseOrUpperCaseIdentifiers": null
+}
