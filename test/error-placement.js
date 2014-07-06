@@ -310,3 +310,24 @@ test( "test existing non-error aria-describedby", function( assert ) {
 	strictEqual( "This is where you enter your data", $("#testForm17text-description").text() );
 	strictEqual( "", $("#testForm17text-error").text(), "Error label is empty for valid field" );
 });
+
+test( "test pre-assigned non-error aria-describedby", function( assert ) {
+	expect( 7 );
+	var form = $( "#testForm17" ),
+		field = $( "#testForm17text" );
+
+	// Pre-assign error identifier
+	field.attr( "aria-describedby", "testForm17text-description testForm17text-error" );
+	form.validate({ errorElement: "span" });
+
+	ok( !field.valid() );
+	equal( field.attr( "aria-describedby" ), "testForm17text-description testForm17text-error" );
+	assert.hasError( field, "required" );
+
+	field.val( "foo" );
+	ok( field.valid() );
+	assert.noErrorFor( field );
+
+	strictEqual( "This is where you enter your data", $("#testForm17text-description").text() );
+	strictEqual( "", $("#testForm17text-error").text(), "Error label is empty for valid field" );
+});
