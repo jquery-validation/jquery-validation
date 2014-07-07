@@ -16,7 +16,7 @@ $.validator.addMethod("pattern", function(value, element, param) {
 		return true;
 	}
 	if (typeof param === "string") {
-		param = new RegExp(param);
+		param = new RegExp("^(?:" + param + ")$");
 	}
 	return param.test(value);
 }, "Invalid format.");
