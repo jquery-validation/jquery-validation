@@ -918,6 +918,13 @@ test("pattern", function() {
 	ok( method( "AR1004", "AR\\d{4}" ), "Correct format for the given RegExp" );
 	ok( method( "AR1004", /^AR\d{4}$/ ), "Correct format for the given RegExp" );
 	ok(!method( "BR1004", /^AR\d{4}$/ ), "Invalid format for the given RegExp" );
+	ok( method( "1ABC", "[0-9][A-Z]{3}" ), "Correct format for the given RegExp" );
+	ok(!method( "ABC", "[0-9][A-Z]{3}" ), "Invalid format for the given RegExp" );
+	ok(!method( "1ABC DEF", "[0-9][A-Z]{3}" ), "Invalid format for the given RegExp" );
+	ok( method( "1ABCdef", "[a-zA-Z0-9]+" ), "Correct format for the given RegExp" );
+	ok(!method( "1ABC def", "[a-zA-Z0-9]+" ), "Invalid format for the given RegExp" );
+	ok( method( "2014-10-02", "[0-9]{4}-(0[1-9]|1[012])-(0[1-9]|1[0-9]|2[0-9]|3[01])" ), "Correct format for the given RegExp" );
+	ok(!method( "02-10-2014", "[0-9]{4}-(0[1-9]|1[012])-(0[1-9]|1[0-9]|2[0-9]|3[01])" ), "Invalid format for the given RegExp" );
 });
 
 function testCardTypeByNumber(number, cardname, expected) {
