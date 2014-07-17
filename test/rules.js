@@ -20,6 +20,30 @@ test("rules(), ignore method:false", function() {
 	deepEqual( element.rules(), { minlength: 2 } );
 });
 
+test("rules(), ignore method:null", function() {
+    var element = $("#firstnamerequirednull");
+
+    $("#nullundefinedtest").validate({
+        rules: {
+            firstnamerequirednull: { required: null, minlength: 2 }
+        }
+    });
+
+    deepEqual( element.rules(), { minlength: 2 } );
+});
+
+test("rules(), ignore method:undefined", function() {
+    var element = $("#firstnamerequiredundefined");
+
+    $("#nullundefinedtest").validate({
+        rules: {
+            firstnamerequiredundefined: { required: undefined, minlength: 2 }
+        }
+    });
+
+    deepEqual( element.rules(), { minlength: 2 } );
+});
+
 test("rules() HTML5 required (no value)", function() {
 	var element = $("#testForm11text1");
 
