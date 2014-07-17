@@ -1001,8 +1001,8 @@ $.extend( $.validator, {
 	normalizeRules: function( rules, element ) {
 		// handle dependency check
 		$.each( rules, function( prop, val ) {
-			// ignore rule when param is explicitly false, eg. required:false
-			if ( val === false ) {
+			// ignore rule when param is explicitly false, null or undefined, eg. required:false
+			if ( val === false || val === null || val === undefined ) {
 				delete rules[ prop ];
 				return;
 			}
