@@ -400,6 +400,32 @@ asyncTest("remote", function() {
 	strictEqual( v.element(e), true, "still invalid, because remote validation must block until it returns; dependency-mismatch considered as valid though" );
 });
 
+asyncTest("remote, pending class added to element while call outstanding", function() {
+	expect(3);
+	var e = $("#username"),
+		v = $("#userForm").validate({
+			rules: {
+				username: {
+					remote: "users.php"
+				}
+			},
+			submitHandler: function() {
+				ok( false, "submitHandler may never be called when validating only elements");
+			}
+		});
+
+	$(document).ajaxStop(function() {
+		$(document).unbind("ajaxStop");
+	  strictEqual( e.hasClass("pending"), false, "not pending since ajax call complete");
+		start();
+	});
+	strictEqual( e.hasClass("pending"), false, "not pending since no data entered");
+	e.val("Peter");
+	// this fires off the validation:
+	v.element(e);
+	strictEqual( e.hasClass("pending"), true, "pending while validation outstanding");
+});
+
 asyncTest("remote, customized ajax options", function() {
 	expect(2);
 	$("#userForm").validate({
