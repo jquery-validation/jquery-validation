@@ -505,6 +505,27 @@ test( "option: (un)highlight, default", function() {
 	ok( e.hasClass( "valid" ) );
 });
 
+test( "renderErrorMessage()", function() {
+  var form = $( "#testForm1"), e;
+  form.validate({
+    errorElement: "div",
+    errorClass: "customError",
+    highlight: function() {}, // skip input highlighting
+    renderErrorMessage: function(error, message) {
+      var textContainer = error.find(".error-text");
+      if (textContainer.length) {
+        textContainer.html(message);
+      } else {
+        error.html("<div class=\"some-custom-wrapper\"><i class=\"some-icon\"></i><span class=\"error-text\">" + message + "</span></div>");
+      }
+    }
+  });
+  form.valid();
+  e = form.find("div.customError");
+  ok(e.find("div.some-custom-wrapper").length === 2);
+  ok(e.find(".error-text").html() === "buga");
+});
+
 test( "option: (un)highlight, nothing", function() {
 	expect( 3 );
 	$( "#testForm1" ).validate({
