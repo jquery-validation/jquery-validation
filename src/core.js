@@ -734,8 +734,13 @@ $.extend( $.validator, {
 			if ( error.length ) {
 				// refresh error/success class
 				error.removeClass( this.settings.validClass ).addClass( this.settings.errorClass );
+				// fix for draw issue in Safari
+				var oldDisplayCss = error.css("display");
+				error.css("display","none");
 				// replace message on existing label
 				error.html( message );
+				// rollback the display style
+				error.css("display", oldDisplayCss);
 			} else {
 				// create error element
 				error = $( "<" + this.settings.errorElement + ">" )
