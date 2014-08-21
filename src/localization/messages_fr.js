@@ -33,6 +33,7 @@ $.extend($.validator.messages, {
 	dateITA: "Veuillez fournir une date valide.",
 	time: "Veuillez fournir une heure valide entre 00:00 et 23:59.",
 	phoneUS: "Veuillez fournir un numéro de téléphone valide.",
+	phoneFR: "Veuillez fournir un numéro de téléphone valide.",
 	phoneUK: "Veuillez fournir un numéro de téléphone valide.",
 	mobileUK: "Veuillez fournir un numéro de téléphone mobile valide.",
 	strippedminlength: $.validator.format("Veuillez fournir au moins {0} caractères."),
