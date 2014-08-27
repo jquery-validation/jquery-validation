@@ -25,6 +25,7 @@
     "robloach/component-installer": "*",
     "components/jquery": ">=1.6.4"
   },
+  "minimum-stability": "dev",
   "extra": {
     "component": {
       "scripts": [
