@@ -9,9 +9,16 @@
   ],
   "authors": [
     {
-      "name": "Jörn Zaefferer <joern.zaefferer@gmail.com>"
+      "name": "Jörn Zaefferer",
+      "email": "joern.zaefferer@gmail.com",
+      "homepage": "http://bassistance.de",
+      "role": "Developer"
     }
   ],
+  "support": {
+    "issues": "https://github.com/jzaefferer/jquery-validation/issues",
+    "source": "git://github.com/jzaefferer/jquery-validation.git"
+  },
   "homepage": "http://jqueryvalidation.org/",
   "license": "MIT",
   "require": {
