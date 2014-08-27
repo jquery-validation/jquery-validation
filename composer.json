@@ -24,7 +24,7 @@
         "dist/jquery.validate.js"
       ],
       "files": [
-        "js/bootstrap.min.js",
+        "js/bootstrap.min.js"
       ],
       "shim": {
         "deps": ["jquery"]
