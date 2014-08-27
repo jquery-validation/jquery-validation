@@ -17,7 +17,7 @@
   ],
   "support": {
     "issues": "https://github.com/jzaefferer/jquery-validation/issues",
-    "source": "git://github.com/jzaefferer/jquery-validation.git"
+    "source": "https://github.com/jzaefferer/jquery-validation.git"
   },
   "homepage": "http://jqueryvalidation.org/",
   "license": "MIT",
