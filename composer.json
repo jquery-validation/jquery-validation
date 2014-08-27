@@ -18,4 +18,17 @@
     "robloach/component-installer": "*",
     "components/jquery": ">=1.6.4"
   }
+  "extra": {
+    "component": {
+      "scripts": [
+        "dist/jquery.validate.js"
+      ],
+      "files": [
+        "js/bootstrap.min.js",
+      ],
+      "shim": {
+        "deps": ["jquery"]
+      }
+    }
+  }
 }
