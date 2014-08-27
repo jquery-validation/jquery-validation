@@ -1,0 +1,21 @@
+{
+  "name": "hsalazr/jquery-validation",
+  "type": "component",
+  "description": "Form validation made easy",
+  "keywords": [
+    "forms",
+    "validation",
+    "validate"
+  ],
+  "authors": [
+    {
+      "name": "Jörn Zaefferer <joern.zaefferer@gmail.com>"
+    }
+  ],
+  "homepage": "http://jqueryvalidation.org/",
+  "license": "MIT",
+  "require": {
+    "robloach/component-installer": "*",
+    "components/jquery": ">=1.6.4"
+  }
+}
