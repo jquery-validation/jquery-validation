@@ -1,0 +1,20 @@
+{
+  "name": "jquery-validation",
+  "repo": "hsalazr/jquery-validation",
+  "description": "Form validation made easy",
+  "homepage": "http://jqueryvalidation.org/",
+  "version": "1.13.1-pre",
+  "keywords": [
+    "forms",
+    "validation",
+    "validate"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "components/jquery": ">=1.6.4"
+  },
+  "main": "dist/jquery.validate.js",
+  "scripts": [
+    "dist/jquery.validate.js"
+  ]
+}
