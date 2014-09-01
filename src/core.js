@@ -40,7 +40,7 @@ $.extend($.fn, {
 			});
 
 			// validate the form on submit
-			this.submit( function( event ) {
+			this.on("submit", function( event ) {
 				if ( validator.settings.debug ) {
 					// prevent form submit to be able to see console output
 					event.preventDefault();
@@ -358,7 +358,7 @@ $.extend( $.validator, {
 				.validateDelegate("select, option, [type='radio'], [type='checkbox']", "click", delegate);
 
 			if ( this.settings.invalidHandler ) {
-				$( this.currentForm ).bind( "invalid-form.validate", this.settings.invalidHandler );
+				$( this.currentForm ).on( "invalid-form.validate", this.settings.invalidHandler );
 			}
 
 			// Add aria-required to any Static/Data/Class required fields before first validation
@@ -880,7 +880,7 @@ $.extend( $.validator, {
 			}
 			delete this.pending[ element.name ];
 			if ( valid && this.pendingRequest === 0 && this.formSubmitted && this.form() ) {
-				$( this.currentForm ).submit();
+				$( this.currentForm ).trigger("submit");
 				this.formSubmitted = false;
 			} else if (!valid && this.pendingRequest === 0 && this.formSubmitted ) {
 				$( this.currentForm ).triggerHandler( "invalid-form", [ this ]);
@@ -1216,7 +1216,7 @@ $.extend( $.validator, {
 			// TODO find a way to bind the event just once, avoiding the unbind-rebind overhead
 			var target = $( param );
 			if ( this.settings.onfocusout ) {
-				target.unbind( ".validate-equalTo" ).bind( "blur.validate-equalTo", function() {
+				target.unbind( ".validate-equalTo" ).on( "blur.validate-equalTo", function() {
 					$( element ).valid();
 				});
 			}
