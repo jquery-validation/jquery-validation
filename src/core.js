@@ -1216,7 +1216,7 @@ $.extend( $.validator, {
 			// TODO find a way to bind the event just once, avoiding the unbind-rebind overhead
 			var target = $( param );
 			if ( this.settings.onfocusout ) {
-				target.unbind( ".validate-equalTo" ).on( "blur.validate-equalTo", function() {
+				target.off( ".validate-equalTo" ).on( "blur.validate-equalTo", function() {
 					$( element ).valid();
 				});
 			}
