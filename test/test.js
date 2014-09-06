@@ -786,6 +786,12 @@ test( "dynamic form", function() {
 	$( "#agb" ).attr( "disabled", false );
 	v.form();
 	errors( 1 );
+	$( "#agb" ).attr( "readonly", true );
+	v.form();
+	errors( 0 );
+	$( "#agb" ).attr( "readonly", false );
+	v.form();
+	errors( 1 );
 });
 
 test( "idOrName()", function() {
