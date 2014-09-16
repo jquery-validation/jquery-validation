@@ -351,7 +351,7 @@ $.extend( $.validator, {
 					"[type='number'], [type='search'] ,[type='tel'], [type='url'], " +
 					"[type='email'], [type='datetime'], [type='date'], [type='month'], " +
 					"[type='week'], [type='time'], [type='datetime-local'], " +
-					"[type='range'], [type='color'], [type='radio'], [type='checkbox']",
+					"[type='range'], [type='color'], [type='radio'], [type='checkbox'], [type='hidden']",
 					"focusin focusout keyup", delegate)
 				// Support: Chrome, oldIE
 				// "select" is provided as event.target when clicking a option
