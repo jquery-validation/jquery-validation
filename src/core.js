@@ -810,7 +810,7 @@ $.extend( $.validator, {
 
 			// aria-describedby should directly reference the error element
 			if ( describer ) {
-				selector = selector + ", #" + describer.replace( /\s+/g, ", #" );
+				selector = selector + ", #" + describer.replace(/\./g, "\\.").replace( /\s+/g, ", #" );
 			}
 			return this
 				.errors()
