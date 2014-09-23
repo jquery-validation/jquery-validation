@@ -130,30 +130,10 @@ grunt.initConfig({
 		options: {
 			atBegin: true
 		},
-		gruntfile: {
-			files: "<%= jshint.grunt.src %>",
-			tasks: [
-				"jscs:grunt",
-				"jshint:grunt"
-			]
-		},
 		src: {
 			files: "<%= jshint.core.src %>",
 			tasks: [
-				"jscs:core",
-				"jshint:core",
-				"concat",
-				"qunit"
-			]
-		},
-		test: {
-			files: [
-				"<%= jshint.test.src %>",
-				"test/index.html"
-			],
-			tasks: [
-				"jscs:test",
-				"jshint:test"
+				"concat"
 			]
 		}
 	},
