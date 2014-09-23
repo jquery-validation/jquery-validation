@@ -770,7 +770,7 @@ $.extend( $.validator, {
 					// If the element is not a child of an associated label, then it's necessary
 					// to explicitly apply aria-describedby
 
-					errorID = error.attr( "id" );
+					errorID = error.attr( "id" ).replace( /(:|\.|\[|\])/g, "\\$1");
 					// Respect existing non-error aria-describedby
 					if ( !describedBy ) {
 						describedBy = errorID;
@@ -810,7 +810,7 @@ $.extend( $.validator, {
 
 			// aria-describedby should directly reference the error element
 			if ( describer ) {
-				selector = selector + ", #" + describer.replace( /[\[\]]/g, "\\$&" ).replace( /\s+/g, ", #" );
+				selector = selector + ", #" + describer.replace( /\s+/g, ", #" );
 			}
 			return this
 				.errors()
