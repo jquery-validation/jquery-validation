@@ -331,3 +331,16 @@ test( "test pre-assigned non-error aria-describedby", function( assert ) {
 	strictEqual( "This is where you enter your data", $("#testForm17text-description").text() );
 	strictEqual( "", $("#testForm17text-error").text(), "Error label is empty for valid field" );
 });
+
+test( "test id/name containing brackets", function( assert ) {
+	var form = $( "#testForm18" ),
+		field = $( "#testForm18\\[text\\]" );
+
+	form.validate({
+		errorElement: "span"
+	});
+
+	form.valid();
+	field.valid();
+	assert.hasError( field, "required" );
+});

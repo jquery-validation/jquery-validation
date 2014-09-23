@@ -807,9 +807,10 @@ $.extend( $.validator, {
 			var name = this.idOrName( element ),
 				describer = $( element ).attr( "aria-describedby" ),
 				selector = "label[for='" + name + "'], label[for='" + name + "'] *";
+
 			// aria-describedby should directly reference the error element
 			if ( describer ) {
-				selector = selector + ", #" + describer.replace( /\s+/g, ", #" );
+				selector = selector + ", #" + describer.replace( /[\[\]]/g, "\\$&" ).replace( /\s+/g, ", #" );
 			}
 			return this
 				.errors()
