@@ -105,6 +105,41 @@ test( "valid() plugin method, special handling for checkable groups", function()
 	ok( checkable.valid(), "valid, third box is checked" );
 });
 
+test( "valid() ???", function() {
+	expect( 4 );
+	var errorList = [
+			{
+				name: "meal",
+				message: "foo",
+				element: $( "#meal" )[ 0 ]
+			}
+		],
+		v = $( "#testForm3" ).validate();
+
+	ok( v.valid(), "No errors, must be valid" );
+	v.errorList = errorList;
+	ok( !v.valid(), "One error, must be invalid" );
+	QUnit.reset();
+	v = $( "#testForm3" ).validate({
+		submitHandler: function() {
+			ok( false, "Submit handler was called" );
+		}
+	});
+	ok( v.valid(), "No errors, must be valid and returning true, even with the submit handler" );
+	v.errorList = errorList;
+	ok( !v.valid(), "One error, must be invalid, no call to submit handler" );
+});
+
+test( "valid(), ignores ignored elements", function() {
+	$( "#testForm1clean" ).validate({
+		ignore: "#firstnamec",
+		rules: {
+			firstnamec: "required"
+		}
+	});
+	ok( $( "#firstnamec" ).valid() );
+});
+
 test( "addMethod", function() {
 	expect( 3 );
 	$.validator.addMethod( "hi", function( value ) {
@@ -296,31 +331,6 @@ test( "hide(): container", function() {
 	$( "#meal" )[ 0 ].selectedIndex = 1;
 	v.element( "#meal" );
 	ok( errorLabel.is( ":hidden" ), "Error label not visible after hiding it" );
-});
-
-test( "valid()", function() {
-	expect( 4 );
-	var errorList = [
-			{
-				name: "meal",
-				message: "foo",
-				element: $( "#meal" )[ 0 ]
-			}
-		],
-		v = $( "#testForm3" ).validate();
-
-	ok( v.valid(), "No errors, must be valid" );
-	v.errorList = errorList;
-	ok( !v.valid(), "One error, must be invalid" );
-	QUnit.reset();
-	v = $( "#testForm3" ).validate({
-		submitHandler: function() {
-			ok( false, "Submit handler was called" );
-		}
-	});
-	ok( v.valid(), "No errors, must be valid and returning true, even with the submit handler" );
-	v.errorList = errorList;
-	ok( !v.valid(), "One error, must be invalid, no call to submit handler" );
 });
 
 test( "submitHandler keeps submitting button", function() {
@@ -530,6 +540,7 @@ test( "option: (un)highlight, custom", function() {
 			equal( "invalid", errorClass );
 			$( element ).show();
 		},
+		ignore: "",
 		errorClass: "invalid",
 		rules: {
 			firstnamec: "required"
