@@ -1261,4 +1261,17 @@ test("stateUS", function() {
 	ok(!method( "mp", { caseSensitive: false, includeTerritories: false } ), "US territories not allowed" );
 });
 
+test("notEqualTo", function() {
+
+	var v = $( "#notEqualTo" ).validate(),
+		method = $.validator.methods.notEqualTo,
+		e = $( "#email1, #email2, #email3" ),
+		id = [ "#email1Backup", "#email2Backup", "#email3Backup" ];
+
+	ok ( method.call( v, e[0].value, e[0], id[0] ), "Backup email is different than the primary." );
+	ok (!method.call( v, e[1].value, e[1], id[1] ), "Backup email is the same as the primary." );
+	ok ( method.call( v, e[2].value, e[2], id[2] ), "Optional, empty values won't be compared." );
+
+});
+
 })(jQuery);
