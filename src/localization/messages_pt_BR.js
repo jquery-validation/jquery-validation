@@ -23,5 +23,6 @@ $.extend($.validator.messages, {
 	min: $.validator.format("Por favor, forne&ccedil;a um valor maior ou igual a {0}."),
 	nifES: "Por favor, forne&ccedil;a um NIF v&aacute;lido.",
 	nieES: "Por favor, forne&ccedil;a um NIE v&aacute;lido.",
-	cifEE: "Por favor, forne&ccedil;a um CIF v&aacute;lido."
+	cifEE: "Por favor, forne&ccedil;a um CIF v&aacute;lido.",
+	postalcodeBR: "Por favor, forne&ccedil;a um CEP v&aacute;lido."
 });
