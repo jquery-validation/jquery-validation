@@ -8,5 +8,5 @@
 *
 */
 $.validator.addMethod("postalcodeBR", function(cep_value, element) {
-	return this.optional(element) || /^\d{5}-\d{3}?$/.test(cep_value);
+	return this.optional(element) || /^\d{5}-?\d{3}?$/.test(cep_value);
 }, "Informe um CEP válido.");
