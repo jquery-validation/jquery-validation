@@ -1261,4 +1261,10 @@ test("stateUS", function() {
 	ok(!method( "mp", { caseSensitive: false, includeTerritories: false } ), "US territories not allowed" );
 });
 
+test("postalcodeBR", function() {
+	var method = methodTest("postalcodeBR");
+	ok( method( "99999-999"), "Valid BR Postal Code");
+	ok(!method( "99999999"), "Invalid BR Postal Code");
+});
+
 })(jQuery);
