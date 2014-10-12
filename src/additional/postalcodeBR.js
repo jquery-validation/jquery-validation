@@ -1,12 +1,16 @@
 /*
 * Valida CEPs do brasileiros:
 *
-*
-*
-* Formato aceito 99999-999
-*
-*
+* Formatos aceitos:
+* 99999-999
+* 99.999-999
+* 99999999
 */
-$.validator.addMethod("postalcodeBR", function(cep_value, element) {
-	return this.optional(element) || /^\d{5}-?\d{3}?$/.test(cep_value);
+$.validator.addMethod("postalcodeBR", function( cep_value ) {
+	if ( /^\d{2}.\d{3}-\d{3}?$/.test( cep_value ) ){
+		return true;
+	}else if ( /^\d{5}-?\d{3}?$/.test( cep_value ) ){
+			return true;
+	}
+	return false;
 }, "Informe um CEP válido.");

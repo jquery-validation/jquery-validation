@@ -1265,7 +1265,8 @@ test("postalcodeBR", function() {
 	var method = methodTest("postalcodeBR");
 	ok( method( "99999-999"), "Valid BR Postal Code");
 	ok( method( "99999999"), "Valid BR Postal Code");
-	ok( !method( "99.999-999"), "Invalid BR Postal Code");
+	ok( method( "99.999-999"), "Valid BR Postal Code");
+	ok( !method( "99.999999"), "Invalid BR Postal Code");
 });
 
 })(jQuery);
