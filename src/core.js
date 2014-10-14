@@ -1057,12 +1057,12 @@ $.extend( $.validator, {
 
 		if ( $.validator.autoCreateRanges ) {
 			// auto-create ranges
-			if ( rules.min && rules.max ) {
+			if ( typeof(rules.min) !== "undefined" && typeof(rules.max) !== "undefined" ) {
 				rules.range = [ rules.min, rules.max ];
 				delete rules.min;
 				delete rules.max;
 			}
-			if ( rules.minlength && rules.maxlength ) {
+			if ( typeof(rules.minlength) !== "undefined" && typeof(rules.maxlength) !== "undefined" ) {
 				rules.rangelength = [ rules.minlength, rules.maxlength ];
 				delete rules.minlength;
 				delete rules.maxlength;
