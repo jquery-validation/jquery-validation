@@ -84,19 +84,19 @@ test("rules(), merge min/max to range, minlength/maxlength to rangelength", func
 	$("#testForm1clean").validate({
 		rules: {
 			firstnamec: {
-				min: 5,
-				max: 12
+				min: -15,
+				max: 0
 			},
 			lastname: {
-				minlength: 2,
-				maxlength: 8
+				minlength: 0,
+				maxlength: 10
 			}
 		}
 	});
 
-	deepEqual( $("#firstnamec").rules(), { range: [ 5, 12 ] } );
+	deepEqual( $("#firstnamec").rules(), { range: [ -15, 0 ] } );
+	deepEqual( $("#lastnamec").rules(), { rangelength: [ 0, 10 ] } );
 
-	deepEqual( $("#lastnamec").rules(), { rangelength: [ 2, 8 ] } );
 	jQuery.validator.autoCreateRanges = false;
 });
 

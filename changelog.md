@@ -1,3 +1,22 @@
+1.13.1 / 2014-10-14
+==================
+
+## Core
+  * Allow 0 as value for autoCreateRanges
+  * Apply ignore setting to all validationTargetFor elements
+  * Don't trim value in min/max/rangelength methods
+  * Escape id/name before using it as a selector in errorsFor
+  * Explicit default for focusCleanup option
+  * Fix incorrect regexp for describedby matcher
+  * Ignore readonly as well as disabled fields
+  * Improve id escaping, store escaped id in describedby
+  * Use return value of submitHandler to allow or prevent form submit
+
+## Additionals
+  * Add postalcodeBR method
+  * Fix pattern method when parameter is a string
+
+
 1.13.0 / 2014-07-01
 ==================
 
