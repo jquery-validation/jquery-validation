@@ -1261,6 +1261,18 @@ test("stateUS", function() {
 	ok(!method( "mp", { caseSensitive: false, includeTerritories: false } ), "US territories not allowed" );
 });
 
+test("nit_pis_pasepBR", function() {
+	var method = methodTest("nit_pis_pasepBR");
+	ok( method( "125.6659.879-9"), "Valid NIT/PIS/Pasep"); //Numero gerado automaticamente
+	ok( method( "125.9189.997-7"), "Valid NIT/PIS/Pasep");
+	ok( method( "125.3815.082-7"), "Valid NIT/PIS/Pasep");
+	ok( method( "125.5145.923-2"), "Valid NIT/PIS/Pasep");
+	ok( method( "125.2138.841-8"), "Valid NIT/PIS/Pasep");
+	ok( method( "12566598799"), "Valid NIT/PIS/Pasep");
+	ok( !method( "125.6659.879-8"), "Invalid NIT/PIS/Pasep");
+	ok( !method( "12566598798"), "Invalid NIT/PIS/Pasep");
+});
+
 test("postalcodeBR", function() {
 	var method = methodTest("postalcodeBR");
 	ok( method( "99999-999"), "Valid BR Postal Code");
