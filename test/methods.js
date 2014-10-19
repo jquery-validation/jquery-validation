@@ -1261,6 +1261,14 @@ test("stateUS", function() {
 	ok(!method( "mp", { caseSensitive: false, includeTerritories: false } ), "US territories not allowed" );
 });
 
+test("postalcodeBR", function() {
+	var method = methodTest("postalcodeBR");
+	ok( method( "99999-999"), "Valid BR Postal Code");
+	ok( method( "99999999"), "Valid BR Postal Code");
+	ok( method( "99.999-999"), "Valid BR Postal Code");
+	ok( !method( "99.999999"), "Invalid BR Postal Code");
+});
+
 test("nit_pis_pasepBR", function() {
 	var method = methodTest("nit_pis_pasepBR");
 	ok( method( "125.6659.879-9"), "Valid NIT/PIS/Pasep"); //Numero gerado automaticamente
@@ -1273,12 +1281,16 @@ test("nit_pis_pasepBR", function() {
 	ok( !method( "12566598798"), "Invalid NIT/PIS/Pasep");
 });
 
-test("postalcodeBR", function() {
-	var method = methodTest("postalcodeBR");
-	ok( method( "99999-999"), "Valid BR Postal Code");
-	ok( method( "99999999"), "Valid BR Postal Code");
-	ok( method( "99.999-999"), "Valid BR Postal Code");
-	ok( !method( "99.999999"), "Invalid BR Postal Code");
+test("teBR", function() {
+	var method = methodTest("teBR");
+	ok( method( "4261 6271 1546"), "Valid TE"); //Numero gerado automaticamente
+	ok( method( "407113120361"), "Valid TE");
+	ok( method( "6218 7807 0531"), "Valid TE");
+	ok( method( "0352 6016 1554"), "Valid TE");
+	ok( method( "352601615/54"), "Valid TE");
+	ok( method( "35260161554"), "Valid TE");
+	ok( !method( "6238 7807 0531"), "Invalid TE");
+	ok( !method( "421878070531"), "Invalid TE");
 });
 
 })(jQuery);
