@@ -1269,4 +1269,17 @@ test("postalcodeBR", function() {
 	ok( !method( "99.999999"), "Invalid BR Postal Code");
 });
 
+test("cpfBR", function() {
+	var method = methodTest("cpfBR");
+	ok( method( "11144477735"), "Valid CPF Number");
+	ok( method( "263.946.533-30"), "Valid CPF Number");
+	ok( method( "325 861 044 47"), "Valid CPF Number");
+	ok( method( "859-684-732-40"), "Valid CPF Number");
+	ok( !method( "99999999999"), "Invalid CPF Number: dump data");
+	ok( !method( "1114447773"), "Invalid CPF Number: < 11 digits");
+	ok( !method( "111444777355"), "Invalid CPF Number: > 11 digits");
+	ok( !method( "11144477715"), "Invalid CPF Number: 1st check number failed");
+	ok( !method( "11144477737"), "Invalid CPF Number: 2nd check number failed");
+});
+
 })(jQuery);

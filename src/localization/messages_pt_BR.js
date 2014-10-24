@@ -24,5 +24,6 @@ $.extend($.validator.messages, {
 	nifES: "Por favor, forne&ccedil;a um NIF v&aacute;lido.",
 	nieES: "Por favor, forne&ccedil;a um NIE v&aacute;lido.",
 	cifEE: "Por favor, forne&ccedil;a um CIF v&aacute;lido.",
-	postalcodeBR: "Por favor, forne&ccedil;a um CEP v&aacute;lido."
+	postalcodeBR: "Por favor, forne&ccedil;a um CEP v&aacute;lido.",
+	cpfBR: "Por favor, forne&ccedil;a um CPF v&aacute;lido."
 });
