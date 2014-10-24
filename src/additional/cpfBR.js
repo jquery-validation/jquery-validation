@@ -35,14 +35,14 @@ $.validator.addMethod("cpfBR", function(value) {
   }
 
   // Step 1 - using first Check Number:
-  for ( i = 1; i <= 9; i++ ){
+  for ( i = 1; i <= 9; i++ ) {
     sum = sum + parseInt(value.substring(i - 1, i)) * (11 - i);
   }
 
   // If first Check Number (CN) is valid, move to Step 2 - using second Check Number:
   if ( checkResult(sum, firstCN) ) {
     sum = 0;
-    for ( i = 1; i <= 10; i++ ){
+    for ( i = 1; i <= 10; i++ ) {
       sum = sum + parseInt(value.substring(i - 1, i)) * (12 - i);
     }
     if ( checkResult(sum, secondCN) ) { // If CPF number is valid
