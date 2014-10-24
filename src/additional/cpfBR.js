@@ -12,7 +12,7 @@ $.validator.addMethod("cpfBR", function(value) {
   checkResult = function(sum, cn) {
     var result = (sum * 10) % 11;
     if ((result === 10) || (result === 11)) {result = 0;}
-    if (result != cn) {
+    if (result !== cn) {
       return false;
     }
     return true;
