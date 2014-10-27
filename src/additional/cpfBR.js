@@ -12,10 +12,7 @@ $.validator.addMethod("cpfBR", function(value) {
   checkResult = function(sum, cn) {
     var result = (sum * 10) % 11;
     if ((result === 10) || (result === 11)) {result = 0;}
-    if (result !== cn) {
-      return false;
-    }
-    return true;
+    return (result === cn);
   };
 
   // Checking for dump data
@@ -45,12 +42,8 @@ $.validator.addMethod("cpfBR", function(value) {
     for ( i = 1; i <= 10; i++ ) {
       sum = sum + parseInt(value.substring(i - 1, i), 10) * (12 - i);
     }
-    if ( checkResult(sum, secondCN) ) { // If CPF number is valid
-      return true;
-    } else { // If second Check Number (CN) number is NOT valid
-      return false;
-    }
-  } else { // If first Check Number (CN) is NOT valid
-    return false;
+    return checkResult(sum, secondCN);
   }
+  return false;
+
 }, "Please specify a valid CPF number");
