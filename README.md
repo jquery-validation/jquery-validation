@@ -63,6 +63,9 @@ For more information on how to setup a rules and customizations, [check the docu
 3. Indicate what browsers the issue can be reproduced in. **Note: IE Compatibilty modes issues will not be addressed.**
 4. What version of the plug-in is the issue reproducible in. Is it reproducible after updating to the latest version.
 
+Documentation issues are also tracked at the [jQuery Validation](https://github.com/jzaefferer/jquery-validation/issues) issue tracker.
+Pull Requests to improve the docs are welcome at the [jQuery Validation docs](https://github.com/jzaefferer/validation-content) repository, though.
+
 ## Contributing
 
 See the [Contributing Guide](CONTRIBUTING.md)
