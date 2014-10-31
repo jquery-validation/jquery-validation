@@ -3,6 +3,14 @@
  * CPF numbers have 11 digits in total: 9 numbers followed by 2 check numbers that are being used for validation.
  */
 $.validator.addMethod("cpfBR", function(value) {
+  // Removing special characters from value
+  value = value.replace(/([~!@#$%^&*()_+=`{}\[\]\-|\\:;'<>,.\/? ])+/g, '');
+
+  // Checking value to have 11 digits only
+  if (value.length !== 11) {
+    return false;
+  }
+
   var sum = 0,
     firstCN, secondCN, checkResult, i;
 
