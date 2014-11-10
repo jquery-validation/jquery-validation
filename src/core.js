@@ -455,10 +455,17 @@ $.extend( $.validator, {
 			this.lastElement = null;
 			this.prepareForm();
 			this.hideErrors();
-			this.elements()
-					.removeClass( this.settings.errorClass )
+			var i, elements = this.elements()
 					.removeData( "previousValue" )
 					.removeAttr( "aria-invalid" );
+
+			if (this.settings.unhighlight) {
+				for (i = 0; elements[i]; i++) {
+					this.settings.unhighlight.call(this, elements[i], this.settings.errorClass, "");
+				}
+			} else {
+				elements.removeClass(this.settings.errorClass);
+			}
 		},
 
 		numberOfInvalids: function() {
