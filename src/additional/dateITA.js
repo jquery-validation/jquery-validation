@@ -36,4 +36,4 @@ $.validator.addMethod("dateITA", function(value, element) {
 		check = false;
 	}
 	return this.optional(element) || check;
-}, "Please enter a correct date");
+}, $.validator.messages.date);
