@@ -719,6 +719,21 @@ test( "focusInvalid()", function() {
 	v.focusInvalid();
 });
 
+test( "focusInvalid() after validate a custom set of inputs", function() {
+	var form = $( "#testForm1" ),
+		validator = form.validate(),
+		// It's important the order of Valid, Invalid, Valid so last active element it's a valid element before focus
+		inputs = $( "#firstname, #lastname, #something" );
+
+	$( "#firstname" ).val( "ok" );
+
+	ok( !inputs.valid(), "just one invalid");
+
+	validator.focusInvalid();
+
+	equal( form[ 0 ].ownerDocument.activeElement, $( "#lastname" )[0], "focused first element" );
+});
+
 test( "findLastActive()", function() {
 	expect( 3 );
 	var v = $( "#testForm1" ).validate(),
