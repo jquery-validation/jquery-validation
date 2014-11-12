@@ -810,10 +810,34 @@ test( "resetForm()", function() {
 	var v = $( "#testForm1" ).validate();
 	v.form();
 	errors( 2 );
+	ok( $( "#firstname" ).hasClass( "error" ) );
 	$( "#firstname" ).val( "hiy" );
 	v.resetForm();
 	errors( 0 );
+	ok( !$( "#firstname" ).hasClass( "error" ) );
 	equal( "", $( "#firstname" ).val(), "form plugin is included, therefor resetForm must also reset inputs, not only errors" );
+});
+
+test( "resetForm() clean styles when custom highlight function is used", function() {
+	var form = $( "#testForm1clean" ),
+		e = $( "#firstnamec" );
+	form.validate({
+		highlight: function( element ) {
+			$( element ).hide();
+		},
+		unhighlight: function( element ) {
+			$( element ).show();
+		},
+		ignore: "",
+		errorClass: "invalid",
+		rules: {
+			firstnamec: "required"
+		}
+	});
+	e.valid();
+	ok( !e.is( ":visible" ) );
+	form.validate().resetForm();
+	ok( e.is( ":visible" ) );
 });
 
 test( "message from title", function() {
