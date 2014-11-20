@@ -49,7 +49,7 @@ test("rules() - external", function() {
 });
 
 test("rules() - external - complete form", function() {
-	expect(1);
+	expect(2);
 
 	var methods = $.extend({}, $.validator.methods),
 		messages = $.extend({}, $.validator.messages),
