@@ -344,3 +344,16 @@ test( "test id/name containing brackets", function( assert ) {
 	field.valid();
 	assert.hasError( field, "required" );
 });
+
+test( "test id/name containing $", function( assert ) {
+	var form = $( "#testForm19" ),
+		field = $( "#testForm19\\$text" );
+
+	form.validate({
+		errorElement: "span"
+	});
+
+	form.valid();
+	field.valid();// with bug present fails with "Syntax error, recognized expression..."
+	assert.hasError( field, "required" );
+});
