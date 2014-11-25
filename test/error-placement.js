@@ -344,3 +344,15 @@ test( "test id/name containing brackets", function( assert ) {
 	field.valid();
 	assert.hasError( field, "required" );
 });
+
+test( "test id/name containing $", function( assert ) {
+	var form = $( "#testForm19" ),
+		field = $( "#testForm19\\$text" );
+
+	form.validate({
+		errorElement: "span"
+	});
+
+	field.valid();
+	assert.hasError( field, "required" );
+});
