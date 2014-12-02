@@ -27,7 +27,7 @@
 	},
 	"dependencies": {},
 	"devDependencies": {
-		"commitplease": "1.11.0",
+		"commitplease": "2.0.0",
 		"grunt": "0.4.4",
 		"grunt-contrib-compress": "0.7.0",
 		"grunt-contrib-concat": "0.3.0",
