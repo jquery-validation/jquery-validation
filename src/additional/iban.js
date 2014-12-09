@@ -16,10 +16,6 @@ $.validator.addMethod("iban", function(value, element) {
 		cOperator = "",
 		countrycode, ibancheck, charAt, cChar, bbanpattern, bbancountrypatterns, ibanregexp, i, p;
 
-	if (!(/^([a-zA-Z0-9]{4} ){2,8}[a-zA-Z0-9]{1,4}|[a-zA-Z0-9]{12,34}$/.test(iban))) {
-		return false;
-	}
-
 	// check the country code and find the country specific format
 	countrycode = iban.substring(0, 2);
 	bbancountrypatterns = {
