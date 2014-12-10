@@ -303,6 +303,7 @@ $.extend( $.validator, {
 		number: "Please enter a valid number.",
 		digits: "Please enter only digits.",
 		creditcard: "Please enter a valid credit card number.",
+		regex: "Input must match {0}.",
 		equalTo: "Please enter the same value again.",
 		maxlength: $.validator.format( "Please enter no more than {0} characters." ),
 		minlength: $.validator.format( "Please enter at least {0} characters." ),
@@ -922,7 +923,8 @@ $.extend( $.validator, {
 		dateISO: { dateISO: true },
 		number: { number: true },
 		digits: { digits: true },
-		creditcard: { creditcard: true }
+		creditcard: { creditcard: true },
+		regex: { regex: true }
 	},
 
 	addClassRules: function( className, rules ) {
@@ -1191,6 +1193,23 @@ $.extend( $.validator, {
 			}
 
 			return ( nCheck % 10 ) === 0;
+		},
+		
+		regex: function (value, element, param) {
+			// contributed by Jordi Scharloo: https://github.com/JScharloo
+
+		    if (this.optional(element)) {
+		        return "dependency-mismatch";
+		    }
+
+		    var regex = new RegExp(param.pattern);
+
+		    // run a regex test against given value
+		    if (!regex.test(value)) {
+		        return false;
+		    }
+
+		    return this.optional(element);
 		},
 
 		// http://jqueryvalidation.org/minlength-method/
