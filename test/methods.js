@@ -429,6 +429,40 @@ asyncTest("remote, customized ajax options", function() {
 	$("#userForm").valid();
 });
 
+asyncTest("remote, customized response Transformer", function() {
+	expect(2);
+	$("#userForm").validate({
+		rules: {
+			username: {
+				required: true,
+				remote: {
+					url: "users.php",
+					type: "POST",
+					beforeSend: function(request, settings) {
+						deepEqual(settings.type, "POST");
+						deepEqual(settings.data, "username=asdf&email=email.com");
+					},
+					data: {
+						email: function() {
+							return "email.com";
+						}
+					},
+					complete: function() {
+						start();
+					},
+					responseTransformer: function(jqXHR) {
+						if (jqXHR.status === 200) {
+							return false;
+						}
+					}
+				}
+			}
+		}
+	});
+	$("#username").val("asdf");
+	!$("#userForm").valid();
+});
+
 asyncTest("remote extensions", function() {
 	expect(5);
 	var e = $("#username"),
