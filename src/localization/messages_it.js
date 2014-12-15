@@ -22,5 +22,6 @@ $.extend($.validator.messages, {
 	min: $.validator.format("Inserisci un valore maggiore o uguale a {0}"),
 	nifES: "Inserisci un NIF valido",
 	nieES: "Inserisci un NIE valido",
-	cifES: "Inserisci un CIF valido"
+	cifES: "Inserisci un CIF valido",
+	currency: "Inserisci una valuta valida"
 });
