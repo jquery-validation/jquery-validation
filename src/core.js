@@ -89,7 +89,7 @@ $.extend($.fn, {
 		return validator;
 	},
 	// http://jqueryvalidation.org/valid/
-	valid: function() {
+	valid: function( showErrors ) {
 		var valid, validator;
 
 		if ( $( this[ 0 ] ).is( "form" ) ) {
@@ -98,7 +98,7 @@ $.extend($.fn, {
 			valid = true;
 			validator = $( this[ 0 ].form ).validate();
 			this.each( function() {
-				valid = validator.element( this ) && valid;
+				valid = validator.element( this, showErrors ) && valid;
 			});
 		}
 		return valid;
@@ -391,7 +391,7 @@ $.extend( $.validator, {
 		},
 
 		// http://jqueryvalidation.org/Validator.element/
-		element: function( element ) {
+		element: function( element, showErrors ) {
 			var cleanElement = this.clean( element ),
 				checkElement = this.validationTargetFor( cleanElement ),
 				result = true;
@@ -418,7 +418,9 @@ $.extend( $.validator, {
 				// Hide error containers on last error
 				this.toHide = this.toHide.add( this.containers );
 			}
-			this.showErrors();
+			if ( showErrors !== false ) {
+				this.showErrors();
+			}
 			return result;
 		},
 
