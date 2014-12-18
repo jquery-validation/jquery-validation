@@ -7,7 +7,6 @@
 		"validation",
 		"validate"
 	],
-	"version": "1.12.0pre",
 	"author": {
 		"name": "Jörn Zaefferer",
 		"email": "joern.zaefferer@gmail.com",
@@ -21,8 +20,8 @@
 	],
 	"bugs": "https://github.com/jzaefferer/jquery-validation/issues",
 	"homepage": "https://github.com/jzaefferer/jquery-validation",
-	"docs": "http://docs.jquery.com/Plugins/Validation",
-	"download": "http://bassistance.de/jquery-plugins/jquery-plugin-validation/",
+	"docs": "http://jqueryvalidation.org/documentation/",
+	"download": "https://github.com/jzaefferer/jquery-validation/releases",
 	"dependencies": {
 		"jquery": ">=1.4.4"
 	}

@@ -28,6 +28,11 @@ If you've wrote custom methods that you'd like to contribute to additional-metho
 
 To run unit tests, you should have a local webserver installed and pointing at your workspace. Then open `http://localhost/jquery-validation/test` to run the unit tests. Start with one browser while developing the fix, then run against others before committing. Usually latest Chrome, Firefox, Safari and Opera and a few IEs.
 
+## Documentation
+
+Please report documentation issues at the [jQuery Validation](https://github.com/jzaefferer/jquery-validation/issues) issue tracker.
+In case your pull request implements or changes public API it would be a plus you would provide a pull request against the [jQuery Validation docs](https://github.com/jzaefferer/validation-content) repository.
+
 ## Linting
 
 To run JSHint and other tools, use `grunt`. 

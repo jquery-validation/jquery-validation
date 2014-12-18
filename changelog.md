@@ -1,3 +1,104 @@
+1.13.1 / 2014-10-14
+==================
+
+## Core
+  * Allow 0 as value for autoCreateRanges
+  * Apply ignore setting to all validationTargetFor elements
+  * Don't trim value in min/max/rangelength methods
+  * Escape id/name before using it as a selector in errorsFor
+  * Explicit default for focusCleanup option
+  * Fix incorrect regexp for describedby matcher
+  * Ignore readonly as well as disabled fields
+  * Improve id escaping, store escaped id in describedby
+  * Use return value of submitHandler to allow or prevent form submit
+
+## Additionals
+  * Add postalcodeBR method
+  * Fix pattern method when parameter is a string
+
+
+1.13.0 / 2014-07-01
+==================
+
+## All
+* Add plugin UMD wrapper
+
+## Core
+* Respect non-error aria-describedby and empty hidden errors
+* Improve dateISO RegExp
+* Added radio/checkbox to delegate click-event
+* Use aria-describedby for non-label elements
+* Register focusin, focusout and keyup also on radio/checkbox
+* Fix normalization for rangelength attribute value
+* Update elementValue method to deal with type="number" fields
+* Use charAt instead of array notation on strings, to support IE8(?)
+
+## Localization
+* Fix sk translation of rangelength method
+* Add Finnish methods
+* Fixed GL number validation message
+* Fixed ES number method validation message
+* Added galician (GL)
+* Fixed French messages for min and max methods
+
+## Additionals
+* Add statesUS method
+* Fix dateITA method to deal with DST bug
+* Add persian date method
+* Add postalCodeCA method
+* Add postalcodeIT method
+
+1.12.0 / 2014-04-01
+==================
+
+* Add ARIA testing ([3d5658e](https://github.com/jzaefferer/jquery-validation/commit/3d5658e9e4825fab27198c256beed86f0bd12577))
+* Add es-AR localization messages. ([7b30beb](https://github.com/jzaefferer/jquery-validation/commit/7b30beb8ebd218c38a55d26a63d529e16035c7a2))
+* Add missing dots to 'es' and 'es_AR' messages. ([a2a653c](https://github.com/jzaefferer/jquery-validation/commit/a2a653cb68926ca034b4b09d742d275db934d040))
+* Added Indonesian (ID) localization ([1d348bd](https://github.com/jzaefferer/jquery-validation/commit/1d348bdcb65807c71da8d0bfc13a97663631cd3a))
+* Added NIF, NIE and CIF Spanish documents numbers validation ([#830](https://github.com/jzaefferer/jquery-validation/issues/830), [317c20f](https://github.com/jzaefferer/jquery-validation/commit/317c20fa9bb772770bb9b70d46c7081d7cfc6545))
+* Added the current form to the context of the remote ajax request ([0a18ae6](https://github.com/jzaefferer/jquery-validation/commit/0a18ae65b9b6d877e3d15650a5c2617a9d2b11d5))
+* Additionals: Update IBAN method, trim trailing whitespaces ([#970](https://github.com/jzaefferer/jquery-validation/issues/970), [347b04a](https://github.com/jzaefferer/jquery-validation/commit/347b04a7d4e798227405246a5de3fc57451d52e1))
+* BIC method: Improve RegEx, {1} is always redundant. Closes gh-744 ([5cad6b4](https://github.com/jzaefferer/jquery-validation/commit/5cad6b493575e8a9a82470d17e0900c881130873))
+* Bower: Add Bower.json for package registration ([e86ccb0](https://github.com/jzaefferer/jquery-validation/commit/e86ccb06e301613172d472cf15dd4011ff71b398))
+* Changes dollar references to 'jQuery', for compability with jQuery.noConflict. Closes gh-754 ([2049afe](https://github.com/jzaefferer/jquery-validation/commit/2049afe46c1be7b3b89b1d9f0690f5bebf4fbf68))
+* Core: Add "method" field to error list entry ([89a15c7](https://github.com/jzaefferer/jquery-validation/commit/89a15c7a4b17fa2caaf4ff817f09b04c094c3884))
+* Core: Added support for generic messages via data-msg attribute ([5bebaa5](https://github.com/jzaefferer/jquery-validation/commit/5bebaa5c55c73f457c0e0181ec4e3b0c409e2a9d))
+* Core: Allow attributes to have a value of zero (eg min='0') ([#854](https://github.com/jzaefferer/jquery-validation/issues/854), [9dc0d1d](https://github.com/jzaefferer/jquery-validation/commit/9dc0d1dd946b2c6178991fb16df0223c76162579))
+* Core: Disable deprecated $.format ([#755](https://github.com/jzaefferer/jquery-validation/issues/755), [bf3b350](https://github.com/jzaefferer/jquery-validation/commit/bf3b3509140ea8ab5d83d3ec58fd9f1d7822efc5))
+* Core: Fix support for multiple error classes ([c1f0baf](https://github.com/jzaefferer/jquery-validation/commit/c1f0baf36c21ca175bbc05fb9345e5b44b094821))
+* Core: Ignore events on ignored elements ([#700](https://github.com/jzaefferer/jquery-validation/issues/700), [a864211](https://github.com/jzaefferer/jquery-validation/commit/a86421131ea69786ee9e0d23a68a54a7658ccdbf))
+* Core: Improve elementValue method ([6c041ed](https://github.com/jzaefferer/jquery-validation/commit/6c041edd21af1425d12d06cdd1e6e32a78263e82))
+* Core: Make element() handle ignored elements properly. ([3f464a8](https://github.com/jzaefferer/jquery-validation/commit/3f464a8da49dbb0e4881ada04165668e4a63cecb))
+* Core: Switch dataRules parsing to W3C HTML5 spec style ([460fd22](https://github.com/jzaefferer/jquery-validation/commit/460fd22b6c84a74c825ce1fa860c0a9da20b56bb))
+* Core: Trigger success on optional but have other successful validators ([#851](https://github.com/jzaefferer/jquery-validation/issues/851), [f93e1de](https://github.com/jzaefferer/jquery-validation/commit/f93e1deb48ec8b3a8a54e946a37db2de42d3aa2a))
+* Core: Use plain element instead of un-wrapping the element again ([03cd4c9](https://github.com/jzaefferer/jquery-validation/commit/03cd4c93069674db5415a0bf174a5870da47e5d2))
+* Core: make sure remote is executed last ([#711](https://github.com/jzaefferer/jquery-validation/issues/711), [ad91b6f](https://github.com/jzaefferer/jquery-validation/commit/ad91b6f388b7fdfb03b74e78554cbab9fd8fca6f))
+* Demo: Use correct option in multipart demo. ([#1025](https://github.com/jzaefferer/jquery-validation/issues/1025), [070edc7](https://github.com/jzaefferer/jquery-validation/commit/070edc7be4de564cb74cfa9ee4e3f40b6b70b76f))
+* Fix $/jQuery usage in additional methods. Fixes #839 ([#839](https://github.com/jzaefferer/jquery-validation/issues/839), [59bc899](https://github.com/jzaefferer/jquery-validation/commit/59bc899e4586255a4251903712e813c21d25b3e1))
+* Improve Chinese translations ([1a0bfe3](https://github.com/jzaefferer/jquery-validation/commit/1a0bfe32b16f8912ddb57388882aa880fab04ffe))
+* Initial ARIA-Required implementation ([bf3cfb2](https://github.com/jzaefferer/jquery-validation/commit/bf3cfb234ede2891d3f7e19df02894797dd7ba5e))
+* Localization: change accept values to extension. Fixes #771, closes gh-793. ([#771](https://github.com/jzaefferer/jquery-validation/issues/771), [12edec6](https://github.com/jzaefferer/jquery-validation/commit/12edec66eb30dc7e86756222d455d49b34016f65))
+* Messages: Add icelandic localization ([dc88575](https://github.com/jzaefferer/jquery-validation/commit/dc885753c8872044b0eaa1713cecd94c19d4c73d))
+* Messages: Add missing dots to 'bg', 'fr' and 'sr' messages. ([adbc636](https://github.com/jzaefferer/jquery-validation/commit/adbc6361c377bf6b74c35df9782479b1115fbad7))
+* Messages: Create messages_sr_lat.js ([f2f9007](https://github.com/jzaefferer/jquery-validation/commit/f2f90076518014d98495c2a9afb9a35d45d184e6))
+* Messages: Create messages_tj.js ([de830b3](https://github.com/jzaefferer/jquery-validation/commit/de830b3fd8689a7384656c17565ee92c2878d8a5))
+* Messages: Fix sr_lat translation, add missing space ([880ba1c](https://github.com/jzaefferer/jquery-validation/commit/880ba1ca545903a41d8c5332fc4038a7e9a580bd))
+* Messages: Update messages_sr.js, fix missing space ([10313f4](https://github.com/jzaefferer/jquery-validation/commit/10313f418c18ea75f385248468c2d3600f136cfb))
+* Methods: Add additional method for currency ([1a981b4](https://github.com/jzaefferer/jquery-validation/commit/1a981b440346620964c87ebdd0fa03246348390e))
+* Methods: Adding Smart Quotes to stripHTML's punctuation removal ([aa0d624](https://github.com/jzaefferer/jquery-validation/commit/aa0d6241c3ea04663edc1e45ed6e6134630bdd2f))
+* Methods: Fix dateITA method, avoiding summertime errors ([279b932](https://github.com/jzaefferer/jquery-validation/commit/279b932c1267b7238e6652880b7846ba3bbd2084))
+* Methods: Localized methods for chilean culture (es-CL) ([cf36b93](https://github.com/jzaefferer/jquery-validation/commit/cf36b933499e435196d951401221d533a4811810))
+* Methods: Update email to use HTML5 regex, remove email2 method ([#828](https://github.com/jzaefferer/jquery-validation/issues/828), [dd162ae](https://github.com/jzaefferer/jquery-validation/commit/dd162ae360639f73edd2dcf7a256710b2f5a4e64))
+* Pattern method: Remove delimiters, since HTML5 implementations don't include those either. ([37992c1](https://github.com/jzaefferer/jquery-validation/commit/37992c1c9e2e0be8b315ccccc2acb74863439d3e))
+* Restricting credit card validator to include length check. Closes gh-772 ([f5f47c5](https://github.com/jzaefferer/jquery-validation/commit/f5f47c5c661da5b0c0c6d59d169e82230928a804))
+* Update messages_ko.js - closes gh-715 ([5da3085](https://github.com/jzaefferer/jquery-validation/commit/5da3085ff02e0e6ecc955a8bfc3bb9a8d220581b))
+* Update messages_pt_BR.js. Closes gh-782 ([4bf813b](https://github.com/jzaefferer/jquery-validation/commit/4bf813b751ce34fac3c04eaa2e80f75da3461124))
+* Update phonesUK and mobileUK to accept new prefixes. Closes gh-750 ([d447b41](https://github.com/jzaefferer/jquery-validation/commit/d447b41b830dee984be21d8281ec7b87a852001d))
+* Verify nine-digit zip codes. Closes gh-726 ([165005d](https://github.com/jzaefferer/jquery-validation/commit/165005d4b5780e22d13d13189d107940c622a76f))
+* phoneUS: Add N11 exclusions. Closes gh-861 ([519bbc6](https://github.com/jzaefferer/jquery-validation/commit/519bbc656bcb26e8aae5166d7b2e000014e0d12a))
+* resetForm should clear any aria-invalid values ([4f8a631](https://github.com/jzaefferer/jquery-validation/commit/4f8a631cbe84f496ec66260ada52db2aa0bb3733))
+* valid(): Check all elements. Fixes #791 - valid() validates only the first (invalid) element ([#791](https://github.com/jzaefferer/jquery-validation/issues/791), [6f26803](https://github.com/jzaefferer/jquery-validation/commit/6f268031afaf4e155424ee74dd11f6c47fbb8553))
+
 1.11.1 / 2013-03-22
 ==================
 

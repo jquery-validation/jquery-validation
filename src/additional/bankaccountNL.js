@@ -4,7 +4,7 @@
  * We accept the notation with spaces, as that is common.
  * acceptable: 123456789 or 12 34 56 789
  */
-jQuery.validator.addMethod("bankaccountNL", function(value, element) {
+$.validator.addMethod("bankaccountNL", function(value, element) {
 	if (this.optional(element)) {
 		return true;
 	}
@@ -12,12 +12,13 @@ jQuery.validator.addMethod("bankaccountNL", function(value, element) {
 		return false;
 	}
 	// now '11 check'
-	var account = value.replace(/ /g,''); // remove spaces
-	var sum = 0;
-	var len = account.length;
-	for (var pos=0; pos<len; pos++) {
-		var factor = len - pos;
-		var digit = account.substring(pos, pos+1);
+	var account = value.replace(/ /g, ""), // remove spaces
+		sum = 0,
+		len = account.length,
+		pos, factor, digit;
+	for ( pos = 0; pos < len; pos++ ) {
+		factor = len - pos;
+		digit = account.substring(pos, pos + 1);
 		sum = sum + factor * digit;
 	}
 	return sum % 11 === 0;

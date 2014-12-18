@@ -1,0 +1,5 @@
+{
+	"preset": "jquery",
+	"maximumLineLength": null,
+	"requireCamelCaseOrUpperCaseIdentifiers": null
+}

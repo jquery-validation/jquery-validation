@@ -1,0 +1,19 @@
+{
+	"boss": true,
+	"curly": true,
+	"eqeqeq": true,
+	"eqnull": true,
+	"expr": true,
+	"immed": true,
+	"noarg": true,
+	"undef": true,
+	"unused": true,
+	"es3": true,
+
+	"jquery": true,
+	"browser": true,
+
+	"globals": {
+		"console": true
+	}
+}

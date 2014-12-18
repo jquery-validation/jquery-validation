@@ -1,2 +1,5 @@
 # Auto detect text files and perform LF normalization
 * text=auto
+
+# JS files must stay in LF for JSCS/jQuery Styleguide
+*.js eol=lf

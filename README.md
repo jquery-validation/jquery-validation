@@ -2,6 +2,7 @@
 ================================
 
 [![Build Status](https://secure.travis-ci.org/jzaefferer/jquery-validation.png)](http://travis-ci.org/jzaefferer/jquery-validation)
+[![devDependency Status](https://david-dm.org/jzaefferer/jquery-validation/dev-status.png?theme=shields.io)](https://david-dm.org/jzaefferer/jquery-validation#info=devDependencies)
 
 The jQuery Validation Plugin provides drop-in validation for your existing forms, while making all kinds of customizations to fit your application really easy.
 
@@ -37,20 +38,33 @@ Include jQuery and the plugin on a page. Then select a form to validate and call
 	<input required>
 </form>
 <script src="jquery.js"></script>
-<script src="jquery.validation.js"></script>
+<script src="jquery.validate.js"></script>
 <script>
 $("form").validate();
 </script>
+```
+
+Alternatively include jQuery and the plugin via requirejs in your module.
+
+```js
+define(["jquery", "jquery.validate"], function( $ ) {
+	$("form").validate();
+});
 ```
 
 For more information on how to setup a rules and customizations, [check the documentation](http://jqueryvalidation.org/documentation/).
 
 ## Reporting an Issue
 
+**IMPORTANT NOTE ABOUT EMAIL VALIDATION**. As of version 1.12.0 this plugin is using the same regular expression that the [HTML5 specification suggests for browsers to use](https://html.spec.whatwg.org/multipage/forms.html#valid-e-mail-address). We will follow their lead and use the same check. If you think the specification is wrong, please report the issue to them.
+
 1. Make sure the problem you're addressing is reproducible.
 2. Use http://jsbin.com or http://jsfiddle.net to provide a test page.
 3. Indicate what browsers the issue can be reproduced in. **Note: IE Compatibilty modes issues will not be addressed.**
 4. What version of the plug-in is the issue reproducible in. Is it reproducible after updating to the latest version.
+
+Documentation issues are also tracked at the [jQuery Validation](https://github.com/jzaefferer/jquery-validation/issues) issue tracker.
+Pull Requests to improve the docs are welcome at the [jQuery Validation docs](https://github.com/jzaefferer/validation-content) repository, though.
 
 ## Contributing
 
