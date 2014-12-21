@@ -1,0 +1,73 @@
+0 info it worked if it ends with ok
+1 verbose cli [ 'C:\\Program Files\\nodejs\\\\node.exe',
+1 verbose cli   'C:\\Program Files\\nodejs\\node_modules\\npm\\bin\\npm-cli.js',
+1 verbose cli   'install' ]
+2 info using npm@1.4.28
+3 info using node@v0.10.34
+4 verbose node symlink C:\Program Files\nodejs\\node.exe
+5 verbose readDependencies using package.json deps
+6 verbose install where, deps [ 'C:\\Users\\Wozzo\\Documents\\JQuery\\jquery-validation',
+6 verbose install   [ 'commitplease',
+6 verbose install     'grunt',
+6 verbose install     'grunt-contrib-compress',
+6 verbose install     'grunt-contrib-concat',
+6 verbose install     'grunt-contrib-copy',
+6 verbose install     'grunt-contrib-jshint',
+6 verbose install     'grunt-contrib-qunit',
+6 verbose install     'grunt-contrib-uglify',
+6 verbose install     'grunt-contrib-watch',
+6 verbose install     'grunt-jscs',
+6 verbose install     'grunt-text-replace' ] ]
+7 info preinstall jquery-validation@1.13.2-pre
+8 verbose readDependencies using package.json deps
+9 verbose already installed skipping commitplease@2.0.0 C:\Users\Wozzo\Documents\JQuery\jquery-validation
+10 verbose already installed skipping grunt@0.4.4 C:\Users\Wozzo\Documents\JQuery\jquery-validation
+11 verbose already installed skipping grunt-contrib-compress@0.7.0 C:\Users\Wozzo\Documents\JQuery\jquery-validation
+12 verbose already installed skipping grunt-contrib-concat@0.3.0 C:\Users\Wozzo\Documents\JQuery\jquery-validation
+13 verbose already installed skipping grunt-contrib-copy@0.5.0 C:\Users\Wozzo\Documents\JQuery\jquery-validation
+14 verbose already installed skipping grunt-contrib-jshint@^0.10.0 C:\Users\Wozzo\Documents\JQuery\jquery-validation
+15 verbose already installed skipping grunt-contrib-qunit@0.4.0 C:\Users\Wozzo\Documents\JQuery\jquery-validation
+16 verbose already installed skipping grunt-contrib-uglify@0.4.0 C:\Users\Wozzo\Documents\JQuery\jquery-validation
+17 verbose already installed skipping grunt-contrib-watch@0.6.0 C:\Users\Wozzo\Documents\JQuery\jquery-validation
+18 verbose already installed skipping grunt-jscs@1.0.0 C:\Users\Wozzo\Documents\JQuery\jquery-validation
+19 verbose already installed skipping grunt-text-replace@0.3.11 C:\Users\Wozzo\Documents\JQuery\jquery-validation
+20 silly resolved []
+21 info build C:\Users\Wozzo\Documents\JQuery\jquery-validation
+22 verbose linkStuff [ false, false, false, 'C:\\Users\\Wozzo\\Documents\\JQuery' ]
+23 info linkStuff jquery-validation@1.13.2-pre
+24 verbose linkBins jquery-validation@1.13.2-pre
+25 verbose linkMans jquery-validation@1.13.2-pre
+26 verbose rebuildBundles jquery-validation@1.13.2-pre
+27 verbose rebuildBundles [ 'commitplease',
+27 verbose rebuildBundles   'grunt',
+27 verbose rebuildBundles   'grunt-contrib-compress',
+27 verbose rebuildBundles   'grunt-contrib-concat',
+27 verbose rebuildBundles   'grunt-contrib-copy',
+27 verbose rebuildBundles   'grunt-contrib-jshint',
+27 verbose rebuildBundles   'grunt-contrib-qunit',
+27 verbose rebuildBundles   'grunt-contrib-uglify',
+27 verbose rebuildBundles   'grunt-contrib-watch',
+27 verbose rebuildBundles   'grunt-jscs',
+27 verbose rebuildBundles   'grunt-text-replace' ]
+28 info install jquery-validation@1.13.2-pre
+29 info postinstall jquery-validation@1.13.2-pre
+30 info prepublish jquery-validation@1.13.2-pre
+31 verbose unsafe-perm in lifecycle true
+32 info jquery-validation@1.13.2-pre Failed to exec prepublish script
+33 error jquery-validation@1.13.2-pre prepublish: `grunt`
+33 error Exit status 6
+34 error Failed at the jquery-validation@1.13.2-pre prepublish script.
+34 error This is most likely a problem with the jquery-validation package,
+34 error not with npm itself.
+34 error Tell the author that this fails on your system:
+34 error     grunt
+34 error You can get their info via:
+34 error     npm owner ls jquery-validation
+34 error There is likely additional logging output above.
+35 error System Windows_NT 6.1.7601
+36 error command "C:\\Program Files\\nodejs\\\\node.exe" "C:\\Program Files\\nodejs\\node_modules\\npm\\bin\\npm-cli.js" "install"
+37 error cwd C:\Users\Wozzo\Documents\JQuery\jquery-validation
+38 error node -v v0.10.34
+39 error npm -v 1.4.28
+40 error code ELIFECYCLE
+41 verbose exit [ 1, true ]
