@@ -93,6 +93,7 @@ test("number", function() {
 	ok( method( "-123,000" ), "Valid number" );
 	ok( method( "123,000.00" ), "Valid number" );
 	ok( method( "-123,000.00" ), "Valid number" );
+	ok(!method( "-" ), "Invalid number" );
 	ok(!method( "123.000,00" ), "Invalid number" );
 	ok(!method( "123.0.0,0" ), "Invalid number" );
 	ok(!method( "x123" ), "Invalid number" );
