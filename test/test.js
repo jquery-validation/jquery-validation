@@ -1771,3 +1771,25 @@ test( "Validation triggered on radio and checkbox via click", function() {
 	// test if there is no error anymore
 	ok( form.find( "input.error" ).length === 0, "Form valid" );
 });
+
+test("- symbol validated as a number", function() {
+    var form = $("#validatenumbers");
+
+    // Initialise the validation
+    form.validate({
+        rules: {
+            number: {
+                number: true,
+                required: true
+            },
+            messages: {
+                number: "Not a number"
+            }
+        }
+    });
+
+    // - sign on it's own
+    $("#validatenumber").val("-");
+    $("#validatenumber").simulate("blur");
+    ok(!form.valid(), "- sign is not a number");
+});
