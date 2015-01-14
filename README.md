@@ -54,22 +54,12 @@ define(["jquery", "jquery.validate"], function( $ ) {
 
 For more information on how to setup a rules and customizations, [check the documentation](http://jqueryvalidation.org/documentation/).
 
-## Reporting an Issue
+## Reporting issues and contributing code
 
-**IMPORTANT NOTE ABOUT EMAIL VALIDATION**. As of version 1.12.0 this plugin is using the same regular expression that the [HTML5 specification suggests for browsers to use](https://html.spec.whatwg.org/multipage/forms.html#valid-e-mail-address). We will follow their lead and use the same check. If you think the specification is wrong, please report the issue to them.
+See the [Contributing Guidelines](CONTRIBUTING.md) for details.
 
-1. Make sure the problem you're addressing is reproducible.
-2. Use http://jsbin.com or http://jsfiddle.net to provide a test page.
-3. Indicate what browsers the issue can be reproduced in. **Note: IE Compatibilty modes issues will not be addressed.**
-4. What version of the plug-in is the issue reproducible in. Is it reproducible after updating to the latest version.
-
-Documentation issues are also tracked at the [jQuery Validation](https://github.com/jzaefferer/jquery-validation/issues) issue tracker.
-Pull Requests to improve the docs are welcome at the [jQuery Validation docs](https://github.com/jzaefferer/validation-content) repository, though.
-
-## Contributing
-
-See the [Contributing Guide](CONTRIBUTING.md)
+**IMPORTANT NOTE ABOUT EMAIL VALIDATION**. As of version 1.12.0 this plugin is using the same regular expression that the [HTML5 specification suggests for browsers to use](https://html.spec.whatwg.org/multipage/forms.html#valid-e-mail-address). We will follow their lead and use the same check. If you think the specification is wrong, please report the issue to them. If you have different requirements, consider [using a custom method](http://jqueryvalidation.org/jQuery.validator.addMethod/).
 
 ## License
-Copyright (c) 2013 Jörn Zaefferer
+Copyright &copy; Jörn Zaefferer<br>
 Licensed under the MIT license.

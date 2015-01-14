@@ -1,4 +1,18 @@
-# Contributing to jQuery Validation Plugin
+# Contributing to the jQuery Validation Plugin
+
+## Reporting an Issue
+
+1. Make sure the problem you're addressing is reproducible.
+2. Use http://jsbin.com or http://jsfiddle.net to provide a test page.
+3. Indicate what browsers the issue can be reproduced in. **Note: IE Compatibilty mode issues will not be addressed. Make sure you test in a real browser!**
+4. What version of the plug-in is the issue reproducible in. Is it reproducible after updating to the latest version.
+
+Documentation issues are also tracked at the [jQuery Validation](https://github.com/jzaefferer/jquery-validation/issues) issue tracker.
+Pull Requests to improve the docs are welcome at the [jQuery Validation docs](https://github.com/jzaefferer/validation-content) repository, though.
+
+**IMPORTANT NOTE ABOUT EMAIL VALIDATION**. As of version 1.12.0 this plugin is using the same regular expression that the [HTML5 specification suggests for browsers to use](https://html.spec.whatwg.org/multipage/forms.html#valid-e-mail-address). We will follow their lead and use the same check. If you think the specification is wrong, please report the issue to them. If you have different requirements, consider [using a custom method](http://jqueryvalidation.org/jQuery.validator.addMethod/).
+
+## Contributing code
 
 Thanks for contributing! Here's a few guidelines to help your contribution get landed.
 
@@ -6,7 +20,7 @@ Thanks for contributing! Here's a few guidelines to help your contribution get l
 2. Follow the [jQuery style guide](http://contribute.jquery.com/style-guides/js)
 3. Add or update unit tests along with your patch. Run the unit tests in at least one browser (see below).
 4. Run `grunt` (see below) to check for linting and a few other issues.
-5. Describe the change in your commit message and reference the ticket, like this: "Fixed delegate bug for dynamic-totals demo. Fixes #51". If you're adding a new localization file, use something like this: "Added croatian (HR) localization"
+5. Describe the change in your commit message and reference the ticket, like this: "Demos: Fixed delegate bug for dynamic-totals demo. Fixes #51". If you're adding a new localization file, use something like this: "Localization: Added croatian (HR) localization"
 
 ## Build setup
 
@@ -20,8 +34,8 @@ Thanks for contributing! Here's a few guidelines to help your contribution get l
 If you've wrote custom methods that you'd like to contribute to additional-methods.js:
 
 1. Create a branch
-2. Add the method as a new file in src/additional
-3. (Optional) Add translations to src/localization
+2. Add the method as a new file in `src/additional`
+3. (Optional) Add translations to `src/localization`
 4. Send a pull request to the master branch.
 
 ## Unit Tests
@@ -35,4 +49,4 @@ In case your pull request implements or changes public API it would be a plus yo
 
 ## Linting
 
-To run JSHint and other tools, use `grunt`. 
+To run JSHint and other tools, use `grunt`.
