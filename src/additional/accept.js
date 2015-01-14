@@ -2,9 +2,9 @@
 $.validator.addMethod( "accept", function( value, element, param ) {
 
 	// Split mime on commas in case we have multiple types we can accept
-	var typeParam = typeof param === "string" ? param.replace( /\s/g, "" ).replace( /,/g, "|" ) : "image/*",
+	var typeParam = typeof param === "string" ? param.replace( /\s/g, "" ) : "image/*",
 	optionalValue = this.optional( element ),
-	i, file;
+	i, file, regex;
 
 	// Element is optional
 	if ( optionalValue ) {
@@ -13,16 +13,19 @@ $.validator.addMethod( "accept", function( value, element, param ) {
 
 	if ( $( element ).attr( "type" ) === "file" ) {
 
-		// If we are using a wildcard, make it regex friendly
-		typeParam = typeParam.replace( /\*/g, ".*" );
+		// Escape string to be used in the regex
+		// see: http://stackoverflow.com/questions/3446170/escape-string-for-use-in-javascript-regex
+		// Escape also "/*" as "/.*" as a wildcard
+		typeParam = typeParam.replace( /[\-\[\]\/\{\}\(\)\+\?\.\\\^\$\|]/g, "\\$&" ).replace( /,/g, "|" ).replace( "\/*", "/.*" );
 
 		// Check if the element has a FileList before checking each file
 		if ( element.files && element.files.length ) {
+			regex = new RegExp( ".?(" + typeParam + ")$", "i" );
 			for ( i = 0; i < element.files.length; i++ ) {
 				file = element.files[ i ];
 
 				// Grab the mimetype from the loaded file, verify it matches
-				if ( !file.type.match( new RegExp( "\\.?(" + typeParam + ")$", "i" ) ) ) {
+				if ( !file.type.match( regex ) ) {
 					return false;
 				}
 			}
