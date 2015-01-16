@@ -1216,12 +1216,12 @@ $.extend( $.validator, {
 
 		// http://jqueryvalidation.org/min-method/
 		min: function( value, element, param ) {
-			return this.optional( element ) || value >= param;
+			return this.optional( element ) || parseFloat( value ) >= parseFloat( param );
 		},
 
 		// http://jqueryvalidation.org/max-method/
 		max: function( value, element, param ) {
-			return this.optional( element ) || value <= param;
+			return this.optional( element ) || parseFloat( value ) <= parseFloat( param );
 		},
 
 		// http://jqueryvalidation.org/range-method/
