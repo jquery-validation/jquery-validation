@@ -106,6 +106,18 @@ $.extend($.fn, {
 		}
 		return valid;
 	},
+	validRemote: function (callback) {
+	    var isValid = this.valid();
+	    var validator = $(this[0]).is("form") ? this.validate() : $(this[0].form).validate();
+
+	    if (Object.keys(validator.pending).length) {
+	        $(document).one("ajaxStop", function () {
+	            callback(Object.keys(validator.invalid).length == 0);
+	        });
+	    } else {
+	        callback(isValid)
+	    }
+	},
 	// attributes: space separated list of attributes to retrieve and remove
 	removeAttrs: function( attributes ) {
 		var result = {},
