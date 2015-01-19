@@ -89,22 +89,34 @@ $.extend($.fn, {
 		return validator;
 	},
 	// http://jqueryvalidation.org/valid/
-	valid: function() {
-		var valid, validator, errorList;
+	valid: function( callback ) {
+	    var valid, validator, interval;
 
-		if ( $( this[ 0 ] ).is( "form" ) ) {
-			valid = this.validate().form();
-		} else {
-			errorList = [];
-			valid = true;
-			validator = $( this[ 0 ].form ).validate();
-			this.each( function() {
-				valid = validator.element( this ) && valid;
-				errorList = errorList.concat( validator.errorList );
-			});
-			validator.errorList = errorList;
-		}
-		return valid;
+	    if ($(this[0]).is("form")) {
+	        validator = this.validate();
+	        valid = validator.form();
+	    } else {
+	        valid = true;
+	        validator = $(this[0].form).validate();
+	        this.each(function() {
+	            valid = validator.element(this) && valid;
+	        });
+	    }
+
+	    if (callback === undefined) {
+	        return valid;
+	    }
+
+	    if (Object.keys(validator.pending).length === 0) {
+	        return callback(valid);
+	    }
+
+	    interval = setInterval(function() {
+	        if (Object.keys(validator.pending).length === 0) {
+	            clearInterval(interval);
+	            callback(Object.keys(validator.invalid).length === 0);
+	        }
+	    }, 300);
 	},
 	// attributes: space separated list of attributes to retrieve and remove
 	removeAttrs: function( attributes ) {
