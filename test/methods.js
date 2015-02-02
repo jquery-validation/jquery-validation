@@ -1318,25 +1318,20 @@ test("file accept - image wildcard", function() {
 	var input = acceptFileDummyInput("test.png", "image/png"),
 			$form = $("<form />"),
 			proxy = $.proxy($.validator.methods.accept, new $.validator({}, $form[0]), null, input, "image/*");
-
 	ok( proxy(), "the selected file for upload is valid" );
 });
 
 test("file accept - specified mime type", function() {
-
 	var input = acceptFileDummyInput("test.kml", "application/vnd.google-earth.kml+xml"),
 			$form = $("<form />"),
 			proxy = $.proxy($.validator.methods.accept, new $.validator({}, $form[0]), null, input, "application/vnd.google-earth.kml+xml");
-
 	ok( proxy(), "the selected file for upload is valid" );
 });
 
 test("file accept - invalid mime type", function() {
-
 	var input = acceptFileDummyInput("test.kml", "foobar/vnd.google-earth.kml+xml"),
 			$form = $("<form />"),
 			proxy = $.proxy($.validator.methods.accept, new $.validator({}, $form[0]), null, input, "application/vnd.google-earth.kml+xml");
-
 	equal(proxy(), "dependency-mismatch", "the selected file for upload is valid" );
 });
 
