@@ -24,7 +24,7 @@ $.extend($.fn, {
 
 		if ( validator.settings.onsubmit ) {
 
-			this.validateDelegate( ":submit", "click", function( event ) {
+			this.validateDelegate( ":submit", "click.validate", function( event ) {
 				if ( validator.settings.submitHandler ) {
 					validator.submitButton = event.target;
 				}
@@ -40,7 +40,7 @@ $.extend($.fn, {
 			});
 
 			// validate the form on submit
-			this.submit( function( event ) {
+			this.bind( "submit.validate", function( event ) {
 				if ( validator.settings.debug ) {
 					// prevent form submit to be able to see console output
 					event.preventDefault();
@@ -359,10 +359,10 @@ $.extend( $.validator, {
 					"[type='email'], [type='datetime'], [type='date'], [type='month'], " +
 					"[type='week'], [type='time'], [type='datetime-local'], " +
 					"[type='range'], [type='color'], [type='radio'], [type='checkbox']",
-					"focusin focusout keyup", delegate)
+					"focusin.validate focusout.validate keyup.validate", delegate)
 				// Support: Chrome, oldIE
 				// "select" is provided as event.target when clicking a option
-				.validateDelegate("select, option, [type='radio'], [type='checkbox']", "click", delegate);
+				.validateDelegate("select, option, [type='radio'], [type='checkbox']", "click.validate", delegate);
 
 			if ( this.settings.invalidHandler ) {
 				$( this.currentForm ).bind( "invalid-form.validate", this.settings.invalidHandler );
@@ -913,6 +913,15 @@ $.extend( $.validator, {
 				valid: true,
 				message: this.defaultMessage( element, "remote" )
 			});
+		},
+
+		// cleans up all forms and elements, removes validator-specific events
+		destroy: function() {
+			this.resetForm();
+
+			$( this.currentForm ).unbind( "submit.validate" );
+			$( this.currentForm ).find(" :input ").unbind( "focusin.validate focusout.validate keyup.validate click.validate invalid-form.validate" );
+			$( this.currentForm ).removeData( "validator" );
 		}
 
 	},
@@ -1300,7 +1309,6 @@ $.extend( $.validator, {
 			}, param ) );
 			return "pending";
 		}
-
 	}
 
 });
