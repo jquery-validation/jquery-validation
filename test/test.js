@@ -1822,3 +1822,15 @@ test( "Validation triggered on radio and checkbox via click", function() {
 	// test if there is no error anymore
 	ok( form.find( "input.error" ).length === 0, "Form valid" );
 });
+
+test( "destroy()", function() {
+    expect( 2 );
+
+    var form = $( "#form" ),
+        validate = form.validate();
+
+    strictEqual( $( form ).data( "validator" ), validate );
+
+    validate.destroy();
+    strictEqual( $( form ).data( "validator" ), undefined );
+});

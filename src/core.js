@@ -24,7 +24,7 @@ $.extend($.fn, {
 
 		if ( validator.settings.onsubmit ) {
 
-			this.validateDelegate( ":submit", "click", function( event ) {
+			this.on( "click.validate", ":submit", function( event ) {
 				if ( validator.settings.submitHandler ) {
 					validator.submitButton = event.target;
 				}
@@ -40,7 +40,7 @@ $.extend($.fn, {
 			});
 
 			// validate the form on submit
-			this.submit( function( event ) {
+			this.on( "submit.validate", function( event ) {
 				if ( validator.settings.debug ) {
 					// prevent form submit to be able to see console output
 					event.preventDefault();
@@ -365,26 +365,26 @@ $.extend( $.validator, {
 			});
 
 			function delegate( event ) {
-				var validator = $.data( this[ 0 ].form, "validator" ),
+				var validator = $.data( this.form, "validator" ),
 					eventType = "on" + event.type.replace( /^validate/, "" ),
 					settings = validator.settings;
-				if ( settings[ eventType ] && !this.is( settings.ignore ) ) {
-					settings[ eventType ].call( validator, this[ 0 ], event );
+				if ( settings[ eventType ] && !$( this ).is( settings.ignore ) ) {
+					settings[ eventType ].call( validator, this, event );
 				}
 			}
+
 			$( this.currentForm )
-				.validateDelegate( ":text, [type='password'], [type='file'], select, textarea, " +
-					"[type='number'], [type='search'] ,[type='tel'], [type='url'], " +
-					"[type='email'], [type='datetime'], [type='date'], [type='month'], " +
-					"[type='week'], [type='time'], [type='datetime-local'], " +
-					"[type='range'], [type='color'], [type='radio'], [type='checkbox']",
-					"focusin focusout keyup", delegate)
+				.on( "focusin.validate focusout.validate keyup.validate",
+					":text, [type='password'], [type='file'], select, textarea, [type='number'], [type='search'], " +
+					"[type='tel'], [type='url'], [type='email'], [type='datetime'], [type='date'], [type='month'], " +
+					"[type='week'], [type='time'], [type='datetime-local'], [type='range'], [type='color'], " +
+					"[type='radio'], [type='checkbox']", delegate)
 				// Support: Chrome, oldIE
 				// "select" is provided as event.target when clicking a option
-				.validateDelegate("select, option, [type='radio'], [type='checkbox']", "click", delegate);
+				.on("click.validate", "select, option, [type='radio'], [type='checkbox']", delegate);
 
 			if ( this.settings.invalidHandler ) {
-				$( this.currentForm ).bind( "invalid-form.validate", this.settings.invalidHandler );
+				$( this.currentForm ).on( "invalid-form.validate", this.settings.invalidHandler );
 			}
 
 			// Add aria-required to any Static/Data/Class required fields before first validation
@@ -936,6 +936,15 @@ $.extend( $.validator, {
 				valid: true,
 				message: this.defaultMessage( element, "remote" )
 			});
+		},
+
+		// cleans up all forms and elements, removes validator-specific events
+		destroy: function() {
+			this.resetForm();
+
+			$( this.currentForm )
+				.off( ".validate" )
+				.removeData( "validator" );
 		}
 
 	},
@@ -1263,7 +1272,7 @@ $.extend( $.validator, {
 			// TODO find a way to bind the event just once, avoiding the unbind-rebind overhead
 			var target = $( param );
 			if ( this.settings.onfocusout ) {
-				target.unbind( ".validate-equalTo" ).bind( "blur.validate-equalTo", function() {
+				target.off( ".validate-equalTo" ).on( "blur.validate-equalTo", function() {
 					$( element ).valid();
 				});
 			}
@@ -1328,7 +1337,6 @@ $.extend( $.validator, {
 			}, param ) );
 			return "pending";
 		}
-
 	}
 
 });
