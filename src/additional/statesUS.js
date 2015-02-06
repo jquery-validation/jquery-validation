@@ -35,7 +35,7 @@
  *
  */
 
-jQuery.validator.addMethod("stateUS", function(value, element, options) {
+$.validator.addMethod("stateUS", function(value, element, options) {
 	var isDefault = typeof options === "undefined",
 		caseSensitive = ( isDefault || typeof options.caseSensitive === "undefined" ) ? false : options.caseSensitive,
 		includeTerritories = ( isDefault || typeof options.includeTerritories === "undefined" ) ? false : options.includeTerritories,
