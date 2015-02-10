@@ -924,13 +924,7 @@ $.extend( $.validator, {
 			this.resetForm();
 
 			$( this.currentForm )
-				.off( "submit.validate" )
-				.off( "focusin.validate focusout.validate keyup.validate",
-					":text, [type='password'], [type='file'], select, textarea, [type='number'], [type='search'], " +
-					"[type='tel'], [type='url'], [type='email'], [type='datetime'], [type='date'], [type='month'], " +
-					"[type='week'], [type='time'], [type='datetime-local'], [type='range'], [type='color'], " +
-					"[type='radio'], [type='checkbox']")
-				.off("click.validate", "select, option, [type='radio'], [type='checkbox']")
+				.off( "submit.validate focusin.validate focusout.validate keyup.validate click.validate" )
 				.removeData( "validator" );
 		}
 
