@@ -429,7 +429,7 @@ test( "showErrors()", function() {
 		v = $( "#testForm1" ).validate();
 
 	ok( errorLabel.is( ":hidden" ) );
-	equal( 0, $( "#lastname" ).next( ".error:not(input)" ).size() );
+	equal( 0, $( "#lastname" ).next( ".error:not(input)" ).length );
 	v.showErrors({ "firstname": "required", "lastname": "bla" });
 	equal( true, errorLabel.is( ":visible" ) );
 	equal( true, $( "#lastname" ).next( ".error:not(input)" ).is( ":visible" ) );
@@ -470,8 +470,8 @@ test( "showErrors() - external messages", function() {
 
 	$.validator.addMethod( "foo", function() { return false; });
 	$.validator.addMethod( "bar", function() { return false; });
-	equal( 0, $( "#testForm4 #f1" ).next( ".error:not(input)" ).size() );
-	equal( 0, $( "#testForm4 #f2" ).next( ".error:not(input)" ).size() );
+	equal( 0, $( "#testForm4 #f1" ).next( ".error:not(input)" ).length );
+	equal( 0, $( "#testForm4 #f2" ).next( ".error:not(input)" ).length );
 
 	form = $( "#testForm4" )[ 0 ];
 	v = $( form ).validate({
@@ -752,7 +752,7 @@ test( "validating multiple checkboxes with 'required'", function() {
 	expect( 3 );
 	var checkboxes = $( "#form input[name=check3]" ).prop( "checked", false ),
 		v;
-	equal( checkboxes.size(), 5 );
+	equal( checkboxes.length, 5 );
 
 	v = $( "#form" ).validate({
 		rules: {
@@ -967,12 +967,12 @@ test( "success option3", function() {
 		}),
 		labels;
 
-	equal( 0, $( "#testForm1 .error:not(input)" ).size() );
+	equal( 0, $( "#testForm1 .error:not(input)" ).length );
 	$( "#firstname" ).val( "hi" );
 	v.form();
 	labels = $( "#testForm1 .error:not(input)" );
 
-	equal( 3, labels.size() );
+	equal( 3, labels.length );
 	ok( labels.eq( 0 ).is( ".valid" ) );
 	ok( !labels.eq( 1 ).is( ".valid" ) );
 });
@@ -997,11 +997,11 @@ test( "success isn't called for optional elements with no other rules", function
 			firstname: { required: false }
 		}
 	});
-	equal( 0, $( "#testForm1 .error:not(input)" ).size() );
+	equal( 0, $( "#testForm1 .error:not(input)" ).length );
 	v.form();
-	equal( 0, $( "#testForm1 .error:not(input)" ).size() );
+	equal( 0, $( "#testForm1 .error:not(input)" ).length );
 	$( "#firstname" ).valid();
-	equal( 0, $( "#testForm1 .error:not(input)" ).size() );
+	equal( 0, $( "#testForm1 .error:not(input)" ).length );
 });
 
 test( "success is called for optional elements with other rules", function() {
@@ -1056,11 +1056,11 @@ test( "all rules are evaluated even if one returns a dependency-mistmatch", func
 			}
 		}
 	});
-	equal( 0, $( "#testForm1 .error:not(input)" ).size() );
+	equal( 0, $( "#testForm1 .error:not(input)" ).length );
 	v.form();
-	equal( 0, $( "#testForm1 .error:not(input)" ).size() );
+	equal( 0, $( "#testForm1 .error:not(input)" ).length );
 	$( "#firstname" ).valid();
-	equal( 0, $( "#testForm1 .error:not(input)" ).size() );
+	equal( 0, $( "#testForm1 .error:not(input)" ).length );
 
 	delete $.validator.methods.custom1;
 	delete $.validator.messages.custom1;
@@ -1158,7 +1158,7 @@ test( "validate on blur", function() {
 		equal( v.size(), expected, message );
 	}
 	function labels( expected ) {
-		equal( v.errors().filter( ":visible" ).size(), expected );
+		equal( v.errors().filter( ":visible" ).length, expected );
 	}
 	function blur( target ) {
 		target.trigger( "blur" ).trigger( "focusout" );
