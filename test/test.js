@@ -1765,3 +1765,30 @@ test( "Validation triggered on radio and checkbox via click", function() {
 	// test if there is no error anymore
 	ok( form.find( "input.error" ).length === 0, "Form valid" );
 });
+
+test( "destruction of Validator", function() {
+	expect( 2 );
+
+	var form = $( "#validatorDestroy" ),
+		validate = form.validate();
+
+	form.on( "submit.validate", function( event )
+	{
+		event.preventDefault();
+
+		ok( !!$( this ).data( "validator" ), "Validator has events and object" );
+	});
+
+	form.submit();
+
+	validate.destroy();
+
+	form.on( "submit.validate", function( event )
+	{
+		event.preventDefault();
+
+		ok( !$( this ).data( "validator" ), "Validator no longer has validator nor its events" );
+	});
+
+	form.submit();
+});
