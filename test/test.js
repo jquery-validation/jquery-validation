@@ -1772,8 +1772,7 @@ test( "destruction of Validator", function() {
 	var form = $( "#validatorDestroy" ),
 		validate = form.validate();
 
-	form.on( "submit.validate", function( event )
-	{
+	form.on( "submit.validate", function( event ) {
 		event.preventDefault();
 
 		ok( !!$( this ).data( "validator" ), "Validator has events and object" );
@@ -1783,8 +1782,7 @@ test( "destruction of Validator", function() {
 
 	validate.destroy();
 
-	form.on( "submit.validate", function( event )
-	{
+	form.on( "submit.validate", function( event ) {
 		event.preventDefault();
 
 		ok( !$( this ).data( "validator" ), "Validator no longer has validator nor its events" );
