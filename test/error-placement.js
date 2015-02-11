@@ -311,6 +311,21 @@ test( "test existing non-error aria-describedby", function( assert ) {
 	strictEqual( "", $("#testForm17text-error").text(), "Error label is empty for valid field" );
 });
 
+test( "test existing non-error aria-describedby with bracket", function( ) {
+	expect( 2 );
+	var form = $( "#testForm18" ),
+		field = $( "#testForm18\\[text\\]");
+
+	field.attr("aria-describedby", "testForm18\\[text\\]-description testForm18\\[text\\]-error");
+
+	form.validate({
+		errorElement: "span"
+	});
+
+	ok( !field.valid() );
+	strictEqual( field.attr("aria-describedby"), "testForm18\\[text\\]-description testForm18\\[text\\]-error", "aria-describedby equal to 'testForm18\\[text\\]-description testForm18\\[text\\]-error'" );
+});
+
 test( "test pre-assigned non-error aria-describedby", function( assert ) {
 	expect( 7 );
 	var form = $( "#testForm17" ),
