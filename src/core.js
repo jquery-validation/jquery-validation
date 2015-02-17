@@ -924,7 +924,7 @@ $.extend( $.validator, {
 			this.resetForm();
 
 			$( this.currentForm )
-				.off( "submit.validate focusin.validate focusout.validate keyup.validate click.validate" )
+				.off( ".validate" )
 				.removeData( "validator" );
 		}
 
