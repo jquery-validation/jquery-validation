@@ -348,7 +348,7 @@ $.extend( $.validator, {
 			function delegate( event ) {
 				var validator = $.data( this[ 0 ].form, "validator" ),
 					eventType = "on" + event.type.replace( /^validate/, "" ),
-					settings = validator.settings;
+					settings = validator && validator.settings ? validator.settings : [];
 				if ( settings[ eventType ] && !this.is( settings.ignore ) ) {
 					settings[ eventType ].call( validator, this[ 0 ], event );
 				}
@@ -1015,7 +1015,7 @@ $.extend( $.validator, {
 		var rules = {},
 			validator = $.data( element.form, "validator" );
 
-		if ( validator.settings.rules ) {
+		if ( validator && validator.settings && validator.settings.rules ) {
 			rules = $.validator.normalizeRule( validator.settings.rules[ element.name ] ) || {};
 		}
 		return rules;
