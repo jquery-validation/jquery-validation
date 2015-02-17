@@ -748,6 +748,13 @@ test( "findLastActive()", function() {
 	equal( v.lastActive, lastActive );
 });
 
+test("elementValue() finds radios/checkboxes only within the current form", function() {
+	expect(1);
+	var v = $("#userForm").validate(), foreignRadio = $("#radio2")[0];
+
+	ok( !v.elementValue(foreignRadio) );
+});
+
 test( "validating multiple checkboxes with 'required'", function() {
 	expect( 3 );
 	var checkboxes = $( "#form input[name=check3]" ).prop( "checked", false ),

@@ -582,7 +582,7 @@ $.extend( $.validator, {
 				type = element.type;
 
 			if ( type === "radio" || type === "checkbox" ) {
-				return $( "input[name='" + element.name + "']:checked" ).val();
+				return this.findByName(element.name).find(":checked").val();
 			} else if ( type === "number" && typeof element.validity !== "undefined" ) {
 				return element.validity.badInput ? false : $element.val();
 			}
