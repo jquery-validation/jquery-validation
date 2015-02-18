@@ -1,3 +1,14 @@
+/*
+ * TE = Número do Título Eleitoral (Number of Electoral Title)
+ *
+ * More information on http://pt.wikipedia.org/wiki/T%C3%ADtulo_eleitoral
+ *
+ * Accepted formats:
+ * 9999 9999 9999
+ * 999999999999
+ * 99999999999
+ * 999999999/99
+ */
 $.validator.addMethod("teBR", function(numero_titulo) {
 	var pesos = "23456789", resto_dv1 = 0, resto_dv2 = 0, i;
 	if (!(/^\d{12}$|^\d{4} \d{4} \d{4}$/.test(numero_titulo))) {
