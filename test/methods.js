@@ -28,19 +28,18 @@ function acceptFileDummyInput(filename, mimeType) {
 			name: filename,
 			size: 500001,
 			type: mimeType
-		}, fileList = {
+		},
+    fileList = {
 			0: file,
 			length: 1,
 			item: dummy
-		},
-		input = {};
+		};
 
-	// dummy DOM element
-	input.type = "file";
-	input.files = fileList;
-	input.nodeName = "INPUT";
-
-	return input;
+	return {
+		type: "file",
+		files: fileList,
+		nodeName: "INPUT"
+	};
 }
 
 module("methods");
