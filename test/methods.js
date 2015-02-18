@@ -29,7 +29,7 @@ function acceptFileDummyInput(filename, mimeType) {
 			size: 500001,
 			type: mimeType
 		},
-    fileList = {
+		fileList = {
 			0: file,
 			length: 1,
 			item: dummy
