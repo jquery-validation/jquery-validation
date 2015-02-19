@@ -631,6 +631,135 @@ test("dateFA", function() {
 	ok(!method( "15/6/1361" ), "Invalid date FA" );
 });
 
+test("dateMultipleFormat", function() {
+	var method = methodTest("dateMultipleFormat");
+
+	// The field is optional
+	// One assertion suffice to test this case
+	ok( method( "", true ), "Valid date dateMultipleFormat (The field is optional)" );
+
+	// Using the default format & separator
+	// Default is: { format: "DD/MM/YYYY", separator: "/" }
+	// options = true
+	ok( method( "29/12/2006", true ), "Valid date dateMultipleFormat (Using default format & separator, options = true)" );
+	ok( !method( "29-07-2004", true ), "Invalid date dateMultipleFormat (Using default format & separator, options = true)" );
+	ok( !method( "29.06.2011", true ), "Invalid date dateMultipleFormat (Using default format & separator, options = true)" );
+	ok( !method( "31/04/2010", true ), "Invalid date dateMultipleFormat (Using default format & separator, options = true)" );
+	ok( !method( "29/00/2001", true ), "Invalid date dateMultipleFormat (Using default format & separator, options = true)" );
+
+	// Using the default format & separator
+	// Default is: { format: "DD/MM/YYYY", separator: "/" }
+	// options = {} : empty object
+	ok( method( "29/11/1998", {} ), "Valid date dateMultipleFormat (Using default format & separator, options = {})" );
+	ok( !method( "29-11-2018", {} ), "Invalid date dateMultipleFormat (Using default format & separator, options = {})" );
+	ok( !method( "29.11.2110", {} ), "Invalid date dateMultipleFormat (Using default format & separator, options = {})" );
+	ok( !method( "31/04/2010", {} ), "Invalid date dateMultipleFormat (Using default format & separator, options = {})" );
+	ok( !method( "029/00/1999", {} ), "Invalid date dateMultipleFormat (Using default format & separator, options = {})" );
+
+	// YYYY{separator}MM{separator}DD
+	ok( method( "1986/11/29", { format: "YYYY/MM/DD", separator: "/" } ), "Valid date dateMultipleFormat (Format: YYYY/MM/DD)" );
+	ok( method( "1885-12-31", { format: "YYYY-MM-DD", separator: "-" } ), "Valid date dateMultipleFormat (Format: YYYY-MM-DD)" );
+	ok( method( "1887.12.31", { format: "YYYY.MM.DD", separator: "." } ), "Valid date dateMultipleFormat (Format: YYYY.MM.DD)" );
+	ok( !method( "2002/06/32", { format: "YYYY/MM/DD", separator: "/" } ), "Invalid date dateMultipleFormat (Format: YYYY/MM/DD)" );
+	ok( !method( "1989-09-31", { format: "YYYY-MM-DD", separator: "-" } ), "Invalid date dateMultipleFormat (Format: YYYY-MM-DD)" );
+	ok( !method( "1975.02.30", { format: "YYYY.MM.DD", separator: "." } ), "Invalid date dateMultipleFormat (Format: YYYY.MM.DD)" );
+
+	// DD{separator}MM{separator}YYYY
+	ok( method( "29/12/2010", { format: "DD/MM/YYYY", separator: "/" } ), "Valid date dateMultipleFormat (Format: DD/MM/YYYY)" );
+	ok( method( "29-08-2010", { format: "DD-MM-YYYY", separator: "-" } ), "Valid date dateMultipleFormat (Format: DD-MM-YYYY)" );
+	ok( method( "29.09.2010", { format: "DD.MM.YYYY", separator: "." } ), "Valid date dateMultipleFormat (Format: DD.MM.YYYY)" );
+	ok( !method( "31/06/1361", { format: "DD/MM/YYYY", separator: "/" } ), "Invalid date dateMultipleFormat (Format: DD/MM/YYYY)" );
+	ok( !method( "31-02-2014", { format: "DD-MM-YYYY", separator: "-" } ), "Invalid date dateMultipleFormat (Format: DD-MM-YYYY)" );
+	ok( !method( "31.04.2014", { format: "DD.MM.YYYY", separator: "." } ), "Invalid date dateMultipleFormat (Format: DD.MM.YYYY)" );
+
+	// MM{separator}DD{separator}YYYY
+	ok( method( "12/27/2010", { format: "MM/DD/YYYY", separator: "/" } ), "Valid date dateMultipleFormat (Format: MM/DD/YYYY)" );
+	ok( method( "11-15-2005", { format: "MM-DD-YYYY", separator: "-" } ), "Valid date dateMultipleFormat (Format: MM-DD-YYYY)" );
+	ok( method( "11.11.2005", { format: "MM.DD.YYYY", separator: "." } ), "Valid date dateMultipleFormat (Format: MM.DD.YYYY)" );
+	ok( !method( "06/31/1999", { format: "MM/DD/YYYY", separator: "/" } ), "Invalid date dateMultipleFormat (Format: MM/DD/YYYY)" );
+	ok( !method( "02-30-2004", { format: "MM-DD-YYYY", separator: "-" } ), "Invalid date dateMultipleFormat (Format: MM-DD-YYYY)" );
+	ok( !method( "04.31.2003", { format: "MM.DD.YYYY", separator: "." } ), "Invalid date dateMultipleFormat (Format: MM.DD.YYYY)" );
+
+	// Test minDate
+	// Default is: { format: "DD/MM/YYYY", separator: "/" }
+	// Using a date string
+	ok( method( "29/12/2012", { minDate: "31/01/2012" } ), "Valid min date dateMultipleFormat (Using default format & separator)" );
+	ok( !method( "15/11/2011", { minDate: "31/03/2012" } ), "Invalid min date dateMultipleFormat (Using default format & separator)" );
+
+	// Test minDate
+	// Default is: { format: "DD/MM/YYYY", separator: "/" }
+	// Using a date object
+	ok( method( "29/12/2012", { minDate: new Date( 2012, 3, 31 ) } ), "Valid min date object dateMultipleFormat (Using default format & separator)" );
+	ok( !method( "15/11/2011", { minDate: new Date( 2014, 1, 18 ) } ), "Invalid min date object dateMultipleFormat (Using default format & separator)" );
+
+	// Test minDate
+	// Using other formats & date string
+	ok( method( "12/29/2012", { format: "MM/DD/YYYY", separator: "/", minDate: "01/31/2012" } ), "Valid min date dateMultipleFormat (Format: MM/DD/YYYY)" );
+	ok( method( "2007-12-31", { format: "YYYY-MM-DD", separator: "-", minDate: "2007-01-31" } ), "Valid min date dateMultipleFormat (Format: YYYY-MM-DD)" );
+	ok( !method( "12/29/2011", { format: "MM/DD/YYYY", separator: "/", minDate: "01/31/2012" } ), "Invalid min date dateMultipleFormat (Format: MM/DD/YYYY)" );
+	ok( !method( "2008-12-31", { format: "YYYY-MM-DD", separator: "-", minDate: "2010-01-31" } ), "Invalid min date dateMultipleFormat (Format: YYYY-MM-DD)" );
+
+	// Test minDate
+	// Using other formats & date object
+	ok( method( "12/29/2012", { format: "MM/DD/YYYY", separator: "/", minDate: new Date( 2012, 0, 31 ) } ), "Valid min date object dateMultipleFormat (Format: MM/DD/YYYY)" );
+	ok( method( "2007-12-31", { format: "YYYY-MM-DD", separator: "-", minDate: new Date( 2007, 0, 31 ) } ), "Valid min date object dateMultipleFormat (Format: YYYY-MM-DD)" );
+	ok( !method( "12/29/2011", { format: "MM/DD/YYYY", separator: "/", minDate: new Date( 2012, 1, 15 ) } ), "Invalid min date object dateMultipleFormat (Format: MM/DD/YYYY)" );
+	ok( !method( "2008-12-31", { format: "YYYY-MM-DD", separator: "-", minDate: new Date( 2009, 11, 31 ) } ), "Invalid min date object dateMultipleFormat (Format: YYYY-MM-DD)" );
+
+	// Test maxDate
+	// Default is: { format: "DD/MM/YYYY", separator: "/" }
+	// Using a date string
+	ok( method( "29/12/2014", { maxDate: "31/01/2015" } ), "Valid max date dateMultipleFormat (Using default format & separator)" );
+	ok( !method( "15/11/2013", { maxDate: "31/03/2012" } ), "Invalid max date dateMultipleFormat (Using default format & separator)" );
+
+	// Test maxDate
+	// Default is: { format: "DD/MM/YYYY", separator: "/" }
+	// Using a date object
+	ok( method( "29/12/2014", { maxDate: new Date( 2015, 1, 21 ) } ), "Valid max date object dateMultipleFormat (Using default format & separator)" );
+	ok( !method( "15/11/2013", { maxDate: new Date( 2012, 2, 15 ) } ), "Invalid max date object dateMultipleFormat (Using default format & separator)" );
+
+	// Test maxDate
+	// Using other formats & date string
+	ok( method( "29/12/2012", { format: "DD/MM/YYYY", separator: "/", maxDate: "31/01/2014" } ), "Valid max date dateMultipleFormat (Format: DD/MM/YYYY)" );
+	ok( method( "2013-12-31", { format: "YYYY-MM-DD", separator: "-", maxDate: "2014-05-31" } ), "Valid max date dateMultipleFormat (Format: YYYY-MM-DD)" );
+	ok( !method( "29/12/2015", { format: "DD/MM/YYYY", separator: "/", maxDate: "31/01/2012" } ), "Invalid max date dateMultipleFormat (Format: DD/MM/YYYY)" );
+	ok( !method( "2015-02-19", { format: "YYYY-MM-DD", separator: "-", maxDate: "2014-05-31" } ), "Invalid max date dateMultipleFormat (Format: YYYY-MM-DD)" );
+
+	// Test maxDate
+	// Using other formats & date object
+	ok( method( "12/29/2010", { format: "MM/DD/YYYY", separator: "/", maxDate: new Date( 2014, 0, 31 ) } ), "Valid max date object dateMultipleFormat (Format: MM/DD/YYYY)" );
+	ok( method( "2011-12-31", { format: "YYYY-MM-DD", separator: "-", maxDate: new Date( 2013, 0, 31 ) } ), "Valid max date object dateMultipleFormat (Format: YYYY-MM-DD)" );
+	ok( !method( "12/29/2013", { format: "MM/DD/YYYY", separator: "/", maxDate: new Date( 2012, 1, 15 ) } ), "Invalid max date object dateMultipleFormat (Format: MM/DD/YYYY)" );
+	ok( !method( "2011-12-31", { format: "YYYY-MM-DD", separator: "-", maxDate: new Date( 2010, 11, 31 ) } ), "Invalid max date object dateMultipleFormat (Format: YYYY-MM-DD)" );
+
+	// Test range date
+	// Default is: { format: "DD/MM/YYYY", separator: "/" }
+	// Using a date string
+	ok( method( "29/07/2013", { minDate: "31/01/2012", maxDate: "31/01/2014" } ), "Valid range date dateMultipleFormat (Using default format & separator)" );
+	ok( !method( "15/11/2013", { minDate: "31/03/2012", maxDate: "31/03/2013" } ), "Invalid range date dateMultipleFormat (Using default format & separator)" );
+
+	// Test range date
+	// Default is: { format: "DD/MM/YYYY", separator: "/" }
+	// Using a date object
+	ok( method( "29/07/2013", { minDate: new Date( 2012, 0, 31 ), maxDate: new Date( 2014, 0, 31 ) } ), "Valid range date object dateMultipleFormat (Using default format & separator)" );
+	ok( !method( "15/11/2013", { minDate: new Date( 2012, 2, 2012 ), maxDate: new Date( 2013, 2, 31 ) } ), "Invalid range date object dateMultipleFormat (Using default format & separator)" );
+
+	// Test range date
+	// Using other formats & date string
+	ok( method( "29/12/2012", { format: "DD/MM/YYYY", separator: "/", minDate: "31/01/2012", maxDate: "31/01/2014" } ), "Valid range date dateMultipleFormat (Format: DD/MM/YYYY)" );
+	ok( method( "2013-12-31", { format: "YYYY-MM-DD", separator: "-", minDate: "2013-05-31", maxDate: "2014-05-31" } ), "Valid range date dateMultipleFormat (Format: YYYY-MM-DD)" );
+	ok( !method( "29/12/2015", { format: "DD/MM/YYYY", separator: "/", minDate: "31/01/2012", maxDate: "31/05/2012" } ), "Invalid range date dateMultipleFormat (Format: DD/MM/YYYY)" );
+	ok( !method( "2012-12-31", { format: "YYYY-MM-DD", separator: "-", minDate: "2013-05-31", maxDate: "2014-05-31" } ), "Valid range date dateMultipleFormat (Format: YYYY-MM-DD)" );
+
+	// Test range date
+	// Using other formats & date object
+	ok( method( "12/29/2012", { format: "MM/DD/YYYY", separator: "/", minDate: new Date( 2012, 0, 31 ), maxDate: new Date( 2014, 0, 31 ) } ), "Valid range date object dateMultipleFormat (Format: DD/MM/YYYY)" );
+	ok( method( "2013-12-31", { format: "YYYY-MM-DD", separator: "-", minDate: new Date( 2013, 4, 21 ), maxDate: new Date( 2014, 4, 21 ) } ), "Valid range date object dateMultipleFormat (Format: YYYY-MM-DD)" );
+	ok( !method( "12/29/2015", { format: "MM/DD/YYYY", separator: "/", minDate: new Date( 2012, 0, 25 ), maxDate: new Date( 2012, 4, 29 ) } ), "Invalid range date object dateMultipleFormat (Format: DD/MM/YYYY)" );
+	ok( !method( "2012-12-31", { format: "YYYY-MM-DD", separator: "-", minDate: new Date( 2013, 4, 31 ), maxDate: new Date( 2014, 4, 31 ) } ), "Valid range date object dateMultipleFormat (Format: YYYY-MM-DD)" );
+
+});
+
 test("iban", function() {
 	var method = methodTest("iban");
 	ok( method( "NL20INGB0001234567"), "Valid IBAN");
