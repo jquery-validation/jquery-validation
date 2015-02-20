@@ -28,5 +28,5 @@ $.extend($.validator.messages, {
 	nit_pis_pasepBR: "Por favor, forne&ccedil;a um &quot;NIT/PIS/Pasep&quot; v&aacute;lido.",
 	teBR: "Por favor, forne&ccedil;a um &quot;T&iacute;tulo Eleitoral&quot; v&aacute;lido.",
 	cpfBR: "Por favor, forne&ccedil;a um CPF v&aacute;lido.",
-	stateBR: "Por favor, forne&ccedil;a um UF v&aacute;lido."
+	statesBR: "Por favor, forne&ccedil;a um UF v&aacute;lido."
 });
