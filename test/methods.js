@@ -1308,7 +1308,7 @@ test("cpfBR", function() {
 
 });
 
-test("stateBR", function() {
+test("statesBR", function() {
 	var method = methodTest("stateBR");
 	ok( method( "MG" ), "Valid BR state" );
 	ok( method( "RJ" ), "Valid BR state" );
