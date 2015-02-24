@@ -808,7 +808,7 @@ $.extend( $.validator, {
 					// Respect existing non-error aria-describedby
 					if ( !describedBy ) {
 						describedBy = errorID;
-					} else if ( !describedBy.match( new RegExp( "\\b" + errorID + "\\b" ) ) ) {
+					} else if ( !describedBy.match( new RegExp( "\\b" + errorID.replace( /(\\)/g, "\\\\$1" ) + "\\b" ) ) ) {
 						// Add to end of list if not already present
 						describedBy += " " + errorID;
 					}
