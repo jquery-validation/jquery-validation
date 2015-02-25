@@ -1,9 +1,9 @@
 (function($) {
 
 function methodTest( methodName ) {
-	var v = jQuery("#form").validate(),
-		method = $.validator.methods[methodName],
-		element = $("#firstname")[0];
+	var v = jQuery( "#form" ).validate(),
+		method = $.validator.methods[ methodName ],
+		element = $( "#firstname" )[0];
 
 	return function(value, param) {
 		element.value = value;
@@ -11,27 +11,27 @@ function methodTest( methodName ) {
 	};
 }
 
-module("methods");
+module( "methods" );
 
-test("default messages", function() {
+test( "default messages", function() {
 	var m = $.validator.methods;
-	$.each(m, function(key) {
-		ok( jQuery.validator.messages[key], key + " has a default message." );
-	});
-});
+	$.each( m, function(key) {
+		ok( jQuery.validator.messages[ key ], key + " has a default message." );
+	} );
+} );
 
-test("digit", function() {
-	var method = methodTest("digits");
+test( "digit", function() {
+	var method = methodTest( "digits" );
 	ok( method( "123" ), "Valid digits" );
 	ok(!method( "123.000" ), "Invalid digits" );
 	ok(!method( "123.000,00" ), "Invalid digits" );
 	ok(!method( "123.0.0,0" ), "Invalid digits" );
 	ok(!method( "x123" ), "Invalid digits" );
 	ok(!method( "100.100,0,0" ), "Invalid digits" );
-});
+} );
 
-test("url", function() {
-	var method = methodTest("url");
+test( "url", function() {
+	var method = methodTest( "url" );
 	ok( method( "http://bassistance.de/jquery/plugin.php?bla=blu" ), "Valid url" );
 	ok( method( "https://bassistance.de/jquery/plugin.php?bla=blu" ), "Valid url" );
 	ok( method( "ftp://bassistance.de/jquery/plugin.php?bla=blu" ), "Valid url" );
@@ -45,10 +45,10 @@ test("url", function() {
 	ok(!method( "http://bassistance;de" ), "Invalid url" );
 	ok(!method( "http://.bassistancede" ), "Invalid url" );
 	ok(!method( "bassistance.de" ), "Invalid url" );
-});
+} );
 
-test("url2 (tld optional)", function() {
-	var method = methodTest("url2");
+test( "url2 (tld optional)", function() {
+	var method = methodTest( "url2" );
 	ok( method( "http://bassistance.de/jquery/plugin.php?bla=blu" ), "Valid url" );
 	ok( method( "https://bassistance.de/jquery/plugin.php?bla=blu" ), "Valid url" );
 	ok( method( "ftp://bassistance.de/jquery/plugin.php?bla=blu" ), "Valid url" );
@@ -62,10 +62,10 @@ test("url2 (tld optional)", function() {
 	ok(!method( "http://bassistance;de" ), "Invalid url" );
 	ok(!method( "http://.bassistancede" ), "Invalid url" );
 	ok(!method( "bassistance.de" ), "Invalid url" );
-});
+} );
 
-test("email", function() {
-	var method = methodTest("email");
+test( "email", function() {
+	var method = methodTest( "email" );
 	ok( method( "name@domain.tld" ), "Valid email" );
 	ok( method( "name@domain.tl" ), "Valid email" );
 	ok( method( "bart+bart@tokbox.com" ), "Valid email" );
@@ -83,10 +83,10 @@ test("email", function() {
 	ok(!method( "name,@domain.tld" ), "Invalid email" );
 	ok(!method( "name;@domain.tld" ), "Invalid email" );
 	ok(!method( "name;@domain.tld." ), "Invalid email" );
-});
+} );
 
-test("number", function() {
-	var method = methodTest("number");
+test( "number", function() {
+	var method = methodTest( "number" );
 	ok( method( "123" ), "Valid number" );
 	ok( method( "-123" ), "Valid number" );
 	ok( method( "123,000" ), "Valid number" );
@@ -112,11 +112,11 @@ test("number", function() {
 	ok(!method( "123.0.0,0" ), "Invalid decimal" );
 	ok(!method( "x123" ), "Invalid decimal" );
 	ok(!method( "100.100,0,0" ), "Invalid decimal" );
-});
+} );
 
 /* disabled for now, need to figure out how to test localized methods
-test("numberDE", function() {
-	var method = methodTest("numberDE");
+test( "numberDE", function() {
+	var method = methodTest( "numberDE" );
 	ok( method( "123" ), "Valid numberDE" );
 	ok( method( "-123" ), "Valid numberDE" );
 	ok( method( "123.000" ), "Valid numberDE" );
@@ -139,18 +139,18 @@ test("numberDE", function() {
 	ok(!method( "123.0.0,0" ), "Invalid decimalDE" );
 	ok(!method( "x123" ), "Invalid decimalDE" );
 	ok(!method( "100,100.0.0" ), "Invalid decimalDE" );
-});
+} );
 */
 
-test("date", function() {
-	var method = methodTest("date");
+test( "date", function() {
+	var method = methodTest( "date" );
 	ok( method( "06/06/1990" ), "Valid date" );
 	ok( method( "6/6/06" ), "Valid date" );
 	ok(!method( "1990x-06-06" ), "Invalid date" );
-});
+} );
 
-test("dateISO", function() {
-	var method = methodTest("dateISO");
+test( "dateISO", function() {
+	var method = methodTest( "dateISO" );
 	ok( method( "1990-06-06" ), "Valid date" );
 	ok( method( "1990-01-01" ), "Valid date" );
 	ok( method( "1990-01-31" ), "Valid date" );
@@ -166,61 +166,61 @@ test("dateISO", function() {
 	ok(!method( "1990-01-00" ), "Invalid date" );
 	ok(!method( "1990-01-32" ), "Invalid date" );
 	ok(!method( "1990-13-32" ), "Invalid date" );
-});
+} );
 
 /* disabled for now, need to figure out how to test localized methods
-test("dateDE", function() {
-	var method = methodTest("dateDE");
+test( "dateDE", function() {
+	var method = methodTest( "dateDE" );
 	ok( method( "03.06.1984" ), "Valid dateDE" );
 	ok( method( "3.6.84" ), "Valid dateDE" );
 	ok(!method( "6-6-06" ), "Invalid dateDE" );
 	ok(!method( "1990-06-06" ), "Invalid dateDE" );
 	ok(!method( "06/06/1990" ), "Invalid dateDE" );
 	ok(!method( "6/6/06" ), "Invalid dateDE" );
-});
+} );
 */
 
-test("required", function() {
-	var v = jQuery("#form").validate(),
+test( "required", function() {
+	var v = jQuery( "#form" ).validate(),
 		method = $.validator.methods.required,
-		e = $("#text1, #text1b, #hidden2, #select1, #select2");
-	ok( method.call( v, e[0].value, e[0]), "Valid text input" );
-	ok(!method.call( v, e[1].value, e[1]), "Invalid text input" );
-	ok(!method.call( v, e[1].value, e[2]), "Invalid text input" );
+		e = $( "#text1, #text1b, #hidden2, #select1, #select2" );
+	ok( method.call( v, e[0].value, e[0] ), "Valid text input" );
+	ok(!method.call( v, e[1].value, e[1] ), "Invalid text input" );
+	ok(!method.call( v, e[1].value, e[2] ), "Invalid text input" );
 
-	ok(!method.call( v, e[2].value, e[3]), "Invalid select" );
-	ok( method.call( v, e[3].value, e[4]), "Valid select" );
+	ok(!method.call( v, e[2].value, e[3] ), "Invalid select" );
+	ok( method.call( v, e[3].value, e[4] ), "Valid select" );
 
-	e = $("#area1, #area2, #pw1, #pw2");
-	ok( method.call( v, e[0].value, e[0]), "Valid textarea" );
-	ok(!method.call( v, e[1].value, e[1]), "Invalid textarea" );
-	ok( method.call( v, e[2].value, e[2]), "Valid password input" );
-	ok(!method.call( v, e[3].value, e[3]), "Invalid password input" );
+	e = $( "#area1, #area2, #pw1, #pw2" );
+	ok( method.call( v, e[0].value, e[0] ), "Valid textarea" );
+	ok(!method.call( v, e[1].value, e[1] ), "Invalid textarea" );
+	ok( method.call( v, e[2].value, e[2] ), "Valid password input" );
+	ok(!method.call( v, e[3].value, e[3] ), "Invalid password input" );
 
-	e = $("#radio1, #radio2, #radio3");
-	ok(!method.call( v, e[0].value, e[0]), "Invalid radio" );
-	ok( method.call( v, e[1].value, e[1]), "Valid radio" );
-	ok( method.call( v, e[2].value, e[2]), "Valid radio" );
+	e = $( "#radio1, #radio2, #radio3" );
+	ok(!method.call( v, e[0].value, e[0] ), "Invalid radio" );
+	ok( method.call( v, e[1].value, e[1] ), "Valid radio" );
+	ok( method.call( v, e[2].value, e[2] ), "Valid radio" );
 
-	e = $("#check1, #check2");
-	ok( method.call( v, e[0].value, e[0]), "Valid checkbox" );
-	ok(!method.call( v, e[1].value, e[1]), "Invalid checkbox" );
+	e = $( "#check1, #check2" );
+	ok( method.call( v, e[0].value, e[0] ), "Valid checkbox" );
+	ok(!method.call( v, e[1].value, e[1] ), "Invalid checkbox" );
 
-	e = $("#select1, #select2, #select3, #select4");
-	ok(!method.call( v, e[0].value, e[0]), "Invalid select" );
-	ok( method.call( v, e[1].value, e[1]), "Valid select" );
-	ok( method.call( v, e[2].value, e[2]), "Valid select" );
-	ok( method.call( v, e[3].value, e[3]), "Valid select" );
-});
+	e = $( "#select1, #select2, #select3, #select4" );
+	ok(!method.call( v, e[0].value, e[0] ), "Invalid select" );
+	ok( method.call( v, e[1].value, e[1] ), "Valid select" );
+	ok( method.call( v, e[2].value, e[2] ), "Valid select" );
+	ok( method.call( v, e[3].value, e[3] ), "Valid select" );
+} );
 
-test("required with dependencies", function() {
-	var v = jQuery("#form").validate(),
+test( "required with dependencies", function() {
+	var v = jQuery( "#form" ).validate(),
 		method = $.validator.methods.required,
-		e = $("#hidden2, #select1, #area2, #radio1, #check2");
+		e = $( "#hidden2, #select1, #area2, #radio1, #check2" );
 	ok( method.call( v, e[0].value, e[0], "asffsaa" ), "Valid text input due to dependency not met" );
 	ok(!method.call( v, e[0].value, e[0], "input" ), "Invalid text input" );
-	ok( method.call( v, e[0].value, e[0], function() { return false; }), "Valid text input due to dependency not met" );
-	ok(!method.call( v, e[0].value, e[0], function() { return true; }), "Invalid text input" );
+	ok( method.call( v, e[0].value, e[0], function() { return false; } ), "Valid text input due to dependency not met" );
+	ok(!method.call( v, e[0].value, e[0], function() { return true; } ), "Invalid text input" );
 	ok( method.call( v, e[1].value, e[1], "asfsfa" ), "Valid select due to dependency not met" );
 	ok(!method.call( v, e[1].value, e[1], "input" ), "Invalid select" );
 	ok( method.call( v, e[2].value, e[2], "asfsafsfa" ), "Valid textarea due to dependency not met" );
@@ -229,116 +229,116 @@ test("required with dependencies", function() {
 	ok(!method.call( v, e[3].value, e[3], "input" ), "Invalid radio" );
 	ok( method.call( v, e[4].value, e[4], "asfsafsfa" ), "Valid checkbox due to dependency not met" );
 	ok(!method.call( v, e[4].value, e[4], "input" ), "Invalid checkbox" );
-});
+} );
 
-test("minlength", function() {
-	var v = jQuery("#form").validate(),
+test( "minlength", function() {
+	var v = jQuery( "#form" ).validate(),
 		method = $.validator.methods.minlength,
 		param = 2,
-		e = $("#text1, #text1c, #text2, #text3");
-	ok( method.call( v, e[0].value, e[0], param), "Valid text input" );
-	ok( method.call( v, e[1].value, e[1], param), "Valid text input" );
-	ok(!method.call( v, e[2].value, e[2], param), "Invalid text input" );
-	ok( method.call( v, e[3].value, e[3], param), "Valid text input" );
+		e = $( "#text1, #text1c, #text2, #text3" );
+	ok( method.call( v, e[0].value, e[0], param ), "Valid text input" );
+	ok( method.call( v, e[1].value, e[1], param ), "Valid text input" );
+	ok(!method.call( v, e[2].value, e[2], param ), "Invalid text input" );
+	ok( method.call( v, e[3].value, e[3], param ), "Valid text input" );
 
-	e = $("#check1, #check2, #check3");
-	ok(!method.call( v, e[0].value, e[0], param), "Valid checkbox" );
-	ok( method.call( v, e[1].value, e[1], param), "Valid checkbox" );
-	ok( method.call( v, e[2].value, e[2], param), "Invalid checkbox" );
+	e = $( "#check1, #check2, #check3" );
+	ok(!method.call( v, e[0].value, e[0], param ), "Valid checkbox" );
+	ok( method.call( v, e[1].value, e[1], param ), "Valid checkbox" );
+	ok( method.call( v, e[2].value, e[2], param ), "Invalid checkbox" );
 
-	e = $("#select1, #select2, #select3, #select4, #select5");
-	ok(method.call( v, e[0].value, e[0], param), "Valid select " + e[0].id );
-	ok(!method.call( v, e[1].value, e[1], param), "Invalid select " + e[1].id );
-	ok( method.call( v, e[2].value, e[2], param), "Valid select " + e[2].id );
-	ok( method.call( v, e[3].value, e[3], param), "Valid select " + e[3].id );
-	ok( method.call( v, e[4].value, e[4], param), "Valid select " + e[4].id );
-});
+	e = $( "#select1, #select2, #select3, #select4, #select5" );
+	ok(method.call( v, e[0].value, e[0], param ), "Valid select " + e[0].id );
+	ok(!method.call( v, e[1].value, e[1], param ), "Invalid select " + e[1].id );
+	ok( method.call( v, e[2].value, e[2], param ), "Valid select " + e[2].id );
+	ok( method.call( v, e[3].value, e[3], param ), "Valid select " + e[3].id );
+	ok( method.call( v, e[4].value, e[4], param ), "Valid select " + e[4].id );
+} );
 
-test("maxlength", function() {
-	var v = jQuery("#form").validate(),
+test( "maxlength", function() {
+	var v = jQuery( "#form" ).validate(),
 		method = $.validator.methods.maxlength,
 		param = 4,
-		e = $("#text1, #text2, #text3");
+		e = $( "#text1, #text2, #text3" );
 
-	ok( method.call( v, e[0].value, e[0], param), "Valid text input" );
-	ok( method.call( v, e[1].value, e[1], param), "Valid text input" );
-	ok(!method.call( v, e[2].value, e[2], param), "Invalid text input" );
+	ok( method.call( v, e[0].value, e[0], param ), "Valid text input" );
+	ok( method.call( v, e[1].value, e[1], param ), "Valid text input" );
+	ok(!method.call( v, e[2].value, e[2], param ), "Invalid text input" );
 
-	e = $("#check1, #check2, #check3");
-	ok( method.call( v, e[0].value, e[0], param), "Valid checkbox" );
-	ok( method.call( v, e[1].value, e[1], param), "Invalid checkbox" );
-	ok(!method.call( v, e[2].value, e[2], param), "Invalid checkbox" );
+	e = $( "#check1, #check2, #check3" );
+	ok( method.call( v, e[0].value, e[0], param ), "Valid checkbox" );
+	ok( method.call( v, e[1].value, e[1], param ), "Invalid checkbox" );
+	ok(!method.call( v, e[2].value, e[2], param ), "Invalid checkbox" );
 
-	e = $("#select1, #select2, #select3, #select4");
-	ok( method.call( v, e[0].value, e[0], param), "Valid select" );
-	ok( method.call( v, e[1].value, e[1], param), "Valid select" );
-	ok( method.call( v, e[2].value, e[2], param), "Valid select" );
-	ok(!method.call( v, e[3].value, e[3], param), "Invalid select" );
-});
+	e = $( "#select1, #select2, #select3, #select4" );
+	ok( method.call( v, e[0].value, e[0], param ), "Valid select" );
+	ok( method.call( v, e[1].value, e[1], param ), "Valid select" );
+	ok( method.call( v, e[2].value, e[2], param ), "Valid select" );
+	ok(!method.call( v, e[3].value, e[3], param ), "Invalid select" );
+} );
 
-test("rangelength", function() {
-	var v = jQuery("#form").validate(),
+test( "rangelength", function() {
+	var v = jQuery( "#form" ).validate(),
 		method = $.validator.methods.rangelength,
 		param = [ 2, 4 ],
-		e = $("#text1, #text2, #text3");
+		e = $( "#text1, #text2, #text3" );
 
-	ok( method.call( v, e[0].value, e[0], param), "Valid text input" );
-	ok(!method.call( v, e[1].value, e[1], param), "Invalid text input" );
-	ok(!method.call( v, e[2].value, e[2], param), "Invalid text input" );
-});
+	ok( method.call( v, e[0].value, e[0], param ), "Valid text input" );
+	ok(!method.call( v, e[1].value, e[1], param ), "Invalid text input" );
+	ok(!method.call( v, e[2].value, e[2], param ), "Invalid text input" );
+} );
 
-test("min", function() {
-	var v = jQuery("#form").validate(),
+test( "min", function() {
+	var v = jQuery( "#form" ).validate(),
 		method = $.validator.methods.min,
 		param = 8,
-		e = $("#value1, #value2, #value3");
+		e = $( "#value1, #value2, #value3" );
 
-	ok(!method.call( v, e[0].value, e[0], param), "Invalid text input" );
-	ok( method.call( v, e[1].value, e[1], param), "Valid text input" );
-	ok( method.call( v, e[2].value, e[2], param), "Valid text input" );
-});
+	ok(!method.call( v, e[0].value, e[0], param ), "Invalid text input" );
+	ok( method.call( v, e[1].value, e[1], param ), "Valid text input" );
+	ok( method.call( v, e[2].value, e[2], param ), "Valid text input" );
+} );
 
-test("max", function() {
-	var v = jQuery("#form").validate(),
+test( "max", function() {
+	var v = jQuery( "#form" ).validate(),
 		method = $.validator.methods.max,
 		param = 12,
-		e = $("#value1, #value2, #value3");
+		e = $( "#value1, #value2, #value3" );
 
-	ok( method.call( v, e[0].value, e[0], param), "Valid text input" );
-	ok( method.call( v, e[1].value, e[1], param), "Valid text input" );
-	ok(!method.call( v, e[2].value, e[2], param), "Invalid text input" );
-});
+	ok( method.call( v, e[0].value, e[0], param ), "Valid text input" );
+	ok( method.call( v, e[1].value, e[1], param ), "Valid text input" );
+	ok(!method.call( v, e[2].value, e[2], param ), "Invalid text input" );
+} );
 
-test("range", function() {
-	var v = jQuery("#form").validate(),
+test( "range", function() {
+	var v = jQuery( "#form" ).validate(),
 		method = $.validator.methods.range,
 		param = [ 4, 12 ],
-		e = $("#value1, #value2, #value3");
+		e = $( "#value1, #value2, #value3" );
 
-	ok(!method.call( v, e[0].value, e[0], param), "Invalid text input" );
-	ok( method.call( v, e[1].value, e[1], param), "Valid text input" );
-	ok(!method.call( v, e[2].value, e[2], param), "Invalid text input" );
-});
+	ok(!method.call( v, e[0].value, e[0], param ), "Invalid text input" );
+	ok( method.call( v, e[1].value, e[1], param ), "Valid text input" );
+	ok(!method.call( v, e[2].value, e[2], param ), "Invalid text input" );
+} );
 
-test("equalTo", function() {
-	var v = jQuery("#form").validate(),
+test( "equalTo", function() {
+	var v = jQuery( "#form" ).validate(),
 		method = $.validator.methods.equalTo,
-		e = $("#text1, #text2");
+		e = $( "#text1, #text2" );
 
 	ok( method.call( v, "Test", e[0], "#text1" ), "Text input" );
 	ok( method.call( v, "T", e[1], "#text2" ), "Another one" );
-});
+} );
 
-test("creditcard", function() {
-	var method = methodTest("creditcard");
+test( "creditcard", function() {
+	var method = methodTest( "creditcard" );
 	ok( method( "4111-1111-1111-1111" ), "Valid creditcard number" );
 	ok( method( "4111 1111 1111 1111" ), "Valid creditcard number" );
 	ok(!method( "41111" ), "Invalid creditcard number" );
 	ok(!method( "asdf" ), "Invalid creditcard number" );
-});
+} );
 
-test("extension", function() {
-	var method = methodTest("extension"),
+test( "extension", function() {
+	var method = methodTest( "extension" ),
 		v;
 	ok( method( "picture.gif" ), "Valid default accept type" );
 	ok( method( "picture.jpg" ), "Valid default accept type" );
@@ -346,9 +346,9 @@ test("extension", function() {
 	ok( method( "picture.png" ), "Valid default accept type" );
 	ok(!method( "picture.pgn" ), "Invalid default accept type" );
 
-	v = jQuery("#form").validate();
+	v = jQuery( "#form" ).validate();
 	method = function(value, param) {
-		return $.validator.methods.extension.call(v, value, $("#text1")[0], param);
+		return $.validator.methods.extension.call( v, value, $( "#text1" )[0], param );
 	};
 	ok( method( "picture.doc", "doc" ), "Valid custom accept type" );
 	ok( method( "picture.pdf", "doc|pdf" ), "Valid custom accept type" );
@@ -359,12 +359,12 @@ test("extension", function() {
 	ok( method( "picture.pdf", "doc,pdf" ), "Valid custom accept type, comma separated" );
 	ok( method( "picture.pdf", "pdf,doc" ), "Valid custom accept type, comma separated" );
 	ok(!method( "picture.pdf", "gop,top" ), "Invalid custom accept type, comma separated" );
-});
+} );
 
-asyncTest("remote", function() {
+asyncTest( "remote", function() {
 	expect(7);
-	var e = $("#username"),
-		v = $("#userForm").validate({
+	var e = $( "#username" ),
+		v = $( "#userForm" ).validate( {
 			rules: {
 				username: {
 					required: true,
@@ -374,36 +374,36 @@ asyncTest("remote", function() {
 			messages: {
 				username: {
 					required: "Please",
-					remote: jQuery.validator.format("{0} in use")
+					remote: jQuery.validator.format( "{0} in use" )
 				}
 			},
 			submitHandler: function() {
-				ok( false, "submitHandler may never be called when validating only elements");
+				ok( false, "submitHandler may never be called when validating only elements" );
 			}
-		});
+		} );
 
 	$(document).ajaxStop(function() {
-		$(document).unbind("ajaxStop");
+		$(document).unbind( "ajaxStop" );
 		equal( 1, v.size(), "There must be one error" );
 		equal( "Peter in use", v.errorList[0].message );
 
 		$(document).ajaxStop(function() {
-			$(document).unbind("ajaxStop");
+			$(document).unbind( "ajaxStop" );
 			equal( 1, v.size(), "There must be one error" );
 			equal( "Peter2 in use", v.errorList[0].message );
 			start();
-		});
-		e.val("Peter2");
+		} );
+		e.val( "Peter2" );
 		strictEqual( v.element(e), true, "new value, new request; dependency-mismatch considered as valid though" );
-	});
+	} );
 	strictEqual( v.element(e), false, "invalid element, nothing entered yet" );
-	e.val("Peter");
+	e.val( "Peter" );
 	strictEqual( v.element(e), true, "still invalid, because remote validation must block until it returns; dependency-mismatch considered as valid though" );
-});
+} );
 
-asyncTest("remote, customized ajax options", function() {
+asyncTest( "remote, customized ajax options", function() {
 	expect(2);
-	$("#userForm").validate({
+	$( "#userForm" ).validate( {
 		rules: {
 			username: {
 				required: true,
@@ -425,15 +425,15 @@ asyncTest("remote, customized ajax options", function() {
 				}
 			}
 		}
-	});
-	$("#username").val("asdf");
-	$("#userForm").valid();
-});
+	} );
+	$( "#username" ).val( "asdf" );
+	$( "#userForm" ).valid();
+} );
 
-asyncTest("remote extensions", function() {
+asyncTest( "remote extensions", function() {
 	expect(5);
-	var e = $("#username"),
-		v = $("#userForm").validate({
+	var e = $( "#username" ),
+		v = $( "#userForm" ).validate( {
 			rules: {
 				username: {
 					required: true,
@@ -448,10 +448,10 @@ asyncTest("remote extensions", function() {
 			submitHandler: function() {
 				ok( false, "submitHandler may never be called when validating only elements" );
 			}
-		});
+		} );
 
-	$(document).ajaxStop(function() {
-		$(document).unbind("ajaxStop");
+	$(document).ajaxStop( function() {
+		$(document).unbind( "ajaxStop" );
 		if ( v.size() !== 0 ) {
 			ok( "There must be one error" );
 			equal( v.errorList[0].message, "asdf is already taken, please try something else" );
@@ -459,19 +459,19 @@ asyncTest("remote extensions", function() {
 			equal( v.errorList[0].message, "asdf is already taken, please try something else", "message doesn't change on revalidation" );
 		}
 		start();
-	});
-	strictEqual( v.element(e), false, "invalid element, nothing entered yet" );
-	e.val("asdf");
-	strictEqual( v.element(e), true, "still invalid, because remote validation must block until it returns; dependency-mismatch considered as valid though" );
-});
+	} );
+	strictEqual( v.element(e ), false, "invalid element, nothing entered yet" );
+	e.val( "asdf" );
+	strictEqual( v.element(e ), true, "still invalid, because remote validation must block until it returns; dependency-mismatch considered as valid though" );
+} );
 
-asyncTest("remote radio correct value sent", function() {
+asyncTest( "remote radio correct value sent", function() {
 	expect(1);
-	var e = $("#testForm10Radio2"),
+	var e = $( "#testForm10Radio2" ),
 		v;
 
 	e.attr( "checked", "checked" );
-	v = $("#testForm10").validate({
+	v = $( "#testForm10" ).validate({
 		rules: {
 			testForm10Radio: {
 				required: true,
@@ -485,15 +485,15 @@ asyncTest("remote radio correct value sent", function() {
 				}
 			}
 		}
-	});
+	} );
 
 	v.element(e);
-});
+} );
 
-asyncTest("remote reset clear old value", function() {
+asyncTest( "remote reset clear old value", function() {
 	expect(1);
-	var e = $("#username"),
-		v = $("#userForm").validate({
+	var e = $( "#username" ),
+		v = $( "#userForm" ).validate({
 			rules: {
 				username: {
 					required: true,
@@ -501,7 +501,7 @@ asyncTest("remote reset clear old value", function() {
 						url: "echo.php",
 						dataFilter: function(data) {
 							var json = JSON.parse(data);
-							if (json.username === "asdf") {
+							if ( json.username === "asdf" ) {
 								return "\"asdf is already taken\"";
 							}
 							return "\"" + true + "\"";
@@ -509,35 +509,35 @@ asyncTest("remote reset clear old value", function() {
 					}
 				}
 			}
-		});
+		} );
 
-	$(document).ajaxStop(function() {
+	$(document).ajaxStop( function() {
 		var waitTimeout;
 
-		$(document).unbind("ajaxStop");
+		$(document).unbind( "ajaxStop" );
 
-		$(document).ajaxStop(function() {
-			clearTimeout(waitTimeout);
+		$(document).ajaxStop( function() {
+			clearTimeout( waitTimeout );
 			ok( true, "Remote request sent to server" );
 			start();
-		});
+		} );
 
 		v.resetForm();
-		e.val("asdf");
-		waitTimeout = setTimeout(function() {
+		e.val( "asdf" );
+		waitTimeout = setTimeout( function() {
 			ok( false, "Remote server did not get request" );
 			start();
-		}, 200);
-		v.element(e);
-	});
-	e.val("asdf");
-	v.element(e);
-});
+		}, 200 );
+		v.element( e );
+	} );
+	e.val( "asdf" );
+	v.element( e );
+} );
 
-module("additional methods");
+module( "additional methods" );
 
-test("phone (us)", function() {
-	var method = methodTest("phoneUS");
+test( "phone (us)", function() {
+	var method = methodTest( "phoneUS" );
 	ok( method( "1(212)-999-2345" ), "Valid US phone number" );
 	ok( method( "212 999 2344" ), "Valid US phone number" );
 	ok( method( "212-999-0983" ), "Valid US phone number" );
@@ -546,10 +546,10 @@ test("phone (us)", function() {
 	ok(!method( "234-911-5678" ), "Invalid US phone number, because the exchange code cannot be in the form N11" );
 	ok(!method( "911-333-5678" ), "Invalid US phone number, because the area code cannot be in the form N11" );
 	ok(method( "234-912-5678" ), "Valid US phone number" );
-});
+} );
 
-test("phoneUK", function() {
-	var method = methodTest("phoneUK");
+test( "phoneUK", function() {
+	var method = methodTest( "phoneUK" );
 	ok( method( "0117 333 5555" ), "Valid UK Phone Number" );
 	ok( method( "0121 555 5555" ), "Valid UK Phone Number" );
 	ok( method( "01633 555555" ), "Valid UK Phone Number" );
@@ -578,10 +578,10 @@ test("phoneUK", function() {
 	ok( method( "+44 7322 555 555" ), "Valid UK Phone Number" );
 	ok(!method( "7222 555555" ), "Invalid UK Phone Number" );
 	ok(!method( "+44 07222 555555" ), "Invalid UK Phone Number" );
-});
+} );
 
-test("mobileUK", function() {
-	var method = methodTest("mobileUK");
+test( "mobileUK", function() {
+	var method = methodTest( "mobileUK" );
 	ok( method( "07134234323" ), "Valid UK Mobile Number" );
 	ok( method( "07334234323" ), "Valid UK Mobile Number" );
 	ok( method( "07624234323" ), "Valid UK Mobile Number" );
@@ -599,19 +599,19 @@ test("mobileUK", function() {
 	ok(!method( "+447604234323" ), "Invalid UK Mobile Number" );
 	ok(!method( "+4477342343234" ), "Invalid UK Mobile Number" );
 	ok(!method( "+4444342343234" ), "Invalid UK Mobile Number" );
-});
+} );
 
-test("dateITA", function() {
-	var method = methodTest("dateITA");
+test( "dateITA", function() {
+	var method = methodTest( "dateITA" );
 	ok( method( "01/01/1900" ), "Valid date ITA" );
 	ok( method( "17/10/2010" ), "Valid date ITA" );
 	ok(!method( "01/13/1990" ), "Invalid date ITA" );
 	ok(!method( "01.01.1900" ), "Invalid date ITA" );
 	ok(!method( "01/01/199" ), "Invalid date ITA" );
-});
+} );
 
-test("dateFA", function() {
-	var method = methodTest("dateFA");
+test( "dateFA", function() {
+	var method = methodTest( "dateFA" );
 
 	ok( method( "1342/12/29" ), "Valid date FA" );
 	ok( method( "1342/12/30" ), "Valid date FA" );
@@ -629,10 +629,10 @@ test("dateFA", function() {
 	ok(!method( "1361/0/11" ), "Invalid date FA" );
 	ok(!method( "63/4/4" ), "Invalid date FA" );
 	ok(!method( "15/6/1361" ), "Invalid date FA" );
-});
+} );
 
-test("iban", function() {
-	var method = methodTest("iban");
+test( "iban", function() {
+	var method = methodTest( "iban" );
 	ok( method( "NL20INGB0001234567" ), "Valid IBAN" );
 	ok( method( "DE68 2105 0170 0012 3456 78" ), "Valid IBAN" );
 	ok( method( "NL20 INGB0001234567" ), "Valid IBAN: invalid spacing" );
@@ -706,12 +706,12 @@ test("iban", function() {
 	ok( method( "TR33 0006 1005 1978 6457 8413 26" ), "Valid IBAN - TR" );
 	ok( method( "AE07 0331 2345 6789 0123 456" ), "Valid IBAN - AE" );
 	ok( method( "GB29 NWBK 6016 1331 9268 19" ), "Valid IBAN - GB" );
-});
+} );
 
 /**
  * BIC tests (For BIC definition take a look on the implementation itself)
  */
-test("bic", function() {
+test( "bic", function() {
 	var method = methodTest( "bic" );
 
 	ok( !method( "PBNKDEF" ), "Invalid BIC: too short" );
@@ -734,10 +734,10 @@ test("bic", function() {
 	ok( method( "AAFFFRP1" ), "Valid BIC" );
 	ok( method( "DEUTDEFFAB1" ), "Valid BIC" );
 	ok( method( "DEUTDEFFAXX" ), "Valid BIC" );
-});
+} );
 
-test("postcodeUK", function() {
-	var method = methodTest("postcodeUK");
+test( "postcodeUK", function() {
+	var method = methodTest( "postcodeUK" );
 	ok( method( "AA9A 9AA" ), "Valid postcode" );
 	ok( method( "A9A 9AA" ), "Valid postcode" );
 	ok( method( "A9 9AA" ), "Valid postcode" );
@@ -757,10 +757,10 @@ test("postcodeUK", function() {
 	ok(!method( "99 9999" ), "Invalid postcode" );
 	ok(!method( "9 9999" ), "Invalid postcode" );
 	ok(!method( "99999" ), "Invalid postcode" );
-});
+} );
 
-test("dateNL", function() {
-	var method = methodTest("dateNL");
+test( "dateNL", function() {
+	var method = methodTest( "dateNL" );
 	ok( method( "01-01-1900" ), "Valid date NL" );
 	ok( method( "01.01.1900" ), "Valid date NL" );
 	ok( method( "01/01/1900" ), "Valid date NL" );
@@ -771,10 +771,10 @@ test("dateNL", function() {
 	ok(!method( "00-01-1900" ), "Invalid date NL" );
 	ok(!method( "35-01-1990" ), "Invalid date NL" );
 	ok(!method( "01.01.190" ), "Invalid date NL" );
-});
+} );
 
-test("phoneNL", function() {
-	var method = methodTest("phoneNL");
+test( "phoneNL", function() {
+	var method = methodTest( "phoneNL" );
 	ok( method( "0701234567" ), "Valid phone NL" );
 	ok( method( "0687654321" ), "Valid phone NL" );
 	ok( method( "020-1234567" ), "Valid phone NL" );
@@ -786,10 +786,10 @@ test("phoneNL", function() {
 	ok(!method( "020-12345678" ), "Invalid phone NL: too long" );
 	ok(!method( "-0201234567" ), "Invalid phone NL" );
 	ok(!method( "+310201234567" ), "Invalid phone NL: no 0 after +31 allowed" );
-});
+} );
 
-test("mobileNL", function() {
-	var method = methodTest("mobileNL");
+test( "mobileNL", function() {
+	var method = methodTest( "mobileNL" );
 	ok( method( "0612345678" ), "Valid NL Mobile Number" );
 	ok( method( "06-12345678" ), "Valid NL Mobile Number" );
 	ok( method( "06-12 345 678" ), "Valid NL Mobile Number" );
@@ -802,10 +802,10 @@ test("mobileNL", function() {
 	ok(!method( "06-123456789" ), "Invalid NL Mobile Number: too long" );
 	ok(!method( "-0612345678" ), "Invalid NL Mobile Number" );
 	ok(!method( "+310612345678" ), "Invalid NL Mobile Number: no 0 after +31 allowed" );
-});
+} );
 
-test("postalcodeNL", function() {
-	var method = methodTest("postalcodeNL");
+test( "postalcodeNL", function() {
+	var method = methodTest( "postalcodeNL" );
 	ok( method( "1234AB" ), "Valid NL Postal Code" );
 	ok( method( "1234ab" ), "Valid NL Postal Code" );
 	ok( method( "1234 AB" ), "Valid NL Postal Code" );
@@ -815,10 +815,10 @@ test("postalcodeNL", function() {
 	ok(!method( "1234  AA" ), "Invalid NL Postal Code: too many spaces" );
 	ok(!method( "AA1234" ), "Invalid NL Postal Code" );
 	ok(!method( "1234-AA" ), "Invalid NL Postal Code" );
-});
+} );
 
-test("bankaccountNL", function() {
-	var method = methodTest("bankaccountNL");
+test( "bankaccountNL", function() {
+	var method = methodTest( "bankaccountNL" );
 	ok( method( "755490975" ), "Valid NL bank account" );
 	ok( method( "75 54 90 975" ), "Valid NL bank account" );
 	ok( method( "123456789" ), "Valid NL bank account" );
@@ -831,26 +831,26 @@ test("bankaccountNL", function() {
 	ok(!method( "123456781" ), "Invalid NL bank account" );
 	ok(!method( "123456784" ), "Invalid NL bank account" );
 	ok(!method( "123456788" ), "Invalid NL bank account" );
-});
+} );
 
-test("giroaccountNL", function() {
-	var method = methodTest("giroaccountNL");
+test( "giroaccountNL", function() {
+	var method = methodTest( "giroaccountNL" );
 	ok( method( "123" ), "Valid NL giro  account" );
 	ok( method( "1234567" ), "Valid NL giro account" );
 	ok(!method( "123456788" ), "Invalid NL giro account" );
-});
+} );
 
-test("bankorgiroaccountNL", function() {
-	var method = methodTest("bankorgiroaccountNL");
+test( "bankorgiroaccountNL", function() {
+	var method = methodTest( "bankorgiroaccountNL" );
 	ok( method( "123" ), "Valid NL giro account" );
 	ok( method( "1234567" ), "Valid NL giro account" );
 	ok( method( "123456789" ), "Valid NL bank account" );
 	ok(!method( "12345678" ), "Invalid NL bank or giro account" );
 	ok(!method( "123456788" ), "Invalid NL bank or giro account" );
-});
+} );
 
-test("time", function() {
-	var method = methodTest("time");
+test( "time", function() {
+	var method = methodTest( "time" );
 	ok( method( "00:00" ), "Valid time, lower bound" );
 	ok( method( "23:59" ), "Valid time, upper bound" );
 	ok(!method( "12" ), "Invalid time" );
@@ -863,10 +863,10 @@ test("time", function() {
 	ok(!method( "120:00" ), "Invalid time" );
 	ok(!method( "12:001" ), "Invalid time" );
 	ok(!method( "12:00a" ), "Invalid time" );
-});
+} );
 
-test("time12h", function() {
-	var method = methodTest("time12h");
+test( "time12h", function() {
+	var method = methodTest( "time12h" );
 	ok( method( "12:00 AM" ), "Valid time, lower bound, am" );
 	ok( method( "11:59 AM" ), "Valid time, upper bound, am" );
 	ok( method( "12:00AM" ), "Valid time, no space, am" );
@@ -883,19 +883,19 @@ test("time12h", function() {
 	ok(!method( "12:61 am" ), "Invalid time" );
 	ok(!method( "13:00 am" ), "Invalid time" );
 	ok(!method( "00:00 am" ), "Invalid time" );
-});
+} );
 
-test("minWords", function() {
-	var method = methodTest("minWords");
+test( "minWords", function() {
+	var method = methodTest( "minWords" );
 	ok( method( "hello worlds", 2 ), "plain text, valid" );
 	ok( method( "<b>hello</b> world", 2 ), "html, valid" );
 	ok(!method( "hello", 2 ), "plain text, invalid" );
 	ok(!method( "<b>world</b>", 2 ), "html, invalid" );
 	ok(!method( "world <br/>", 2 ), "html, invalid" );
-});
+} );
 
-test("maxWords", function() {
-	var method = methodTest("maxWords");
+test( "maxWords", function() {
+	var method = methodTest( "maxWords" );
 	ok( method( "hello", 2 ), "plain text, valid" );
 	ok( method( "<b>world</b>", 2 ), "html, valid" );
 	ok( method( "world <br/>", 2 ), "html, valid" );
@@ -903,19 +903,19 @@ test("maxWords", function() {
 	ok( method( "<b>hello</b> world", 2 ), "html, valid" );
 	ok(!method( "hello 123 world", 2 ), "plain text, invalid" );
 	ok(!method( "<b>hello</b> 123 world", 2 ), "html, invalid" );
-});
+} );
 
-test("rangeWords", function() {
-	var method = methodTest("rangeWords");
+test( "rangeWords", function() {
+	var method = methodTest( "rangeWords" );
 	ok( method( "hello", [ 0, 2 ] ), "plain text, valid" );
 	ok( method( "hello worlds", [ 0, 2 ] ), "plain text, valid" );
 	ok( method( "<b>hello</b> world", [ 0, 2 ] ), "html, valid" );
 	ok(!method( "hello worlds what is up", [ 0, 2 ] ), "plain text, invalid" );
 	ok(!method( "<b>Hello</b> <b>world</b> <b>hello</b>", [ 0, 2 ] ), "html, invalid" );
-});
+} );
 
-test("pattern", function() {
-	var method = methodTest("pattern");
+test( "pattern", function() {
+	var method = methodTest( "pattern" );
 	ok( method( "AR1004", "AR\\d{4}" ), "Correct format for the given RegExp" );
 	ok( method( "AR1004", /^AR\d{4}$/ ), "Correct format for the given RegExp" );
 	ok(!method( "BR1004", /^AR\d{4}$/ ), "Invalid format for the given RegExp" );
@@ -926,16 +926,16 @@ test("pattern", function() {
 	ok(!method( "1ABC def", "[a-zA-Z0-9]+" ), "Invalid format for the given RegExp" );
 	ok( method( "2014-10-02", "[0-9]{4}-(0[1-9]|1[012])-(0[1-9]|1[0-9]|2[0-9]|3[01])" ), "Correct format for the given RegExp" );
 	ok(!method( "02-10-2014", "[0-9]{4}-(0[1-9]|1[012])-(0[1-9]|1[0-9]|2[0-9]|3[01])" ), "Invalid format for the given RegExp" );
-});
+} );
 
 function testCardTypeByNumber(number, cardname, expected) {
-	$("#cardnumber").val(number);
-	var actual = $("#ccform").valid();
-	equal(actual, expected, $.validator.format("Expect card number {0} to validate to {1}, actually validated to ", number, expected));
+	$( "#cardnumber" ).val( number );
+	var actual = $( "#ccform" ).valid();
+	equal( actual, expected, $.validator.format( "Expect card number {0} to validate to {1}, actually validated to ", number, expected ) );
 }
 
-test("creditcardtypes, all", function() {
-	$("#ccform").validate({
+test( "creditcardtypes, all", function() {
+	$( "#ccform" ).validate( {
 		rules: {
 			cardnumber: {
 				creditcard: true,
@@ -944,7 +944,7 @@ test("creditcardtypes, all", function() {
 				}
 			}
 		}
-	});
+	} );
 
 	testCardTypeByNumber( "4111-1111-1111-1111", "VISA", true );
 	testCardTypeByNumber( "5111-1111-1111-1118", "MasterCard", true );
@@ -955,10 +955,10 @@ test("creditcardtypes, all", function() {
 	testCardTypeByNumber( "5432-1111-1111-1111", "MasterCard", false );
 	testCardTypeByNumber( "6611-6611-6611-6611", "Discover", false );
 	testCardTypeByNumber( "3777-7777-7777-7777", "AMEX", false );
-});
+} );
 
-test("creditcardtypes, visa", function() {
-	$("#ccform").validate({
+test( "creditcardtypes, visa", function() {
+	$( "#ccform" ).validate({
 		rules: {
 			cardnumber: {
 				creditcard: true,
@@ -967,16 +967,16 @@ test("creditcardtypes, visa", function() {
 				}
 			}
 		}
-	});
+	} );
 
 	testCardTypeByNumber( "4111-1111-1111-1111", "VISA", true );
 	testCardTypeByNumber( "5111-1111-1111-1118", "MasterCard", false );
 	testCardTypeByNumber( "6111-1111-1111-1116", "Discover", false );
 	testCardTypeByNumber( "3400-0000-0000-009", "AMEX", false );
-});
+} );
 
-test("creditcardtypes, mastercard", function() {
-	$("#ccform").validate({
+test( "creditcardtypes, mastercard", function() {
+	$( "#ccform" ).validate({
 		rules: {
 			cardnumber: {
 				creditcard: true,
@@ -985,97 +985,97 @@ test("creditcardtypes, mastercard", function() {
 				}
 			}
 		}
-	});
+	} );
 
 	testCardTypeByNumber( "5111-1111-1111-1118", "MasterCard", true );
 	testCardTypeByNumber( "6111-1111-1111-1116", "Discover", false );
 	testCardTypeByNumber( "3400-0000-0000-009", "AMEX", false );
 	testCardTypeByNumber( "4111-1111-1111-1111", "VISA", false );
-});
+} );
 
 function fillFormWithValuesAndExpect(formSelector, inputValues, expected) {
 	var i, actual;
 
 	for (i = 0; i < inputValues.length; i++) {
-		$(formSelector + " input:eq(" + i + ")").val(inputValues[i]);
+		$( formSelector + " input:eq(" + i + " )" ).val( inputValues[i] );
 	}
 	actual = $(formSelector).valid();
-	equal(actual, expected, $.validator.format("Filled inputs of form '{0}' with {1} values ({2})", formSelector, inputValues.length, inputValues.toString()));
+	equal( actual, expected, $.validator.format( "Filled inputs of form '{0}' with {1} values ({2} )", formSelector, inputValues.length, inputValues.toString() ) );
 
 }
 
-test("require_from_group", function() {
-	$("#productInfo").validate({
+test( "require_from_group", function() {
+	$( "#productInfo" ).validate({
 		rules: {
 			partnumber: { require_from_group: [ 2, ".productInfo" ] },
 			description: { require_from_group: [ 2, ".productInfo" ] },
 			discount: { require_from_group: [ 2, ".productInfo" ] }
 		}
-	});
+	} );
 
-	fillFormWithValuesAndExpect("#productInfo", [], false);
-	fillFormWithValuesAndExpect("#productInfo", [ 123 ], false);
-	$("#productInfo input[type='checkbox']").attr("checked", "checked");
-	fillFormWithValuesAndExpect("#productInfo", [ 123 ], true);
-	$("#productInfo input[type='checkbox']").removeAttr("checked");
-	fillFormWithValuesAndExpect("#productInfo", [ 123, "widget" ], true);
-	fillFormWithValuesAndExpect("#productInfo", [ 123, "widget", "red" ], true);
-	fillFormWithValuesAndExpect("#productInfo", [ 123, "widget", "red" ], true);
-});
+	fillFormWithValuesAndExpect( "#productInfo", [], false );
+	fillFormWithValuesAndExpect( "#productInfo", [ 123 ], false );
+	$( "#productInfo input[type='checkbox']" ).attr( "checked", "checked" );
+	fillFormWithValuesAndExpect( "#productInfo", [ 123 ], true );
+	$( "#productInfo input[type='checkbox']" ).removeAttr( "checked" );
+	fillFormWithValuesAndExpect( "#productInfo", [ 123, "widget" ], true );
+	fillFormWithValuesAndExpect( "#productInfo", [ 123, "widget", "red" ], true );
+	fillFormWithValuesAndExpect( "#productInfo", [ 123, "widget", "red" ], true );
+} );
 
-test("require_from_group preserve other rules", function() {
-	$("#productInfo").validate({
+test( "require_from_group preserve other rules", function() {
+	$( "#productInfo" ).validate({
 		rules: {
 			partnumber: { require_from_group: [ 2, ".productInfo" ] },
 			description: { require_from_group: [ 2, ".productInfo" ] },
 			color: { require_from_group: [ 2, ".productInfo" ] },
 			supplier: { required: true }
 		}
-	});
+	} );
 
-	fillFormWithValuesAndExpect("#productInfo", [], false);
-	fillFormWithValuesAndExpect("#productInfo", [ 123 ], false);
-	fillFormWithValuesAndExpect("#productInfo", [ 123, "widget" ], false);
-	fillFormWithValuesAndExpect("#productInfo", [ "", "", "", "Acme" ], false);
-	fillFormWithValuesAndExpect("#productInfo", [ 123, "", "", "Acme" ], false);
-	fillFormWithValuesAndExpect("#productInfo", [ 123, "widget", "", "Acme" ], true);
-	fillFormWithValuesAndExpect("#productInfo", [ 123, "widget", "red", "Acme" ], true);
-});
+	fillFormWithValuesAndExpect( "#productInfo", [], false );
+	fillFormWithValuesAndExpect( "#productInfo", [ 123 ], false );
+	fillFormWithValuesAndExpect( "#productInfo", [ 123, "widget" ], false );
+	fillFormWithValuesAndExpect( "#productInfo", [ "", "", "", "Acme" ], false );
+	fillFormWithValuesAndExpect( "#productInfo", [ 123, "", "", "Acme" ], false );
+	fillFormWithValuesAndExpect( "#productInfo", [ 123, "widget", "", "Acme" ], true );
+	fillFormWithValuesAndExpect( "#productInfo", [ 123, "widget", "red", "Acme" ], true );
+} );
 
-test("skip_or_fill_minimum", function() {
-	$("#productInfo").validate({
+test( "skip_or_fill_minimum", function() {
+	$( "#productInfo" ).validate({
 		rules: {
 			partnumber:  { skip_or_fill_minimum: [ 2, ".productInfo" ] },
 			description: { skip_or_fill_minimum: [ 2, ".productInfo" ] },
 			color:       { skip_or_fill_minimum: [ 2, ".productInfo" ] }
 		}
-	});
+	} );
 
-	fillFormWithValuesAndExpect("#productInfo", [], true);
-	fillFormWithValuesAndExpect("#productInfo", [ 123 ], false);
-	fillFormWithValuesAndExpect("#productInfo", [ 123, "widget" ], true);
-	fillFormWithValuesAndExpect("#productInfo", [ 123, "widget", "red" ], true);
-});
+	fillFormWithValuesAndExpect( "#productInfo", [], true );
+	fillFormWithValuesAndExpect( "#productInfo", [ 123 ], false );
+	fillFormWithValuesAndExpect( "#productInfo", [ 123, "widget" ], true );
+	fillFormWithValuesAndExpect( "#productInfo", [ 123, "widget", "red" ], true );
+} );
 
-test("skip_or_fill_minimum preserve other rules", function() {
-	$("#productInfo").validate({
+test( "skip_or_fill_minimum preserve other rules", function() {
+	$( "#productInfo" ).validate({
 		rules: {
 			partnumber:  { skip_or_fill_minimum: [ 2, ".productInfo" ] },
 			description: { skip_or_fill_minimum: [ 2, ".productInfo" ] },
 			color:       { skip_or_fill_minimum: [ 2, ".productInfo" ] },
 			supplier: { required: true }
 		}
-	});
+	} );
 
-	fillFormWithValuesAndExpect("#productInfo", [], false);
-	fillFormWithValuesAndExpect("#productInfo", [ "", "", "", "Acme" ], true);
-	fillFormWithValuesAndExpect("#productInfo", [ 123, "", "", "Acme" ], false);
-	fillFormWithValuesAndExpect("#productInfo", [ 123, "widget", "", "Acme" ], true);
-	fillFormWithValuesAndExpect("#productInfo", [ 123, "widget", "red", "Acme" ], true);
-});
+	fillFormWithValuesAndExpect( "#productInfo", [], false );
+	fillFormWithValuesAndExpect( "#productInfo", [ "", "", "", "Acme" ], true );
+	fillFormWithValuesAndExpect( "#productInfo", [ 123, "", "", "Acme" ], false );
+	fillFormWithValuesAndExpect( "#productInfo", [ 123, "widget", "", "Acme" ], true );
+	fillFormWithValuesAndExpect( "#productInfo", [ 123, "widget", "red", "Acme" ], true );
+} );
 
-test("zipcodeUS", function() {
-	var method = methodTest("zipcodeUS");
+test( "zipcodeUS", function() {
+	var method = methodTest( "zipcodeUS" );
 	ok( method( "12345" ), "Valid zip" );
 	ok( method( "12345-2345" ), "Valid zip" );
 	ok( method( "90210-4567" ), "Valid zip" );
@@ -1084,10 +1084,10 @@ test("zipcodeUS", function() {
 	ok(!method( "123-23" ), "Invalid zip" );
 	ok(!method( "12345-43" ), "Invalid zip" );
 	ok(!method( "123456-7890" ), "Invalid zip" );
-});
+} );
 
-test("nifES", function() {
-	var method = methodTest("nifES");
+test( "nifES", function() {
+	var method = methodTest( "nifES" );
 	ok( method( "11441059P" ), "NIF valid" );
 	ok( method( "80054306T" ), "NIF valid" );
 	ok( method( "76048581R" ), "NIF valid" );
@@ -1113,10 +1113,10 @@ test("nifES", function() {
 	ok(!method( "05.122.654R" ), "NIF invalid: starts with 0 and dots" );
 	ok(!method( "5.122.654-R" ), "NIF invalid:  dots and dash" );
 	ok(!method( "05.122.654-R" ), "NIF invalid: starts with zero and dot and dash" );
-});
+} );
 
-test("nieES", function() {
-	var method = methodTest("nieES");
+test( "nieES", function() {
+	var method = methodTest( "nieES" );
 	ok( method( "X0093999K" ), "NIE valid" );
 	ok( method( "X1923000Q" ), "NIE valid" );
 	ok( method( "Z9669587R" ), "NIE valid" );
@@ -1142,10 +1142,10 @@ test("nieES", function() {
 	ok(!method( "05.122.654R" ), "NIE inválido: starts with 0 and dots" );
 	ok(!method( "5.122.654-R" ), "NIE inválido: dots and dash" );
 	ok(!method( "05.122.654-R" ), "NIE inválido: starts with zero and dot and dash" );
-});
+} );
 
-test("cifES", function() {
-	var method = methodTest("cifES");
+test( "cifES", function() {
+	var method = methodTest( "cifES" );
 	ok( method( "A79082244" ), "CIF valid" );
 	ok( method( "A60917978" ), "CIF valid" );
 	ok( method( "A39000013" ), "CIF valid" );
@@ -1178,45 +1178,47 @@ test("cifES", function() {
 	ok(!method( "Basdasdas" ), "CIF invalid: all letters" );
 	ok(!method( "B43.522.192" ), "CIF invalid: dots" );
 	ok(!method( "B-43.522.192" ), "CIF invalid: dots and dash" );
-});
+} );
 
-test("maxWords", function() {
-	var method = methodTest("maxWords"),
+test( "maxWords", function() {
+	var method = methodTest( "maxWords" ),
 		maxWords = 6;
 
-	ok( method( "I am a sentence", maxWords), "Max Words" );
-	ok(!method( "I'm way too long for this sentence!", maxWords), "Too many words" );
+	ok( method( "I am a sentence", maxWords ), "Max Words" );
+	ok(!method( "I'm way too long for this sentence!", maxWords ), "Too many words" );
 	ok(method( "Don’t “count” me as too long", maxWords), "Right amount of words with smartquotes" );
-	ok(!method( "But you can “count” me as too long", maxWords), "Too many words with smartquotes" );
-	ok(method( "<div>Don’t “count” me as too long</div>", maxWords), "Right amount of words with smartquotes w/ HTML" );
-	ok(!method( "<div>But you can “count” me as too long</div>", maxWords), "Too many words with smartquotes w/ HTML" );
-});
+	ok(!method( "But you can “count” me as too long", maxWords ), "Too many words with smartquotes" );
+	ok(method( "<div>Don’t “count” me as too long</div>", maxWords ), "Right amount of words with smartquotes w/ HTML" );
+	ok(!method( "<div>But you can “count” me as too long</div>", maxWords ), "Too many words with smartquotes w/ HTML" );
+} );
 
-test("minWords", function() {
-	var method = methodTest("minWords"),
+test( "minWords", function() {
+	var method = methodTest( "minWords" ),
 		minWords = 6;
 
-	ok(!method( "I am a short sentence", minWords), "Max Words" );
-	ok( method( "I'm way too long for this sentence!", minWords), "Too many words" );
-	ok(!method( "Don’t “count” me as short.", minWords), "Right amount of words with smartquotes" );
-	ok( method( "But you can “count” me as too short", minWords), "Too many words with smartquotes" );
-	ok(!method( "<div>“Count” me as too short.</div>", minWords), "Right amount of words with smartquotes w/ HTML" );
-	ok( method( "<div>But you can “count” me as too long</div>", minWords), "Too many words with smartquotes w/ HTML" );
-});
+	ok(!method( "I am a short sentence", minWords ), "Max Words" );
+	ok( method( "I'm way too long for this sentence!", minWords ), "Too many words" );
+	ok(!method( "Don’t “count” me as short.", minWords ), "Right amount of words with smartquotes" );
+	ok( method( "But you can “count” me as too short", minWords ), "Too many words with smartquotes" );
+	ok(!method( "<div>“Count” me as too short.</div>", minWords ), "Right amount of words with smartquotes w/ HTML" );
+	ok( method( "<div>But you can “count” me as too long</div>", minWords ), "Too many words with smartquotes w/ HTML" );
+} );
 
-test("rangeWords", function() {
-	var method = methodTest("rangeWords"),
+test( "rangeWords", function() {
+	var method = methodTest( "rangeWords" ),
 		rangeWords = [ 3, 6 ];
 
-	ok(!method( "I'm going to be longer than “six words!”", rangeWords), "Longer than 6 with smartquotes" );
-	ok( method( "I'm just the right amount!", rangeWords), "In between" );
-	ok( method( "Super short sentence’s.", rangeWords), "Low end" );
-	ok(!method( "I", rangeWords), "Too short" );
-	ok( method( "<div>“Count” me as perfect.</div>", rangeWords), "Right amount of words with smartquotes w/ HTML" );
-	ok(!method( "<div>But you can “count” me as too long</div>", rangeWords), "Too many words with smartquotes w/ HTML" );
-});
+	ok(!method( "I'm going to be longer than “six words!”", rangeWords ), "Longer than 6 with smartquotes" );
+	ok( method( "I'm just the right amount!", rangeWords ), "In between" );
+	ok( method( "Super short sentence’s.", rangeWords ), "Low end" );
+	ok(!method( "I", rangeWords ), "Too short" );
+	ok( method( "<div>“Count” me as perfect.</div>", rangeWords ), "Right amount of words with smartquotes w/ HTML" );
+	ok(!method( "<div>But you can “count” me as too long</div>", rangeWords ), "Too many words with smartquotes w/ HTML" );
+} );
 
-test("currency", function() { // Works with any symbol
+test( "currency", function() {
+
+	// Works with any symbol
 	var method = methodTest( "currency" );
 	ok( method( "£9", "£" ), "Symbol no decimal" );
 	ok( method( "£9.9", "£" ), "£, one decimal" );
@@ -1225,33 +1227,33 @@ test("currency", function() { // Works with any symbol
 	ok( method( "£9,999.9", "£" ), "£, thousand, comma separator, one decimal" );
 	ok( method( "£9,999.99", "£" ), "£, thousand, comma separator, two decimal" );
 	ok( method( "£9,999,999.9", "£" ), "£, million, comma separators, one decimal" );
-	ok( method( "9", [ "£", false ]), "Valid currency" );
-	ok( method( "9.9", [ "£", false ]), "Valid currency" );
-	ok( method( "9.99", [ "£", false ]), "Valid currency" );
-	ok( method( "9.90", [ "£", false ]), "Valid currency" );
-	ok( method( "9,999.9", [ "£", false ]), "Valid currency" );
-	ok( method( "9,999.99", [ "£", false ]), "Valid currency" );
-	ok( method( "9,999,999.9", [ "£", false ]), "Valid currency" );
+	ok( method( "9", [ "£", false ] ), "Valid currency" );
+	ok( method( "9.9", [ "£", false ] ), "Valid currency" );
+	ok( method( "9.99", [ "£", false ] ), "Valid currency" );
+	ok( method( "9.90", [ "£", false ] ), "Valid currency" );
+	ok( method( "9,999.9", [ "£", false ] ), "Valid currency" );
+	ok( method( "9,999.99", [ "£", false ] ), "Valid currency" );
+	ok( method( "9,999,999.9", [ "£", false ] ), "Valid currency" );
 	ok(!method( "9,", "£" ), "Invalid currency" );
 	ok(!method( "9,99.99", "£" ), "Invalid currency" );
 	ok(!method( "9,", "£" ), "Invalid currency" );
 	ok(!method( "9.999", "£" ), "Invalid currency" );
 	ok(!method( "9.999", "£" ), "Invalid currency" );
 	ok(!method( "9.99,9", "£" ), "Invalid currency" );
-});
+} );
 
-test("postalCodeCA", function() {
-	var method = methodTest("postalCodeCA");
+test( "postalCodeCA", function() {
+	var method = methodTest( "postalCodeCA" );
 	ok( method( "H0H 0H0" ), "Valid CA Postal Code; Single space" );
 	ok( !method( "H0H0H0" ), "Inalid CA Postal Code; No space" );
 	ok( !method( "H0H-0H0" ), "Invalid CA Postal Code; Single dash" );
 	ok( !method( "H0H 0H" ), "Invalid CA Postal Code; Too Short" );
 	ok( !method( "Z0H 0H" ), "Invalid CA Postal Code; Only 'ABCEGHJKLMNPRSTVXY' are valid starting characters" );
 	ok( !method( "h0h 0h0" ), "Invalid CA Postal Code; Only upper case characters" );
-});
+} );
 
-test("stateUS", function() {
-	var method = methodTest("stateUS");
+test( "stateUS", function() {
+	var method = methodTest( "stateUS" );
 	ok( method( "AZ" ), "Valid US state" );
 	ok( method( "OH" ), "Valid US state" );
 	ok( method( "DC" ), "Valid US state" );
@@ -1260,18 +1262,18 @@ test("stateUS", function() {
 	ok( method( "me", { caseSensitive: false } ), "Valid US state" );
 	ok(!method( "az", { caseSensitive: true } ), "Must be capital letters" );
 	ok(!method( "mp", { caseSensitive: false, includeTerritories: false } ), "US territories not allowed" );
-});
+} );
 
-test("postalcodeBR", function() {
-	var method = methodTest("postalcodeBR");
+test( "postalcodeBR", function() {
+	var method = methodTest( "postalcodeBR" );
 	ok( method( "99999-999" ), "Valid BR Postal Code" );
 	ok( method( "99999999" ), "Valid BR Postal Code" );
 	ok( method( "99.999-999" ), "Valid BR Postal Code" );
 	ok( !method( "99.999999" ), "Invalid BR Postal Code" );
-});
+} );
 
-test("nit_pis_pasepBR", function() {
-	var method = methodTest("nit_pis_pasepBR");
+test( "nit_pis_pasepBR", function() {
+	var method = methodTest( "nit_pis_pasepBR" );
 
 	//Number automatically generated
 	ok( method( "125.6659.879-9" ), "Valid NIT/PIS/Pasep" );
@@ -1282,10 +1284,10 @@ test("nit_pis_pasepBR", function() {
 	ok( method( "12566598799" ), "Valid NIT/PIS/Pasep" );
 	ok( !method( "125.6659.879-8" ), "Invalid NIT/PIS/Pasep" );
 	ok( !method( "12566598798" ), "Invalid NIT/PIS/Pasep" );
-});
+} );
 
-test("teBR", function() {
-	var method = methodTest("teBR");
+test( "teBR", function() {
+	var method = methodTest( "teBR" );
 
 	//Number automatically generated
 	ok( method( "4261 6271 1546" ), "Valid TE" );
@@ -1296,10 +1298,10 @@ test("teBR", function() {
 	ok( method( "35260161554" ), "Valid TE" );
 	ok( !method( "6238 7807 0531" ), "Invalid TE" );
 	ok( !method( "421878070531" ), "Invalid TE" );
-});
+} );
 
-test("cpfBR", function() {
-	var method = methodTest("cpfBR");
+test( "cpfBR", function() {
+	var method = methodTest( "cpfBR" );
 	ok( method( "11144477735" ), "Valid CPF Number" );
 	ok( method( "263.946.533-30" ), "Valid CPF Number" );
 	ok( method( "325 861 044 47" ), "Valid CPF Number" );
@@ -1310,16 +1312,16 @@ test("cpfBR", function() {
 	ok( !method( "11144477715" ), "Invalid CPF Number: 1st check number failed" );
 	ok( !method( "11144477737" ), "Invalid CPF Number: 2nd check number failed" );
 
-});
+} );
 
-test("statesBR", function() {
-	var method = methodTest("stateBR");
+test( "statesBR", function() {
+	var method = methodTest( "stateBR" );
 	ok( method( "MG" ), "Valid BR state" );
 	ok( method( "RJ" ), "Valid BR state" );
 	ok( method( "SP" ), "Valid BR state" );
 	ok( method( "mg", { caseSensitive: false } ), "Valid BR state" );
 	ok(!method( "pa", { caseSensitive: true } ), "Must be capital letters" );
 	ok(!method( "mj" ), "Invalid BR state" );
-});
+} );
 
-})(jQuery);
+} )(jQuery);
