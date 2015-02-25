@@ -71,12 +71,12 @@ test("email", function() {
 	ok( method( "bart+bart@tokbox.com" ), "Valid email" );
 	ok( method( "bart+bart@tokbox.travel" ), "Valid email" );
 	ok( method( "n@d.tld" ), "Valid email" );
-	ok( method( "bla.blu@g.mail.com"), "Valid email" );
+	ok( method( "bla.blu@g.mail.com" ), "Valid email" );
 	ok( method( "name@domain" ), "Valid email" );
 	ok( method( "name.@domain.tld" ), "Valid email" );
 	ok( method( "name@website.a" ), "Valid email" );
-	ok(!method( "ole@føtex.dk"), "Invalid email" );
-	ok(!method( "jörn@bassistance.de"), "Invalid email" );
+	ok(!method( "ole@føtex.dk " ), "Invalid email" );
+	ok(!method( "jörn@bassistance.de" ), "Invalid email" );
 	ok(!method( "name" ), "Invalid email" );
 	ok(!method( "test@test-.com" ), "Invalid email" );
 	ok(!method( "name@" ), "Invalid email" );
@@ -411,8 +411,8 @@ asyncTest("remote, customized ajax options", function() {
 					url: "users.php",
 					type: "POST",
 					beforeSend: function(request, settings) {
-						deepEqual(settings.type, "POST");
-						deepEqual(settings.data, "username=asdf&email=email.com");
+						deepEqual( settings.type, "POST" );
+						deepEqual( settings.data, "username=asdf&email=email.com" );
 					},
 					data: {
 						email: function() {
@@ -446,7 +446,7 @@ asyncTest("remote extensions", function() {
 				}
 			},
 			submitHandler: function() {
-				ok( false, "submitHandler may never be called when validating only elements");
+				ok( false, "submitHandler may never be called when validating only elements" );
 			}
 		});
 
@@ -470,7 +470,7 @@ asyncTest("remote radio correct value sent", function() {
 	var e = $("#testForm10Radio2"),
 		v;
 
-	e.attr("checked", "checked");
+	e.attr( "checked", "checked" );
 	v = $("#testForm10").validate({
 		rules: {
 			testForm10Radio: {
@@ -525,7 +525,7 @@ asyncTest("remote reset clear old value", function() {
 		v.resetForm();
 		e.val("asdf");
 		waitTimeout = setTimeout(function() {
-			ok( false, "Remote server did not get request");
+			ok( false, "Remote server did not get request" );
 			start();
 		}, 200);
 		v.element(e);
@@ -633,79 +633,79 @@ test("dateFA", function() {
 
 test("iban", function() {
 	var method = methodTest("iban");
-	ok( method( "NL20INGB0001234567"), "Valid IBAN");
-	ok( method( "DE68 2105 0170 0012 3456 78"), "Valid IBAN");
-	ok( method( "NL20 INGB0001234567"), "Valid IBAN: invalid spacing");
-	ok( method( "NL20 INGB 00 0123 4567"), "Valid IBAN: invalid spacing");
-	ok( method( "XX40INGB000123456712341234"), "Valid (more or less) IBAN: unknown country, but checksum OK");
+	ok( method( "NL20INGB0001234567" ), "Valid IBAN" );
+	ok( method( "DE68 2105 0170 0012 3456 78" ), "Valid IBAN" );
+	ok( method( "NL20 INGB0001234567" ), "Valid IBAN: invalid spacing" );
+	ok( method( "NL20 INGB 00 0123 4567" ), "Valid IBAN: invalid spacing" );
+	ok( method( "XX40INGB000123456712341234" ), "Valid (more or less) IBAN: unknown country, but checksum OK" );
 
-	ok(!method( "NL20INGB000123456"), "Invalid IBAN: too short");
-	ok(!method( "NL20INGB00012345678"), "Invalid IBAN: too long");
-	ok(!method( "NL20INGB0001234566"), "Invalid IBAN: checksum incorrect");
-	ok(!method( "DE68 2105 0170 0012 3456 7"), "Invalid IBAN: too short");
-	ok(!method( "DE68 2105 0170 0012 3456 789"), "Invalid IBAN: too long");
-	ok(!method( "DE68 2105 0170 0012 3456 79"), "Invalid IBAN: checksum incorrect");
+	ok(!method( "NL20INGB000123456" ), "Invalid IBAN: too short" );
+	ok(!method( "NL20INGB00012345678" ), "Invalid IBAN: too long" );
+	ok(!method( "NL20INGB0001234566" ), "Invalid IBAN: checksum incorrect" );
+	ok(!method( "DE68 2105 0170 0012 3456 7" ), "Invalid IBAN: too short" );
+	ok(!method( "DE68 2105 0170 0012 3456 789" ), "Invalid IBAN: too long" );
+	ok(!method( "DE68 2105 0170 0012 3456 79" ), "Invalid IBAN: checksum incorrect" );
 
-	ok(!method( "NL54INGB00012345671234"), "Invalid IBAN too long, BUT CORRECT CHECKSUM");
-	ok(!method( "XX00INGB000123456712341234"), "Invalid IBAN: unknown country and checksum incorrect");
+	ok(!method( "NL54INGB00012345671234" ), "Invalid IBAN too long, BUT CORRECT CHECKSUM" );
+	ok(!method( "XX00INGB000123456712341234" ), "Invalid IBAN: unknown country and checksum incorrect" );
 
 	// sample IBANs for different countries
-	ok( method( "AL47 2121 1009 0000 0002 3569 8741"), "Valid IBAN - AL");
-	ok( method( "AD12 0001 2030 2003 5910 0100"), "Valid IBAN - AD");
-	ok( method( "AT61 1904 3002 3457 3201"), "Valid IBAN - AT");
-	ok( method( "AZ21 NABZ 0000 0000 1370 1000 1944"), "Valid IBAN - AZ");
-	ok( method( "BH67 BMAG 0000 1299 1234 56"), "Valid IBAN - BH");
-	ok( method( "BE62 5100 0754 7061"), "Valid IBAN - BE");
-	ok( method( "BA39 1290 0794 0102 8494"), "Valid IBAN - BA");
-	ok( method( "BG80 BNBG 9661 1020 3456 78"), "Valid IBAN - BG");
-	ok( method( "HR12 1001 0051 8630 0016 0"), "Valid IBAN - HR");
-	ok( method( "CH93 0076 2011 6238 5295 7"), "Valid IBAN - CH");
-	ok( method( "CY17 0020 0128 0000 0012 0052 7600"), "Valid IBAN - CY");
-	ok( method( "CZ65 0800 0000 1920 0014 5399"), "Valid IBAN - CZ");
-	ok( method( "DK50 0040 0440 1162 43"), "Valid IBAN - DK");
-	ok( method( "EE38 2200 2210 2014 5685"), "Valid IBAN - EE");
-	ok( method( "FO97 5432 0388 8999 44"), "Valid IBAN - FO");
-	ok( method( "FI21 1234 5600 0007 85"), "Valid IBAN - FI");
-	ok( method( "FR14 2004 1010 0505 0001 3M02 606"), "Valid IBAN - FR");
-	ok( method( "GE29 NB00 0000 0101 9049 17"), "Valid IBAN - GE");
-	ok( method( "DE89 3704 0044 0532 0130 00"), "Valid IBAN - DE");
-	ok( method( "GI75 NWBK 0000 0000 7099 453"), "Valid IBAN - GI");
-	ok( method( "GR16 0110 1250 0000 0001 2300 695"), "Valid IBAN - GR");
-	ok( method( "GL56 0444 9876 5432 10"), "Valid IBAN - GL");
-	ok( method( "HU42 1177 3016 1111 1018 0000 0000"), "Valid IBAN - HU");
-	ok( method( "IS14 0159 2600 7654 5510 7303 39"), "Valid IBAN - IS");
-	ok( method( "IE29 AIBK 9311 5212 3456 78"), "Valid IBAN - IE");
-	ok( method( "IL62 0108 0000 0009 9999 999"), "Valid IBAN - IL");
-	ok( method( "IT40 S054 2811 1010 0000 0123 456"), "Valid IBAN - IT");
-	ok( method( "LV80 BANK 0000 4351 9500 1"), "Valid IBAN - LV");
-	ok( method( "LB62 0999 0000 0001 0019 0122 9114"), "Valid IBAN - LB");
-	ok( method( "LI21 0881 0000 2324 013A A"), "Valid IBAN - LI");
-	ok( method( "LT12 1000 0111 0100 1000"), "Valid IBAN - LT");
-	ok( method( "LU28 0019 4006 4475 0000"), "Valid IBAN - LU");
-	ok( method( "MK07 2501 2000 0058 984"), "Valid IBAN - MK");
-	ok( method( "MT84 MALT 0110 0001 2345 MTLC AST0 01S"), "Valid IBAN - MT");
-	ok( method( "MU17 BOMM 0101 1010 3030 0200 000M UR"), "Valid IBAN - MU");
-	ok( method( "MD24 AG00 0225 1000 1310 4168"), "Valid IBAN - MD");
-	ok( method( "MC93 2005 2222 1001 1223 3M44 555"), "Valid IBAN - MC");
-	ok( method( "ME25 5050 0001 2345 6789 51"), "Valid IBAN - ME");
-	ok( method( "NL39 RABO 0300 0652 64"), "Valid IBAN - NL");
-	ok( method( "NO93 8601 1117 947"), "Valid IBAN - NO");
-	ok( method( "PK36 SCBL 0000 0011 2345 6702"), "Valid IBAN - PK");
-	ok( method( "PL60 1020 1026 0000 0422 7020 1111"), "Valid IBAN - PL");
-	ok( method( "PT50 0002 0123 1234 5678 9015 4"), "Valid IBAN - PT");
-	ok( method( "RO49 AAAA 1B31 0075 9384 0000"), "Valid IBAN - RO");
-	ok( method( "SM86 U032 2509 8000 0000 0270 100"), "Valid IBAN - SM");
-	ok( method( "SA03 8000 0000 6080 1016 7519"), "Valid IBAN - SA");
-	ok( method( "RS35 2600 0560 1001 6113 79"), "Valid IBAN - RS");
-	ok( method( "SK31 1200 0000 1987 4263 7541"), "Valid IBAN - SK");
-	ok( method( "SI56 1910 0000 0123 438"), "Valid IBAN - SI");
-	ok( method( "ES80 2310 0001 1800 0001 2345"), "Valid IBAN - ES");
-	ok( method( "SE35 5000 0000 0549 1000 0003"), "Valid IBAN - SE");
-	ok( method( "CH93 0076 2011 6238 5295 7"), "Valid IBAN - CH");
-	ok( method( "TN59 1000 6035 1835 9847 8831"), "Valid IBAN - TN");
-	ok( method( "TR33 0006 1005 1978 6457 8413 26"), "Valid IBAN - TR");
-	ok( method( "AE07 0331 2345 6789 0123 456"), "Valid IBAN - AE");
-	ok( method( "GB29 NWBK 6016 1331 9268 19"), "Valid IBAN - GB");
+	ok( method( "AL47 2121 1009 0000 0002 3569 8741" ), "Valid IBAN - AL" );
+	ok( method( "AD12 0001 2030 2003 5910 0100" ), "Valid IBAN - AD" );
+	ok( method( "AT61 1904 3002 3457 3201" ), "Valid IBAN - AT" );
+	ok( method( "AZ21 NABZ 0000 0000 1370 1000 1944" ), "Valid IBAN - AZ" );
+	ok( method( "BH67 BMAG 0000 1299 1234 56" ), "Valid IBAN - BH" );
+	ok( method( "BE62 5100 0754 7061" ), "Valid IBAN - BE" );
+	ok( method( "BA39 1290 0794 0102 8494" ), "Valid IBAN - BA" );
+	ok( method( "BG80 BNBG 9661 1020 3456 78" ), "Valid IBAN - BG" );
+	ok( method( "HR12 1001 0051 8630 0016 0" ), "Valid IBAN - HR" );
+	ok( method( "CH93 0076 2011 6238 5295 7" ), "Valid IBAN - CH" );
+	ok( method( "CY17 0020 0128 0000 0012 0052 7600" ), "Valid IBAN - CY" );
+	ok( method( "CZ65 0800 0000 1920 0014 5399" ), "Valid IBAN - CZ" );
+	ok( method( "DK50 0040 0440 1162 43" ), "Valid IBAN - DK" );
+	ok( method( "EE38 2200 2210 2014 5685" ), "Valid IBAN - EE" );
+	ok( method( "FO97 5432 0388 8999 44" ), "Valid IBAN - FO" );
+	ok( method( "FI21 1234 5600 0007 85" ), "Valid IBAN - FI" );
+	ok( method( "FR14 2004 1010 0505 0001 3M02 606" ), "Valid IBAN - FR" );
+	ok( method( "GE29 NB00 0000 0101 9049 17" ), "Valid IBAN - GE" );
+	ok( method( "DE89 3704 0044 0532 0130 00" ), "Valid IBAN - DE" );
+	ok( method( "GI75 NWBK 0000 0000 7099 453" ), "Valid IBAN - GI" );
+	ok( method( "GR16 0110 1250 0000 0001 2300 695" ), "Valid IBAN - GR" );
+	ok( method( "GL56 0444 9876 5432 10" ), "Valid IBAN - GL" );
+	ok( method( "HU42 1177 3016 1111 1018 0000 0000" ), "Valid IBAN - HU" );
+	ok( method( "IS14 0159 2600 7654 5510 7303 39" ), "Valid IBAN - IS" );
+	ok( method( "IE29 AIBK 9311 5212 3456 78" ), "Valid IBAN - IE" );
+	ok( method( "IL62 0108 0000 0009 9999 999" ), "Valid IBAN - IL" );
+	ok( method( "IT40 S054 2811 1010 0000 0123 456" ), "Valid IBAN - IT" );
+	ok( method( "LV80 BANK 0000 4351 9500 1" ), "Valid IBAN - LV" );
+	ok( method( "LB62 0999 0000 0001 0019 0122 9114" ), "Valid IBAN - LB" );
+	ok( method( "LI21 0881 0000 2324 013A A" ), "Valid IBAN - LI" );
+	ok( method( "LT12 1000 0111 0100 1000" ), "Valid IBAN - LT" );
+	ok( method( "LU28 0019 4006 4475 0000" ), "Valid IBAN - LU" );
+	ok( method( "MK07 2501 2000 0058 984" ), "Valid IBAN - MK" );
+	ok( method( "MT84 MALT 0110 0001 2345 MTLC AST0 01S" ), "Valid IBAN - MT" );
+	ok( method( "MU17 BOMM 0101 1010 3030 0200 000M UR" ), "Valid IBAN - MU" );
+	ok( method( "MD24 AG00 0225 1000 1310 4168" ), "Valid IBAN - MD" );
+	ok( method( "MC93 2005 2222 1001 1223 3M44 555" ), "Valid IBAN - MC" );
+	ok( method( "ME25 5050 0001 2345 6789 51" ), "Valid IBAN - ME" );
+	ok( method( "NL39 RABO 0300 0652 64" ), "Valid IBAN - NL" );
+	ok( method( "NO93 8601 1117 947" ), "Valid IBAN - NO" );
+	ok( method( "PK36 SCBL 0000 0011 2345 6702" ), "Valid IBAN - PK" );
+	ok( method( "PL60 1020 1026 0000 0422 7020 1111" ), "Valid IBAN - PL" );
+	ok( method( "PT50 0002 0123 1234 5678 9015 4" ), "Valid IBAN - PT" );
+	ok( method( "RO49 AAAA 1B31 0075 9384 0000" ), "Valid IBAN - RO" );
+	ok( method( "SM86 U032 2509 8000 0000 0270 100" ), "Valid IBAN - SM" );
+	ok( method( "SA03 8000 0000 6080 1016 7519" ), "Valid IBAN - SA" );
+	ok( method( "RS35 2600 0560 1001 6113 79" ), "Valid IBAN - RS" );
+	ok( method( "SK31 1200 0000 1987 4263 7541" ), "Valid IBAN - SK" );
+	ok( method( "SI56 1910 0000 0123 438" ), "Valid IBAN - SI" );
+	ok( method( "ES80 2310 0001 1800 0001 2345" ), "Valid IBAN - ES" );
+	ok( method( "SE35 5000 0000 0549 1000 0003" ), "Valid IBAN - SE" );
+	ok( method( "CH93 0076 2011 6238 5295 7" ), "Valid IBAN - CH" );
+	ok( method( "TN59 1000 6035 1835 9847 8831" ), "Valid IBAN - TN" );
+	ok( method( "TR33 0006 1005 1978 6457 8413 26" ), "Valid IBAN - TR" );
+	ok( method( "AE07 0331 2345 6789 0123 456" ), "Valid IBAN - AE" );
+	ok( method( "GB29 NWBK 6016 1331 9268 19" ), "Valid IBAN - GB" );
 });
 
 /**
@@ -775,78 +775,78 @@ test("dateNL", function() {
 
 test("phoneNL", function() {
 	var method = methodTest("phoneNL");
-	ok( method( "0701234567"), "Valid phone NL");
-	ok( method( "0687654321"), "Valid phone NL");
-	ok( method( "020-1234567"), "Valid phone NL");
-	ok( method( "020 - 12 34 567"), "Valid phone NL");
-	ok( method( "010-2345678"), "Valid phone NL");
-	ok( method( "+3120-1234567"), "Valid phone NL");
-	ok( method( "+31(0)10-2345678"), "Valid phone NL");
-	ok(!method( "020-123456"), "Invalid phone NL: too short");
-	ok(!method( "020-12345678"), "Invalid phone NL: too long");
-	ok(!method( "-0201234567"), "Invalid phone NL");
-	ok(!method( "+310201234567"), "Invalid phone NL: no 0 after +31 allowed");
+	ok( method( "0701234567" ), "Valid phone NL" );
+	ok( method( "0687654321" ), "Valid phone NL" );
+	ok( method( "020-1234567" ), "Valid phone NL" );
+	ok( method( "020 - 12 34 567" ), "Valid phone NL" );
+	ok( method( "010-2345678" ), "Valid phone NL" );
+	ok( method( "+3120-1234567" ), "Valid phone NL" );
+	ok( method( "+31(0)10-2345678" ), "Valid phone NL" );
+	ok(!method( "020-123456" ), "Invalid phone NL: too short" );
+	ok(!method( "020-12345678" ), "Invalid phone NL: too long" );
+	ok(!method( "-0201234567" ), "Invalid phone NL" );
+	ok(!method( "+310201234567" ), "Invalid phone NL: no 0 after +31 allowed" );
 });
 
 test("mobileNL", function() {
 	var method = methodTest("mobileNL");
-	ok( method( "0612345678"), "Valid NL Mobile Number");
-	ok( method( "06-12345678"), "Valid NL Mobile Number");
-	ok( method( "06-12 345 678"), "Valid NL Mobile Number");
-	ok( method( "+316-12345678"), "Valid NL Mobile Number");
-	ok( method( "+31(0)6-12345678"), "Valid NL Mobile Number");
-	ok(!method( "abcdefghij"), "Invalid NL Mobile Number: text");
-	ok(!method( "0123456789"), "Invalid NL Mobile Number: should start with 06");
-	ok(!method( "0823456789"), "Invalid NL Mobile Number: should start with 06");
-	ok(!method( "06-1234567"), "Invalid NL Mobile Number: too short");
-	ok(!method( "06-123456789"), "Invalid NL Mobile Number: too long");
-	ok(!method( "-0612345678"), "Invalid NL Mobile Number");
-	ok(!method( "+310612345678"), "Invalid NL Mobile Number: no 0 after +31 allowed");
+	ok( method( "0612345678" ), "Valid NL Mobile Number" );
+	ok( method( "06-12345678" ), "Valid NL Mobile Number" );
+	ok( method( "06-12 345 678" ), "Valid NL Mobile Number" );
+	ok( method( "+316-12345678" ), "Valid NL Mobile Number" );
+	ok( method( "+31(0)6-12345678" ), "Valid NL Mobile Number" );
+	ok(!method( "abcdefghij" ), "Invalid NL Mobile Number: text" );
+	ok(!method( "0123456789" ), "Invalid NL Mobile Number: should start with 06" );
+	ok(!method( "0823456789" ), "Invalid NL Mobile Number: should start with 06" );
+	ok(!method( "06-1234567" ), "Invalid NL Mobile Number: too short" );
+	ok(!method( "06-123456789" ), "Invalid NL Mobile Number: too long" );
+	ok(!method( "-0612345678" ), "Invalid NL Mobile Number" );
+	ok(!method( "+310612345678" ), "Invalid NL Mobile Number: no 0 after +31 allowed" );
 });
 
 test("postalcodeNL", function() {
 	var method = methodTest("postalcodeNL");
-	ok( method( "1234AB"), "Valid NL Postal Code");
-	ok( method( "1234ab"), "Valid NL Postal Code");
-	ok( method( "1234 AB"), "Valid NL Postal Code");
-	ok( method( "6789YZ"), "Valid NL Postal Code");
-	ok(!method( "123AA"), "Invalid NL Postal Code: not enough digits");
-	ok(!method( "12345ZZ"), "Invalid NL Postal Code: too many digits");
-	ok(!method( "1234  AA"), "Invalid NL Postal Code: too many spaces");
-	ok(!method( "AA1234"), "Invalid NL Postal Code");
-	ok(!method( "1234-AA"), "Invalid NL Postal Code");
+	ok( method( "1234AB" ), "Valid NL Postal Code" );
+	ok( method( "1234ab" ), "Valid NL Postal Code" );
+	ok( method( "1234 AB" ), "Valid NL Postal Code" );
+	ok( method( "6789YZ" ), "Valid NL Postal Code" );
+	ok(!method( "123AA" ), "Invalid NL Postal Code: not enough digits" );
+	ok(!method( "12345ZZ" ), "Invalid NL Postal Code: too many digits" );
+	ok(!method( "1234  AA" ), "Invalid NL Postal Code: too many spaces" );
+	ok(!method( "AA1234" ), "Invalid NL Postal Code" );
+	ok(!method( "1234-AA" ), "Invalid NL Postal Code" );
 });
 
 test("bankaccountNL", function() {
 	var method = methodTest("bankaccountNL");
-	ok( method( "755490975"), "Valid NL bank account");
-	ok( method( "75 54 90 975"), "Valid NL bank account");
-	ok( method( "123456789"), "Valid NL bank account");
-	ok( method( "12 34 56 789"), "Valid NL bank account");
-	ok(!method( "12 3456789"), "Valid NL bank account: inconsistent spaces");
-	ok(!method( "123 45 67 89"), "Valid NL bank account: incorrect spaces");
-	ok(!method( "755490971"), "Invalid NL bank account");
-	ok(!method( "755490973"), "Invalid NL bank account");
-	ok(!method( "755490979"), "Invalid NL bank account");
-	ok(!method( "123456781"), "Invalid NL bank account");
-	ok(!method( "123456784"), "Invalid NL bank account");
-	ok(!method( "123456788"), "Invalid NL bank account");
+	ok( method( "755490975" ), "Valid NL bank account" );
+	ok( method( "75 54 90 975" ), "Valid NL bank account" );
+	ok( method( "123456789" ), "Valid NL bank account" );
+	ok( method( "12 34 56 789" ), "Valid NL bank account" );
+	ok(!method( "12 3456789" ), "Valid NL bank account: inconsistent spaces" );
+	ok(!method( "123 45 67 89" ), "Valid NL bank account: incorrect spaces" );
+	ok(!method( "755490971" ), "Invalid NL bank account" );
+	ok(!method( "755490973" ), "Invalid NL bank account" );
+	ok(!method( "755490979" ), "Invalid NL bank account" );
+	ok(!method( "123456781" ), "Invalid NL bank account" );
+	ok(!method( "123456784" ), "Invalid NL bank account" );
+	ok(!method( "123456788" ), "Invalid NL bank account" );
 });
 
 test("giroaccountNL", function() {
 	var method = methodTest("giroaccountNL");
-	ok( method( "123"), "Valid NL giro  account");
-	ok( method( "1234567"), "Valid NL giro account");
-	ok(!method( "123456788"), "Invalid NL giro account");
+	ok( method( "123" ), "Valid NL giro  account" );
+	ok( method( "1234567" ), "Valid NL giro account" );
+	ok(!method( "123456788" ), "Invalid NL giro account" );
 });
 
 test("bankorgiroaccountNL", function() {
 	var method = methodTest("bankorgiroaccountNL");
-	ok( method( "123"), "Valid NL giro account");
-	ok( method( "1234567"), "Valid NL giro account");
-	ok( method( "123456789"), "Valid NL bank account");
-	ok(!method( "12345678"), "Invalid NL bank or giro account");
-	ok(!method( "123456788"), "Invalid NL bank or giro account");
+	ok( method( "123" ), "Valid NL giro account" );
+	ok( method( "1234567" ), "Valid NL giro account" );
+	ok( method( "123456789" ), "Valid NL bank account" );
+	ok(!method( "12345678" ), "Invalid NL bank or giro account" );
+	ok(!method( "123456788" ), "Invalid NL bank or giro account" );
 });
 
 test("time", function() {
@@ -879,7 +879,7 @@ test("time12h", function() {
 	ok( method( "01:59 pm" ), "Valid time, single hour, leading 0" );
 	ok(!method( "12:00" ), "Invalid time" );
 	ok(!method( "9" ), "Invalid time" );
-	ok(!method( "9 am"), "Invalid time" );
+	ok(!method( "9 am" ), "Invalid time" );
 	ok(!method( "12:61 am" ), "Invalid time" );
 	ok(!method( "13:00 am" ), "Invalid time" );
 	ok(!method( "00:00 am" ), "Invalid time" );
@@ -1184,47 +1184,47 @@ test("maxWords", function() {
 	var method = methodTest("maxWords"),
 		maxWords = 6;
 
-	ok( method( "I am a sentence", maxWords), "Max Words");
-	ok(!method( "I'm way too long for this sentence!", maxWords), "Too many words");
-	ok(method( "Don’t “count” me as too long", maxWords), "Right amount of words with smartquotes");
-	ok(!method( "But you can “count” me as too long", maxWords), "Too many words with smartquotes");
-	ok(method( "<div>Don’t “count” me as too long</div>", maxWords), "Right amount of words with smartquotes w/ HTML");
-	ok(!method( "<div>But you can “count” me as too long</div>", maxWords), "Too many words with smartquotes w/ HTML");
+	ok( method( "I am a sentence", maxWords), "Max Words" );
+	ok(!method( "I'm way too long for this sentence!", maxWords), "Too many words" );
+	ok(method( "Don’t “count” me as too long", maxWords), "Right amount of words with smartquotes" );
+	ok(!method( "But you can “count” me as too long", maxWords), "Too many words with smartquotes" );
+	ok(method( "<div>Don’t “count” me as too long</div>", maxWords), "Right amount of words with smartquotes w/ HTML" );
+	ok(!method( "<div>But you can “count” me as too long</div>", maxWords), "Too many words with smartquotes w/ HTML" );
 });
 
 test("minWords", function() {
 	var method = methodTest("minWords"),
 		minWords = 6;
 
-	ok(!method( "I am a short sentence", minWords), "Max Words");
-	ok( method( "I'm way too long for this sentence!", minWords), "Too many words");
-	ok(!method( "Don’t “count” me as short.", minWords), "Right amount of words with smartquotes");
-	ok( method( "But you can “count” me as too short", minWords), "Too many words with smartquotes");
-	ok(!method( "<div>“Count” me as too short.</div>", minWords), "Right amount of words with smartquotes w/ HTML");
-	ok( method( "<div>But you can “count” me as too long</div>", minWords), "Too many words with smartquotes w/ HTML");
+	ok(!method( "I am a short sentence", minWords), "Max Words" );
+	ok( method( "I'm way too long for this sentence!", minWords), "Too many words" );
+	ok(!method( "Don’t “count” me as short.", minWords), "Right amount of words with smartquotes" );
+	ok( method( "But you can “count” me as too short", minWords), "Too many words with smartquotes" );
+	ok(!method( "<div>“Count” me as too short.</div>", minWords), "Right amount of words with smartquotes w/ HTML" );
+	ok( method( "<div>But you can “count” me as too long</div>", minWords), "Too many words with smartquotes w/ HTML" );
 });
 
 test("rangeWords", function() {
 	var method = methodTest("rangeWords"),
 		rangeWords = [ 3, 6 ];
 
-	ok(!method( "I'm going to be longer than “six words!”", rangeWords), "Longer than 6 with smartquotes");
-	ok( method( "I'm just the right amount!", rangeWords), "In between");
-	ok( method( "Super short sentence’s.", rangeWords), "Low end");
-	ok(!method( "I", rangeWords), "Too short");
-	ok( method( "<div>“Count” me as perfect.</div>", rangeWords), "Right amount of words with smartquotes w/ HTML");
-	ok(!method( "<div>But you can “count” me as too long</div>", rangeWords), "Too many words with smartquotes w/ HTML");
+	ok(!method( "I'm going to be longer than “six words!”", rangeWords), "Longer than 6 with smartquotes" );
+	ok( method( "I'm just the right amount!", rangeWords), "In between" );
+	ok( method( "Super short sentence’s.", rangeWords), "Low end" );
+	ok(!method( "I", rangeWords), "Too short" );
+	ok( method( "<div>“Count” me as perfect.</div>", rangeWords), "Right amount of words with smartquotes w/ HTML" );
+	ok(!method( "<div>But you can “count” me as too long</div>", rangeWords), "Too many words with smartquotes w/ HTML" );
 });
 
 test("currency", function() { // Works with any symbol
 	var method = methodTest( "currency" );
-	ok( method( "£9", "£"), "Symbol no decimal" );
-	ok( method( "£9.9", "£"), "£, one decimal" );
-	ok( method( "£9.99", "£"), "£, two decimal" );
-	ok( method( "£9.90", "£"), "Valid currency" );
-	ok( method( "£9,999.9", "£"), "£, thousand, comma separator, one decimal" );
-	ok( method( "£9,999.99", "£"), "£, thousand, comma separator, two decimal" );
-	ok( method( "£9,999,999.9", "£"), "£, million, comma separators, one decimal" );
+	ok( method( "£9", "£" ), "Symbol no decimal" );
+	ok( method( "£9.9", "£" ), "£, one decimal" );
+	ok( method( "£9.99", "£" ), "£, two decimal" );
+	ok( method( "£9.90", "£" ), "Valid currency" );
+	ok( method( "£9,999.9", "£" ), "£, thousand, comma separator, one decimal" );
+	ok( method( "£9,999.99", "£" ), "£, thousand, comma separator, two decimal" );
+	ok( method( "£9,999,999.9", "£" ), "£, million, comma separators, one decimal" );
 	ok( method( "9", [ "£", false ]), "Valid currency" );
 	ok( method( "9.9", [ "£", false ]), "Valid currency" );
 	ok( method( "9.99", [ "£", false ]), "Valid currency" );
@@ -1232,22 +1232,22 @@ test("currency", function() { // Works with any symbol
 	ok( method( "9,999.9", [ "£", false ]), "Valid currency" );
 	ok( method( "9,999.99", [ "£", false ]), "Valid currency" );
 	ok( method( "9,999,999.9", [ "£", false ]), "Valid currency" );
-	ok(!method( "9,", "£"), "Invalid currency" );
-	ok(!method( "9,99.99", "£"), "Invalid currency" );
-	ok(!method( "9,", "£"), "Invalid currency" );
-	ok(!method( "9.999", "£"), "Invalid currency" );
-	ok(!method( "9.999", "£"), "Invalid currency" );
-	ok(!method( "9.99,9", "£"), "Invalid currency" );
+	ok(!method( "9,", "£" ), "Invalid currency" );
+	ok(!method( "9,99.99", "£" ), "Invalid currency" );
+	ok(!method( "9,", "£" ), "Invalid currency" );
+	ok(!method( "9.999", "£" ), "Invalid currency" );
+	ok(!method( "9.999", "£" ), "Invalid currency" );
+	ok(!method( "9.99,9", "£" ), "Invalid currency" );
 });
 
 test("postalCodeCA", function() {
 	var method = methodTest("postalCodeCA");
-	ok( method( "H0H 0H0"), "Valid CA Postal Code; Single space" );
-	ok( !method( "H0H0H0"), "Inalid CA Postal Code; No space" );
-	ok( !method( "H0H-0H0"), "Invalid CA Postal Code; Single dash" );
-	ok( !method( "H0H 0H"), "Invalid CA Postal Code; Too Short" );
-	ok( !method( "Z0H 0H"), "Invalid CA Postal Code; Only 'ABCEGHJKLMNPRSTVXY' are valid starting characters" );
-	ok( !method( "h0h 0h0"), "Invalid CA Postal Code; Only upper case characters" );
+	ok( method( "H0H 0H0" ), "Valid CA Postal Code; Single space" );
+	ok( !method( "H0H0H0" ), "Inalid CA Postal Code; No space" );
+	ok( !method( "H0H-0H0" ), "Invalid CA Postal Code; Single dash" );
+	ok( !method( "H0H 0H" ), "Invalid CA Postal Code; Too Short" );
+	ok( !method( "Z0H 0H" ), "Invalid CA Postal Code; Only 'ABCEGHJKLMNPRSTVXY' are valid starting characters" );
+	ok( !method( "h0h 0h0" ), "Invalid CA Postal Code; Only upper case characters" );
 });
 
 test("stateUS", function() {
@@ -1264,47 +1264,51 @@ test("stateUS", function() {
 
 test("postalcodeBR", function() {
 	var method = methodTest("postalcodeBR");
-	ok( method( "99999-999"), "Valid BR Postal Code");
-	ok( method( "99999999"), "Valid BR Postal Code");
-	ok( method( "99.999-999"), "Valid BR Postal Code");
-	ok( !method( "99.999999"), "Invalid BR Postal Code");
+	ok( method( "99999-999" ), "Valid BR Postal Code" );
+	ok( method( "99999999" ), "Valid BR Postal Code" );
+	ok( method( "99.999-999" ), "Valid BR Postal Code" );
+	ok( !method( "99.999999" ), "Invalid BR Postal Code" );
 });
 
 test("nit_pis_pasepBR", function() {
 	var method = methodTest("nit_pis_pasepBR");
-	ok( method( "125.6659.879-9"), "Valid NIT/PIS/Pasep"); //Number automatically generated
-	ok( method( "125.9189.997-7"), "Valid NIT/PIS/Pasep");
-	ok( method( "125.3815.082-7"), "Valid NIT/PIS/Pasep");
-	ok( method( "125.5145.923-2"), "Valid NIT/PIS/Pasep");
-	ok( method( "125.2138.841-8"), "Valid NIT/PIS/Pasep");
-	ok( method( "12566598799"), "Valid NIT/PIS/Pasep");
-	ok( !method( "125.6659.879-8"), "Invalid NIT/PIS/Pasep");
-	ok( !method( "12566598798"), "Invalid NIT/PIS/Pasep");
+
+	//Number automatically generated
+	ok( method( "125.6659.879-9" ), "Valid NIT/PIS/Pasep" );
+	ok( method( "125.9189.997-7" ), "Valid NIT/PIS/Pasep" );
+	ok( method( "125.3815.082-7" ), "Valid NIT/PIS/Pasep" );
+	ok( method( "125.5145.923-2" ), "Valid NIT/PIS/Pasep" );
+	ok( method( "125.2138.841-8" ), "Valid NIT/PIS/Pasep" );
+	ok( method( "12566598799" ), "Valid NIT/PIS/Pasep" );
+	ok( !method( "125.6659.879-8" ), "Invalid NIT/PIS/Pasep" );
+	ok( !method( "12566598798" ), "Invalid NIT/PIS/Pasep" );
 });
 
 test("teBR", function() {
 	var method = methodTest("teBR");
-	ok( method( "4261 6271 1546"), "Valid TE"); //Number automatically generated
-	ok( method( "407113120361"), "Valid TE");
-	ok( method( "6218 7807 0531"), "Valid TE");
-	ok( method( "0352 6016 1554"), "Valid TE");
-	ok( method( "352601615/54"), "Valid TE");
-	ok( method( "35260161554"), "Valid TE");
-	ok( !method( "6238 7807 0531"), "Invalid TE");
-	ok( !method( "421878070531"), "Invalid TE");
+
+	//Number automatically generated
+	ok( method( "4261 6271 1546" ), "Valid TE" );
+	ok( method( "407113120361" ), "Valid TE" );
+	ok( method( "6218 7807 0531" ), "Valid TE" );
+	ok( method( "0352 6016 1554" ), "Valid TE" );
+	ok( method( "352601615/54" ), "Valid TE" );
+	ok( method( "35260161554" ), "Valid TE" );
+	ok( !method( "6238 7807 0531" ), "Invalid TE" );
+	ok( !method( "421878070531" ), "Invalid TE" );
 });
 
 test("cpfBR", function() {
 	var method = methodTest("cpfBR");
-	ok( method( "11144477735"), "Valid CPF Number");
-	ok( method( "263.946.533-30"), "Valid CPF Number");
-	ok( method( "325 861 044 47"), "Valid CPF Number");
-	ok( method( "859-684-732-40"), "Valid CPF Number");
-	ok( !method( "99999999999"), "Invalid CPF Number: dump data");
-	ok( !method( "1114447773"), "Invalid CPF Number: < 11 digits");
-	ok( !method( "111444777355"), "Invalid CPF Number: > 11 digits");
-	ok( !method( "11144477715"), "Invalid CPF Number: 1st check number failed");
-	ok( !method( "11144477737"), "Invalid CPF Number: 2nd check number failed");
+	ok( method( "11144477735" ), "Valid CPF Number" );
+	ok( method( "263.946.533-30" ), "Valid CPF Number" );
+	ok( method( "325 861 044 47" ), "Valid CPF Number" );
+	ok( method( "859-684-732-40" ), "Valid CPF Number" );
+	ok( !method( "99999999999" ), "Invalid CPF Number: dump data" );
+	ok( !method( "1114447773" ), "Invalid CPF Number: < 11 digits" );
+	ok( !method( "111444777355" ), "Invalid CPF Number: > 11 digits" );
+	ok( !method( "11144477715" ), "Invalid CPF Number: 1st check number failed" );
+	ok( !method( "11144477737" ), "Invalid CPF Number: 2nd check number failed" );
 
 });
 
