@@ -8,23 +8,23 @@
  * 99999999999
  * 999.9999.999-99
  */
-$.validator.addMethod("nit_pis_pasepBR", function(numero_pis) {
-	var pesos = "3298765432", resto = 0, i;
-	if (!(/^\d{3}.\d{4}.\d{3}-\d{1}$|^\d{11}$/.test(numero_pis))) {
+$.validator.addMethod("nit_pis_pasepBR", function(number_pis) {
+	var weights = "3298765432", rest = 0, i;
+	if (!(/^\d{3}.\d{4}.\d{3}-\d{1}$|^\d{11}$/.test(number_pis))) {
 		return false;
 	}
-	numero_pis = numero_pis.replace(/[^\d]+/g, "");
+	number_pis = number_pis.replace(/[^\d]+/g, "");
 	for (i = 0; i <= 9; i++) {
-		resto += (numero_pis.slice(i, i + 1)) * (pesos.slice(i, i + 1));
+		rest += (number_pis.slice(i, i + 1)) * (weights.slice(i, i + 1));
 	}
-	resto %= 11;
-	if (resto !== 0) {
-		resto = 11 - resto;
+	rest %= 11;
+	if (rest !== 0) {
+		rest = 11 - rest;
 	}
-	if (resto === 10 || resto === 11) {
-		resto = resto.slice(1, 2);
+	if (rest === 10 || rest === 11) {
+		rest = rest.slice(1, 2);
 	}
-	if (String(resto) !== (numero_pis.slice(10, 11))) {
+	if (String(rest) !== (number_pis.slice(10, 11))) {
 		return false;
 	}
 	return true;
