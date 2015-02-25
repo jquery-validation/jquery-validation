@@ -1313,8 +1313,6 @@ test("statesBR", function() {
 	ok( method( "MG" ), "Valid BR state" );
 	ok( method( "RJ" ), "Valid BR state" );
 	ok( method( "SP" ), "Valid BR state" );
-	ok( method( "DF", { includeFederalDistrict: true } ), "Valid BR state" );
-	ok(!method( "DF", { includeFederalDistrict: false } ), "Invalid BR state" );
 	ok( method( "mg", { caseSensitive: false } ), "Valid BR state" );
 	ok(!method( "pa", { caseSensitive: true } ), "Must be capital letters" );
 	ok(!method( "mj" ), "Invalid BR state" );
