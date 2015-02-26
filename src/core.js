@@ -80,6 +80,10 @@ $.extend($.fn, {
 					}
 					return handle();
 				} else {
+				        if ( validator.settings.stopPropagation ) {
+				          // don't bubble submit request
+				          event.stopImmediatePropagation();
+				        }
 					validator.focusInvalid();
 					return false;
 				}
@@ -240,6 +244,7 @@ $.extend( $.validator, {
 		errorContainer: $( [] ),
 		errorLabelContainer: $( [] ),
 		onsubmit: true,
+		stopPropagation: false,
 		ignore: ":hidden",
 		ignoreTitle: false,
 		onfocusin: function( element ) {
