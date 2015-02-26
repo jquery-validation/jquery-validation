@@ -369,7 +369,7 @@ $.extend( $.validator, {
 					":text, [type='password'], [type='file'], select, textarea, [type='number'], [type='search'], " +
 					"[type='tel'], [type='url'], [type='email'], [type='datetime'], [type='date'], [type='month'], " +
 					"[type='week'], [type='time'], [type='datetime-local'], [type='range'], [type='color'], " +
-					"[type='radio'], [type='checkbox']", delegate)
+					"[type='radio'], [type='checkbox'], [contenteditable]", delegate)
 				// Support: Chrome, oldIE
 				// "select" is provided as event.target when clicking a option
 				.on("click.validate", "select, option, [type='radio'], [type='checkbox']", delegate);
@@ -551,7 +551,7 @@ $.extend( $.validator, {
 
 			// select all valid inputs inside the form (no submit or reset buttons)
 			return $( this.currentForm )
-			.find( "input, select, textarea" )
+			.find( "input, select, textarea, [contenteditable]" )
 			.not( ":submit, :reset, :image, :disabled" )
 			.not( this.settings.ignore )
 			.filter( function() {
@@ -608,7 +608,12 @@ $.extend( $.validator, {
 				return element.validity.badInput ? false : $element.val();
 			}
 
-			val = $element.val();
+			if (element.hasAttribute('contenteditable')) {
+			        val = $element.text();
+			}
+			else {
+				val = $element.val();
+			}
 			if ( typeof val === "string" ) {
 				return val.replace( /\r/g, "" );
 			}
