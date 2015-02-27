@@ -1824,18 +1824,10 @@ test( "Validation triggered on radio and checkbox via click", function() {
 });
 
 test( "destruction of Validator", function() {
-	expect( 2 );
+	expect( 1 );
 
 	var form = $( "#validatorDestroy" ),
 		validate = form.validate();
-
-	form.on( "submit.validate", function( event ) {
-		event.preventDefault();
-
-		ok( !!$( this ).data( "validator" ), "Validator has events and object" );
-	});
-
-	form.submit();
 
 	validate.destroy();
 
