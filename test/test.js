@@ -748,6 +748,13 @@ test( "findLastActive()", function() {
 	equal( v.lastActive, lastActive );
 });
 
+test("elementValue() finds radios/checkboxes only within the current form", function() {
+	expect(1);
+	var v = $("#userForm").validate(), foreignRadio = $("#radio2")[0];
+
+	ok( !v.elementValue(foreignRadio) );
+});
+
 test( "validating multiple checkboxes with 'required'", function() {
 	expect( 3 );
 	var checkboxes = $( "#form input[name=check3]" ).prop( "checked", false ),
@@ -1275,6 +1282,56 @@ test( "validate email on keyup and blur", function() {
 	e.val( "aa" );
 	e.trigger( "keyup" );
 	errors( 0 );
+});
+
+test( "don't revalidate the field when pressing special characters", function() {
+	function errors( expected, message ) {
+		equal( expected, v.size(), message );
+	}
+
+	function triggerEvent( element, keycode ) {
+		var event = $.Event( "keyup", { keyCode: keycode } );
+		element.trigger( event );
+	}
+
+	var e = $( "#firstname" ),
+		v = $( "#testForm1" ).validate(),
+		excludedKeys = {
+			"Shift": 16,
+			"Ctrl": 17,
+			"Alt": 18,
+			"Caps lock": 20,
+			"End": 35,
+			"Home": 36,
+			"Left arrow": 37,
+			"Up arrow": 38,
+			"Right arrow": 39,
+			"Down arrow": 40,
+			"Insert": 45,
+			"Num lock": 144,
+			"Alt GR": 225
+		};
+
+	// To make sure there is only one error, that one of #firtname field
+	$( "#firstname" ).val( "" );
+	$( "#lastname" ).val( "something" );
+	$( "#something" ).val( "something" );
+
+	// Validate the form
+	v.form();
+	errors( 1, "Validate manualy" );
+
+	// Check for special keys
+	e.val( "aaa" );
+	$.each( excludedKeys, function( key, keyCode ) {
+		triggerEvent( e, keyCode );
+		errors( 1, key + " key" );
+	});
+
+	// Normal keyup
+	e.val( "aaaaa" );
+	e.trigger( "keyup" );
+	errors( 0, "Normal keyup" );
 });
 
 test( "validate checkbox on click", function() {
