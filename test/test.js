@@ -928,6 +928,16 @@ test( "bypassing validation on form submission", function() {
 	equal($v.numberOfInvalids(), 1, "Validation failed correctly" );
 });
 
+test( "works on contenteditable fields", function(assert) {
+	var form = $( "#contenteditableForm" );
+	form.valid();
+	assert.hasError($('#contenteditableNumberInvalid'), 'Please enter a valid number.');
+	assert.hasError($('#contenteditableRequiredInvalid'), 'This field is required.');
+	assert.hasError($('#contenteditableInput'), 'Please enter a valid number.');
+	assert.noErrorFor($('#contenteditableNumberValid'));
+	assert.noErrorFor($('#contenteditableRequiredValid'));
+});
+
 module( "misc" );
 
 test( "success option", function() {
