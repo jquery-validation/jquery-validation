@@ -4,8 +4,8 @@
 $.extend($.fn, {
 	validateDelegate: function( delegate, type, handler ) {
 		return this.bind(type, function( event ) {
-			var target = $(event.target);
-			if ( target.is(delegate) ) {
+			var target = $(event.target).closest(delegate);
+			if(target.length) {
 				return handler.apply(target, arguments);
 			}
 		});
