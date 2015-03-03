@@ -1239,12 +1239,12 @@ $.extend( $.validator, {
 
 		// http://jqueryvalidation.org/min-method/
 		min: function( value, element, param ) {
-			return this.optional( element ) || value >= param;
+			return this.optional( element ) || parseInt(value, 10) >= param;
 		},
 
 		// http://jqueryvalidation.org/max-method/
 		max: function( value, element, param ) {
-			return this.optional( element ) || value <= param;
+			return this.optional( element ) || parseInt(value, 10) <= param;
 		},
 
 		// http://jqueryvalidation.org/range-method/
