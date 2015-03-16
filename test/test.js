@@ -1823,19 +1823,14 @@ test( "Validation triggered on radio and checkbox via click", function() {
 	ok( form.find( "input.error" ).length === 0, "Form valid" );
 });
 
-test( "destruction of Validator", function() {
-	expect( 1 );
+test( "destroy()", function() {
+    expect( 2 );
 
-	var form = $( "#validatorDestroy" ),
-		validate = form.validate();
+    var form = $( "#form" ),
+        validate = form.validate();
 
-	validate.destroy();
+    strictEqual( $( form ).data( "validator" ), validate );
 
-	form.on( "submit.validate", function( event ) {
-		event.preventDefault();
-
-		ok( !$( this ).data( "validator" ), "Validator no longer has validator nor its events" );
-	});
-
-	form.submit();
+    validate.destroy();
+    strictEqual( $( form ).data( "validator" ), undefined );
 });
