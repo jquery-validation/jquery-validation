@@ -1,0 +1,43 @@
+{
+  "name": "jzaefferer/jquery-validation",
+  "type": "component",
+  "keywords": [
+    "forms",
+    "validation",
+    "validate"
+  ],
+  "authors": [
+    {
+      "name": "Jörn Zaefferer",
+      "email": "joern.zaefferer@gmail.com",
+      "homepage": "http://bassistance.de",
+      "role": "Developer"
+    }
+  ],
+  "support": {
+    "issues": "https://github.com/jzaefferer/jquery-validation/issues",
+    "source": "https://github.com/jzaefferer/jquery-validation.git"
+  },
+  "homepage": "http://jqueryvalidation.org/",
+  "license": "MIT",
+  "require": {
+    "robloach/component-installer": "*",
+    "components/jquery": ">=1.6.4"
+  },
+  "minimum-stability": "dev",
+  "extra": {
+    "component": {
+      "scripts": [
+        "dist/jquery.validate.js"
+      ],
+      "files": [
+        "dist/localization/",
+        "dist/additional-methods.js",
+        "dist/jquery.validate.js"
+      ],
+      "shim": {
+        "deps": ["jquery"]
+      }
+    }
+  }
+}
