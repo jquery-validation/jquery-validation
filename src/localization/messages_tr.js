@@ -19,5 +19,6 @@ $.extend($.validator.messages, {
 	rangelength: $.validator.format("Lütfen en az {0} ve en fazla {1} uzunluğunda bir değer giriniz."),
 	range: $.validator.format("Lütfen {0} ile {1} arasında bir değer giriniz."),
 	max: $.validator.format("Lütfen {0} değerine eşit ya da daha küçük bir değer giriniz."),
-	min: $.validator.format("Lütfen {0} değerine eşit ya da daha büyük bir değer giriniz.")
+	min: $.validator.format("Lütfen {0} değerine eşit ya da daha büyük bir değer giriniz."),
+	require_from_group: "Lütfen bu alanların en az {0} tanesini doldurunuz."
 });
