@@ -217,6 +217,18 @@ test( "form(): radio buttons: required", function() {
 	equal($( "#testForm10Radio2" ).attr( "class" ), "valid" );
 });
 
+test( "form(): radiocheckbox_array", function() {
+	expect( 3 );
+	var form = $( "#radiocheckbox_array" )[ 0 ],
+		v = $( form ).validate();
+	ok( !v.form(), "Invalid Form" );
+
+	$( "#radio_array_1, #checkbox_array_1" ).attr( "checked", true );
+	ok( !v.form(), "Invalid Form" );
+	$( "#checkbox_array_2" ).attr( "checked", true );
+	ok( v.form(), "Valid form" );
+});
+
 test( "form(): selects: min/required", function() {
 	expect( 3 );
 	var form = $( "#testForm7" )[ 0 ],
