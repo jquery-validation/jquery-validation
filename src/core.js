@@ -767,7 +767,7 @@ $.extend( $.validator, {
 		showLabel: function( element, message ) {
 			var place, group, errorID,
 				error = this.errorsFor( element ),
-				elementID = this.idOrName( element ),
+				elementID = this.idOrName( element ).replace(/\[\]/g,"-"),
 				describedBy = $( element ).attr( "aria-describedby" );
 			if ( error.length ) {
 				// refresh error/success class
@@ -838,7 +838,7 @@ $.extend( $.validator, {
 		},
 
 		errorsFor: function( element ) {
-			var name = this.idOrName( element ),
+			var name = this.idOrName( element ).replace(/\[\]/g,"-"),
 				describer = $( element ).attr( "aria-describedby" ),
 				selector = "label[for='" + name + "'], label[for='" + name + "'] *";
 
