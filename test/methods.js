@@ -855,6 +855,7 @@ test("time", function() {
 	var method = methodTest("time");
 	ok( method( "00:00" ), "Valid time, lower bound" );
 	ok( method( "23:59" ), "Valid time, upper bound" );
+	ok( method( "3:59" ), "Valid time, single digit hour" );
 	ok(!method( "12" ), "Invalid time" );
 	ok(!method( "29:59" ), "Invalid time" );
 	ok(!method( "00:60" ), "Invalid time" );
