@@ -28,7 +28,7 @@ $.validator.addMethod("accept", function(value, element, param) {
 				file = element.files[i];
 
 				// Allow blank mimetype if regex contained an empty entry.
-				if (file.type == "" && blankTypeAllowed) {
+				if (file.type === "" && blankTypeAllowed) {
 					continue;  // skip the regex check
 				}
 
