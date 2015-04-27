@@ -1000,6 +1000,11 @@ $.extend( $.validator, {
 			// allows type="date" and others to be compared as strings
 			if ( /min|max|step/.test( method ) && ( type === null || /number|range|text/.test( type ) ) ) {
 				value = Number( value );
+
+				// Support Opera Mini, which returns NaN for undefined minlength
+				if ( isNaN( value ) ) {
+					value = undefined;
+				}
 			}
 
 			if ( value || value === 0 ) {
