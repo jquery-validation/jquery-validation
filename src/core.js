@@ -31,7 +31,7 @@ $.extend($.fn, {
 				
 				// locate the actual "action" element
 				var actionTarget = $(event.target);
-				if(!actionTarget.is(":submit")) {
+				if ( !actionTarget.is( ":submit" ) ) {
 				    actionTarget = actionTarget.closest(":submit");
 				}
 				
