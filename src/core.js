@@ -28,13 +28,13 @@ $.extend($.fn, {
 				if ( validator.settings.submitHandler ) {
 					validator.submitButton = event.target;
 				}
-				
+
 				// locate the actual "action" element
 				var actionTarget = $(event.target);
 				if ( !actionTarget.is( ":submit" ) ) {
 				    actionTarget = actionTarget.closest(":submit");
 				}
-				
+
 				// allow suppressing validation by adding a cancel class to the submit button
 				if ( actionTarget.hasClass( "cancel" ) ) {
 					validator.cancelSubmit = true;
