@@ -1299,8 +1299,8 @@ $.extend( $.validator, {
 				data: data,
 				context: validator.currentForm,
 				success: function( response ) {
-					if (typeof response === 'object' && 'valid' in response) {
-						response = response['valid'] === true || response['valid'] === "true";
+					if (typeof response === "object" && "valid" in response) {
+						response = response.valid === true || response.valid === "true";
 					}
 					var valid = response === true || response === "true",
 						errors, message, submitted;
