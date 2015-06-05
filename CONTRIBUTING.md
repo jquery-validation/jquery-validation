@@ -40,7 +40,8 @@ If you've wrote custom methods that you'd like to contribute to additional-metho
 
 ## Unit Tests
 
-To run unit tests, you should have a local webserver installed and pointing at your workspace. Then open `http://localhost/jquery-validation/test` to run the unit tests. Start with one browser while developing the fix, then run against others before committing. Usually latest Chrome, Firefox, Safari and Opera and a few IEs.
+To run unit tests, just open `test/index.html` within your browser. Make sure you ran `npm install` before so all required dependencies are available.
+Start with one browser while developing the fix, then run against others before committing. Usually latest Chrome, Firefox, Safari and Opera and a few IEs.
 
 ## Documentation
 
