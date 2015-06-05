@@ -389,7 +389,7 @@ asyncTest("validation triggered on radio/checkbox when using keyboard", function
 		// assert all event handlers fired
 		equal(6, triggeredEvents);
 		start();
-	}, 50);
+	});
 });
 
 asyncTest("validation triggered on radio/checkbox when using mouseclick", function() {
@@ -420,7 +420,7 @@ asyncTest("validation triggered on radio/checkbox when using mouseclick", functi
 		// assert all event handlers fired
 		equal(2, triggeredEvents);
 		start();
-	}, 50);
+	});
 });
 
 test( "showErrors()", function() {
