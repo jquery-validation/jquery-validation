@@ -19,7 +19,7 @@ $.validator.addMethod("accept", function(value, element, param) {
 		if (typeParam.match(/^\|/) || typeParam.match(/\|\|/) || typeParam.match(/\|$/)) {
 			blankTypeAllowed = true;
 			// remove the error-prone blank entry from regex before continuing.
-			typeParam = typeParam.replace(/^\|/, "").replace(/\|\|/g, "|");
+			typeParam = typeParam.replace(/^\|/, "").replace(/\|\|/g, "|").replace(/\|$/, "");
 		}
 
 		// Check if the element has a FileList before checking each file
