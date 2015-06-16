@@ -1279,6 +1279,11 @@ $.extend( $.validator, {
 			var previous = this.previousValue( element ),
 				validator, data;
 
+                        // execute guard before pushing this.settings.messages
+                        if ( previous.old === value ) {
+				return previous.valid;
+			}
+			
 			if (!this.settings.messages[ element.name ] ) {
 				this.settings.messages[ element.name ] = {};
 			}
@@ -1286,10 +1291,6 @@ $.extend( $.validator, {
 			this.settings.messages[ element.name ].remote = previous.message;
 
 			param = typeof param === "string" && { url: param } || param;
-
-			if ( previous.old === value ) {
-				return previous.valid;
-			}
 
 			previous.old = value;
 			validator = this;
@@ -1317,8 +1318,9 @@ $.extend( $.validator, {
 						validator.showErrors();
 					} else {
 						errors = {};
-						message = response || validator.defaultMessage( element, "remote" );
-						errors[ element.name ] = previous.message = $.isFunction( message ) ? message( value ) : message;
+						previous.message = validator.defaultMessage( element, "remote" );
+						message = response || previous.message
+						errors[ element.name ] = $.isFunction( message ) ? message( value ) : message;
 						validator.invalid[ element.name ] = true;
 						validator.showErrors( errors );
 					}
