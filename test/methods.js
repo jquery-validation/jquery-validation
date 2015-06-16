@@ -38,6 +38,7 @@ test("url", function() {
 	ok( method( "http://www.føtex.dk/" ), "Valid url, danish unicode characters" );
 	ok( method( "http://bösendorfer.de/" ), "Valid url, german unicode characters" );
 	ok( method( "http://192.168.8.5" ), "Valid IP Address" );
+	ok( method( "http://pro.photography" ), "Valid long TLD" );
 	ok(!method( "http://192.168.8." ), "Invalid IP Address" );
 	ok(!method( "http://bassistance" ), "Invalid url" ); // valid
 	ok(!method( "http://bassistance." ), "Invalid url" ); // valid
@@ -75,6 +76,7 @@ test("email", function() {
 	ok( method( "name@domain" ), "Valid email" );
 	ok( method( "name.@domain.tld" ), "Valid email" );
 	ok( method( "name@website.a" ), "Valid email" );
+	ok( method( "name@pro.photography" ), "Valid email" );
 	ok(!method( "ole@føtex.dk"), "Invalid email" );
 	ok(!method( "jörn@bassistance.de"), "Invalid email" );
 	ok(!method( "name" ), "Invalid email" );
