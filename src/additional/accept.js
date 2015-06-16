@@ -16,7 +16,7 @@ $.validator.addMethod("accept", function(value, element, param) {
 		typeParam = typeParam.replace(/\*/g, ".*");
 
 		// Allow checking for BLANK mimetype.
-		if (typeParam.match(/^\|/) || typeParam.match(/\|\|/)) {
+		if (typeParam.match(/^\|/) || typeParam.match(/\|\|/) || typeParam.match(/\|$/)) {
 			blankTypeAllowed = true;
 			// remove the error-prone blank entry from regex before continuing.
 			typeParam = typeParam.replace(/^\|/, "").replace(/\|\|/g, "|");
