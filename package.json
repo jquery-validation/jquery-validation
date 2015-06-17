@@ -4,6 +4,7 @@
 	"description": "Client-side form validation made easy",
 	"version": "1.13.2-pre",
 	"homepage": "http://jqueryvalidation.org/",
+	"license": "MIT",
 	"author": {
 		"name": "Jörn Zaefferer",
 		"email": "joern.zaefferer@gmail.com",
