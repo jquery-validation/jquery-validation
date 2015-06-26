@@ -106,10 +106,36 @@ $.extend($.fn, {
 		}
 		return valid;
 	},
+	validAsync: function(callback){
+		var valid = this.valid();
+		var validator;
+
+		if ( $( this[ 0 ] ).is( "form" ) ) {
+			validator = this.validate();
+		} else {
+			validator = $( this[ 0 ].form ).validate();
+		}
+		 
+		if(!callback || typeof callback !== "function"){
+			return valid;
+		}
+
+		if (Object.keys(validator.pending).length == 0) {
+			return callback(valid);
+		}
+
+		var interval = setInterval(function(){
+			if (Object.keys(validator.pending).length == 0) {
+				clearInterval(interval);
+				callback(Object.keys(validator.invalid).length == 0);
+			}
+		}, 50);
+	},
 	// attributes: space separated list of attributes to retrieve and remove
 	removeAttrs: function( attributes ) {
 		var result = {},
-			$element = this;
+		$element = this;
+		
 		$.each( attributes.split( /\s/ ), function( index, value ) {
 			result[ value ] = $element.attr( value );
 			$element.removeAttr( value );
@@ -1187,7 +1213,7 @@ $.extend( $.validator, {
 
 		// http://jqueryvalidation.org/number-method/
 		number: function( value, element ) {
-		    return this.optional( element ) || /^(?:-?\d+|-?\d{1,3}(?:,\d{3})+)?(?:\.\d+)?$/.test( value );
+			return this.optional( element ) || /^(?:-?\d+|-?\d{1,3}(?:,\d{3})+)?(?:\.\d+)?$/.test( value );
 		},
 
 		// http://jqueryvalidation.org/digits-method/
