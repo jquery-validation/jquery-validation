@@ -106,28 +106,27 @@ $.extend($.fn, {
 		}
 		return valid;
 	},
-	validAsync: function(callback){
-		var valid = this.valid();
-		var validator;
+	validAsync: function(callback) {
+		var validator, interval, valid = this.valid();
 
 		if ( $( this[ 0 ] ).is( "form" ) ) {
 			validator = this.validate();
 		} else {
 			validator = $( this[ 0 ].form ).validate();
 		}
-		 
-		if(!callback || typeof callback !== "function"){
+
+		if ( typeof(callback) !== "function" ) {
 			return valid;
 		}
 
-		if (Object.keys(validator.pending).length == 0) {
+		if ( Object.keys(validator.pending).length === 0 ) {
 			return callback(valid);
 		}
 
-		var interval = setInterval(function(){
-			if (Object.keys(validator.pending).length == 0) {
+		interval = setInterval(function() {
+			if (Object.keys(validator.pending).length === 0) {
 				clearInterval(interval);
-				callback(Object.keys(validator.invalid).length == 0);
+				callback(Object.keys(validator.invalid).length === 0);
 			}
 		}, 50);
 	},
@@ -135,7 +134,7 @@ $.extend($.fn, {
 	removeAttrs: function( attributes ) {
 		var result = {},
 		$element = this;
-		
+
 		$.each( attributes.split( /\s/ ), function( index, value ) {
 			result[ value ] = $element.attr( value );
 			$element.removeAttr( value );
