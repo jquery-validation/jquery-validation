@@ -39,6 +39,9 @@ test("url", function() {
 	ok( method( "http://bösendorfer.de/" ), "Valid url, german unicode characters" );
 	ok( method( "http://192.168.8.5" ), "Valid IP Address" );
 	ok( method( "http://pro.photography" ), "Valid long TLD" );
+	ok( method( "//code.jquery.com/jquery-1.11.3.min.js" ), "Valid protocol-relative url" );
+	ok( method( "//192.168.8.5" ), "Valid protocol-relative IP Address" );
+	ok(!method( "htp://code.jquery.com/jquery-1.11.3.min.js" ), "Invalid protocol" );
 	ok(!method( "http://192.168.8." ), "Invalid IP Address" );
 	ok(!method( "http://bassistance" ), "Invalid url" ); // valid
 	ok(!method( "http://bassistance." ), "Invalid url" ); // valid
