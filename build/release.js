@@ -23,8 +23,6 @@ Release.define({
 		return Release.newVersion + " / " + today() + "\n==================\n\n";
 	},
 
-	_generateCommitChangelog: function() {},
-
 	generateArtifacts: function( done ) {
 		Release.exec( "grunt release", "Grunt command failed" );
 		done([
