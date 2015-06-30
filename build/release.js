@@ -1,3 +1,12 @@
+/* Release checklist
+- Run `git changelog` and edit to match previous output (this should make use of jquey-release instead)
+- pull latest https://github.com/jquery/jquery-release
+- run
+	node release.js --remote=jzaefferer/jquery-validation
+- Wait a while, verify and confirm each step
+-
+*/
+
 /*jshint node:true */
 module.exports = function( Release ) {
 
@@ -13,6 +22,8 @@ Release.define({
 	changelogShell: function() {
 		return Release.newVersion + " / " + today() + "\n==================\n\n";
 	},
+
+	_generateChangelog: function() {},
 
 	generateArtifacts: function( done ) {
 		Release.exec( "grunt release", "Grunt command failed" );
