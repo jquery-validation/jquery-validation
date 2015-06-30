@@ -1665,7 +1665,7 @@ test( "Max set by data-rule, valid", function() {
 
 	label = $( "#ranges .error:not(input)" );
 	equal( label.text(), "", "Correct error label" );
-})
+});
 
 test( "calling blur on ignored element", function() {
 	var form = $( "#ignoredElements" );

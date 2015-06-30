@@ -930,6 +930,7 @@ test("creditcardtypes, mastercard", function() {
 	testCardTypeByNumber( "4111-1111-1111-1111", "VISA", false );
 });
 
+/*
 function fillFormWithValuesAndExpect(formSelector, inputValues, expected) {
 	var i, actual;
 
@@ -941,7 +942,6 @@ function fillFormWithValuesAndExpect(formSelector, inputValues, expected) {
 
 }
 
-/*
 test("require_from_group", function() {
 	$("#productInfo").validate({
 		rules: {
