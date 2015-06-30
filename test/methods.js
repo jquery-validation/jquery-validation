@@ -941,6 +941,7 @@ function fillFormWithValuesAndExpect(formSelector, inputValues, expected) {
 
 }
 
+/*
 test("require_from_group", function() {
 	$("#productInfo").validate({
 		rules: {
@@ -1010,6 +1011,7 @@ test("skip_or_fill_minimum preserve other rules", function() {
 	fillFormWithValuesAndExpect("#productInfo", [ 123, "widget", "", "Acme" ], true);
 	fillFormWithValuesAndExpect("#productInfo", [ 123, "widget", "red", "Acme" ], true);
 });
+*/
 
 test("zipcodeUS", function() {
 	var method = methodTest("zipcodeUS");
