@@ -28,13 +28,14 @@ $.extend($.fn, {
 				if ( validator.settings.submitHandler ) {
 					validator.submitButton = event.target;
 				}
+
 				// allow suppressing validation by adding a cancel class to the submit button
-				if ( $( event.target ).hasClass( "cancel" ) ) {
+				if ( $( this ).hasClass( "cancel" ) ) {
 					validator.cancelSubmit = true;
 				}
 
 				// allow suppressing validation by adding the html5 formnovalidate attribute to the submit button
-				if ( $( event.target ).attr( "formnovalidate" ) !== undefined ) {
+				if ( $( this ).attr( "formnovalidate" ) !== undefined ) {
 					validator.cancelSubmit = true;
 				}
 			});
