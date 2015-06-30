@@ -217,16 +217,19 @@ test("rules(), add and remove", function() {
 		return false;
 	}, "");
 	$("#v2").validate();
-	var removedAttrs = $("#v2-i5").removeClass("required").removeAttrs("minlength maxlength");
+	$("#v2-i5").removeClass("required").removeAttr("minlength maxlength");
 	deepEqual( $("#v2-i5").rules(), { customMethod1: "123" });
 
-	$("#v2-i5").addClass("required").attr(removedAttrs);
+	$("#v2-i5").addClass("required").attr({
+		minlength: 2,
+		maxlength: 5
+	});
 	deepEqual( $("#v2-i5").rules(), { required: true, minlength: 2, maxlength: 5, customMethod1: "123" });
 
 	$("#v2-i5").addClass("email").attr({ min: 5 });
 	deepEqual( $("#v2-i5").rules(), { required: true, email: true, minlength: 2, maxlength: 5, min: 5, customMethod1: "123" });
 
-	$("#v2-i5").removeClass("required email").removeAttrs("minlength maxlength customMethod1 min");
+	$("#v2-i5").removeClass("required email").removeAttr("minlength maxlength customMethod1 min");
 	deepEqual( $("#v2-i5").rules(), {});
 
 	delete $.validator.methods.customMethod1;
