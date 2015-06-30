@@ -982,6 +982,29 @@ $.extend( $.validator, {
 		return rules;
 	},
 
+	normalizeAttributeRule: function( rules, type, method, value ) {
+
+		// convert the value to a number for number inputs, and for text for backwards compability
+		// allows type="date" and others to be compared as strings
+		if ( /min|max/.test( method ) && ( type === null || /number|range|text/.test( type ) ) ) {
+			value = Number( value );
+
+			// Support Opera Mini, which returns NaN for undefined minlength
+			if ( isNaN( value ) ) {
+				value = undefined;
+			}
+		}
+
+		if ( value || value === 0 ) {
+			rules[ method ] = value;
+		} else if ( type === method && type !== "range" ) {
+
+			// exception: the jquery validate 'range' method
+			// does not test for the html5 'range' type
+			rules[ method ] = true;
+		}
+	},
+
 	attributeRules: function( element ) {
 		var rules = {},
 			$element = $( element ),
@@ -993,35 +1016,20 @@ $.extend( $.validator, {
 			// support for <input required> in both html5 and older browsers
 			if ( method === "required" ) {
 				value = element.getAttribute( method );
+
 				// Some browsers return an empty string for the required attribute
 				// and non-HTML5 browsers might have required="" markup
 				if ( value === "" ) {
 					value = true;
 				}
+
 				// force non-HTML5 browsers to return bool
 				value = !!value;
 			} else {
 				value = $element.attr( method );
 			}
 
-			// convert the value to a number for number inputs, and for text for backwards compability
-			// allows type="date" and others to be compared as strings
-			if ( /min|max/.test( method ) && ( type === null || /number|range|text/.test( type ) ) ) {
-				value = Number( value );
-
-				// Support Opera Mini, which returns NaN for undefined minlength
-				if ( isNaN( value ) ) {
-					value = undefined;
-				}
-			}
-
-			if ( value || value === 0 ) {
-				rules[ method ] = value;
-			} else if ( type === method && type !== "range" ) {
-				// exception: the jquery validate 'range' method
-				// does not test for the html5 'range' type
-				rules[ method ] = true;
-			}
+			this.normalizeAttributeRule( rules, type, method, value );
 		}
 
 		// maxlength may be returned as -1, 2147483647 ( IE ) and 524288 ( safari ) for text inputs
@@ -1040,20 +1048,7 @@ $.extend( $.validator, {
 
 		for ( method in $.validator.methods ) {
 			value = $element.data( "rule" + method.charAt( 0 ).toUpperCase() + method.substring( 1 ).toLowerCase() );
-
-			// convert the value to a number for number inputs, and for text for backwards compability
-			// allows type="date" and others to be compared as strings
-			if ( /min|max/.test( method ) && ( type === null || /number|range|text/.test( type ) ) ) {
-				value = Number( value );
-			}
-
-			if ( value || value === 0 ) {
-				rules[ method ] = value;
-			} else if ( type === method && type !== "range" ) {
-				// exception: the jquery validate 'range' method
-				// does not test for the html5 'range' type
-				rules[ method ] = true;
-			}
+			this.normalizeAttributeRule( rules, type, method, value );
 		}
 		return rules;
 	},
