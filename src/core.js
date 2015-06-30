@@ -107,10 +107,35 @@ $.extend($.fn, {
 		}
 		return valid;
 	},
+	validAsync: function(callback) {
+		var validator, interval, valid = this.valid();
+
+		if ( $( this[ 0 ] ).is( "form" ) ) {
+			validator = this.validate();
+		} else {
+			validator = $( this[ 0 ].form ).validate();
+		}
+
+		if ( typeof(callback) !== "function" ) {
+			return valid;
+		}
+
+		if ( Object.keys(validator.pending).length === 0 ) {
+			return callback(valid);
+		}
+
+		interval = setInterval(function() {
+			if (Object.keys(validator.pending).length === 0) {
+				clearInterval(interval);
+				callback(Object.keys(validator.invalid).length === 0);
+			}
+		}, 50);
+	},
 	// attributes: space separated list of attributes to retrieve and remove
 	removeAttrs: function( attributes ) {
 		var result = {},
-			$element = this;
+		$element = this;
+
 		$.each( attributes.split( /\s/ ), function( index, value ) {
 			result[ value ] = $element.attr( value );
 			$element.removeAttr( value );
