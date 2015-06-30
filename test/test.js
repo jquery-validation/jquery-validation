@@ -1459,6 +1459,8 @@ test( "validate input with no type attribute, defaulting to text", function() {
 	errors( 0 );
 });
 
+module( "ignore hidden" );
+
 test( "ignore hidden elements", function() {
 	var form = $( "#userForm" ),
 		validate = form.validate({
@@ -1487,6 +1489,8 @@ test( "ignore hidden elements at start", function() {
 	$( "#userForm [name=username]" ).show();
 	ok( !validate.form(), "form should be invalid when required element is visible" );
 });
+
+module( "configuration with attributes " );
 
 test( "Specify error messages through data attributes", function() {
 	var form = $( "#dataMessages" ),
@@ -1639,16 +1643,29 @@ test( "Min and Max strings set by attributes less", function() {
 
 test( "Min and Max strings set by attributes valid", function() {
 	var form = $( "#ranges" ),
-		name = $( "#rangeTextValid" ),
+		range = $( "#rangeTextValid" ),
 		label;
 
 	form.validate();
 	form.get( 0 ).reset();
-	name.valid();
+	range.valid();
 
 	label = $( "#ranges .error:not(input)" );
 	equal( label.text(), "", "Correct error label" );
 });
+
+test( "Max set by data-rule, valid", function() {
+	var form = $( "#ranges" ),
+		range = $( "#rangeTextDataRuleValid" ),
+		label;
+
+	form.validate();
+	form.get( 0 ).reset();
+	range.valid();
+
+	label = $( "#ranges .error:not(input)" );
+	equal( label.text(), "", "Correct error label" );
+})
 
 test( "calling blur on ignored element", function() {
 	var form = $( "#ignoredElements" );
