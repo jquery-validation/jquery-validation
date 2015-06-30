@@ -115,10 +115,6 @@ $.extend($.fn, {
 			validator = $( this[ 0 ].form ).validate();
 		}
 
-		if ( typeof(callback) !== "function" ) {
-			return valid;
-		}
-
 		if ( Object.keys(validator.pending).length === 0 ) {
 			return callback(valid);
 		}
