@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>Retro Cinema Registration</title>
+	<link rel="stylesheet" href="http://code.jquery.com/ui/1.11.3/themes/swanky-purse/jquery-ui.css">
+	<script src="../../lib/jquery.js"></script>
+	<script src="http://code.jquery.com/ui/1.11.3/jquery-ui.js"></script>
+	<script src="../../dist/jquery.validate.js"></script>
+	<script>
+		$( function() {
+			$.validator.addMethod( "adultsOnly", function( value, element ) {
+				if ( $( "#movie .adult:checked" ).val() === "on" ) {
+					var now = new Date();
+					var dob = $( "#dob" ).datepicker( "getDate" );
+					var age = now - dob;
+					return Math.floor( age / 31536000000 ) >= 18;
+				}
+				return true;
+			} );
+			$( "#movie" ).buttonset();
+			$( "#customer, #email, #dob, #reserve" ).button();
+			$( "#dob" ).datepicker( {
+				changeMonth: true,
+				changeYear: true,
+				yearRange: "-100:+0",
+				maxDate: "+0D"
+			} );
+			$( "#reservation" ).validate( {
+				errorClass: "ui-state-error",
+				rules: {
+					customer: "required",
+					email: {
+						required: true,
+						email: true
+					},
+					dob: {
+						required: true,
+						date: true
+					},
+					movie: {
+						required: true,
+						adultsOnly: true
+					}
+				},
+				messages: {
+					customer: "Please enter your name",
+					email: {
+						required: "Please enter your email",
+						email: "Please enter a valid email"
+					},
+					dob: {
+						required: "Please enter your dob",
+						date: "Please enter a valid date"
+					},
+					movie: {
+						required: "Please choose a movie",
+						adultsOnly: "This movie is for adults only!"
+					}
+				},
+				errorPlacement: function( error, element ) {
+					if ( element.is( ":radio" ) ) {
+						$( "<br>" ).appendTo( element.parent().parent().find( "label:first" ) );
+						error.appendTo( element.parent().parent().find( "label:first" ) );
+					} else {
+						$( "<br>" ).appendTo( element.parent().find( "label" ) );
+						error.appendTo( element.parent().find( "label" ) );
+					}
+				}
+			} );
+		} );
+	</script>
+	<style>
+		#customer, #email, #dob {
+			height: 1.5em;
+			width: 20em;
+			text-align: left;
+			outline: none;
+			cursor: text;
+		}
+		.formlabel {
+			float: left;
+			width: 12em;
+		}
+		#reserve {
+			margin-left: 12em;
+		}
+		legend {
+			padding: 1em;
+			font-size: 1.2em !important;
+		}
+		div {
+			margin: 1em 0 1em 0;
+		}
+	</style>
+</head>
+<body>
+
+<form id="reservation" method="get" action="">
+	<fieldset class="ui-widget ui-widget-content ui-corner-all">
+		<legend class="ui-widget ui-widget-header ui-corner-all">Retro Cinema Reservation</legend>
+		<div>
+			<label for="customer" class="formlabel">Name</label>
+			<input type="text" id="customer" name="customer">
+		</div>
+		<div>
+			<label for="email" class="formlabel">Email</label>
+			<input type="email" id="email" name="email">
+		</div>
+		<div>
+			<label for="dob" class="formlabel">Date of Birth</label>
+			<input type="text" id="dob" name="dob">
+		</div>
+		<div>
+			<label for="movie" class="formlabel">Choose your Movie</label>
+			<div id="movie">
+				<label for="movie1"><img src="saucer_men.jpg" alt="Invasion of the Saucer Men" style="width:200px;height:300px;"><br>Invasion of the<br>Saucer Men</label>
+				<input type="radio" id="movie1" name="movie">
+				<label for="movie2"><img src="plan_9.jpg" alt="Plan 9 from Outer Space" style="width:200px;height:300px;"><br>Plan 9 from<br>Outer Space</label>
+				<input type="radio" id="movie2" name="movie">
+				<label for="movie3"><img src="refer_madness.jpg" alt="Reefer Madness - Adults Only" style="width:200px;height:300px;"><br>Reefer Madness<br>Adults Only</label>
+				<input type="radio" id="movie3" name="movie" class="adult">
+			</div>
+		</div>
+		<div>
+			<input type="submit" id="reserve" name="reserve" value="reserve">
+		</div>
+	</fieldset>
+</form>
+
+</body>
+</html>
