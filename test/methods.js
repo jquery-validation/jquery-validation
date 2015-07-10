@@ -1,7 +1,7 @@
 (function($) {
 
-function methodTest( methodName ) {
-	var v = jQuery("#form").validate(),
+function methodTest( methodName, options ) {
+	var v = jQuery("#form").validate(options),
 		method = $.validator.methods[methodName],
 		element = $("#firstname")[0];
 
@@ -88,6 +88,10 @@ test("email", function() {
 	ok(!method( "name,@domain.tld" ), "Invalid email" );
 	ok(!method( "name;@domain.tld" ), "Invalid email" );
 	ok(!method( "name;@domain.tld." ), "Invalid email" );
+    
+    method = methodTest("email", {emailRegex: /\.de$/});
+    ok(method( "name@domain.de" ), "Valid email with custom pattern" );
+    ok(!method( "name@domain.com" ), "Invalid email with custom pattern" );
 });
 
 test("number", function() {
