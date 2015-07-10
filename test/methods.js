@@ -1,9 +1,14 @@
 (function($) {
 
 function methodTest( methodName, options ) {
-	var v = jQuery("#form").validate(options),
+	var v = jQuery("#form").validate(),
 		method = $.validator.methods[methodName],
 		element = $("#firstname")[0];
+    if ( options ) {
+        // when options are provided, re-initialize the validator
+        v.destroy();
+        v  = jQuery("#form").validate(options);
+    }
 
 	return function(value, param) {
 		element.value = value;
@@ -88,8 +93,8 @@ test("email", function() {
 	ok(!method( "name,@domain.tld" ), "Invalid email" );
 	ok(!method( "name;@domain.tld" ), "Invalid email" );
 	ok(!method( "name;@domain.tld." ), "Invalid email" );
-    
-    method = methodTest("email", {emailRegex: /\.de$/});
+
+    method = methodTest("email", { emailRegex: /\.de$/ });
     ok(method( "name@domain.de" ), "Valid email with custom pattern" );
     ok(!method( "name@domain.com" ), "Invalid email with custom pattern" );
 });
