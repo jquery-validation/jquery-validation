@@ -1187,6 +1187,9 @@ $.extend( $.validator, {
 
 		// http://jqueryvalidation.org/dateISO-method/
 		dateISO: function( value, element ) {
+			if (this.optional(element)) {
+				return true;
+			}
 			var check = false,
 				re = /^(\d{4})[\/\-](0?[1-9]|1[012])[\/\-](0?[1-9]|[12][0-9]|3[01])$/,
 				adata,
@@ -1213,7 +1216,7 @@ $.extend( $.validator, {
 					}
 				}
 			}
-			return this.optional(element) || check;
+			return check;
 		},
 
 		// http://jqueryvalidation.org/number-method/
