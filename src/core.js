@@ -1201,6 +1201,7 @@ $.extend( $.validator, {
 		}
 	},
 
+	// http://jqueryvalidation.org/jQuery.validator.methods/
 	methods: {
 
 		// http://jqueryvalidation.org/required-method/
