@@ -59,6 +59,7 @@ For more information on how to setup a rules and customizations, [check the docu
 See the [Contributing Guidelines](CONTRIBUTING.md) for details.
 
 **IMPORTANT NOTE ABOUT EMAIL VALIDATION**. As of version 1.12.0 this plugin is using the same regular expression that the [HTML5 specification suggests for browsers to use](https://html.spec.whatwg.org/multipage/forms.html#valid-e-mail-address). We will follow their lead and use the same check. If you think the specification is wrong, please report the issue to them. If you have different requirements, consider [using a custom method](http://jqueryvalidation.org/jQuery.validator.addMethod/).
+In case you need to adjust the built-in validation regular expression patterns, please [follow the documentation](http://jqueryvalidation.org/jQuery.validator.methods/).
 
 ## License
 Copyright &copy; Jörn Zaefferer<br>
