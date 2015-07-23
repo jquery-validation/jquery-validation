@@ -1190,12 +1190,14 @@ test("currency", function() { // Works with any symbol
 
 test("postalCodeCA", function() {
 	var method = methodTest("postalCodeCA");
-	ok( method( "H0H 0H0"), "Valid CA Postal Code; Single space" );
-	ok( !method( "H0H0H0"), "Inalid CA Postal Code; No space" );
-	ok( !method( "H0H-0H0"), "Invalid CA Postal Code; Single dash" );
-	ok( !method( "H0H 0H"), "Invalid CA Postal Code; Too Short" );
-	ok( !method( "Z0H 0H"), "Invalid CA Postal Code; Only 'ABCEGHJKLMNPRSTVXY' are valid starting characters" );
-	ok( !method( "h0h 0h0"), "Invalid CA Postal Code; Only upper case characters" );
+	ok( method( "H0H0H0"), "Valid Canadian postal code: all upper case with no space" );
+	ok( method( "H0H 0H0"), "Valid Canadian postal code: all upper case with one space" );
+	ok( method( "H0H  0H0"), "Valid Canadian postal code: all upper case with multiple spaces" );
+	ok( method( "h0h 0h0"), "Valid Canadian postal code: all lower case with space" );
+	ok( method( "h0h0h0" ), "Valid Canadian postal code: all lower case with no space" );
+	ok( !method( "H0H-0H0"), "Invalid Canadian postal code: dash used as separator" );
+	ok( !method( "H0H 0H"), "Invalid Canadian postal code: too short" );
+	ok( !method( "Z0H 0H"), "Invalid Canadian postal code: only 'ABCEGHJKLMNPRSTVXY' are valid starting characters" );
 });
 
 test("stateUS", function() {
