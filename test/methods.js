@@ -1197,7 +1197,9 @@ test("postalCodeCA", function() {
 	ok( method( "h0h0h0" ), "Valid Canadian postal code: all lower case with no space" );
 	ok( !method( "H0H-0H0"), "Invalid Canadian postal code: dash used as separator" );
 	ok( !method( "H0H 0H"), "Invalid Canadian postal code: too short" );
-	ok( !method( "Z0H 0H"), "Invalid Canadian postal code: only 'ABCEGHJKLMNPRSTVXY' are valid starting characters" );
+	ok( !method( "Z0H 0H0"), "Invalid Canadian postal code: only 'ABCEGHJKLMNPRSTVXY' are valid first characters for the Forward Sorting Area" );
+	ok( !method( "H0D 0H0"), "Invalid Canadian postal code: only 'ABCEGHJKLMNPRSTVWXYZ' are valid third characters for the Forward Sorting Area" );
+	ok( !method( "H0H 0D0"), "Invalid Canadian postal code: only 'ABCEGHJKLMNPRSTVWXYZ' are valid second characters for the Local Delivery Unit" );
 });
 
 test("stateUS", function() {
