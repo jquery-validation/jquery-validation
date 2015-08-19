@@ -7,13 +7,14 @@
  *
  */
 $.validator.addMethod("idTR", function(value, element) {
-    var d = value.split(''), t = e = o = 0, i;
-    for(i=0; i < 9; i++) {
+    var d = value.split(""), t = e = o = 0, i;
+    for (i = 0; i < 9; i++) {
         t += n = parseInt(d[i]);
-        if(i % 2 == 1)
+        if (i % 2 == 1) {
             e += n;
-        else
+        } else {
             o += n;
+        }
     }
     return this.optional(element) || !(!/^[1-9][0-9]{10}$/.test(value) || ( (t + parseInt(d[9])) % 10 != d[10]) || (o * 7 - e) % 10 != d[9]);
 }, $.validator.messages.remote);
