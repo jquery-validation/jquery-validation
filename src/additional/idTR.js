@@ -9,7 +9,7 @@
 $.validator.addMethod("idTR", function(value, element) {
     var d = value.split(""), t = 0, e = 0, o = 0, i;
     for (i = 0; i < 9; i++) {
-        n = parseInt(d[i], 10);
+        var n = parseInt(d[i], 10);
         t += n;
         if (i % 2 === 1) {
             e += n;
