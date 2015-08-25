@@ -1317,7 +1317,7 @@ $.extend( $.validator, {
 				data: data,
 				context: validator.currentForm,
 				success: function( response ) {
-					var valid = response === true || response === "true",
+					var valid = response === true || response === "true" || (param.predict && param.predict.call(this, response)),
 						errors, message, submitted;
 
 					validator.settings.messages[ element.name ].remote = previous.originalMessage;
