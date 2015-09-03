@@ -1291,7 +1291,9 @@ $.extend( $.validator, {
 			}
 
 			var previous = this.previousValue( element ),
-				validator, data;
+				validator = this,
+				successResponse = null,
+				data, valid;
 
 			if (!this.settings.messages[ element.name ] ) {
 				this.settings.messages[ element.name ] = {};
@@ -1303,6 +1305,37 @@ $.extend( $.validator, {
 
 			if ( previous.old === value ) {
 				return previous.valid;
+			}
+
+			function handleDisplay( valid, value, element, previous, response ) {
+				var submitted, message, errors;
+				validator.settings.messages[ element.name ].remote = previous.originalMessage;
+				validator.valid(valid);
+
+				if ( valid ) {
+					submitted = validator.formSubmitted;
+					validator.prepareElement( element );
+					validator.formSubmitted = submitted;
+					validator.successList.push( element );
+					delete validator.invalid[ element.name ];
+					validator.showErrors();
+				} else {
+					errors = {};
+					message = response || validator.defaultMessage( element, "remote" );
+					errors[ element.name ] = previous.message = $.isFunction( message ) ? message( value ) : message;
+					validator.invalid[ element.name ] = true;
+					validator.showErrors( errors );
+				}
+				previous.valid = valid;
+				validator.stopRequest( element, valid );
+			}
+
+			function isValid( response ) {
+				if ( response === null ) {
+					return false;
+				}
+
+				return response === true || response === "true";
 			}
 
 			previous.old = value;
@@ -1317,26 +1350,13 @@ $.extend( $.validator, {
 				data: data,
 				context: validator.currentForm,
 				success: function( response ) {
-					var valid = response === true || response === "true",
-						errors, message, submitted;
+					successResponse = response;
+				},
+				complete: function( jqXHR, textStatus ) {
+					var transformer = param.responseTransformer;
+					valid = typeof transformer === "function" ? transformer( jqXHR, textStatus ) : isValid( successResponse );
 
-					validator.settings.messages[ element.name ].remote = previous.originalMessage;
-					if ( valid ) {
-						submitted = validator.formSubmitted;
-						validator.prepareElement( element );
-						validator.formSubmitted = submitted;
-						validator.successList.push( element );
-						delete validator.invalid[ element.name ];
-						validator.showErrors();
-					} else {
-						errors = {};
-						message = response || validator.defaultMessage( element, "remote" );
-						errors[ element.name ] = previous.message = $.isFunction( message ) ? message( value ) : message;
-						validator.invalid[ element.name ] = true;
-						validator.showErrors( errors );
-					}
-					previous.valid = valid;
-					validator.stopRequest( element, valid );
+					handleDisplay( valid, value, element, previous, successResponse );
 				}
 			}, param ) );
 			return "pending";
