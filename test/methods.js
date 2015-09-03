@@ -470,6 +470,53 @@ asyncTest("remote extensions", function() {
 	strictEqual( v.element(e), true, "still invalid, because remote validation must block until it returns; dependency-mismatch considered as valid though" );
 });
 
+test("remote, data previous querystring", function( assert ) {
+	expect(4);
+	var succeeded = 0,
+		$f = $("#firstnamec"),
+		$l = $("#lastnamec"),
+		done1 = assert.async(),
+		done2 = assert.async(),
+		done3 = assert.async(),
+		v = $("#testForm1clean").validate({
+			rules: {
+				lastname: {
+					remote: {
+						url: "users.php",
+						type: "POST",
+						data: {
+							firstname: function() {
+								return $f.val();
+							}
+						},
+						complete: function(request, settings) {
+							succeeded++;
+						}
+					}
+				}
+			}
+		});
+	$f.val("first-name");
+	$l.val("last-name");
+	strictEqual( succeeded, 0, "no valid call means no successful validation" );
+	v.element( $l );
+	setTimeout(function() {
+		strictEqual( succeeded, 1, "first valid check should submit given first name" );
+		done1();
+		v.element( $l );
+		setTimeout(function() {
+			strictEqual( succeeded, 1, "second valid check should not resubmit given same first name" );
+			done2();
+			$f.val("different-first-name");
+			v.element( $l );
+			setTimeout(function() {
+				strictEqual( succeeded, 2, "third valid check should resubmit given different first name" );
+				done3();
+			});
+		});
+	});
+});
+
 module("additional methods");
 
 test("phone (us)", function() {
