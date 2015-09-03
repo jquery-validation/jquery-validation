@@ -479,6 +479,42 @@ asyncTest("remote extensions", function() {
 	strictEqual( v.element(e), true, "still invalid, because remote validation must block until it returns; dependency-mismatch considered as valid though" );
 });
 
+test("remote, data previous querystring", function() {
+	expect(4);
+	var change = true,
+		e = $("#username"),
+		v = $("#userForm").validate({
+			rules: {
+				username: {
+					required: true,
+					remote: {
+						url: "users.php",
+						type: "POST",
+						data: {
+							email: function() {
+								if ( change ) {
+									change = false;
+									return "email.com";
+								}
+								return "email2.com";
+							}
+						},
+						beforeSend: function(request, settings) {
+							if ( change ) {
+								deepEqual(settings.data, "username=asdf&email=email.com");
+							} else {
+								deepEqual(settings.data, "username=asdf&email=email2.com");
+							}
+						}
+					}
+				}
+			}
+		});
+	$("#username").val("asdf");
+	strictEqual( v.element(e), true, "new email value (email.com), new request; dependency-mismatch considered as valid though" );
+	strictEqual( v.element(e), true, "new email value (email2.com), new request; dependency-mismatch considered as valid though" );
+});
+
 module("additional methods");
 
 test("phone (us)", function() {

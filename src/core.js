@@ -1320,7 +1320,7 @@ $.extend( $.validator, {
 			}
 
 			var previous = this.previousValue( element ),
-				validator, data;
+				validator, data, optionDataString;
 
 			if (!this.settings.messages[ element.name ] ) {
 				this.settings.messages[ element.name ] = {};
@@ -1329,12 +1329,12 @@ $.extend( $.validator, {
 			this.settings.messages[ element.name ].remote = previous.message;
 
 			param = typeof param === "string" && { url: param } || param;
-
-			if ( previous.old === value ) {
+			optionDataString = $.param( $.extend( { data: value }, param.data ) );
+			if (previous.old === optionDataString) {
 				return previous.valid;
 			}
 
-			previous.old = value;
+			previous.old = optionDataString;
 			validator = this;
 			this.startRequest( element );
 			data = {};
