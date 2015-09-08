@@ -10,11 +10,14 @@ $.extend($.fn, {
 			return;
 		}
 
-		// check if a validator for this form was already created
-		var validator = $.data( this[ 0 ], "validator" );
-		if ( validator ) {
-			return validator;
-		}
+		// Allow non-singleton:- useful e.g. if you want to apply conditional validation to a form
+		if (!options || typeof options.singleton === 'undefined' || options.singleton === true) {
+			// check if a validator for this form was already created
+			var validator = $.data( this[ 0 ], "validator" );
+			if ( validator ) {
+				return validator;
+			}
+		};
 
 		// Add novalidate tag if HTML5.
 		this.attr( "novalidate", "novalidate" );
