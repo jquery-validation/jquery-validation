@@ -479,40 +479,51 @@ asyncTest("remote extensions", function() {
 	strictEqual( v.element(e), true, "still invalid, because remote validation must block until it returns; dependency-mismatch considered as valid though" );
 });
 
-test("remote, data previous querystring", function() {
+test("remote, data previous querystring", function( assert ) {
 	expect(4);
-	var change = true,
-		e = $("#username"),
-		v = $("#userForm").validate({
+	var succeeded = 0,
+		$f = $("#firstnamec"),
+		$l = $("#lastnamec"),
+		done1 = assert.async(),
+		done2 = assert.async(),
+		done3 = assert.async(),
+		v = $("#testForm1clean").validate({
 			rules: {
-				username: {
-					required: true,
+				lastname: {
 					remote: {
 						url: "users.php",
 						type: "POST",
 						data: {
-							email: function() {
-								if ( change ) {
-									change = false;
-									return "email.com";
-								}
-								return "email2.com";
+							firstname: function() {
+								return $f.val();
 							}
 						},
-						beforeSend: function(request, settings) {
-							if ( change ) {
-								deepEqual(settings.data, "username=asdf&email=email.com");
-							} else {
-								deepEqual(settings.data, "username=asdf&email=email2.com");
-							}
+						complete: function() {
+							succeeded++;
 						}
 					}
 				}
 			}
 		});
-	$("#username").val("asdf");
-	strictEqual( v.element(e), true, "new email value (email.com), new request; dependency-mismatch considered as valid though" );
-	strictEqual( v.element(e), true, "new email value (email2.com), new request; dependency-mismatch considered as valid though" );
+	$f.val("first-name");
+	$l.val("last-name");
+	strictEqual( succeeded, 0, "no valid call means no successful validation" );
+	v.element( $l );
+	setTimeout(function() {
+		strictEqual( succeeded, 1, "first valid check should submit given first name" );
+		done1();
+		v.element( $l );
+		setTimeout(function() {
+			strictEqual( succeeded, 1, "second valid check should not resubmit given same first name" );
+			done2();
+			$f.val("different-first-name");
+			v.element( $l );
+			setTimeout(function() {
+				strictEqual( succeeded, 2, "third valid check should resubmit given different first name" );
+				done3();
+			});
+		});
+	});
 });
 
 module("additional methods");
