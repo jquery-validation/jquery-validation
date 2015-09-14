@@ -272,7 +272,7 @@ $.extend( $.validator, {
 
 			if ( event.which === 9 && this.elementValue( element ) === "" || $.inArray( event.keyCode, excludedKeys ) !== -1 ) {
 				return;
-			} else if ( element.name in this.submitted || element === this.lastElement ) {
+			} else if ( element.name in this.submitted || this.isValidElement( element ) ) {
 				this.element( element );
 			}
 		},
@@ -411,8 +411,6 @@ $.extend( $.validator, {
 				checkElement = this.validationTargetFor( cleanElement ),
 				result = true;
 
-			this.lastElement = checkElement;
-
 			if ( checkElement === undefined ) {
 				delete this.invalid[ cleanElement.name ];
 			} else {
@@ -421,7 +419,7 @@ $.extend( $.validator, {
 
 				result = this.check( checkElement ) !== false;
 				if ( result ) {
-					delete this.invalid[ checkElement.name ];
+					this.invalid[ checkElement.name ] = false;
 				} else {
 					this.invalid[ checkElement.name ] = true;
 				}
@@ -467,7 +465,6 @@ $.extend( $.validator, {
 				$( this.currentForm ).resetForm();
 			}
 			this.submitted = {};
-			this.lastElement = null;
 			this.prepareForm();
 			this.hideErrors();
 			var i, elements = this.elements()
@@ -493,7 +490,9 @@ $.extend( $.validator, {
 			var count = 0,
 				i;
 			for ( i in obj ) {
-				count++;
+				if ( obj[ i ] ) {
+					count++;
+				}
 			}
 			return count;
 		},
@@ -509,6 +508,15 @@ $.extend( $.validator, {
 
 		valid: function() {
 			return this.size() === 0;
+		},
+
+		// Check if the given element is valid
+		// return
+		//          true  If the field is valid
+		//         false  If the field is invalid
+		//     undefined  If the field is not validated yet.
+		isValidElement: function( element ) {
+			return this.invalid[ element.name ] === undefined ? undefined : !this.invalid[ element.name ];
 		},
 
 		size: function() {
