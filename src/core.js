@@ -441,7 +441,6 @@ $.extend( $.validator, {
 			if ( errors ) {
 				// add items to error list and map
 				$.extend( this.errorMap, errors );
-				this.errorList = [];
 				for ( var name in errors ) {
 					this.errorList.push({
 						message: errors[ name ],
