@@ -1360,7 +1360,7 @@ test( "#1508: Validation fails to trigger when next field is already filled out"
 	element.trigger( "keyup" );
 
 	// element should be invalid
-	equal( false, validator.isValidElement( element[0] ), "The element is not valid" );
+	equal( validator.isValidElement( element[0] ), false, "The element is not valid" );
 });
 
 test( "validate checkbox on click", function() {
