@@ -795,16 +795,16 @@ $.extend( $.validator, {
 				} else if ( error.parents( "label[for='" + elementID + "']" ).length === 0 ) {
 					// If the element is not a child of an associated label, then it's necessary
 					// to explicitly apply aria-describedby
-
-					errorID = error.attr( "id" ).replace( /(:|\.|\[|\]|\$)/g, "\\$1");
-					// Respect existing non-error aria-describedby
-					if ( !describedBy ) {
-						describedBy = errorID;
-					} else if ( !describedBy.match( new RegExp( "\\b" + errorID + "\\b" ) ) ) {
-						// Add to end of list if not already present
-						describedBy += " " + errorID;
-					}
-					$( element ).attr( "aria-describedby", describedBy );
+					
+ 					errorID = error.attr("id");
+                    // Respect existing non-error aria-describedby
+                    if (!describedBy) {
+                        describedBy = errorID;
+                    } else if (!describedBy.match(new RegExp("\\b" + errorID.replace(/(:||\[|\]|\$)/g, "\\$1") + "\\b"))) {
+                        // Add to end of list if not already present
+                        describedBy += " " + errorID;
+                    }
+                    $(element).attr("aria-describedby", describedBy);
 
 					// If this element is grouped, then assign to all elements in the same group
 					group = this.groups[ element.name ];
