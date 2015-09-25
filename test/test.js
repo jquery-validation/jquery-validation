@@ -1312,14 +1312,14 @@ test( "don't revalidate the field when pressing special characters", function() 
 			"Alt GR": 225
 		};
 
-	// To make sure there is only one error, that one of #firtname field
+	// To make sure there is only one error, that one of #firstname field
 	$( "#firstname" ).val( "" );
 	$( "#lastname" ).val( "something" );
 	$( "#something" ).val( "something" );
 
 	// Validate the form
 	v.form();
-	errors( 1, "Validate manualy" );
+	errors( 1, "Validate manually" );
 
 	// Check for special keys
 	e.val( "aaa" );
@@ -1332,6 +1332,35 @@ test( "don't revalidate the field when pressing special characters", function() 
 	e.val( "aaaaa" );
 	e.trigger( "keyup" );
 	errors( 0, "Normal keyup" );
+});
+
+test( "#1508: Validation fails to trigger when next field is already filled out", function() {
+	// The next field is already filled out.
+	$( "#lastname" ).val( "something" );
+
+	var event     = $.Event( "keyup", { keyCode: 9 } ),
+		element   = $( "#firstname" ),
+		validator = $( "#testForm1" ).validate();
+
+	// Fill the first element
+	element.val( "abc" );
+
+	// Tab to the next field
+	element.blur();
+	$("#lastname").trigger( event );
+	$("#lastname").focus();
+
+	// Tab back to element
+	$("#lastname").blur();
+	element.trigger( event );
+	element.focus();
+
+	// Delete the content
+	element.val( "" );
+	element.trigger( "keyup" );
+
+	// element should be invalid
+	equal( validator.isValidElement( element[0] ), false, "The element is not valid" );
 });
 
 test( "validate checkbox on click", function() {
