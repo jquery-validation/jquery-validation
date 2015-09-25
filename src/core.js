@@ -899,6 +899,58 @@ $.extend( $.validator, {
 			return !$.validator.methods.required.call( this, val, element ) && "dependency-mismatch";
 		},
 
+		//can be used to create custom asynchronous validation methods (such as remote)
+		//The method parameter is a function that accepts single argument: callback function that should be used to
+		//handle result that arrived from asynchronous operation. Discriminator is any value that distinguishes two
+		//calls for same element (for example with different values).
+		//See remote method as an example usage.
+		callbackMethod: function(value, element, method, discriminator) {
+			function processResult(valid, message) {
+				var errors,  submitted;
+
+				validator.settings.messages[ element.name ].remote = previous.originalMessage;
+				if ( valid ) {
+					submitted = validator.formSubmitted;
+					validator.prepareElement( element );
+					validator.formSubmitted = submitted;
+					validator.successList.push( element );
+					delete validator.invalid[ element.name ];
+					validator.showErrors();
+				} else {
+					errors = {};
+					if (message[ "default" ]) {
+						message = validator.defaultMessage( element, message[ "default" ] );
+					}
+					message = $.isFunction( message ) ? message( value ) : message;
+					errors[ element.name ] = previous.message = message;
+					validator.invalid[ element.name ] = true;
+					validator.showErrors( errors );
+				}
+				previous.valid = valid;
+				validator.stopRequest( element, valid );
+			}
+			var previous = this.previousValue( element ),
+				validator, optionDataString;
+
+			if (!this.settings.messages[ element.name ] ) {
+				this.settings.messages[ element.name ] = {};
+			}
+			previous.originalMessage = this.settings.messages[ element.name ].remote;
+			this.settings.messages[ element.name ].remote = previous.message;
+
+			optionDataString = $.param( $.extend( { data: value }, discriminator ) );
+			if (previous.old === optionDataString) {
+				return previous.valid;
+			}
+			previous.old = optionDataString;
+
+			validator = this;
+			this.startRequest( element );
+
+			method.apply(this, [ processResult ]);
+			return "pending";
+		},
+
 		startRequest: function( element ) {
 			if ( !this.pending[ element.name ] ) {
 				this.pendingRequest++;
@@ -1290,56 +1342,27 @@ $.extend( $.validator, {
 				return "dependency-mismatch";
 			}
 
-			var previous = this.previousValue( element ),
-				validator, data, optionDataString;
-
-			if (!this.settings.messages[ element.name ] ) {
-				this.settings.messages[ element.name ] = {};
-			}
-			previous.originalMessage = this.settings.messages[ element.name ].remote;
-			this.settings.messages[ element.name ].remote = previous.message;
-
 			param = typeof param === "string" && { url: param } || param;
-			optionDataString = $.param( $.extend( { data: value }, param.data ) );
-			if (previous.old === optionDataString) {
-				return previous.valid;
-			}
-
-			previous.old = optionDataString;
-			validator = this;
-			this.startRequest( element );
-			data = {};
+			var validator = this, data = {};
 			data[ element.name ] = value;
-			$.ajax( $.extend( true, {
-				mode: "abort",
-				port: "validate" + element.name,
-				dataType: "json",
-				data: data,
-				context: validator.currentForm,
-				success: function( response ) {
-					var valid = response === true || response === "true",
-						errors, message, submitted;
-
-					validator.settings.messages[ element.name ].remote = previous.originalMessage;
-					if ( valid ) {
-						submitted = validator.formSubmitted;
-						validator.prepareElement( element );
-						validator.formSubmitted = submitted;
-						validator.successList.push( element );
-						delete validator.invalid[ element.name ];
-						validator.showErrors();
-					} else {
-						errors = {};
-						message = response || validator.defaultMessage( element, "remote" );
-						errors[ element.name ] = previous.message = $.isFunction( message ) ? message( value ) : message;
-						validator.invalid[ element.name ] = true;
-						validator.showErrors( errors );
+			return this.callbackMethod(value, element, function(processResult) {
+				$.ajax( $.extend( true, {
+					mode: "abort",
+					port: "validate" + element.name,
+					dataType: "json",
+					data: data,
+					context: validator.currentForm,
+					success: function( response ) {
+						var message, valid = response === true || response === "true";
+						if (valid || response === false) {
+							message = { "default": "remote" };
+						} else {
+							message = response;
+						}
+						processResult(valid, message);
 					}
-					previous.valid = valid;
-					validator.stopRequest( element, valid );
-				}
-			}, param ) );
-			return "pending";
+				}, param ) );
+			}, param.data);
 		}
 	}
 

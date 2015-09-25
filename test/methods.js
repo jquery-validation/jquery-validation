@@ -389,13 +389,13 @@ asyncTest("remote", function() {
 
 	$(document).ajaxStop(function() {
 		$(document).unbind("ajaxStop");
-		equal( 1, v.size(), "There must be one error" );
-		equal( "Peter in use", v.errorList[0].message );
+		equal( v.size(), 1, "There must be one error" );
+		equal( v.errorList[0].message, "Peter in use" );
 
 		$(document).ajaxStop(function() {
 			$(document).unbind("ajaxStop");
-			equal( 1, v.size(), "There must be one error" );
-			equal( "Peter2 in use", v.errorList[0].message );
+			equal( v.size(), 1, "There must be one error" );
+			equal( v.errorList[0].message, "Peter2 in use" );
 			start();
 		});
 		e.val("Peter2");
