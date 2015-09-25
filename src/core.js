@@ -514,6 +514,9 @@ $.extend( $.validator, {
 		//          true  If the field is valid
 		//         false  If the field is invalid
 		//     undefined  If the field is not validated yet.
+		//
+		// Note that this method assumes that you have
+		// already called `validate()` on your form
 		isValidElement: function( element ) {
 			return this.invalid[ element.name ] === undefined ? undefined : !this.invalid[ element.name ];
 		},
