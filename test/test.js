@@ -768,7 +768,7 @@ test( "validating multiple checkboxes with 'required'", function() {
 	});
 	v.form();
 
-	equal( v.size(), 1 );
+	equal( v.size(), 5 );
 	checkboxes.filter( ":last" ).prop( "checked", true );
 	v.form();
 	equal( v.size(), 0 );
@@ -1415,7 +1415,7 @@ test( "validate multiple checkbox on click", function() {
 	errors( 0 );
 	trigger( e2 );
 	equal( false, v.form() );
-	errors( 1 );
+	errors( 2 );
 	trigger( e2 );
 	errors( 0 );
 	trigger( e2 );
@@ -1466,7 +1466,7 @@ test( "validate radio on click", function() {
 
 	errors( 0 );
 	equal( false, v.form() );
-	errors( 1 );
+	errors( 2 );
 	trigger( e2 );
 	errors( 0 );
 	trigger( e1 );
