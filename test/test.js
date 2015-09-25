@@ -462,6 +462,21 @@ test( "showErrors(), allow empty string and null as default message", function()
 	ok( $( "#username" ).next( ".error:not(input)" ).is( ":hidden" ) );
 });
 
+test( "showErrors(), define default required message", function() {
+	$( "#userForm" ).validate({
+		rules: {
+			username: {
+				required: true
+			}
+		},
+		messages: {
+			required: "default required message"
+		}
+	});
+	ok( !$( "#username" ).valid() );
+	equal( "default required message", $( "#username" ).next( ".error:not(input)" ).text() );
+});
+
 test( "showErrors() - external messages", function() {
 	expect( 4 );
 	var methods = $.extend( {}, $.validator.methods ),
