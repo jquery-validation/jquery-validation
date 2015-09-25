@@ -3,6 +3,7 @@ $.validator.addMethod("accept", function(value, element, param) {
 	// Split mime on commas in case we have multiple types we can accept
 	var typeParam = typeof param === "string" ? param.replace(/\s/g, "").replace(/,/g, "|") : "image/*",
 	optionalValue = this.optional(element),
+	blankTypeAllowed = false,
 	i, file;
 
 	// Element is optional
@@ -14,10 +15,22 @@ $.validator.addMethod("accept", function(value, element, param) {
 		// If we are using a wildcard, make it regex friendly
 		typeParam = typeParam.replace(/\*/g, ".*");
 
+		// Allow checking for BLANK mimetype.
+		if (typeParam.match(/^\|/) || typeParam.match(/\|\|/) || typeParam.match(/\|$/)) {
+			blankTypeAllowed = true;
+			// remove the error-prone blank entry from regex before continuing.
+			typeParam = typeParam.replace(/^\|/, "").replace(/\|\|/g, "|").replace(/\|$/, "");
+		}
+
 		// Check if the element has a FileList before checking each file
 		if (element.files && element.files.length) {
 			for (i = 0; i < element.files.length; i++) {
 				file = element.files[i];
+
+				// Allow blank mimetype if regex contained an empty entry.
+				if (file.type === "" && blankTypeAllowed) {
+					continue;  // skip the regex check
+				}
 
 				// Grab the mimetype from the loaded file, verify it matches
 				if (!file.type.match(new RegExp( "\\.?(" + typeParam + ")$", "i"))) {
