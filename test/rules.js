@@ -20,6 +20,24 @@ test("rules(), ignore method:false", function() {
 	deepEqual( element.rules(), { minlength: 2 } );
 });
 
+test("rules(), ignore explicit method:false", function() {
+	var element_without_required = $("#yeara"),
+		element_without_date  = $("#montha");
+
+	$("#testForm1clean").validate();
+
+	deepEqual( element_without_required.rules(), {} );
+	deepEqual( element_without_date.rules(), {} );
+});
+
+test("rules(), override class rules by explicit attribute with false", function() {
+	var element_without_date  = $("#monthb");
+
+	$("#testForm1clean").validate();
+
+	deepEqual( element_without_date.rules(), {} );
+});
+
 test("rules() HTML5 required (no value)", function() {
 	var element = $("#testForm11text1");
 

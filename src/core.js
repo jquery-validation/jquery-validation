@@ -1067,7 +1067,7 @@ $.extend( $.validator, {
 		// handle dependency check
 		$.each( rules, function( prop, val ) {
 			// ignore rule when param is explicitly false, eg. required:false
-			if ( val === false ) {
+			if ( val === false || val === "false" ) {
 				delete rules[ prop ];
 				return;
 			}
