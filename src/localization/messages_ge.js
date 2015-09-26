@@ -3,7 +3,7 @@
  * Translated default messages for the jQuery validation plugin.
  * Locale: GE (Georgian; ქართული)
  */
-$.extend($.validator.messages, {
+$.extend( $.validator.messages, {
 	required: "ეს ველი სავალდებულოა",
 	remote: "გთხოვთ შეასწოროთ.",
 	email: "გთხოვთ შეიყვანოთ სწორი ფორმატით.",
@@ -20,4 +20,4 @@ $.extend($.validator.messages, {
 	range: $.validator.format( "შეიყვანეთ {0} -სა {1} -ს შორის." ),
 	max: $.validator.format( "გთხოვთ შეიყვანოთ მნიშვნელობა ნაკლები ან ტოლი {0} -ს." ),
 	min: $.validator.format( "გთხოვთ შეიყვანოთ მნიშვნელობა მეტი ან ტოლი {0} -ს." )
-});
+} );
