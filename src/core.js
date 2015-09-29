@@ -26,9 +26,9 @@ $.extend( $.fn, {
 		if ( validator.settings.onsubmit ) {
 
 			this.on( "click.validate", ":submit", function( event ) {
-				if ( validator.settings.submitHandler ) {
-					validator.submitButton = event.currentTarget;
-				}
+				// Track the used submit button to properly handle scripted
+				// submits later.
+				validator.submitButton = event.target;
 
 				// Allow suppressing validation by adding a cancel class to the submit button
 				if ( $( this ).hasClass( "cancel" ) ) {
@@ -1082,7 +1082,20 @@ $.extend( $.validator, {
 			delete this.pending[ element.name ];
 			$( element ).removeClass( this.settings.pendingClass );
 			if ( valid && this.pendingRequest === 0 && this.formSubmitted && this.form() ) {
+				var hidden;
+				// If no submit handler is set but a submit button is present
+				// ensure the following scripted submit has the value of the
+				// submit button by injecting a hidden field.
+				if ( !this.settings.submitHandler && this.submitButton ) {
+					hidden = $("<input type='hidden'/>")
+					  .attr("name", this.submitButton.name)
+					  .val($(this.submitButton).val())
+					  .appendTo(this.currentForm);
+				}
 				$( this.currentForm ).submit();
+				if ( hidden ) {
+				  hidden.remove();
+				}
 				this.formSubmitted = false;
 			} else if ( !valid && this.pendingRequest === 0 && this.formSubmitted ) {
 				$( this.currentForm ).triggerHandler( "invalid-form", [ this ] );
