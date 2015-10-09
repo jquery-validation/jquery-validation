@@ -804,7 +804,7 @@ $.extend( $.validator, {
 				if ( error.is( "label" ) ) {
 					// If the error is a label, then associate using 'for'
 					error.attr( "for", elementID );
-				} else if ( error.parents( "label[for='" + elementID + "']" ).length === 0 ) {
+				} else if ( error.parents( "label[for='" + elementID.replace( /'/g, "\\'" ) + "']" ).length === 0 ) {
 					// If the element is not a child of an associated label, then it's necessary
 					// to explicitly apply aria-describedby
 
@@ -823,7 +823,7 @@ $.extend( $.validator, {
 					if ( group ) {
 						$.each( this.groups, function( name, testgroup ) {
 							if ( testgroup === group ) {
-								$( "[name='" + name + "']", this.currentForm )
+								$( "[name='" + name.replace( /'/g, "\\'" ) + "']", this.currentForm )
 									.attr( "aria-describedby", error.attr( "id" ) );
 							}
 						} );
@@ -842,14 +842,17 @@ $.extend( $.validator, {
 		},
 
 		errorsFor: function( element ) {
-			var name = this.idOrName( element ),
+			var name = this.idOrName( element ).replace( /'/g, "\\'" ),
 				describer = $( element ).attr( "aria-describedby" ),
 				selector = "label[for='" + name + "'], label[for='" + name + "'] *";
 
 			// aria-describedby should directly reference the error element
 			if ( describer ) {
-				selector = selector + ", #" + describer.replace( /\s+/g, ", #" );
+				selector = selector + ", #" + describer
+					.replace( /'/g, "\\'" )
+					.replace( /\s+/g, ", #" );
 			}
+
 			return this
 				.errors()
 				.filter( selector );
@@ -875,7 +878,7 @@ $.extend( $.validator, {
 		},
 
 		findByName: function( name ) {
-			return $( this.currentForm ).find( "[name='" + name + "']" );
+			return $( this.currentForm ).find( "[name='" + name.replace( /'/g, "\\'" ) + "']" );
 		},
 
 		getLength: function( value, element ) {
