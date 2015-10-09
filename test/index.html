@@ -177,8 +177,8 @@
 		<input name="testForm18[text]" id="testForm18[text]" required>
 	</form>
 	<form id="testForm19">
-	<!-- test id/name containing $ -->
-	<input name="testForm19$text" id="testForm19$text" required>
+		<!-- test id/name containing $ -->
+		<input name="testForm19$text" id="testForm19$text" required>
 	</form>
 	<form id="dataMessages">
 		<input name="dataMessagesName" id="dataMessagesName" class="required" data-msg-required="You must enter a value here">
@@ -369,6 +369,12 @@
 		<input id="radiocheckbox-1-1" autocomplete="off" type="checkbox" name="radiocheckbox-1" required="required">
 		<input id="radiocheckbox-1-2" autocomplete="off" type="checkbox" name="radiocheckbox-1" required="required">
 		<input id="radiocheckbox-1-3" autocomplete="off" type="checkbox" name="radiocheckbox-1" required="required">
+	</form>
+	<form id="testForm20">
+		<!-- test id/name containing single quotes -->
+		<input name="testForm20['text input']" id="testForm20['textinput']" required>
+		<input type="checkbox" id="testForm20['checkboxinput']" name="testForm20['checkbox input']" required>
+		<input type="radio" id="testForm20['radioinput']" name="testForm20['radio input']" required>
 	</form>
 </div>
 </body>

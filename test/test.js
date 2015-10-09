@@ -1347,11 +1347,11 @@ test( "#1508: Validation fails to trigger when next field is already filled out"
 
 	// Tab to the next field
 	element.blur();
-	$("#lastname").trigger( event );
-	$("#lastname").focus();
+	$( "#lastname" ).trigger( event );
+	$( "#lastname" ).focus();
 
 	// Tab back to element
-	$("#lastname").blur();
+	$( "#lastname" ).blur();
 	element.trigger( event );
 	element.focus();
 
@@ -1360,7 +1360,7 @@ test( "#1508: Validation fails to trigger when next field is already filled out"
 	element.trigger( "keyup" );
 
 	// element should be invalid
-	equal( validator.isValidElement( element[0] ), false, "The element is not valid" );
+	equal( validator.isValidElement( element[ 0 ] ), false, "The element is not valid" );
 });
 
 test( "validate checkbox on click", function() {
