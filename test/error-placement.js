@@ -356,3 +356,17 @@ test( "test id/name containing $", function( assert ) {
 	field.valid();
 	assert.hasError( field, "required" );
 });
+
+test( "test id/name containing single quotes", function() {
+	var v = $( "#testForm20" ).validate(),
+		textElement = $( "#testForm20\\[\\'textinput\\'\\]" ),
+		checkboxElement = $( "#testForm20\\[\\'checkboxinput\\'\\]" ),
+		radioElement = $( "#testForm20\\[\\'radioinput\\'\\]" );
+
+	v.form();
+
+	equal( v.numberOfInvalids(), 3, "There is three invalid elements" );
+	equal( v.invalidElements()[ 0 ], textElement[ 0 ], "The element should be invalid" );
+	equal( v.invalidElements()[ 1 ], checkboxElement[ 0 ], "The text element should be invalid" );
+	equal( v.invalidElements()[ 2 ], radioElement[ 0 ], "The text element should be invalid" );
+});
