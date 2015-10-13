@@ -291,6 +291,42 @@ test( "test existing non-label used as error element", function(assert) {
 	assert.noErrorFor( field );
 });
 
+test( "test aria-describedby with input names contains special characters (:, ., [, ], $)", function() {
+	var form = $( "#testForm21" ),
+		field = $( "#testForm21\\[\\]\\.value" );
+
+	equal( field.attr( "aria-describedby" ), undefined );
+
+	form.validate( {
+		errorElement: "span",
+		errorPlacement: function() {
+			// Do something
+		}
+	} );
+
+	// Validate the element
+	ok( !field.valid() );
+	equal( field.attr( "aria-describedby" ), "testForm21[].value-error" );
+
+	// Re-run validation
+	field.val( "some" );
+	field.trigger( "keyup" );
+
+	field.val( "something" );
+	field.trigger( "keyup" );
+
+	// `aria-describedby` should remain the same as before.
+	equal( field.attr( "aria-describedby" ), "testForm21[].value-error" );
+
+	// Re-run validation
+	field.val( "something something" );
+	field.trigger( "keyup" );
+
+	ok( field.valid() );
+	// `aria-describedby` should remain the same as before.
+	equal( field.attr( "aria-describedby" ), "testForm21[].value-error" );
+});
+
 test( "test existing non-error aria-describedby", function( assert ) {
 	expect( 8 );
 	var form = $( "#testForm17" ),
