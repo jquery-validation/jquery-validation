@@ -772,6 +772,7 @@ $.extend( $.validator, {
 				error = this.errorsFor( element ),
 				elementID = this.idOrName( element ),
 				describedBy = $( element ).attr( "aria-describedby" );
+
 			if ( error.length ) {
 				// refresh error/success class
 				error.removeClass( this.settings.validClass ).addClass( this.settings.errorClass );
@@ -803,15 +804,15 @@ $.extend( $.validator, {
 				if ( error.is( "label" ) ) {
 					// If the error is a label, then associate using 'for'
 					error.attr( "for", elementID );
-				} else if ( error.parents( "label[for='" + elementID.replace( /'/g, "\\'" ) + "']" ).length === 0 ) {
+				} else if ( error.parents( "label[for='" + this.escapeCssMeta( elementID ) + "']" ).length === 0 ) {
 					// If the element is not a child of an associated label, then it's necessary
 					// to explicitly apply aria-describedby
 
-					errorID = error.attr( "id" ).replace( /(:|\.|\[|\]|\$)/g, "\\$1" );
+					errorID = error.attr( "id" );
 					// Respect existing non-error aria-describedby
 					if ( !describedBy ) {
 						describedBy = errorID;
-					} else if ( !describedBy.match( new RegExp( "\\b" + errorID + "\\b" ) ) ) {
+					} else if ( !describedBy.match( new RegExp( "\\b" + this.escapeCssMeta( errorID ) + "\\b" ) ) ) {
 						// Add to end of list if not already present
 						describedBy += " " + errorID;
 					}
@@ -822,7 +823,7 @@ $.extend( $.validator, {
 					if ( group ) {
 						$.each( this.groups, function( name, testgroup ) {
 							if ( testgroup === group ) {
-								$( "[name='" + name.replace( /'/g, "\\'" ) + "']", this.currentForm )
+								$( "[name='" + this.escapeCssMeta( name ) + "']", this.currentForm )
 									.attr( "aria-describedby", error.attr( "id" ) );
 							}
 						} );
@@ -841,20 +842,26 @@ $.extend( $.validator, {
 		},
 
 		errorsFor: function( element ) {
-			var name = this.idOrName( element ).replace( /'/g, "\\'" ),
+			var name = this.escapeCssMeta( this.idOrName( element ) ),
 				describer = $( element ).attr( "aria-describedby" ),
 				selector = "label[for='" + name + "'], label[for='" + name + "'] *";
 
 			// aria-describedby should directly reference the error element
 			if ( describer ) {
-				selector = selector + ", #" + describer
-					.replace( /'/g, "\\'" )
+				selector = selector + ", #" + this.escapeCssMeta( describer )
 					.replace( /\s+/g, ", #" );
 			}
 
 			return this
 				.errors()
 				.filter( selector );
+		},
+
+		// See https://api.jquery.com/category/selectors/, for CSS
+		// meta-characters that should be escaped in order to be used with JQuery
+		// as a literal part of a name/id or any selector.
+		escapeCssMeta: function( string ) {
+			return string.replace( /(!|"|#|\$|%|&|'|\(|\)|\*|\+|,|\.|\/|:|;|<|=|>|\?|@|\[|\\|\]|\^|`|\{|\||\}|~)/g, "\\$1");
 		},
 
 		idOrName: function( element ) {
@@ -877,7 +884,7 @@ $.extend( $.validator, {
 		},
 
 		findByName: function( name ) {
-			return $( this.currentForm ).find( "[name='" + name.replace( /'/g, "\\'" ) + "']" );
+			return $( this.currentForm ).find( "[name='" + this.escapeCssMeta( name ) + "']" );
 		},
 
 		getLength: function( value, element ) {
