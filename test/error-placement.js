@@ -291,6 +291,40 @@ test( "test existing non-label used as error element", function(assert) {
 	assert.noErrorFor( field );
 });
 
+test( "test aria-describedby with input names contains CSS-selector meta-characters", function() {
+	var form = $( "#testForm21" ),
+		field = $( "#testForm21\\!\\#\\$\\%\\&\\'\\(\\)\\*\\+\\,\\.\\/\\:\\;\\<\\=\\>\\?\\@\\[\\\\\\]\\^\\`\\{\\|\\}\\~" );
+
+	equal( field.attr( "aria-describedby" ), undefined );
+
+	form.validate( {
+		errorElement: "span",
+		errorPlacement: function() {
+			// Do something
+		}
+	} );
+
+	// Validate the element
+	ok( !field.valid() );
+	equal( field.attr( "aria-describedby" ), "testForm21!#$%&'()*+,./:;<=>?@[\\]^`{|}~-error" );
+
+	// Re-run validation
+	field.val( "some" );
+	field.trigger( "keyup" );
+
+	field.val( "something" );
+	field.trigger( "keyup" );
+
+	equal( field.attr( "aria-describedby" ), "testForm21!#$%&'()*+,./:;<=>?@[\\]^`{|}~-error", "`aria-describedby` should remain the same as before." );
+
+	// Re-run validation
+	field.val( "something something" );
+	field.trigger( "keyup" );
+
+	ok( field.valid() );
+	equal( field.attr( "aria-describedby" ), "testForm21!#$%&'()*+,./:;<=>?@[\\]^`{|}~-error", "`aria-describedby` should remain the same as before." );
+});
+
 test( "test existing non-error aria-describedby", function( assert ) {
 	expect( 8 );
 	var form = $( "#testForm17" ),
