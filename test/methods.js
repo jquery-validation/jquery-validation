@@ -1,5 +1,3 @@
-( function( $ ) {
-
 function methodTest( methodName ) {
 	var v = jQuery( "#form" ).validate(),
 		method = $.validator.methods[ methodName ],
@@ -332,14 +330,6 @@ test( "equalTo", function() {
 
 	ok( method.call( v, "Test", e[ 0 ], "#text1" ), "Text input" );
 	ok( method.call( v, "T", e[ 1 ], "#text2" ), "Another one" );
-} );
-
-test( "creditcard", function() {
-	var method = methodTest( "creditcard" );
-	ok( method( "4111-1111-1111-1111" ), "Valid creditcard number" );
-	ok( method( "4111 1111 1111 1111" ), "Valid creditcard number" );
-	ok( !method( "41111" ), "Invalid creditcard number" );
-	ok( !method( "asdf" ), "Invalid creditcard number" );
 } );
 
 test( "extension", function() {
@@ -1272,5 +1262,3 @@ test( "cpfBR", function() {
 	ok( !method( "11144477715" ), "Invalid CPF Number: 1st check number failed" );
 	ok( !method( "11144477737" ), "Invalid CPF Number: 2nd check number failed" );
 } );
-
-} )( jQuery );
