@@ -305,3 +305,91 @@ test( "rules(), rangelength attribute as array", function() {
 		rangelength: [ 2, 3 ]
 	} );
 } );
+
+test( "rules(), normalizer", function() {
+	var username = $( "#usernamec" ),
+		urlc = $( "#urlc" ),
+		lastname = $( "#lastnamec" ),
+		v;
+
+	username.val( "\t\t \r" );
+	urlc.val( "" );
+
+	v = $( "#testForm1clean" ).validate( {
+		rules: {
+			username: {
+				required: true,
+				// Using the normalizer to trim the value of the element
+				// before validating it.
+				normalizer: function( value ) {
+					equal( this, username[ 0 ], "`this` in the normalizer should be the username element." );
+
+					// Trim the value of the input
+					return $.trim( value );
+				}
+			},
+			urlc: {
+				required: true,
+				url: true,
+				// Using the normalizer to append https:// if it's not
+				// present on the input value
+				normalizer: function( value ) {
+					equal( this, urlc[ 0 ], "`this` in the normalizer should be the urlc element." );
+
+					var url = value;
+
+					// Check if it doesn't start with http:// or https:// or ftp://
+					if ( url && url.substr( 0, 7 ) !== "http://" &&
+						url.substr( 0, 8 ) !== "https://" &&
+						url.substr( 0, 6 ) !== "ftp://" ) {
+						// then prefix with http:// or even https://
+						url = "https://" + url;
+					}
+
+					// Return the new url
+					return url;
+				}
+			},
+			lastname: {
+				required: true,
+				// Using the normalizer to trim the value of the element
+				// before validating it.
+				normalizer: function( value ) {
+					equal( this, lastname[ 0 ], "`this` in the normalizer should be the lastname element." );
+
+					// Return null in order to make sure a exception is thrown
+					// when normalizer returns a non string value.
+					value = null;
+
+					return value;
+				}
+			}
+		}
+	} );
+
+	// Validate only the username and the url elements.
+	username.valid();
+	equal( v.invalidElements()[ 0 ], username[ 0 ], "The username should be invalid" );
+
+	urlc.valid();
+	equal( v.invalidElements()[ 0 ], urlc[ 0 ], "The url should be invalid" );
+
+	equal( v.numberOfInvalids(), 2, "There is two invalid elements" );
+
+	username.val( "something" );
+	urlc.val( "google.com" );
+
+	username.trigger( "keyup" );
+	urlc.trigger( "keyup" );
+
+	equal( v.numberOfInvalids(), 0, "All elements are valid" );
+	equal( v.size(), 0, "All elements are valid" );
+	equal( v.isValidElement( urlc[ 0 ] ), true, "The url element should be valid" );
+
+	// Validate the lastname element, which will throw an exception
+	throws( function() {
+		v.check( lastname[ 0 ] );
+	}, function( err ) {
+		return err.name === "TypeError" && err.message === "The normalizer should return a string value.";
+	}, "This should throw a TypeError exception." );
+} );

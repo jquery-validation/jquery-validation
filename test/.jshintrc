@@ -35,6 +35,7 @@
 		"stop": false,
 		"test": false,
 		"TestHelpers": true,
+		"throws": false,
 		"JSHINT": false
 	}
 }
