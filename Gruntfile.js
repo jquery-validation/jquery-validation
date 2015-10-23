@@ -25,7 +25,9 @@ banner = "/*!\n" +
 umdStart = "(function( factory ) {\n" +
 	"\tif ( typeof define === \"function\" && define.amd ) {\n";
 
-umdMiddle = "\t} else {\n" +
+umdMiddle = "\t} else if (typeof exports !== \"undefined\") {\n" +
+	"\t\tfactory( require( \"jquery\" ) );\n" +
+	"\t} else {\n" +
 	"\t\tfactory( jQuery );\n" +
 	"\t}\n" +
 	"}(function( $ ) {\n\n";
