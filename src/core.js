@@ -556,12 +556,12 @@ $.extend( $.validator, {
 			.not( ":submit, :reset, :image, :disabled" )
 			.not( this.settings.ignore )
 			.filter( function() {
-			    var name = this.name || $(this).attr("name"); // for contenteditable
+				var name = this.name || $( this ).attr("name"); // for contenteditable
 				if ( !name && validator.settings.debug && window.console ) {
 					console.error( "%o has no name assigned", this );
 				}
 
-			    // set form expando on contenteditable
+				// set form expando on contenteditable
 				if (this.hasAttribute("contenteditable")) {
 					this.form = $(this).closest("form")[0];
 				}
@@ -615,8 +615,8 @@ $.extend( $.validator, {
 				return element.validity.badInput ? false : $element.val();
 			}
 
-			if (element.hasAttribute("contenteditable")) {
-			        val = $element.text();
+			if (element.hasAttribute( "contenteditable" )) {
+				val = $element.text();
 			} else {
 				val = $element.val();
 			}
