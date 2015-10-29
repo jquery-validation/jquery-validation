@@ -939,7 +939,7 @@ $.extend( $.validator, {
 		startRequest: function( element ) {
 			if ( !this.pending[ element.name ] ) {
 				this.pendingRequest++;
-				$(element).addClass(this.settings.pendingClass);
+				$( element ).addClass( this.settings.pendingClass );
 				this.pending[ element.name ] = true;
 			}
 		},
@@ -951,7 +951,7 @@ $.extend( $.validator, {
 				this.pendingRequest = 0;
 			}
 			delete this.pending[ element.name ];
-			$(element).removeClass(this.settings.pendingClass);
+			$( element ).removeClass( this.settings.pendingClass );
 			if ( valid && this.pendingRequest === 0 && this.formSubmitted && this.form() ) {
 				$( this.currentForm ).submit();
 				this.formSubmitted = false;
