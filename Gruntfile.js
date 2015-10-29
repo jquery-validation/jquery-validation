@@ -25,7 +25,9 @@ banner = "/*!\n" +
 umdStart = "(function( factory ) {\n" +
 	"\tif ( typeof define === \"function\" && define.amd ) {\n";
 
-umdMiddle = "\t} else {\n" +
+umdMiddle = "\t} else if (typeof module === \"object\" && module.exports) {\n" +
+	"\t\tmodule.exports = factory( require( \"jquery\" ) );\n" +
+	"\t} else {\n" +
 	"\t\tfactory( jQuery );\n" +
 	"\t}\n" +
 	"}(function( $ ) {\n\n";
@@ -130,30 +132,10 @@ grunt.initConfig({
 		options: {
 			atBegin: true
 		},
-		gruntfile: {
-			files: "<%= jshint.grunt.src %>",
-			tasks: [
-				"jscs:grunt",
-				"jshint:grunt"
-			]
-		},
 		src: {
 			files: "<%= jshint.core.src %>",
 			tasks: [
-				"jscs:core",
-				"jshint:core",
-				"concat",
-				"qunit"
-			]
-		},
-		test: {
-			files: [
-				"<%= jshint.test.src %>",
-				"test/index.html"
-			],
-			tasks: [
-				"jscs:test",
-				"jshint:test"
+				"concat"
 			]
 		}
 	},

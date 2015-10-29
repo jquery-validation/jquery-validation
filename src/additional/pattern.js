@@ -11,12 +11,12 @@
 * @type Boolean
 * @cat Plugins/Validate/Methods
 */
-$.validator.addMethod("pattern", function(value, element, param) {
-	if (this.optional(element)) {
+$.validator.addMethod( "pattern", function( value, element, param ) {
+	if ( this.optional( element ) ) {
 		return true;
 	}
-	if (typeof param === "string") {
-		param = new RegExp(param);
+	if ( typeof param === "string" ) {
+		param = new RegExp( "^(?:" + param + ")$" );
 	}
-	return param.test(value);
-}, "Invalid format.");
+	return param.test( value );
+}, "Invalid format." );

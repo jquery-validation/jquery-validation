@@ -1,9 +1,10 @@
 {
 	"name": "jquery-validation",
 	"title": "jQuery Validation Plugin",
-	"description": "Form validation made easy",
-	"version": "1.13.1-pre",
+	"description": "Client-side form validation made easy",
+	"version": "1.14.1-pre",
 	"homepage": "http://jqueryvalidation.org/",
+	"license": "MIT",
 	"author": {
 		"name": "Jörn Zaefferer",
 		"email": "joern.zaefferer@gmail.com",
@@ -23,11 +24,18 @@
 		}
 	],
 	"scripts": {
-		"test": "grunt"
+		"test": "grunt",
+		"prepublish": "grunt"
 	},
+	"files": [
+		"dist/localization/",
+		"dist/additional-methods.js",
+		"dist/jquery.validate.js"
+	],
+	"main": "dist/jquery.validate.js",
 	"dependencies": {},
 	"devDependencies": {
-		"commitplease": "1.7.0",
+		"commitplease": "2.0.0",
 		"grunt": "0.4.4",
 		"grunt-contrib-compress": "0.7.0",
 		"grunt-contrib-concat": "0.3.0",
@@ -36,10 +44,12 @@
 		"grunt-contrib-qunit": "0.4.0",
 		"grunt-contrib-uglify": "0.4.0",
 		"grunt-contrib-watch": "0.6.0",
-		"grunt-jscs": "^0.6.1",
+		"grunt-jscs": "1.0.0",
 		"grunt-text-replace": "0.3.11"
 	},
 	"keywords": [
+		"jquery",
+		"jquery-plugin",
 		"forms",
 		"validation",
 		"validate"

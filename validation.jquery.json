@@ -20,7 +20,7 @@
 	],
 	"bugs": "https://github.com/jzaefferer/jquery-validation/issues",
 	"homepage": "https://github.com/jzaefferer/jquery-validation",
-	"docs": "http://docs.jquery.com/Plugins/Validation",
+	"docs": "http://jqueryvalidation.org/documentation/",
 	"download": "https://github.com/jzaefferer/jquery-validation/releases",
 	"dependencies": {
 		"jquery": ">=1.4.4"

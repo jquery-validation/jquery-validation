@@ -63,10 +63,10 @@ $_SESSION['captcha_id'] = $str;
 	</style>
 </head>
 <body>
-<h1><acronym title="Asynchronous JavaScript And XML">AJAX</acronym> <acronym title="Completely Automated Public Turing test to tell Computers and Humans Apart">CAPTCHA</acronym>, based on <a href="http://psyrens.com/captcha/">http://psyrens.com/captcha/</a></h1>
+<h1><acronym title="Asynchronous JavaScript And XML">AJAX</acronym> <acronym title="Completely Automated Public Turing test to tell Computers and Humans Apart">CAPTCHA</acronym></h1>
 <form id="captchaform" action="">
 	<fieldset>
-		<div id="captchaimage"><a href="<?php echo $_SERVER['PHP_SELF']; ?>" id="refreshimg" title="Click to refresh image"><img src="images/image.php?<?php echo time(); ?>" width="132" height="46" alt="Captcha image"></a></div>
+		<div id="captchaimage"><a href="<?php echo htmlEntities($_SERVER['PHP_SELF'], ENT_QUOTES); ?>" id="refreshimg" title="Click to refresh image"><img src="images/image.php?<?php echo time(); ?>" width="132" height="46" alt="Captcha image"></a></div>
 		<label for="captcha">Enter the characters as seen on the image above (case insensitive):</label>
 		<input type="text" maxlength="6" name="captcha" id="captcha">
 		<input type="submit" name="submit" id="submit" value="Check">

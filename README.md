@@ -1,19 +1,16 @@
 [jQuery Validation Plugin](http://jqueryvalidation.org/) - Form validation made easy
 ================================
 
-[![Build Status](https://secure.travis-ci.org/jzaefferer/jquery-validation.png)](http://travis-ci.org/jzaefferer/jquery-validation)
-[![devDependency Status](https://david-dm.org/jzaefferer/jquery-validation/dev-status.png?theme=shields.io)](https://david-dm.org/jzaefferer/jquery-validation#info=devDependencies)
+[![Build Status](https://secure.travis-ci.org/jzaefferer/jquery-validation.svg)](http://travis-ci.org/jzaefferer/jquery-validation)
+[![devDependency Status](https://david-dm.org/jzaefferer/jquery-validation/dev-status.svg?theme=shields.io)](https://david-dm.org/jzaefferer/jquery-validation#info=devDependencies)
+[![Join the chat at https://gitter.im/jzaefferer/jquery-validation](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/jzaefferer/jquery-validation)
 
 The jQuery Validation Plugin provides drop-in validation for your existing forms, while making all kinds of customizations to fit your application really easy.
 
-## [Help the project](http://pledgie.com/campaigns/18159)
+## [⚠️ Looking for maintainers ⚠️](https://github.com/jzaefferer/jquery-validation/issues/1569)
 
-[![Help the project](http://www.pledgie.com/campaigns/18159.png?skin_name=chrome)](http://pledgie.com/campaigns/18159)
+This project is looking for one or more maintainers. This mostly involves triaging issues, reviewing pull requests, and occasionally fixing bugs or finishing a feature implementation. If you're interested, [please get in touch](https://github.com/jzaefferer/jquery-validation/issues/1569).
 
-This project is looking for help! [You can donate to the ongoing pledgie campaign](http://pledgie.com/campaigns/18159)
-and help spread the word. If you've used the plugin, or plan to use, consider a donation - any amount will help.
-
-You can find the plan for how to spend the money on the [pledgie page](http://pledgie.com/campaigns/18159).
 
 ## Getting Started
 
@@ -54,19 +51,12 @@ define(["jquery", "jquery.validate"], function( $ ) {
 
 For more information on how to setup a rules and customizations, [check the documentation](http://jqueryvalidation.org/documentation/).
 
-## Reporting an Issue
+## Reporting issues and contributing code
 
-**IMPORTANT NOTE ABOUT EMAIL VALIDATION**. As of version 1.12.0 this plugin is using the same regular expression that the [HTML5 specification suggests for browsers to use](http://www.whatwg.org/specs/web-apps/current-work/multipage/states-of-the-type-attribute.html#e-mail-state-%28type=email%29). We will follow their lead and use the same check. If you think the specification is wrong, please report the issue to them.
+See the [Contributing Guidelines](CONTRIBUTING.md) for details.
 
-1. Make sure the problem you're addressing is reproducible.
-2. Use http://jsbin.com or http://jsfiddle.net to provide a test page.
-3. Indicate what browsers the issue can be reproduced in. **Note: IE Compatibilty modes issues will not be addressed.**
-4. What version of the plug-in is the issue reproducible in. Is it reproducible after updating to the latest version.
-
-## Contributing
-
-See the [Contributing Guide](CONTRIBUTING.md)
+**IMPORTANT NOTE ABOUT EMAIL VALIDATION**. As of version 1.12.0 this plugin is using the same regular expression that the [HTML5 specification suggests for browsers to use](https://html.spec.whatwg.org/multipage/forms.html#valid-e-mail-address). We will follow their lead and use the same check. If you think the specification is wrong, please report the issue to them. If you have different requirements, consider [using a custom method](http://jqueryvalidation.org/jQuery.validator.addMethod/).
 
 ## License
-Copyright (c) 2013 Jörn Zaefferer
+Copyright &copy; Jörn Zaefferer<br>
 Licensed under the MIT license.
