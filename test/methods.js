@@ -412,12 +412,12 @@ asyncTest( "remote, pending class added to element while call outstanding", func
 				}
 			}
 		} );
-	strictEqual( e.hasClass("pending"), false, "not pending since no data entered" );
+	strictEqual( e.hasClass( "pending" ), false, "not pending since no data entered" );
 	e.val( "Peter" );
 	// this fires off the validation:
 	v.element( e );
 	strictEqual( e.hasClass( "pending" ), true, "pending while validation outstanding" );
-});
+} );
 
 asyncTest( "remote, customized ajax options", function() {
 	expect( 2 );
