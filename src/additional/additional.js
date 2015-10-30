@@ -1,9 +1,11 @@
 ( function() {
 
 	function stripHtml( value ) {
-		// remove html tags and space chars
+
+		// Remove html tags and space chars
 		return value.replace( /<.[^<>]*?>/g, " " ).replace( /&nbsp;|&#160;/gi, " " )
-		// remove punctuation
+
+		// Remove punctuation
 		.replace( /[.(),;:!?%#$'\"_+=\/\-“”’]*/g, "" );
 	}
 

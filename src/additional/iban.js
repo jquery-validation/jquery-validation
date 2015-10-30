@@ -3,12 +3,13 @@
  * It has a country - specific format, that is checked here too
  */
 $.validator.addMethod( "iban", function( value, element ) {
-	// some quick simple tests to prevent needless work
+
+	// Some quick simple tests to prevent needless work
 	if ( this.optional( element ) ) {
 		return true;
 	}
 
-	// remove spaces and to upper case
+	// Remove spaces and to upper case
 	var iban = value.replace( / /g, "" ).toUpperCase(),
 		ibancheckdigits = "",
 		leadingZeroes = true,
@@ -16,7 +17,7 @@ $.validator.addMethod( "iban", function( value, element ) {
 		cOperator = "",
 		countrycode, ibancheck, charAt, cChar, bbanpattern, bbancountrypatterns, ibanregexp, i, p;
 
-	// check the country code and find the country specific format
+	// Check the country code and find the country specific format
 	countrycode = iban.substring( 0, 2 );
 	bbancountrypatterns = {
 		"AL": "\\d{8}[\\dA-Z]{16}",
@@ -85,7 +86,8 @@ $.validator.addMethod( "iban", function( value, element ) {
 		"VG": "[\\dA-Z]{4}\\d{16}"
 	};
 
-	bbanpattern = bbancountrypatterns[countrycode];
+	bbanpattern = bbancountrypatterns[ countrycode ];
+
 	// As new countries will start using IBAN in the
 	// future, we only check if the countrycode is known.
 	// This prevents false negatives, while almost all
@@ -96,11 +98,11 @@ $.validator.addMethod( "iban", function( value, element ) {
 	if ( typeof bbanpattern !== "undefined" ) {
 		ibanregexp = new RegExp( "^[A-Z]{2}\\d{2}" + bbanpattern + "$", "" );
 		if ( !( ibanregexp.test( iban ) ) ) {
-			return false; // invalid country specific format
+			return false; // Invalid country specific format
 		}
 	}
 
-	// now check the checksum, first convert to digits
+	// Now check the checksum, first convert to digits
 	ibancheck = iban.substring( 4, iban.length ) + iban.substring( 0, 4 );
 	for ( i = 0; i < ibancheck.length; i++ ) {
 		charAt = ibancheck.charAt( i );
@@ -112,7 +114,7 @@ $.validator.addMethod( "iban", function( value, element ) {
 		}
 	}
 
-	// calculate the result of: ibancheckdigits % 97
+	// Calculate the result of: ibancheckdigits % 97
 	for ( p = 0; p < ibancheckdigits.length; p++ ) {
 		cChar = ibancheckdigits.charAt( p );
 		cOperator = "" + cRest + "" + cChar;

@@ -49,7 +49,7 @@ QUnit.assert.hasError = function( element, text, message ) {
 // Asserts that there is no visible error for the given element
 QUnit.assert.noErrorFor = function( element, message ) {
 	var errors = $( element ).closest( "form" ).validate().errorsFor( element[ 0 ] ),
-		hidden = ( errors.length === 0 ) || (errors.is( ":hidden" ) && ( errors.text() === "" ) );
+		hidden = ( errors.length === 0 ) || ( errors.is( ":hidden" ) && ( errors.text() === "" ) );
 	QUnit.push( hidden, hidden, true, message );
 };
 
@@ -72,12 +72,12 @@ test( "valid() plugin method", function() {
 		input = $( "#username" );
 
 	form.validate();
-	ok ( !form.valid(), "Form isn't valid yet" );
-	ok ( !input.valid(), "Input isn't valid either" );
+	ok( !form.valid(), "Form isn't valid yet" );
+	ok( !input.valid(), "Input isn't valid either" );
 
 	input.val( "Hello world" );
-	ok ( form.valid(), "Form is now valid" );
-	ok ( input.valid(), "Input is valid, too" );
+	ok( form.valid(), "Form is now valid" );
+	ok( input.valid(), "Input is valid, too" );
 } );
 
 test( "valid() plugin method, multiple inputs", function() {
@@ -94,7 +94,8 @@ test( "valid() plugin method, multiple inputs", function() {
 } );
 
 test( "valid() plugin method, special handling for checkable groups", function() {
-	// rule is defined on first checkbox, must apply to others, too
+
+	// Rule is defined on first checkbox, must apply to others, too
 	var checkable = $( "#checkable2" );
 	ok( !checkable.valid(), "must be invalid, not checked yet" );
 	checkable.attr( "checked", true );
@@ -339,7 +340,8 @@ test( "submitHandler keeps submitting button", function() {
 	$( "#userForm" ).validate( {
 		debug: true,
 		submitHandler: function( form ) {
-			// dunno how to test this better; this tests the implementation that uses a hidden input
+
+			// Dunno how to test this better; this tests the implementation that uses a hidden input
 			var hidden = $( form ).find( "input:hidden" )[ 0 ];
 			deepEqual( hidden.value, button.value );
 			deepEqual( hidden.name, button.name );
@@ -381,12 +383,13 @@ asyncTest( "validation triggered on radio/checkbox when using keyboard", functio
 	}
 
 	input = $( "#form :checkbox:first" );
-	for (i = 0; i < events.length; i++) {
+	for ( i = 0; i < events.length; i++ ) {
 		input.trigger( events[ i ] );
 	}
 
 	setTimeout( function() {
-		// assert all event handlers fired
+
+		// Assert all event handlers fired
 		equal( triggeredEvents, 6 );
 		start();
 	} );
@@ -416,8 +419,9 @@ asyncTest( "validation triggered on radio/checkbox when using mouseclick", funct
 		input.trigger( events[ i ] );
 	}
 
-	setTimeout(function() {
-		// assert all event handlers fired
+	setTimeout( function() {
+
+		// Assert all event handlers fired
 		equal( triggeredEvents, 2 );
 		start();
 	} );
@@ -586,9 +590,9 @@ test( "option: focusCleanup default false", function() {
 	var form = $( "#userForm" );
 	form.validate();
 	form.valid();
-	ok( form.find( "#username" ).next( ".error:not(input)" ).is( ":visible" ));
+	ok( form.find( "#username" ).next( ".error:not(input)" ).is( ":visible" ) );
 	$( "#username" ).focus();
-	ok( form.find( "#username" ).next( ".error:not(input)" ).is( ":visible" ));
+	ok( form.find( "#username" ).next( ".error:not(input)" ).is( ":visible" ) );
 } );
 
 test( "option: focusCleanup true", function() {
@@ -699,7 +703,7 @@ asyncTest( "option invalidHandler", function() {
 
 test( "findByName()", function() {
 	deepEqual(
-		new $.validator( {}, document.getElementById( "form" ))
+		new $.validator( {}, document.getElementById( "form" ) )
 			.findByName( document.getElementById( "radio1" ).name )
 			.get(),
 		$( "#form" ).find( "[name=radio1]" ).get()
@@ -707,10 +711,11 @@ test( "findByName()", function() {
 } );
 
 test( "focusInvalid()", function() {
+
 	// TODO when using custom focusin, this is triggered just once
 	// TODO when using 1.4 focusin, triggered twice; fix once not testing against 1.3 anymore
 	// expect( 1 );
-	var inputs = $( "#testForm1 input" ).focus(function() {
+	var inputs = $( "#testForm1 input" ).focus( function() {
 			equal( this, inputs[ 0 ], "focused first element" );
 		} ),
 		v = $( "#testForm1" ).validate();
@@ -722,6 +727,7 @@ test( "focusInvalid()", function() {
 test( "focusInvalid() after validate a custom set of inputs", function() {
 	var form = $( "#testForm1" ),
 		validator = form.validate(),
+
 		// It's important the order of Valid, Invalid, Valid so last active element it's a valid element before focus
 		inputs = $( "#firstname, #lastname, #something" );
 
@@ -936,7 +942,7 @@ test( "works on contenteditable fields", function( assert ) {
 	assert.hasError( $( "#contenteditableInput" ), "Please enter a valid number." );
 	assert.noErrorFor( $( "#contenteditableNumberValid" ) );
 	assert.noErrorFor( $( "#contenteditableRequiredValid" ) );
-});
+} );
 
 module( "misc" );
 
@@ -1345,6 +1351,7 @@ test( "don't revalidate the field when pressing special characters", function() 
 } );
 
 test( "#1508: Validation fails to trigger when next field is already filled out", function() {
+
 	// The next field is already filled out.
 	$( "#lastname" ).val( "something" );
 
@@ -1369,9 +1376,9 @@ test( "#1508: Validation fails to trigger when next field is already filled out"
 	element.val( "" );
 	element.trigger( "keyup" );
 
-	// element should be invalid
+	// 'element' should be invalid
 	equal( validator.isValidElement( element[ 0 ] ), false, "The element is not valid" );
-});
+} );
 
 test( "validate checkbox on click", function() {
 	function errors( expected, message ) {
@@ -1379,7 +1386,8 @@ test( "validate checkbox on click", function() {
 	}
 	function trigger( element ) {
 		element.click();
-		// triggered click event screws up checked-state in 1.4
+
+		// Triggered click event screws up checked-state in 1.4
 		element.valid();
 	}
 	var e = $( "#check2" ),
@@ -1406,7 +1414,8 @@ test( "validate multiple checkbox on click", function() {
 	}
 	function trigger( element ) {
 		element.click();
-		// triggered click event screws up checked-state in 1.4
+
+		// Triggered click event screws up checked-state in 1.4
 		element.valid();
 	}
 	var e1 = $( "#check1" ).attr( "checked", false ),
@@ -1435,7 +1444,8 @@ test( "validate multiple checkbox on click", function() {
 test( "correct checkbox receives the error", function() {
 	function trigger( element ) {
 		element.click();
-		// triggered click event screws up checked-state in 1.4
+
+		// Triggered click event screws up checked-state in 1.4
 		element.valid();
 	}
 	var e1 = $( "#check1" ).attr( "checked", false ),
@@ -1451,9 +1461,9 @@ test( "correct checkbox receives the error", function() {
 		}
 	} );
 
-	equal( v.form(), false);
+	equal( v.form(), false );
 	trigger( e1 );
-	equal( v.form(), false);
+	equal( v.form(), false );
 	ok( v.errorList[ 0 ].element.id === v.currentElements[ 0 ].id, "the proper checkbox has the error AND is present in currentElements" );
 } );
 
@@ -1463,7 +1473,8 @@ test( "validate radio on click", function() {
 	}
 	function trigger( element ) {
 		element.click();
-		// triggered click event screws up checked-state in 1.4
+
+		// Triggered click event screws up checked-state in 1.4
 		element.valid();
 	}
 	var e1 = $( "#radio1" ),
@@ -1557,9 +1568,10 @@ test( "Updates pre-existing label if has error class", function() {
 	input.valid();
 	labelsAfter = form.find( ".error:not(input)" ).length;
 
-	// label was updated
+	// 'label' was updated
 	equal( label.text(), input.attr( "data-msg-required" ) );
-	// new label wasn't created
+
+	// New label wasn't created
 	equal( labelsAfter, labelsBefore );
 } );
 
@@ -1761,8 +1773,9 @@ test( "Min and Max type absent set by attributes valid", function() {
 } );
 
 test( "Min and Max range set by attributes valid", function() {
+
 	//
-	// cannot test for overflow:
+	// Cannot test for overflow:
 	// When the element is suffering from an underflow,
 	// the user agent must set the element"s value to a valid
 	// floating-point number that represents the minimum.
@@ -1863,19 +1876,19 @@ test( "Validation triggered on radio and checkbox via click", function() {
 
 	var form = $( "#radiocheckbox" );
 
-	// init validate
+	// Init validate
 	form.validate();
 
-	// validate so we have errors
+	// Validate so we have errors
 	ok( !form.valid(), "Form invalid" );
 
-	// simulate native click on first checkbox to trigger change-event
+	// Simulate native click on first checkbox to trigger change-event
 	$( "#radiocheckbox-0-1" ).simulate( "click" );
 
-	// simulate native click on first radio to trigger change-event
+	// Simulate native click on first radio to trigger change-event
 	$( "#radiocheckbox-1-1" ).simulate( "click" );
 
-	// test if there is no error anymore
+	// Test if there is no error anymore
 	ok( form.find( "input.error" ).length === 0, "Form valid" );
 } );
 

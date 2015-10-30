@@ -21,7 +21,7 @@ $.extend( $.validator.messages, {
 	max: $.validator.format( "Vul hier een waarde in kleiner dan of gelijk aan {0}." ),
 	min: $.validator.format( "Vul hier een waarde in groter dan of gelijk aan {0}." ),
 
-	// for validations in additional-methods.js
+	// For validations in additional-methods.js
 	iban: "Vul hier een geldig IBAN in.",
 	dateNL: "Vul hier een geldige datum in.",
 	phoneNL: "Vul hier een geldig Nederlands telefoonnummer in.",
