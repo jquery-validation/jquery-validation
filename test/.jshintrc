@@ -24,6 +24,7 @@
 		"equal": false,
 		"expect": false,
 		"Globalize": false,
+		"methodTest": false,
 		"module": false,
 		"notEqual": false,
 		"notDeepEqual": false,

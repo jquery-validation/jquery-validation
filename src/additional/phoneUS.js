@@ -1,5 +1,5 @@
 /**
- * matches US phone number format
+ * Matches US phone number format
  *
  * where the area code may not start with 1 and the prefix may not start with 1
  * allows '-' or ' ' as a separator and allows parens around area code

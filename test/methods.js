@@ -41,8 +41,8 @@ test( "url", function() {
 	ok( method( "//142.42.1.1" ), "Valid protocol-relative IP Address" );
 	ok( !method( "htp://code.jquery.com/jquery-1.11.3.min.js" ), "Invalid protocol" );
 	ok( !method( "http://192.168.8." ), "Invalid IP Address" );
-	ok( !method( "http://bassistance" ), "Invalid url" ); // valid
-	ok( !method( "http://bassistance." ), "Invalid url" ); // valid
+	ok( !method( "http://bassistance" ), "Invalid url" ); // Valid
+	ok( !method( "http://bassistance." ), "Invalid url" ); // Valid
 	ok( !method( "http://bassistance,de" ), "Invalid url" );
 	ok( !method( "http://bassistance;de" ), "Invalid url" );
 	ok( !method( "http://.bassistancede" ), "Invalid url" );
@@ -117,7 +117,7 @@ test( "number", function() {
 	ok( !method( "100.100,0,0" ), "Invalid decimal" );
 } );
 
-/* disabled for now, need to figure out how to test localized methods
+/* Disabled for now, need to figure out how to test localized methods
 test("numberDE", function() {
 	var method = methodTest("numberDE");
 	ok( method( "123" ), "Valid numberDE" );
@@ -171,7 +171,7 @@ test( "dateISO", function() {
 	ok( !method( "1990-13-32" ), "Invalid date" );
 } );
 
-/* disabled for now, need to figure out how to test localized methods
+/* Disabled for now, need to figure out how to test localized methods
 test("dateDE", function() {
 	var method = methodTest("dateDE");
 	ok( method( "03.06.1984" ), "Valid dateDE" );
@@ -414,7 +414,8 @@ asyncTest( "remote, pending class added to element while call outstanding", func
 		} );
 	strictEqual( e.hasClass( "pending" ), false, "not pending since no data entered" );
 	e.val( "Peter" );
-	// this fires off the validation:
+
+	// This fires off the validation:
 	v.element( e );
 	strictEqual( e.hasClass( "pending" ), true, "pending while validation outstanding" );
 } );
@@ -645,7 +646,7 @@ test( "iban", function() {
 	ok( !method( "NL54INGB00012345671234" ), "Invalid IBAN too long, BUT CORRECT CHECKSUM" );
 	ok( !method( "XX00INGB000123456712341234" ), "Invalid IBAN: unknown country and checksum incorrect" );
 
-	// sample IBANs for different countries
+	// Sample IBANs for different countries
 	ok( method( "AL47 2121 1009 0000 0002 3569 8741" ), "Valid IBAN - AL" );
 	ok( method( "AD12 0001 2030 2003 5910 0100" ), "Valid IBAN - AD" );
 	ok( method( "AT61 1904 3002 3457 3201" ), "Valid IBAN - AT" );
@@ -990,86 +991,86 @@ test( "creditcardtypes, mastercard", function() {
 	testCardTypeByNumber( "4111-1111-1111-1111", "VISA", false );
 } );
 
-function fillFormWithValuesAndExpect(formSelector, inputValues, expected) {
+function fillFormWithValuesAndExpect( formSelector, inputValues, expected ) {
 	var i, actual;
 
-	for (i = 0; i < inputValues.length; i++) {
-		$(formSelector + " input:eq(" + i + ")").val(inputValues[i]);
+	for ( i = 0; i < inputValues.length; i++ ) {
+		$( formSelector + " input:eq(" + i + ")" ).val( inputValues[ i ] );
 	}
-	actual = $(formSelector).valid();
-	equal(actual, expected, $.validator.format("Filled inputs of form '{0}' with {1} values ({2})", formSelector, inputValues.length, inputValues.toString()));
+	actual = $( formSelector ).valid();
+	equal( actual, expected, $.validator.format( "Filled inputs of form '{0}' with {1} values ({2})", formSelector, inputValues.length, inputValues.toString() ) );
 
 }
 
-test("require_from_group", function() {
-	$("#productInfo").validate({
+test( "require_from_group", function() {
+	$( "#productInfo" ).validate( {
 		rules: {
 			partnumber: { require_from_group: [ 2, ".productInfo" ] },
 			description: { require_from_group: [ 2, ".productInfo" ] },
 			discount: { require_from_group: [ 2, ".productInfo" ] }
 		}
-	});
+	} );
 
-	fillFormWithValuesAndExpect("#productInfo", [], false);
-	fillFormWithValuesAndExpect("#productInfo", [ 123 ], false);
-	$("#productInfo input[type='checkbox']").attr("checked", "checked");
-	fillFormWithValuesAndExpect("#productInfo", [ 123 ], true);
-	$("#productInfo input[type='checkbox']").removeAttr("checked");
-	fillFormWithValuesAndExpect("#productInfo", [ 123, "widget" ], true);
-	fillFormWithValuesAndExpect("#productInfo", [ 123, "widget", "red" ], true);
-	fillFormWithValuesAndExpect("#productInfo", [ 123, "widget", "red" ], true);
-});
+	fillFormWithValuesAndExpect( "#productInfo", [], false );
+	fillFormWithValuesAndExpect( "#productInfo", [ 123 ], false );
+	$( "#productInfo input[type='checkbox']" ).attr( "checked", "checked" );
+	fillFormWithValuesAndExpect( "#productInfo", [ 123 ], true );
+	$( "#productInfo input[type='checkbox']" ).removeAttr( "checked" );
+	fillFormWithValuesAndExpect( "#productInfo", [ 123, "widget" ], true );
+	fillFormWithValuesAndExpect( "#productInfo", [ 123, "widget", "red" ], true );
+	fillFormWithValuesAndExpect( "#productInfo", [ 123, "widget", "red" ], true );
+} );
 
-test("require_from_group preserve other rules", function() {
-	$("#productInfo").validate({
+test( "require_from_group preserve other rules", function() {
+	$( "#productInfo" ).validate( {
 		rules: {
 			partnumber: { require_from_group: [ 2, ".productInfo" ] },
 			description: { require_from_group: [ 2, ".productInfo" ] },
 			color: { require_from_group: [ 2, ".productInfo" ] },
 			supplier: { required: true }
 		}
-	});
+	} );
 
-	fillFormWithValuesAndExpect("#productInfo", [], false);
-	fillFormWithValuesAndExpect("#productInfo", [ 123 ], false);
-	fillFormWithValuesAndExpect("#productInfo", [ 123, "widget" ], false);
-	fillFormWithValuesAndExpect("#productInfo", [ "", "", "", "Acme" ], false);
-	fillFormWithValuesAndExpect("#productInfo", [ 123, "", "", "Acme" ], false);
-	fillFormWithValuesAndExpect("#productInfo", [ 123, "widget", "", "Acme" ], true);
-	fillFormWithValuesAndExpect("#productInfo", [ 123, "widget", "red", "Acme" ], true);
-});
+	fillFormWithValuesAndExpect( "#productInfo", [], false );
+	fillFormWithValuesAndExpect( "#productInfo", [ 123 ], false );
+	fillFormWithValuesAndExpect( "#productInfo", [ 123, "widget" ], false );
+	fillFormWithValuesAndExpect( "#productInfo", [ "", "", "", "Acme" ], false );
+	fillFormWithValuesAndExpect( "#productInfo", [ 123, "", "", "Acme" ], false );
+	fillFormWithValuesAndExpect( "#productInfo", [ 123, "widget", "", "Acme" ], true );
+	fillFormWithValuesAndExpect( "#productInfo", [ 123, "widget", "red", "Acme" ], true );
+} );
 
-test("skip_or_fill_minimum", function() {
-	$("#productInfo").validate({
+test( "skip_or_fill_minimum", function() {
+	$( "#productInfo" ).validate( {
 		rules: {
 			partnumber:  { skip_or_fill_minimum: [ 2, ".productInfo" ] },
 			description: { skip_or_fill_minimum: [ 2, ".productInfo" ] },
 			color:       { skip_or_fill_minimum: [ 2, ".productInfo" ] }
 		}
-	});
+	} );
 
-	fillFormWithValuesAndExpect("#productInfo", [], true);
-	fillFormWithValuesAndExpect("#productInfo", [ 123 ], false);
-	fillFormWithValuesAndExpect("#productInfo", [ 123, "widget" ], true);
-	fillFormWithValuesAndExpect("#productInfo", [ 123, "widget", "red" ], true);
-});
+	fillFormWithValuesAndExpect( "#productInfo", [], true );
+	fillFormWithValuesAndExpect( "#productInfo", [ 123 ], false );
+	fillFormWithValuesAndExpect( "#productInfo", [ 123, "widget" ], true );
+	fillFormWithValuesAndExpect( "#productInfo", [ 123, "widget", "red" ], true );
+} );
 
-test("skip_or_fill_minimum preserve other rules", function() {
-	$("#productInfo").validate({
+test( "skip_or_fill_minimum preserve other rules", function() {
+	$( "#productInfo" ).validate( {
 		rules: {
 			partnumber:  { skip_or_fill_minimum: [ 2, ".productInfo" ] },
 			description: { skip_or_fill_minimum: [ 2, ".productInfo" ] },
 			color:       { skip_or_fill_minimum: [ 2, ".productInfo" ] },
 			supplier: { required: true }
 		}
-	});
+	} );
 
-	fillFormWithValuesAndExpect("#productInfo", [], false);
-	fillFormWithValuesAndExpect("#productInfo", [ "", "", "", "Acme" ], true);
-	fillFormWithValuesAndExpect("#productInfo", [ 123, "", "", "Acme" ], false);
-	fillFormWithValuesAndExpect("#productInfo", [ 123, "widget", "", "Acme" ], true);
-	fillFormWithValuesAndExpect("#productInfo", [ 123, "widget", "red", "Acme" ], true);
-});
+	fillFormWithValuesAndExpect( "#productInfo", [], false );
+	fillFormWithValuesAndExpect( "#productInfo", [ "", "", "", "Acme" ], true );
+	fillFormWithValuesAndExpect( "#productInfo", [ 123, "", "", "Acme" ], false );
+	fillFormWithValuesAndExpect( "#productInfo", [ 123, "widget", "", "Acme" ], true );
+	fillFormWithValuesAndExpect( "#productInfo", [ 123, "widget", "red", "Acme" ], true );
+} );
 
 test( "zipcodeUS", function() {
 	var method = methodTest( "zipcodeUS" );

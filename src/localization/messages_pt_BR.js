@@ -4,7 +4,8 @@
  * Region: BR (Brazil)
  */
 $.extend( $.validator.messages, {
-	//Core
+
+	// Core
 	required: "Este campo &eacute; requerido.",
 	remote: "Por favor, corrija este campo.",
 	email: "Por favor, forne&ccedil;a um endere&ccedil;o de email v&aacute;lido.",
