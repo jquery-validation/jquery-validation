@@ -986,7 +986,6 @@ test("creditcardtypes, mastercard", function() {
 	testCardTypeByNumber( "4111-1111-1111-1111", "VISA", false );
 });
 
-/*
 function fillFormWithValuesAndExpect(formSelector, inputValues, expected) {
 	var i, actual;
 
@@ -1067,7 +1066,6 @@ test("skip_or_fill_minimum preserve other rules", function() {
 	fillFormWithValuesAndExpect("#productInfo", [ 123, "widget", "", "Acme" ], true);
 	fillFormWithValuesAndExpect("#productInfo", [ 123, "widget", "red", "Acme" ], true);
 });
-*/
 
 test("zipcodeUS", function() {
 	var method = methodTest("zipcodeUS");
