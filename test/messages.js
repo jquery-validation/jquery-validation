@@ -53,9 +53,9 @@ test( "read messages from metadata", function() {
 	e.val( "bla" ).valid();
 	equal( form.find( "#testEmail9" ).next( ".error:not(input)" ).text(), "email" );
 
-	g = $("#testGeneric9");
+	g = $( "#testGeneric9" );
 	g.valid();
-	equal( form.find( "#testGeneric9" ).next( ".error:not(input)" ).text(), "generic");
+	equal( form.find( "#testGeneric9" ).next( ".error:not(input)" ).text(), "generic" );
 	g.val( "bla" ).valid();
 	equal( form.find( "#testGeneric9" ).next( ".error:not(input)" ).text(), "email" );
 } );

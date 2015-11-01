@@ -11,8 +11,9 @@ $.validator.addMethod( "bankaccountNL", function( value, element ) {
 	if ( !( /^[0-9]{9}|([0-9]{2} ){3}[0-9]{3}$/.test( value ) ) ) {
 		return false;
 	}
-	// now '11 check'
-	var account = value.replace( / /g, "" ), // remove spaces
+
+	// Now '11 check'
+	var account = value.replace( / /g, "" ), // Remove spaces
 		sum = 0,
 		len = account.length,
 		pos, factor, digit;

@@ -5,7 +5,7 @@ $.validator.addMethod( "creditcard", function( value, element ) {
 		return "dependency-mismatch";
 	}
 
-	// accept only spaces, digits and dashes
+	// Accept only spaces, digits and dashes
 	if ( /[^0-9 \-]+/.test( value ) ) {
 		return false;
 	}

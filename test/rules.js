@@ -319,6 +319,7 @@ test( "rules(), normalizer", function() {
 		rules: {
 			username: {
 				required: true,
+
 				// Using the normalizer to trim the value of the element
 				// before validating it.
 				normalizer: function( value ) {
@@ -331,6 +332,7 @@ test( "rules(), normalizer", function() {
 			urlc: {
 				required: true,
 				url: true,
+
 				// Using the normalizer to append https:// if it's not
 				// present on the input value
 				normalizer: function( value ) {
@@ -342,7 +344,8 @@ test( "rules(), normalizer", function() {
 					if ( url && url.substr( 0, 7 ) !== "http://" &&
 						url.substr( 0, 8 ) !== "https://" &&
 						url.substr( 0, 6 ) !== "ftp://" ) {
-						// then prefix with http:// or even https://
+
+						// Then prefix with http:// or even https://
 						url = "https://" + url;
 					}
 
@@ -352,6 +355,7 @@ test( "rules(), normalizer", function() {
 			},
 			lastname: {
 				required: true,
+
 				// Using the normalizer to trim the value of the element
 				// before validating it.
 				normalizer: function( value ) {

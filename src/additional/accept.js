@@ -1,5 +1,6 @@
 // Accept a value from a file input based on a required mimetype
 $.validator.addMethod( "accept", function( value, element, param ) {
+
 	// Split mime on commas in case we have multiple types we can accept
 	var typeParam = typeof param === "string" ? param.replace( /\s/g, "" ).replace( /,/g, "|" ) : "image/*",
 	optionalValue = this.optional( element ),
@@ -11,6 +12,7 @@ $.validator.addMethod( "accept", function( value, element, param ) {
 	}
 
 	if ( $( element ).attr( "type" ) === "file" ) {
+
 		// If we are using a wildcard, make it regex friendly
 		typeParam = typeParam.replace( /\*/g, ".*" );
 
