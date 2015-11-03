@@ -1,6 +1,11 @@
 language: node_js
 node_js:
-  - 0.10
+  - 0.12
+
+cache:
+  - npm
+sudo: false
+
 install:
   - npm install grunt-cli -g
   - npm install

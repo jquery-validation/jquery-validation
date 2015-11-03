@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>JQuery-validation demo | Semantic UI</title>
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/semantic-ui/2.1.4/semantic.min.css" />
+	<script type="text/javascript" src="../../lib/jquery-1.11.1.js"></script>
+	<script type="text/javascript" src="../../dist/jquery.validate.js"></script>
+	<style type="text/css">
+		.row {
+			padding-bottom: 0px !important;
+		}
+	</style>
+</head>
+<body>
+    <div class="ui grid sem">
+        <div class="four wide column"></div>
+
+        <div class="eight wide column">
+			<div class="ui info message" style="top: 15px;">
+				<div class="header">
+					This demo shows how to integrate JQuery-validation and the Semantic UI framework.
+				</div>
+				<ul class="list">
+					<li><a href="http://semantic-ui.com/">Semantic UI home project</a></li>
+				</ul>
+			</div>
+
+			<div class="ui segments" style="top: 20px; margin-bottom: 20px">
+				<div class="ui segment">
+					<h4 class="ui header">JQuery-validation demo - Semantic-UI Form</h4>
+				</div>
+
+				<div class="ui secondary segment">
+					<form id="signupForm" class="ui grid form" style="padding: 10px">
+						<div class="row field">
+							<label class="six wide column" for="firstname">First name</label>
+							<div class="eight wide column">
+								<div class="ui input">
+									<input id="firstname" name="firstname" type="text" placeholder="First name" />
+								</div>
+							</div>
+						</div>
+
+						<div class="row field">
+							<label class="six wide column" for="lastname">Last name</label>
+							<div class="eight wide column">
+								<div class="ui input">
+									<input id="lastname" name="lastname" type="text" placeholder="Last name" />
+								</div>
+							</div>
+						</div>
+
+						<div class="row field">
+							<label class="six wide column" for="username">Username</label>
+							<div class="eight wide column">
+								<div class="ui input">
+									<input id="username" name="username" type="text" placeholder="Username" />
+								</div>
+							</div>
+						</div>
+
+						<div class="row field">
+							<label class="six wide column" for="email">Email</label>
+							<div class="eight wide column">
+								<div class="ui input">
+									<input id="email" name="email" type="text" placeholder="Email" />
+								</div>
+							</div>
+						</div>
+
+						<div class="row field">
+							<label class="six wide column" for="password">Password</label>
+							<div class="eight wide column">
+								<div class="ui input">
+									<input id="password" name="password" type="password" placeholder="Password" />
+								</div>
+							</div>
+						</div>
+
+						<div class="row field">
+							<label class="six wide column" for="confirm_password">Confirm password</label>
+							<div class="eight wide column">
+								<div class="ui input">
+									<input id="confirm_password" name="confirm_password" type="password" placeholder="Confirm password" />
+								</div>
+							</div>
+						</div>
+
+						<div class="row field">
+							<label class="six wide column"></label>
+							<div class="eight wide column">
+								<div class="ui checkbox">
+									<input name="agree" type="checkbox" /> <label>Please agree to our policy</label>
+								</div>
+							</div>
+						</div>
+
+						<div class="row">
+							<label class="six wide column"></label>
+							<div class="eight wide column">
+								<button type="submit" class="ui primary button">Sign up</button>
+							</div>
+						</div>
+					</form>
+				</div>
+
+			</div>
+		</div>
+
+        <div class="four wide column"></div>
+    </div>
+	<script type="text/javascript">
+		$.validator.setDefaults( {
+			submitHandler: function () {
+				alert( "submitted!" );
+			}
+		} );
+
+		$( document ).ready( function () {
+			$( "#signupForm" ).validate( {
+				rules: {
+					firstname: "required",
+					lastname: "required",
+					username: {
+						required: true,
+						minlength: 2
+					},
+					password: {
+						required: true,
+						minlength: 5
+					},
+					confirm_password: {
+						required: true,
+						minlength: 5,
+						equalTo: "#password"
+					},
+					email: {
+						required: true,
+						email: true
+					},
+					agree: "required"
+				},
+				messages: {
+					firstname: "Please enter your firstname",
+					lastname: "Please enter your lastname",
+					username: {
+						required: "Please enter a username",
+						minlength: "Your username must consist of at least 2 characters"
+					},
+					password: {
+						required: "Please provide a password",
+						minlength: "Your password must be at least 5 characters long"
+					},
+					confirm_password: {
+						required: "Please provide a password",
+						minlength: "Your password must be at least 5 characters long",
+						equalTo: "Please enter the same password as above"
+					},
+					email: "Please enter a valid email address",
+					agree: "Please accept our policy"
+				},
+				errorPlacement: function ( error, element ) {
+					error.addClass( "ui red pointing label transition" );
+					error.insertAfter( element.parent() );
+				},
+				highlight: function ( element, errorClass, validClass ) {
+					$( element ).parents( ".row" ).addClass( errorClass );
+				},
+				unhighlight: function (element, errorClass, validClass) {
+					$( element ).parents( ".row" ).removeClass( errorClass );
+				}
+			} );
+		} );
+	</script>
+</body>
+</html>
