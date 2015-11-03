@@ -1287,9 +1287,11 @@ $.extend( $.validator, {
 		range: function( value, element, param ) {
 			return this.optional( element ) || ( value >= param[ 0 ] && value <= param[ 1 ] );
 		},
-		
+
 		// http://jqueryvalidation.org/step-method/
 		step: function( value, element, param ) {
+			// TODO find a way to support input types date, datetime, datetime-local, month, time and week
+			// only support number and range input types
 			return this.optional( element ) || ( value % param === 0 );
 		},
 
