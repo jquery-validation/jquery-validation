@@ -731,6 +731,20 @@ test( "bic", function() {
 	ok( method( "AAFFFRP1" ), "Valid BIC" );
 	ok( method( "DEUTDEFFAB1" ), "Valid BIC" );
 	ok( method( "DEUTDEFFAXX" ), "Valid BIC" );
+
+	// BIC accept also lowercased values
+	ok( !method( "pbnkdef" ), "Invalid BIC: too short" );
+	ok( !method( "deutdeffa1" ), "Invalid BIC: disallowed length" );
+	ok( !method( "pbnkdeffxxx1" ), "Invalid BIC: too long" );
+	ok( !method( "1bnkdeff" ), "Invalid BIC: invalid digit" );
+	ok( !method( "ingddeffxaa" ), "Invalid BIC: invalid char" );
+
+	ok( method( "deutdeff" ), "Valid BIC (lowercase value)" );
+	ok( method( "deutdeffxxx" ), "Valid BIC (lowercase value)" );
+	ok( method( "pbnkde2f" ), "Valid BIC (lowercase value)" );
+	ok( method( "ingdde91xxx" ), "Valid BIC (lowercase value)" );
+	ok( method( "ingddef2" ), "Valid BIC (lowercase value)" );
+	ok( method( "deutdeffab1" ), "Valid BIC (lowercase value)" );
 } );
 
 test( "postcodeUK", function() {
