@@ -1,19 +1,16 @@
 [jQuery Validation Plugin](http://jqueryvalidation.org/) - Form validation made easy
 ================================
 
-[![Build Status](https://secure.travis-ci.org/jzaefferer/jquery-validation.png)](http://travis-ci.org/jzaefferer/jquery-validation)
-[![devDependency Status](https://david-dm.org/jzaefferer/jquery-validation/dev-status.png?theme=shields.io)](https://david-dm.org/jzaefferer/jquery-validation#info=devDependencies)
+[![Build Status](https://secure.travis-ci.org/jzaefferer/jquery-validation.svg)](http://travis-ci.org/jzaefferer/jquery-validation)
+[![devDependency Status](https://david-dm.org/jzaefferer/jquery-validation/dev-status.svg?theme=shields.io)](https://david-dm.org/jzaefferer/jquery-validation#info=devDependencies)
+[![Join the chat at https://gitter.im/jzaefferer/jquery-validation](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/jzaefferer/jquery-validation)
 
 The jQuery Validation Plugin provides drop-in validation for your existing forms, while making all kinds of customizations to fit your application really easy.
 
-## [Help the project](http://pledgie.com/campaigns/18159)
+## [⚠️ Looking for maintainers ⚠️](https://github.com/jzaefferer/jquery-validation/issues/1569)
 
-[![Help the project](http://www.pledgie.com/campaigns/18159.png?skin_name=chrome)](http://pledgie.com/campaigns/18159)
+This project is looking for one or more maintainers. This mostly involves triaging issues, reviewing pull requests, and occasionally fixing bugs or finishing a feature implementation. If you're interested, [please get in touch](https://github.com/jzaefferer/jquery-validation/issues/1569).
 
-This project is looking for help! [You can donate to the ongoing pledgie campaign](http://pledgie.com/campaigns/18159)
-and help spread the word. If you've used the plugin, or plan to use, consider a donation - any amount will help.
-
-You can find the plan for how to spend the money on the [pledgie page](http://pledgie.com/campaigns/18159).
 
 ## Getting Started
 
