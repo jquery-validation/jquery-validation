@@ -1097,6 +1097,7 @@ test( "messages", function() {
 	equal( m.max( 1 ), "Please enter a value less than or equal to 1." );
 	equal( m.min( 0 ), "Please enter a value greater than or equal to 0." );
 	equal( m.range( [ 1, 2 ] ), "Please enter a value between 1 and 2." );
+	equal( m.step( 2 ), "Please enter a multiple of 2." );
 } );
 
 test( "jQuery.validator.format", function() {
@@ -1692,7 +1693,20 @@ test( "Min and Max strings set by attributes less", function() {
 	equal( label.text(), "Please enter a value greater than or equal to 200.", "Correct error label" );
 } );
 
-test( "Min and Max strings set by attributes valid", function() {
+test( "Step string set by attribute invalid", function() {
+	var form = $( "#ranges" ),
+		name = $( "#rangeTextInvalidStep" ),
+		label;
+
+	form.validate();
+	form.get( 0 ).reset();
+	name.valid();
+
+	label = $( "#ranges .error:not(input)" );
+	equal( label.text(), "Please enter a multiple of 100.", "Correct error label" );
+} );
+
+test( "Min, Max and Step strings set by attributes valid", function() {
 	var form = $( "#ranges" ),
 		range = $( "#rangeTextValid" ),
 		label;
@@ -1705,7 +1719,7 @@ test( "Min and Max strings set by attributes valid", function() {
 	equal( label.text(), "", "Correct error label" );
 } );
 
-test( "Max set by data-rule, valid", function() {
+test( "Min, Max and Step set by data-rule valid", function() {
 	var form = $( "#ranges" ),
 		range = $( "#rangeTextDataRuleValid" ),
 		label;
@@ -1759,7 +1773,20 @@ test( "Min and Max type absent set by attributes less", function() {
 	equal( label.text(), "Please enter a value greater than or equal to 200.", "Correct error label" );
 } );
 
-test( "Min and Max type absent set by attributes valid", function() {
+test( "Step type absent set by attribute invalid", function() {
+	var form = $( "#ranges" ),
+		name = $( "#rangeAbsentInvalidStep" ),
+		label;
+
+	form.validate();
+	form.get( 0 ).reset();
+	name.valid();
+
+	label = $( "#ranges .error:not(input)" );
+	equal( label.text(), "Please enter a multiple of 100.", "Correct error label" );
+} );
+
+test( "Min, Max and Step type absent set by attributes valid", function() {
 	var form = $( "#ranges" ),
 		name = $( "#rangeAbsentValid" ),
 		label;
@@ -1772,7 +1799,7 @@ test( "Min and Max type absent set by attributes valid", function() {
 	equal( label.text(), "", "Correct error label" );
 } );
 
-test( "Min and Max range set by attributes valid", function() {
+test( "Min, Max and Step range set by attributes valid", function() {
 
 	//
 	// Cannot test for overflow:
