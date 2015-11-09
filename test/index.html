@@ -15,6 +15,7 @@
 	<script src="rules.js"></script>
 	<script src="messages.js"></script>
 	<script src="methods.js"></script>
+	<script src="additional/creditcard.js"></script>
 	<script src="aria.js"></script>
 	<script src="error-placement.js"></script>
 </head>
@@ -71,6 +72,7 @@
 		<label id="errorFirstnamec" for="firstnamec" class="error">error for firstname</label>
 		<input title="buga" name="lastname" id="lastnamec">
 		<input name="username" id="usernamec">
+		<input id="urlc" type="text" name="urlc">
 	</form>
 	<form id="userForm">
 		<input type="text" data-rule-required="true" name="username" id="username">
@@ -177,8 +179,8 @@
 		<input name="testForm18[text]" id="testForm18[text]" required>
 	</form>
 	<form id="testForm19">
-	<!-- test id/name containing $ -->
-	<input name="testForm19$text" id="testForm19$text" required>
+		<!-- test id/name containing $ -->
+		<input name="testForm19$text" id="testForm19$text" required>
 	</form>
 	<form id="dataMessages">
 		<input name="dataMessagesName" id="dataMessagesName" class="required" data-msg-required="You must enter a value here">
@@ -369,6 +371,23 @@
 		<input id="radiocheckbox-1-1" autocomplete="off" type="checkbox" name="radiocheckbox-1" required="required">
 		<input id="radiocheckbox-1-2" autocomplete="off" type="checkbox" name="radiocheckbox-1" required="required">
 		<input id="radiocheckbox-1-3" autocomplete="off" type="checkbox" name="radiocheckbox-1" required="required">
+	</form>
+	<form id="testForm20">
+		<!-- test id/name containing single quotes -->
+		<input name="testForm20['text input']" id="testForm20['textinput']" required>
+		<input type="checkbox" id="testForm20['checkboxinput']" name="testForm20['checkbox input']" required>
+		<input type="radio" id="testForm20['radioinput']" name="testForm20['radio input']" required>
+	</form>
+	<form id="testForm21">
+		<label for="testForm21!#$%&'()*+,./:;<=>?@[\]^`{|}~">Input text</label>
+		<input type="text" name="testForm21!#$%&'()*+,./:;<=>?@[\]^`{|}~" id="testForm21!#$%&'()*+,./:;<=>?@[\]^`{|}~" required minlength="15">
+	</form>
+	<form id="contenteditableForm">
+		<div contenteditable id="contenteditableNumberInvalid" data-rule-number="true" name="field1">ABC</div>
+		<div contenteditable id="contenteditableNumberValid" data-rule-number="true" name="field2">123</div>
+		<div contenteditable id="contenteditableRequiredInvalid" data-rule-required="true" name="field3"></div>
+		<div contenteditable id="contenteditableRequiredValid" data-rule-required="true" name="field3">Some text</div>
+		<input id="contenteditableInput" type="text" data-rule-number="true" name="field4" value="ABC" />
 	</form>
 </div>
 </body>
