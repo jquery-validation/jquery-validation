@@ -1706,6 +1706,23 @@ test( "Max set by data-rule, valid", function() {
 	equal( label.text(), "", "Correct error label" );
 });
 
+test( "Step attribute on element with unsupported input type", function() {
+	var form = $( "#stepOnUnsupportedType" ),
+		input = $( "#stepOnUnsupportedTypeInput" );
+
+	throws(
+		function() {
+			form.validate();
+			form.get( 0 ).reset();
+			input.valid();
+		},
+		function( err ) {
+			return err.message === "Step attribute on input type date is not supported.";
+		},
+		"Must throw an expected error to pass."
+	);
+} );
+
 test( "calling blur on ignored element", function() {
 	var form = $( "#ignoredElements" );
 
