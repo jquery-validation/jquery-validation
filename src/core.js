@@ -1319,9 +1319,17 @@ $.extend( $.validator, {
 
 		// http://jqueryvalidation.org/step-method/
 		step: function( value, element, param ) {
+			var type = element.type,
+				errorMessage = "Input type " + type + " is not supported.",
+				supportedTypes = [ "text", "number", "range" ],
+				re = new RegExp( "\\b" + type + "\\b" ),
+				notSupported = !re.test( supportedTypes.join() );
 
-			// Works only for number and range input types
+			// Works only for text, number and range input types
 			// TODO find a way to support input types date, datetime, datetime-local, month, time and week
+			if ( !type || notSupported ) {
+				throw new Error( errorMessage );
+			}
 			return this.optional( element ) || ( value % param === 0 );
 		},
 
