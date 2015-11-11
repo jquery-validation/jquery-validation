@@ -490,9 +490,15 @@ $.extend( $.validator, {
 			this.submitted = {};
 			this.prepareForm();
 			this.hideErrors();
-			var i, elements = this.elements()
+			var elements = this.elements()
 				.removeData( "previousValue" )
 				.removeAttr( "aria-invalid" );
+
+			this.resetElements( elements );
+		},
+
+		resetElements: function( elements ) {
+			var i;
 
 			if ( this.settings.unhighlight ) {
 				for ( i = 0; elements[ i ]; i++ ) {
@@ -1191,6 +1197,7 @@ $.extend( $.validator, {
 				if ( keepRule ) {
 					rules[ prop ] = val.param !== undefined ? val.param : true;
 				} else {
+					$.data( element.form, "validator" ).resetElements( $( element ) );
 					delete rules[ prop ];
 				}
 			}
