@@ -637,7 +637,17 @@ test( "option: errorClass with multiple classes", function() {
 
 test( "defaultMessage(), empty title is ignored", function() {
 	var v = $( "#userForm" ).validate();
-	equal( v.defaultMessage( $( "#username" )[ 0 ], "required" ), "This field is required." );
+	equal( v.defaultMessage( $( "#username" )[ 0 ], { method: "required", parameters: true } ), "This field is required." );
+} );
+
+test( "#741: move message processing from formatAndAdd to defaultMessage", function() {
+	var v = $( "#testForm22" ).validate();
+	equal( v.defaultMessage( $( "#tF22Input" )[ 0 ], { method: "minlength", parameters: 5 } ),
+		"You should enter at least 5 characters.", "defaultMessage() now format the messages" );
+
+	$( "#tF22Input" ).val( "abc" );
+	v.form();
+	equal( v.errorList[ 0 ].message, "You should enter at least 5 characters." );
 } );
 
 test( "formatAndAdd", function() {
