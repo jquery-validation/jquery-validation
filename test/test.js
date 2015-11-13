@@ -1947,3 +1947,26 @@ test( "destroy()", function() {
     validate.destroy();
     strictEqual( $( form ).data( "validator" ), undefined );
 } );
+
+test( "#1618: Errorlist containing more errors than it should", function() {
+	var v = $( "#testForm24" ).validate( {
+			rules: {
+				val1: {
+					required: true
+				},
+				val2: {
+					required: true
+				},
+				val3: {
+					required: true
+				}
+			}
+		} ),
+		inputList = $( "#val1, #val2, #val3" );
+
+	inputList.valid();
+	equal( v.errorList.length, 2, "There is only two errors" );
+
+	inputList.valid();
+	equal( v.errorList.length, 2, "There should be no change in errorList's content" );
+} );
