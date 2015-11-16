@@ -606,9 +606,9 @@ $.extend( $.validator, {
 		},
 
 		elementValue: function( element ) {
-			var val,
-				$element = $( element ),
-				type = element.type;
+			var $element = $( element ),
+				type = element.type,
+				val, idx;
 
 			if ( type === "radio" || type === "checkbox" ) {
 				return this.findByName( element.name ).filter(":checked").val();
@@ -621,6 +621,31 @@ $.extend( $.validator, {
 			} else {
 				val = $element.val();
 			}
+
+			if ( type === "file" ) {
+
+				// Modern browser (chrome & safari)
+				if ( val.substr( 0, 12 ) === "C:\\fakepath\\" ) {
+					return val.substr( 12 );
+				}
+
+				// Legacy browsers
+				// Unix-based path
+				idx = val.lastIndexOf( "/" );
+				if ( idx >= 0 ) {
+					return val.substr( idx + 1 );
+				}
+
+				// Windows-based path
+				idx = val.lastIndexOf( "\\" );
+				if ( idx >= 0 ) {
+					return val.substr( idx + 1 );
+				}
+
+				// Just the file name
+				return val;
+			}
+
 			if ( typeof val === "string" ) {
 				return val.replace( /\r/g, "" );
 			}

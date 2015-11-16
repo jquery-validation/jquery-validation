@@ -755,6 +755,55 @@ test("elementValue() finds radios/checkboxes only within the current form", func
 	ok( !v.elementValue(foreignRadio) );
 });
 
+test( "elementValue() returns the file input's name without the prefix 'C:\\fakepath\\' ", function() {
+	var v = $( "#userForm" ).validate(),
+
+		// A fake file input
+		fileInput = {
+			name: "fakeFile",
+			type: "file",
+			files: {},
+			nodeName: "INPUT",
+			value: "C:\\fakepath\\somefile.txt",
+			form: $( "#userForm" )[ 0 ],
+			hasAttribute: function() { return false; },
+			getAttribute: function( name ) {
+				if ( name === "type" ) {
+					return "file";
+				}
+
+				return undefined;
+			},
+			setAttribute: function() {}
+		};
+
+	v.defaultShowErrors = function() {};
+	v.validationTargetFor = function() {
+		return fileInput;
+	};
+
+	equal( v.elementValue( fileInput ), "somefile.txt" );
+
+	$( fileInput ).rules( "add", {
+		minlength: 10
+	} );
+
+	ok( v.element( fileInput ), "The fake file input is valid (length = 12, minlength = 10)" );
+
+	fileInput.value = "C:\\fakepath\\file.txt";
+	ok( !v.element( fileInput ), "The fake file input is invalid (length = 8, minlength = 10)" );
+
+	$( fileInput ).rules( "remove" );
+	$( fileInput ).rules( "add", {
+		maxlength: 10
+	} );
+
+	ok( v.element( fileInput ), "The fake file input is valid (length = 8, maxlength = 10)" );
+
+	fileInput.value = "C:\\fakepath\\fakefile.txt";
+	ok( !v.element( fileInput ), "The fake file input is invalid (length = 12, maxlength = 10)" );
+} );
+
 test( "validating multiple checkboxes with 'required'", function() {
 	expect( 3 );
 	var checkboxes = $( "#form input[name=check3]" ).prop( "checked", false ),
