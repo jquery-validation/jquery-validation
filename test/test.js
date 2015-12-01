@@ -61,6 +61,16 @@ $.mockjax( {
 	responseTime: 1
 } );
 
+$.mockjax( {
+	url: "workemail.php",
+	response: function( data ) {
+		this.responseStatus = data.data.special === "somevalue" ? 200 : 400; //Requires special param for request
+		if ( this.responseStatus === 200 ) { //Only if valid request - processing workemail
+			this.responseText = JSON.stringify( data.data.email === "john.doe@company.com" );
+		}
+	}
+} );
+
 // Asserts that there is a visible error with the given text for the specified element
 QUnit.assert.hasError = function( element, text, message ) {
 	var errors = $( element ).closest( "form" ).validate().errorsFor( element[ 0 ] ),
@@ -2173,3 +2183,35 @@ test( "#1618: Errorlist containing more errors than it should", function() {
 	inputList.valid();
 	equal( v.errorList.length, 2, "There should be no change in errorList's content" );
 } );
+
+asyncTest( "addMethod, reusing remote in custom method", function() {
+	expect( 7 );
+	$.validator.addMethod( "workemail", function( value, element, param ) {
+		return $.validator.methods.remote.call( this, value, element, {
+			url: "workemail.php",
+			data: { email: value, special: param }
+		}, "workemail" );
+	}, "work email custom message" );
+
+	var e = $( "#add-method-username" ),
+		v = $( "#add-method-remote" ).validate();
+
+	$( document ).ajaxStop( function() {
+		$( document ).unbind( "ajaxStop" );
+		strictEqual( v.size(), 1, "There must be one error" );
+		strictEqual( v.errorList[ 0 ].message, "work email custom message", "john.doe@gmail.com is not work email" );
+
+		$( document ).ajaxStop( function() {
+			$( document ).unbind( "ajaxStop" );
+			strictEqual( v.size(), 0, "There must be no errors" );
+			ok( v.element( e ), "john.doe@company.com is work email ;)" );
+			start();
+		} );
+		e.val( "john.doe@company.com" );
+		strictEqual( v.element( e ), true, "new value, new request; dependency-mismatch considered as valid though" );
+	} );
+	strictEqual( v.element( e ), false, "invalid element, nothing entered yet" );
+	e.val( "john.doe@gmail.com" );
+	strictEqual( v.element( e ), true, "still invalid, because remote validation must block until it returns; dependency-mismatch considered as valid though" );
+} );
+

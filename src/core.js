@@ -1029,11 +1029,11 @@ $.extend( $.validator, {
 			}
 		},
 
-		previousValue: function( element ) {
+		previousValue: function( element, method ) {
 			return $.data( element, "previousValue" ) || $.data( element, "previousValue", {
 				old: null,
 				valid: true,
-				message: this.defaultMessage( element, { method: "remote" } )
+				message: this.defaultMessage( element, { method: method } )
 			} );
 		},
 
@@ -1379,19 +1379,21 @@ $.extend( $.validator, {
 		},
 
 		// http://jqueryvalidation.org/remote-method/
-		remote: function( value, element, param ) {
+		remote: function( value, element, param, method ) {
 			if ( this.optional( element ) ) {
 				return "dependency-mismatch";
 			}
 
-			var previous = this.previousValue( element ),
+			method = typeof method === "string" && method || "remote";
+
+			var previous = this.previousValue( element, method ),
 				validator, data, optionDataString;
 
 			if ( !this.settings.messages[ element.name ] ) {
 				this.settings.messages[ element.name ] = {};
 			}
-			previous.originalMessage = previous.originalMessage || this.settings.messages[ element.name ].remote;
-			this.settings.messages[ element.name ].remote = previous.message;
+			previous.originalMessage = previous.originalMessage || this.settings.messages[ element.name ][ method ];
+			this.settings.messages[ element.name ][ method ] = previous.message;
 
 			param = typeof param === "string" && { url: param } || param;
 			optionDataString = $.param( $.extend( { data: value }, param.data ) );
@@ -1414,7 +1416,7 @@ $.extend( $.validator, {
 					var valid = response === true || response === "true",
 						errors, message, submitted;
 
-					validator.settings.messages[ element.name ].remote = previous.originalMessage;
+					validator.settings.messages[ element.name ][ method ] = previous.originalMessage;
 					if ( valid ) {
 						submitted = validator.formSubmitted;
 						validator.prepareElement( element );
@@ -1424,7 +1426,7 @@ $.extend( $.validator, {
 						validator.showErrors();
 					} else {
 						errors = {};
-						message = response || validator.defaultMessage( element, { method: "remote", parameters: value } );
+						message = response || validator.defaultMessage( element, { method: method, parameters: value } );
 						errors[ element.name ] = previous.message = message;
 						validator.invalid[ element.name ] = true;
 						validator.showErrors( errors );
