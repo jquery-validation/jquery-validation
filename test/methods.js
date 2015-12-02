@@ -760,7 +760,7 @@ test( "bic", function() {
 	ok( !method( "PBNKDEFFXXX1" ), "Invalid BIC: too long" );
 	ok( !method( "1BNKDEFF" ), "Invalid BIC: invalid digit" );
 	ok( !method( "PBNKDE1F" ), "Invalid BIC: invalid digit" );
-	ok( !method( "PBNKDEF3" ), "Invalid BIC: invalid digit" );
+	ok( !method( "PBNKDEF0" ), "Invalid BIC: invalid digit" );
 	ok( !method( "PBNKDEFO" ), "Invalid BIC: invalid char" );
 	ok( !method( "INGDDEFFXAA" ), "Invalid BIC: invalid char" );
 	ok( !method( "DEUTDEF0" ), "Invalid BIC: invalid digit" );
@@ -775,6 +775,7 @@ test( "bic", function() {
 	ok( method( "AAFFFRP1" ), "Valid BIC" );
 	ok( method( "DEUTDEFFAB1" ), "Valid BIC" );
 	ok( method( "DEUTDEFFAXX" ), "Valid BIC" );
+	ok( method( "SSKNDE77XXX" ), "Valid BIC" );
 
 	// BIC accept also lowercased values
 	ok( !method( "pbnkdef" ), "Invalid BIC: too short" );
