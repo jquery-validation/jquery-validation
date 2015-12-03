@@ -760,7 +760,6 @@ test( "bic", function() {
 	ok( !method( "PBNKDEFFXXX1" ), "Invalid BIC: too long" );
 	ok( !method( "1BNKDEFF" ), "Invalid BIC: invalid digit" );
 	ok( !method( "PBNKDE1F" ), "Invalid BIC: invalid digit" );
-	ok( !method( "PBNKDEF0" ), "Invalid BIC: invalid digit" );
 	ok( !method( "PBNKDEFO" ), "Invalid BIC: invalid char" );
 	ok( !method( "INGDDEFFXAA" ), "Invalid BIC: invalid char" );
 	ok( !method( "DEUTDEF0" ), "Invalid BIC: invalid digit" );
