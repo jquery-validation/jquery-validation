@@ -1201,7 +1201,7 @@ $.extend( $.validator, {
 		} );
 
 		// Clean number parameters
-		$.each( [ "minlength", "maxlength" ], function() {
+		$.each( [ "minlength", "maxlength" , "min", "max" ], function() {
 			if ( rules[ this ] ) {
 				rules[ this ] = Number( rules[ this ] );
 			}
