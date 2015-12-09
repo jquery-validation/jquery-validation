@@ -190,7 +190,8 @@ $.extend( $.expr[ ":" ], {
 
 	// http://jqueryvalidation.org/filled-selector/
 	filled: function( a ) {
-		return !!$.trim( "" + $( a ).val() );
+		var val = $( a ).val();
+		return val !== null && !!$.trim( "" + val );
 	},
 
 	// http://jqueryvalidation.org/unchecked-selector/

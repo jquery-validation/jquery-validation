@@ -1223,6 +1223,14 @@ test( "expression: :filled", function() {
 	equal( $( e ).filter( ":filled" ).length, 0 );
 	e.value = " a ";
 	equal( $( e ).filter( ":filled" ).length, 1 );
+  e = $( "#meal" )[ 0 ];
+  equal( $( e ).filter( ":filled" ).length, 0 );
+	$( e ).val( "1" );
+	equal( $( e ).filter( ":filled" ).length, 1 );
+  e = $( "#selectf7" )[ 0 ];
+  equal( $( e ).filter( ":filled" ).length, 0 );
+	$( e ).val( [ "1", "2" ] );
+	equal( $( e ).filter( ":filled" ).length, 1 );
 } );
 
 test( "expression: :unchecked", function() {
