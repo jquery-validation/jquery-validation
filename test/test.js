@@ -39,6 +39,15 @@ $.mockjax( {
 	responseTime: 100
 } );
 
+$.mockjax( {
+	url: "response.php",
+	response: function( settings ) {
+		this.responseText = settings.data.responseText || "";
+		this.responseStatus = settings.data.responseStatus || 200;
+		this.responseTime = settings.data.responseTime || 100;
+	}
+} );
+
 // Asserts that there is a visible error with the given text for the specified element
 QUnit.assert.hasError = function( element, text, message ) {
 	var errors = $( element ).closest( "form" ).validate().errorsFor( element[ 0 ] ),

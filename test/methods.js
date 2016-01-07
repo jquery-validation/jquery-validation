@@ -575,6 +575,50 @@ test( "remote, data previous querystring", function( assert ) {
 	} );
 } );
 
+test( "remote, highlight all invalid fields", function( assert ) {
+	expect( 3 );
+
+	var done = assert.async(),
+		$form = $( "#testForm1" ),
+		$firstnameField = $form.find( "input[name='firstname']" ),
+		$lastnameField = $form.find( "input[name='lastname']" ),
+		$somethingField = $form.find( "input[name='something']" ),
+		validateOptions = {
+	        rules: {
+				firstname: {
+	                required: true
+	            },
+	            lastname: {
+	                required: true
+	            },
+				something: {
+	                required: true,
+	                remote: {
+	                    url: "response.php",
+	                    type: "post",
+						data: {
+							responseText: "false"
+						}
+					}
+				}
+			}
+		};
+
+	$firstnameField.val( "" );
+	$lastnameField.val( "" );
+	$somethingField.val( "something value" );
+
+	$form.validate( validateOptions );
+	$form.valid();
+
+	setTimeout( function() {
+		equal( $firstnameField.hasClass( "error" ), true, "Field 'firstname' should have a '.error' class" );
+		equal( $lastnameField.hasClass( "error" ), true, "Field 'lastname' should have a '.error' class" );
+		equal( $somethingField.hasClass( "error" ), true, "Field 'something' should have a '.error' class" );
+		done();
+	}, 500 );
+} );
+
 module( "additional methods" );
 
 test( "phone (us)", function() {

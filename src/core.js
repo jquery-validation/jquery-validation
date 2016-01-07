@@ -459,16 +459,16 @@ $.extend( $.validator, {
 		// http://jqueryvalidation.org/Validator.showErrors/
 		showErrors: function( errors ) {
 			if ( errors ) {
+				var validator = this;
 
 				// Add items to error list and map
 				$.extend( this.errorMap, errors );
-				this.errorList = [];
-				for ( var name in errors ) {
-					this.errorList.push( {
-						message: errors[ name ],
-						element: this.findByName( name )[ 0 ]
-					} );
-				}
+				this.errorList = $.map( this.errorMap, function( message, name ) {
+					return {
+						message: message,
+						element: validator.findByName( name ) [ 0 ]
+					};
+				} );
 
 				// Remove items from success list
 				this.successList = $.grep( this.successList, function( element ) {
