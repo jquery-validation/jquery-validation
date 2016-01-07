@@ -619,6 +619,54 @@ test( "remote, highlight all invalid fields", function( assert ) {
 	}, 500 );
 } );
 
+test( "Fix #697: remote validation uses wrong error messages", function( assert ) {
+	var e = $( "#username" ),
+		done1 = assert.async(),
+		done2 = assert.async(),
+		done3 = assert.async(),
+		v = $( "#userForm" ).validate( {
+			rules: {
+				username: {
+					required: true,
+					remote: {
+						url: "users.php"
+					}
+				}
+			},
+			messages: {
+				username: {
+					remote: $.validator.format( "{0} in use" )
+				}
+			}
+		} );
+
+	$( "#userForm" ).valid();
+
+	e.val( "Peter" );
+	v.element( e );
+	setTimeout( function() {
+		equal( v.errorList[ 0 ].message, "Peter in use" );
+		done1();
+
+		e.val( "something" );
+		v.element( e );
+
+		e.val( "Peter" );
+		v.element( e );
+		setTimeout( function() {
+			equal( v.errorList[ 0 ].message, "Peter in use" );
+			done2();
+
+			e.val( "asdf" );
+			v.element( e );
+			setTimeout( function() {
+				equal( v.errorList[ 0 ].message, "asdf in use", "error message should be updated" );
+				done3();
+			} );
+		} );
+	} );
+} );
+
 module( "additional methods" );
 
 test( "phone (us)", function() {
