@@ -15,6 +15,7 @@
 	<script src="rules.js"></script>
 	<script src="messages.js"></script>
 	<script src="methods.js"></script>
+	<script src="additional/creditcard.js"></script>
 	<script src="aria.js"></script>
 	<script src="error-placement.js"></script>
 </head>
@@ -71,6 +72,7 @@
 		<label id="errorFirstnamec" for="firstnamec" class="error">error for firstname</label>
 		<input title="buga" name="lastname" id="lastnamec">
 		<input name="username" id="usernamec">
+		<input id="urlc" type="text" name="urlc">
 	</form>
 	<form id="userForm">
 		<input type="text" data-rule-required="true" name="username" id="username">
@@ -177,8 +179,8 @@
 		<input name="testForm18[text]" id="testForm18[text]" required>
 	</form>
 	<form id="testForm19">
-	<!-- test id/name containing $ -->
-	<input name="testForm19$text" id="testForm19$text" required>
+		<!-- test id/name containing $ -->
+		<input name="testForm19$text" id="testForm19$text" required>
 	</form>
 	<form id="dataMessages">
 		<input name="dataMessagesName" id="dataMessagesName" class="required" data-msg-required="You must enter a value here">
@@ -310,7 +312,7 @@
 		<input type="date" id="rangeDateInvalidLess" name="rangeDateInvalidLess" min="2012-11-21" max="2013-01-21" value="2012-10-21">
 		<input type="date" id="maxDateValid" name="maxDateValid" max="2013-01-21" value="2012-12-21">
 		<input type="date" id="rangeDateValid" name="rangeDateValid" min="2012-11-21" max="2013-01-21" value="2012-12-21">
-		<!-- input type text is not supposed to have min/max according to html5,
+		<!-- input type text is not supposed to have min/max/step according to html5,
 			 but for backward compatibility with 1.10.0 we treat it as number.
 			 you can also use type="number", in which case the browser may also
 			 do validation, and mobile browsers may offer a numeric keypad to edit
@@ -319,21 +321,26 @@
 		  -->
 		<input type="text" id="rangeTextInvalidGreater" name="rangeTextInvalidGreater" min="50" max="200" value="1000">
 		<input type="text" id="rangeTextInvalidLess" name="rangeTextInvalidLess" min="200" max="1000" value="50">
+		<input type="text" id="rangeTextInvalidStep" name="rangeTextInvalidStep" min="200" max="1000" step="100" value="250">
 		<input id="rangeAbsentInvalidGreater" name="rangeAbsentInvalidGreater" min="50" max="200" value="1000">
 		<input id="rangeAbsentInvalidLess" name="rangeAbsentInvalidLess" min="200" max="1000" value="50">
-		<input type="text" id="rangeTextValid" name="rangeTextValid" min="50" max="1000" value="200">
-		<input type="text" id="rangeTextDataRuleValid" name="rangeTextValid" min="50" data-rule-max="1000.00" value="200">
-		<input id="rangeAbsentValid" name="rangeAbsentValid" min="50" max="1000" value="200">
+		<input id="rangeAbsentInvalidStep" name="rangeAbsentInvalidStep" min="200" max="1000" step="100" value="250">
+		<input type="text" id="rangeTextValid" name="rangeTextValid" min="50" max="1000" step="50" value="200">
+		<input type="text" id="rangeTextDataRuleValid" name="rangeTextValid" data-rule-min="50" data-rule-max="1000.00" data-rule-step="50.0" value="200">
+		<input id="rangeAbsentValid" name="rangeAbsentValid" min="50" max="1000" step="50" value="200">
 		<!-- ranges are like numbers in html5, except that browser is not required
 			 to demand an exact value.  User interface could be a slider.
 		  -->
-		<input type="range" id="rangeRangeValid" name="rangeRangeValid" min="50" max="1000" value="200">
+		<input type="range" id="rangeRangeValid" name="rangeRangeValid" min="50" max="1000" step="50" value="200">
 		<input type="number" id="rangeNumberValid" name="rangeNumberValid" min="50" max="1000" value="200">
 		<input type="number" id="rangeNumberInvalidGreater" name="rangeNumberInvalidGreater" min="50" max="200" value="1000">
 		<input type="number" id="rangeNumberInvalidLess" name="rangeNumberInvalidLess" min="50" max="200" value="6">
 		<input type="number" id="rangeMinZeroInvalidLess" name="rangeMinZeroInvalidLess" min="0" value="-1">
 		<input type="number" id="rangeMinZeroValidEqual" name="rangeMinZeroValidEqual" min="0" value="0">
 		<input type="number" id="rangeMinZeroValidGreater" name="rangeMinZeroValidGreater" min="0" value="1">
+	</form>
+	<form id="stepOnUnsupportedType">
+		<input type="date" id="stepOnUnsupportedTypeInput" name="stepOnUnsupportedTypeInput" step="1">
 	</form>
 	<form id="rangeMinDateValid">
 		<input type="date" id="minDateValid" name="minDateValid" min="2012-11-21" value="2012-12-21">
@@ -369,6 +376,32 @@
 		<input id="radiocheckbox-1-1" autocomplete="off" type="checkbox" name="radiocheckbox-1" required="required">
 		<input id="radiocheckbox-1-2" autocomplete="off" type="checkbox" name="radiocheckbox-1" required="required">
 		<input id="radiocheckbox-1-3" autocomplete="off" type="checkbox" name="radiocheckbox-1" required="required">
+	</form>
+	<form id="testForm20">
+		<!-- test id/name containing single quotes -->
+		<input name="testForm20['text input']" id="testForm20['textinput']" required>
+		<input type="checkbox" id="testForm20['checkboxinput']" name="testForm20['checkbox input']" required>
+		<input type="radio" id="testForm20['radioinput']" name="testForm20['radio input']" required>
+	</form>
+	<form id="testForm21">
+		<label for="testForm21!#$%&'()*+,./:;<=>?@[\]^`{|}~">Input text</label>
+		<input type="text" name="testForm21!#$%&'()*+,./:;<=>?@[\]^`{|}~" id="testForm21!#$%&'()*+,./:;<=>?@[\]^`{|}~" required minlength="15">
+	</form>
+	<form id="testForm22">
+		<label for="tF22Input">Input text</label>
+		<input type="text" name="tF22Input" id="tF22Input" required minlength="5" data-msg-minlength="You should enter at least {0} characters.">
+	</form>
+	<form id="contenteditableForm">
+		<div contenteditable id="contenteditableNumberInvalid" data-rule-number="true" name="field1">ABC</div>
+		<div contenteditable id="contenteditableNumberValid" data-rule-number="true" name="field2">123</div>
+		<div contenteditable id="contenteditableRequiredInvalid" data-rule-required="true" name="field3"></div>
+		<div contenteditable id="contenteditableRequiredValid" data-rule-required="true" name="field3">Some text</div>
+		<input id="contenteditableInput" type="text" data-rule-number="true" name="field4" value="ABC" />
+	</form>
+	<form id="testForm24">
+		<input id="val1" type="hidden" name="val1" value="hello" />
+		<input id="val2" type="text" name="val2" value="" />
+		<input id="val3" type="text" name="val3" value="" />
 	</form>
 </div>
 </body>

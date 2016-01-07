@@ -17,17 +17,17 @@
  * @type Boolean
  * @cat Plugins/Validate/Methods
  */
-$.validator.addMethod("dateITA", function(value, element) {
+$.validator.addMethod( "dateITA", function( value, element ) {
 	var check = false,
 		re = /^\d{1,2}\/\d{1,2}\/\d{4}$/,
 		adata, gg, mm, aaaa, xdata;
-	if ( re.test(value)) {
-		adata = value.split("/");
-		gg = parseInt(adata[0], 10);
-		mm = parseInt(adata[1], 10);
-		aaaa = parseInt(adata[2], 10);
-		xdata = new Date(Date.UTC(aaaa, mm - 1, gg, 12, 0, 0, 0));
-		if ( ( xdata.getUTCFullYear() === aaaa ) && ( xdata.getUTCMonth () === mm - 1 ) && ( xdata.getUTCDate() === gg ) ) {
+	if ( re.test( value ) ) {
+		adata = value.split( "/" );
+		gg = parseInt( adata[ 0 ], 10 );
+		mm = parseInt( adata[ 1 ], 10 );
+		aaaa = parseInt( adata[ 2 ], 10 );
+		xdata = new Date( Date.UTC( aaaa, mm - 1, gg, 12, 0, 0, 0 ) );
+		if ( ( xdata.getUTCFullYear() === aaaa ) && ( xdata.getUTCMonth() === mm - 1 ) && ( xdata.getUTCDate() === gg ) ) {
 			check = true;
 		} else {
 			check = false;
@@ -35,5 +35,5 @@ $.validator.addMethod("dateITA", function(value, element) {
 	} else {
 		check = false;
 	}
-	return this.optional(element) || check;
-}, $.validator.messages.date);
+	return this.optional( element ) || check;
+}, $.validator.messages.date );
