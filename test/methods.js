@@ -591,7 +591,7 @@ test( "remote, highlight all invalid fields", function( assert ) {
 	            lastname: {
 	                required: true
 	            },
-	        	something: {
+				something: {
 	                required: true,
 	                remote: {
 	                    url: "response.php",
@@ -599,10 +599,10 @@ test( "remote, highlight all invalid fields", function( assert ) {
 						data: {
 							responseText: "false"
 						}
-	                }
-	        	}
-	        }
-	    };
+					}
+				}
+			}
+		};
 
 	$firstnameField.val( "" );
 	$lastnameField.val( "" );
