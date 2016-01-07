@@ -829,6 +829,49 @@ test( "elementValue() returns the file input's name without the prefix 'C:\\fake
 	ok( !v.element( fileInput ), "The fake file input is invalid (length = 12, maxlength = 10)" );
 } );
 
+test( "", function() {
+	var v = $( "#userForm" ).validate(),
+
+		// A fake number input
+		numberInput = {
+			name: "fakeNumber",
+			type: "number",
+			nodeName: "INPUT",
+			value: "",
+			form: $( "#userForm" )[ 0 ],
+			validity: {
+				badInput: false
+			},
+			hasAttribute: function() { return false; },
+			getAttribute: function( name ) {
+				return this[ name ];
+			},
+			setAttribute: function() {}
+		};
+
+	v.defaultShowErrors = function() {};
+	v.validationTargetFor = function() {
+		return numberInput;
+	};
+
+	$( numberInput ).rules( "add", {
+		required: true
+	} );
+
+	deepEqual( $( numberInput ).rules(), { required: true, number: true } );
+	ok( !v.element( numberInput ), "The fake number input is invalid" );
+	equal( v.errorList[ 0 ].message, $.validator.messages.required, "The error message should be the one of required rule." );
+
+	numberInput.value = "Not A Number";
+	numberInput.validity.badInput = true;
+	ok( !v.element( numberInput ), "The fake number input is invalid" );
+	equal( v.errorList[ 0 ].message, $.validator.messages.number, "The error message should be the one of number rule." );
+
+	numberInput.value = "2015";
+	numberInput.validity.badInput = false;
+	ok( v.element( numberInput ), "The fake number input is valid" );
+} );
+
 test( "validating multiple checkboxes with 'required'", function() {
 	expect( 3 );
 	var checkboxes = $( "#form input[name=check3]" ).prop( "checked", false ),

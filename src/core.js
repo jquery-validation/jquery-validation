@@ -644,7 +644,7 @@ $.extend( $.validator, {
 			if ( type === "radio" || type === "checkbox" ) {
 				return this.findByName( element.name ).filter( ":checked" ).val();
 			} else if ( type === "number" && typeof element.validity !== "undefined" ) {
-				return element.validity.badInput ? false : $element.val();
+				return element.validity.badInput ? "NaN" : $element.val();
 			}
 
 			if ( element.hasAttribute( "contenteditable" ) ) {
@@ -713,7 +713,6 @@ $.extend( $.validator, {
 			for ( method in rules ) {
 				rule = { method: method, parameters: rules[ method ] };
 				try {
-
 					result = $.validator.methods[ method ].call( this, val, element, rule.parameters );
 
 					// If a method indicates that the field is optional and therefore valid,
