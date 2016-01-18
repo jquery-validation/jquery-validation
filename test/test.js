@@ -48,6 +48,19 @@ $.mockjax( {
 	}
 } );
 
+$.mockjax( {
+	url: "issue1508.php",
+	response: function( settings ) {
+		if ( /abc/i.test( settings.data.val2 ) ) {
+			this.responseText = "false";
+		} else {
+			this.responseText = "true";
+		}
+	},
+	responseStatus: 200,
+	responseTime: 1
+} );
+
 // Asserts that there is a visible error with the given text for the specified element
 QUnit.assert.hasError = function( element, text, message ) {
 	var errors = $( element ).closest( "form" ).validate().errorsFor( element[ 0 ] ),
@@ -1473,31 +1486,102 @@ test( "don't revalidate the field when pressing special characters", function() 
 test( "#1508: Validation fails to trigger when next field is already filled out", function() {
 
 	// The next field is already filled out.
-	$( "#lastname" ).val( "something" );
+	$( "#box2" ).val( "something" );
 
-	var event     = $.Event( "keyup", { keyCode: 9 } ),
-		element   = $( "#firstname" ),
-		validator = $( "#testForm1" ).validate();
+	var event   = $.Event( "keyup", { keyCode: 9 } ),
+		element = $( "#box1" ),
+		nextE   = $( "#box2" ),
+		validator = $( "#testForm23" ).validate( {
+			rules: {
+				box1: {
+					required: true
+				},
+				box2: {
+					required: true
+				}
+			}
+		} ),
+		check = function( value ) {
 
-	// Fill the first element
-	element.val( "abc" );
+			// Fill the first element
+			element.val( "something" );
 
-	// Tab to the next field
-	element.blur();
-	$( "#lastname" ).trigger( event );
-	$( "#lastname" ).focus();
+			// Tab to the next field
+			element.blur();
+			nextE.trigger( event );
+			nextE.focus();
 
-	// Tab back to element
-	$( "#lastname" ).blur();
-	element.trigger( event );
-	element.focus();
+			// Tab back to element
+			nextE.blur();
+			element.trigger( event );
+			element.focus();
 
-	// Delete the content
-	element.val( "" );
-	element.trigger( "keyup" );
+			// Change the content
+			element.val( value );
+			element.trigger( "keyup" );
+		},
+		eq = function( expected, msg ) {
+			equal( validator.numberOfInvalids(), expected, "There is only one invalid element." );
+			equal( validator.invalidElements()[ 0 ], element[ 0 ], msg );
+		};
 
-	// 'element' should be invalid
-	equal( validator.isValidElement( element[ 0 ] ), false, "The element is not valid" );
+	check( "" );
+	eq( 1, "The box1 element should be invalid" );
+} );
+
+test( "[Remote rule] #1508: Validation fails to trigger when next field is already filled out", function( assert ) {
+	assert.expect( 2 );
+
+	// The next field is already filled out.
+	$( "#val3" ).val( "something" );
+
+	var event   = $.Event( "keyup", { keyCode: 9 } ),
+		element = $( "#val2" ),
+		nextE   = $( "#val3" ),
+		done = assert.async(),
+		validator = $( "#testForm24" ).validate( {
+			rules: {
+				val2: {
+					remote: {
+						url: "issue1508.php"
+					}
+				},
+				val3: {
+					required: true
+				}
+			}
+		} ),
+		check = function( value ) {
+
+			// Fill the first element
+			element.val( "something" );
+
+			// Tab to the next field
+			element.blur();
+			nextE.trigger( event );
+			nextE.focus();
+
+			// Make sure all events will be called before the bellow code
+			setTimeout( function() {
+
+				// Tab back to element
+				nextE.blur();
+				element.trigger( event );
+				element.focus();
+
+				// Change the content
+				element.val( value );
+				element.trigger( "keyup" );
+
+				setTimeout( function() {
+					equal( validator.numberOfInvalids(), 1, "There is only one invalid element" );
+					equal( validator.invalidElements()[ 0 ], element[ 0 ], "The val2 element should be invalid" );
+					done();
+				} );
+			} );
+		};
+
+	check( "abc" );
 } );
 
 test( "validate checkbox on click", function() {

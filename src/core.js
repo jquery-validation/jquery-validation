@@ -289,7 +289,7 @@ $.extend( $.validator, {
 
 			if ( event.which === 9 && this.elementValue( element ) === "" || $.inArray( event.keyCode, excludedKeys ) !== -1 ) {
 				return;
-			} else if ( element.name in this.submitted || this.isValidElement( element ) ) {
+			} else if ( element.name in this.submitted || element.name in this.invalid ) {
 				this.element( element );
 			}
 		},
@@ -487,6 +487,7 @@ $.extend( $.validator, {
 			if ( $.fn.resetForm ) {
 				$( this.currentForm ).resetForm();
 			}
+			this.invalid = {};
 			this.submitted = {};
 			this.prepareForm();
 			this.hideErrors();
@@ -537,18 +538,6 @@ $.extend( $.validator, {
 
 		valid: function() {
 			return this.size() === 0;
-		},
-
-		// Check if the given element is valid
-		// return
-		//          true  If the field is valid
-		//         false  If the field is invalid
-		//     undefined  If the field is not validated yet.
-		//
-		// Note that this method assumes that you have
-		// already called `validate()` on your form
-		isValidElement: function( element ) {
-			return this.invalid[ element.name ] === undefined ? undefined : !this.invalid[ element.name ];
 		},
 
 		size: function() {
@@ -1431,7 +1420,7 @@ $.extend( $.validator, {
 						validator.prepareElement( element );
 						validator.formSubmitted = submitted;
 						validator.successList.push( element );
-						delete validator.invalid[ element.name ];
+						validator.invalid[ element.name ] = false;
 						validator.showErrors();
 					} else {
 						errors = {};

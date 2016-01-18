@@ -388,7 +388,6 @@ test( "rules(), normalizer", function() {
 
 	equal( v.numberOfInvalids(), 0, "All elements are valid" );
 	equal( v.size(), 0, "All elements are valid" );
-	equal( v.isValidElement( urlc[ 0 ] ), true, "The url element should be valid" );
 
 	// Validate the lastname element, which will throw an exception
 	throws( function() {
