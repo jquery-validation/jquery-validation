@@ -20,6 +20,7 @@ test( "group error messages", function() {
 
 	var form = $( "#dateRangeForm" );
 	form.validate( {
+		errorElement: "span",
 		groups: {
 			dateRange: "fromDate toDate"
 		},

@@ -843,7 +843,7 @@ $.extend( $.validator, {
 		},
 
 		showLabel: function( element, message ) {
-			var place, group, errorID,
+			var place, group, errorID, v,
 				error = this.errorsFor( element ),
 				elementID = this.idOrName( element ),
 				describedBy = $( element ).attr( "aria-describedby" );
@@ -884,11 +884,10 @@ $.extend( $.validator, {
 
 					// If the error is a label, then associate using 'for'
 					error.attr( "for", elementID );
-				}
 
-				// If the element is not a child of an associated label, then it's necessary
-				// to explicitly apply aria-describedby
-				else if ( error.parents( "label[for='" + this.escapeCssMeta( elementID ) + "']" ).length === 0 ) {
+					// If the element is not a child of an associated label, then it's necessary
+					// to explicitly apply aria-describedby
+				} else if ( error.parents( "label[for='" + this.escapeCssMeta( elementID ) + "']" ).length === 0 ) {
 					errorID = error.attr( "id" );
 
 					// Respect existing non-error aria-describedby
@@ -904,9 +903,10 @@ $.extend( $.validator, {
 					// If this element is grouped, then assign to all elements in the same group
 					group = this.groups[ element.name ];
 					if ( group ) {
-						$.each( this.groups, function( name, testgroup ) {
+						v = this;
+						$.each( v.groups, function( name, testgroup ) {
 							if ( testgroup === group ) {
-								$( "[name='" + this.escapeCssMeta( name ) + "']", this.currentForm )
+								$( "[name='" + v.escapeCssMeta( name ) + "']", v.currentForm )
 									.attr( "aria-describedby", error.attr( "id" ) );
 							}
 						} );
