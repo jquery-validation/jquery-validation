@@ -2150,15 +2150,21 @@ test( "Validation triggered on radio and checkbox via click", function() {
 } );
 
 test( "destroy()", function() {
-    expect( 2 );
+	expect( 6 );
 
-    var form = $( "#form" ),
-        validate = form.validate();
+	var form = $( "#testForm5" ),
+		validate = form.validate();
 
-    strictEqual( $( form ).data( "validator" ), validate );
+	strictEqual( form.data( "validator" ), validate );
 
-    validate.destroy();
-    strictEqual( $( form ).data( "validator" ), undefined );
+	form.valid();
+	equal( $( "#x1", form ).hasClass( "validate-equalTo-blur" ), true, "The blur event should be bound to this element" );
+	equal( $( "#x2", form ).hasClass( "validate-equalTo-blur" ), true, "The blur event should be bound to this element" );
+
+	validate.destroy();
+	strictEqual( form.data( "validator" ), undefined );
+	equal( $( "#x1", form ).hasClass( "validate-equalTo-blur" ), false, "The blur event should be unbound from this element" );
+	equal( $( "#x2", form ).hasClass( "validate-equalTo-blur" ), false, "The blur event should be unbound from this element" );
 } );
 
 test( "#1618: Errorlist containing more errors than it should", function() {
