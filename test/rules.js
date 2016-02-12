@@ -396,3 +396,10 @@ test( "rules(), normalizer", function() {
 		return err.name === "TypeError" && err.message === "The normalizer should return a string value.";
 	}, "This should throw a TypeError exception." );
 } );
+
+test( "rules() - on empty jquery set #1706", function() {
+	var element = $( "#firstname .mynonexistantclass" );
+
+	var result = element.rules( "add", "whatever" );
+	strictEqual( result, undefined, "can work on an empty set without a js error" );
+} );
