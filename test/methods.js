@@ -618,6 +618,55 @@ test( "remote, highlight all invalid fields", function( assert ) {
 		done();
 	}, 500 );
 } );
+test( "remote, unhighlighted should be invoked after being highlighted/invalid", function( assert ) {
+	expect( 2 );
+
+	var done1 = assert.async(),
+		done2 = assert.async(),
+		$form = $( "#testForm25" ),
+		$somethingField = $form.find( "input[name='something25']" ),
+		responseText = "false",
+		response = function() { return responseText; },
+		validateOptions = {
+			highlight: function( e ) {
+				$( e ).addClass( "error" );
+			},
+			unhighlight: function( e ) {
+				$( e ).removeClass( "error" );
+			},
+	        rules: {
+				something25: {
+	                required: true,
+	                remote: {
+	                    url: "callback.php",
+	                    type: "post",
+						data: {
+							responseText: response
+						},
+						async: false
+					}
+				}
+			}
+		};
+
+	$somethingField.val( "something value" );
+	var v = $form.validate( validateOptions );
+	v.element( $somethingField );
+
+	setTimeout( function() {
+		equal( $somethingField.hasClass( "error" ), true, "Field 'something' should have the error class" );
+		done1();
+		$somethingField.val( "something value 2" );
+		responseText = "true";
+
+		v.element( $somethingField );
+
+		setTimeout( function() {
+			equal( $somethingField.hasClass( "error" ), false, "Field 'something' should not have the error class" );
+			done2();
+		}, 500 );
+	}, 500 );
+} );
 
 test( "Fix #697: remote validation uses wrong error messages", function( assert ) {
 	var e = $( "#username" ),

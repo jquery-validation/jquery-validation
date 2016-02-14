@@ -49,6 +49,15 @@ $.mockjax( {
 } );
 
 $.mockjax( {
+	url: "callback.php",
+	response: function( settings ) {
+		this.responseText = settings.data.responseText();
+		this.responseStatus = settings.data.responseStatus || 200;
+		this.responseTime = settings.data.responseTime || 100;
+	}
+} );
+
+$.mockjax( {
 	url: "issue1508.php",
 	response: function( settings ) {
 		if ( /abc/i.test( settings.data.val2 ) ) {
