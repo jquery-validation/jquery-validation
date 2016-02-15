@@ -624,9 +624,13 @@ $.extend( $.validator, {
 			this.toHide = this.errors().add( this.containers );
 		},
 
+		setToHideFor: function( element ){
+			this.toHide = this.errorsFor( element );
+		},
+
 		prepareElement: function( element ) {
 			this.reset();
-			this.toHide = this.errorsFor( element );
+			this.setToHideFor( element );
 		},
 
 		elementValue: function( element ) {
@@ -1424,6 +1428,7 @@ $.extend( $.validator, {
 					if ( valid ) {
 						submitted = validator.formSubmitted;
 						validator.resetLists();
+						validator.setToHideFor( element );
 						validator.formSubmitted = submitted;
 						validator.successList.push( element );
 						validator.invalid[ element.name ] = false;
