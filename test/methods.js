@@ -619,7 +619,7 @@ test( "remote, highlight all invalid fields", function( assert ) {
 	}, 500 );
 } );
 test( "remote, unhighlighted should be invoked after being highlighted/invalid", function( assert ) {
-	expect( 2 );
+	expect( 6 );
 
 	var done1 = assert.async(),
 		done2 = assert.async(),
@@ -630,15 +630,17 @@ test( "remote, unhighlighted should be invoked after being highlighted/invalid",
 		validateOptions = {
 			highlight: function( e ) {
 				$( e ).addClass( "error" );
+				ok( true, "highlight should be called" );
 			},
 			unhighlight: function( e ) {
 				$( e ).removeClass( "error" );
+				ok( true, "unhighlight should be called" );
 			},
 	        rules: {
 				something25: {
 	                required: true,
 	                remote: {
-	                    url: "callback.php",
+	                    url: "response.php",
 	                    type: "post",
 						data: {
 							responseText: response

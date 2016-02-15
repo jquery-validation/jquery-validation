@@ -42,16 +42,16 @@ $.mockjax( {
 $.mockjax( {
 	url: "response.php",
 	response: function( settings ) {
-		this.responseText = settings.data.responseText || "";
-		this.responseStatus = settings.data.responseStatus || 200;
-		this.responseTime = settings.data.responseTime || 100;
-	}
-} );
-
-$.mockjax( {
-	url: "callback.php",
-	response: function( settings ) {
-		this.responseText = settings.data.responseText();
+		var responseText = settings.data.responseText;
+		if ( responseText ) {
+			if ( typeof responseText === "function" ) {
+				this.responseText = responseText();
+			} else {
+				this.responseText = responseText;
+			}
+		} else {
+			this.responseText = "";
+		}
 		this.responseStatus = settings.data.responseStatus || 200;
 		this.responseTime = settings.data.responseTime || 100;
 	}
