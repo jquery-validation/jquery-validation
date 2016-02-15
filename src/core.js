@@ -624,7 +624,7 @@ $.extend( $.validator, {
 			this.toHide = this.errors().add( this.containers );
 		},
 
-		setToHideFor: function( element ){
+		setToHideFor: function( element ) {
 			this.toHide = this.errorsFor( element );
 		},
 
