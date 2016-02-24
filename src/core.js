@@ -529,9 +529,12 @@ $.extend( $.validator, {
 				for ( i = 0; elements[ i ]; i++ ) {
 					this.settings.unhighlight.call( this, elements[ i ],
 						this.settings.errorClass, "" );
+					this.findByName( elements[ i ].name ).removeClass( this.settings.validClass );
 				}
 			} else {
-				elements.removeClass( this.settings.errorClass );
+				elements
+					.removeClass( this.settings.errorClass )
+					.removeClass( this.settings.validClass );
 			}
 		},
 
