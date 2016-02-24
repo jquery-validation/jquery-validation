@@ -976,10 +976,12 @@ test( "resetForm()", function() {
 	v.form();
 	errors( 2 );
 	ok( $( "#firstname" ).hasClass( "error" ) );
+	ok( $( "#something" ).hasClass( "valid" ) );
 	$( "#firstname" ).val( "hiy" );
 	v.resetForm();
 	errors( 0 );
 	ok( !$( "#firstname" ).hasClass( "error" ) );
+	ok( !$( "#something" ).hasClass( "valid" ) );
 	equal( $( "#firstname" ).val(), "", "form plugin is included, therefor resetForm must also reset inputs, not only errors" );
 } );
 
