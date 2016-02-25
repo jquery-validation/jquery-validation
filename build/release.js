@@ -11,7 +11,7 @@
     git checkout tags/X.YY.Z
     npm publish
 - Update MS CDN (see 1password for url and credentials)
-- Check jsdelivr CDN
+- Check jsdelivr CDN: new git tags are automatically pulled, tested & merged via https://github.com/jsdelivr/jsdelivr/pulls
 - Update validation-content/pages/index.html (may have to hold off on CDN updates until available)
 - Write blog post: Some highlights, changelog, download links
 */
