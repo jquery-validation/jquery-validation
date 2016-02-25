@@ -6,6 +6,10 @@
 	node release.js --remote=jzaefferer/jquery-validation
 - Wait a while, verify and confirm each step
 - Create GitHub release: Pick the new tag, add changelog, upload zip
+- Upload to NPM
+    git fetch --tags jzaefferer
+    git checkout tags/X.YY.Z
+    npm publish
 - Update MS CDN (see 1password for url and credentials)
 - Check jsdelivr CDN
 - Update validation-content/pages/index.html (may have to hold off on CDN updates until available)
