@@ -2,7 +2,6 @@
 - Run `git changelog` and edit to match previous output (this should make use of jquey-release instead)
 - pull latest https://github.com/jquery/jquery-release
 - disable _generateChangelog task in release.js (BOOOO)
-- adjust commit message in jquery-release/lib/repo.js to prepand "Release:", to make the commit hook happy
 - run
 	node release.js --remote=jzaefferer/jquery-validation
 - Wait a while, verify and confirm each step
