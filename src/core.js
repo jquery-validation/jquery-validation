@@ -574,8 +574,9 @@ $.extend( $.validator, {
 		focusInvalid: function() {
 			if ( this.settings.focusInvalid ) {
 				try {
-					$( this.findLastActive() || this.errorList.length && this.errorList[ 0 ].element || [] )
-					.filter( ":visible" )
+					var errElems = this.invalidElements(); 
+					$( this.findLastActive() || errElems.length && errElems || [] )
+					.filter( ":visible:first" )
 					.focus()
 
 					// Manually trigger focusin event; without it, focusin handler isn't called, findLastActive won't have anything to find
