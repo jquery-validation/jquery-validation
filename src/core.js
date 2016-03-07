@@ -574,7 +574,7 @@ $.extend( $.validator, {
 		focusInvalid: function() {
 			if ( this.settings.focusInvalid ) {
 				try {
-					var errElems = this.invalidElements(); 
+					var errElems = this.invalidElements();
 					$( this.findLastActive() || errElems.length && errElems || [] )
 					.filter( ":visible:first" )
 					.focus()
