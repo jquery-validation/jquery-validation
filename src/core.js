@@ -272,6 +272,16 @@ $.extend( $.validator, {
 				this.element( element );
 			}
 		},
+		oninput: function( element ) {
+			if ( element.name in this.submitted || element.name in this.invalid ) {
+				this.element( element );
+			} else {
+				return;
+			}
+		},
+
+		// DEPRECATED
+		// Please use `oninput` instead.
 		onkeyup: function( element, event ) {
 
 			// Avoid revalidate the field when pressing one of the following keys
@@ -366,6 +376,8 @@ $.extend( $.validator, {
 			this.reset();
 
 			var groups = ( this.groups = {} ),
+				inputSupported = "oninput" in document.createElement( "input" ),
+				inputOrKeyup = ( inputSupported ? "input" : "keyup" ) + ".validate",
 				rules;
 			$.each( this.settings.groups, function( key, value ) {
 				if ( typeof value === "string" ) {
@@ -390,7 +402,7 @@ $.extend( $.validator, {
 			}
 
 			$( this.currentForm )
-				.on( "focusin.validate focusout.validate keyup.validate",
+				.on( "focusin.validate focusout.validate " + inputOrKeyup,
 					":text, [type='password'], [type='file'], select, textarea, [type='number'], [type='search'], " +
 					"[type='tel'], [type='url'], [type='email'], [type='datetime'], [type='date'], [type='month'], " +
 					"[type='week'], [type='time'], [type='datetime-local'], [type='range'], [type='color'], " +

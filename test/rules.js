@@ -383,8 +383,8 @@ test( "rules(), normalizer", function() {
 	username.val( "something" );
 	urlc.val( "google.com" );
 
-	username.trigger( "keyup" );
-	urlc.trigger( "keyup" );
+	username.trigger( inputOrKeyup );
+	urlc.trigger( inputOrKeyup );
 
 	equal( v.numberOfInvalids(), 0, "All elements are valid" );
 	equal( v.size(), 0, "All elements are valid" );

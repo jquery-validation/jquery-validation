@@ -24,6 +24,8 @@
 		"equal": false,
 		"expect": false,
 		"Globalize": false,
+		"inputOrKeyup": true,
+		"inputSupported": true,
 		"methodTest": false,
 		"module": false,
 		"notEqual": false,
@@ -35,7 +37,6 @@
 		"strictEqual": false,
 		"stop": false,
 		"test": false,
-		"TestHelpers": true,
 		"throws": false,
 		"JSHINT": false
 	}
