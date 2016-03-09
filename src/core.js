@@ -1369,7 +1369,7 @@ $.extend( $.validator, {
 
 		// http://jqueryvalidation.org/min-method/
 		min: function( value, element, param ) {
-			if ( typeof this.settings.rules[ element.name ].number != "undefined" || this.settings.rules[ element.name ].number != false ) {
+			if ( typeof this.settings.rules[ element.name ].number !== "undefined" || this.settings.rules[ element.name ].number !== false ) {
 				value = value.replace( /,/g, "" );
 			}
 
