@@ -1369,8 +1369,10 @@ $.extend( $.validator, {
 
 		// http://jqueryvalidation.org/min-method/
 		min: function( value, element, param ) {
-			if (this.settings.rules[element.name].number)
+			if (this.settings.rules[element.name].number) {
 				value = value.replace(/,/g, '');
+			}
+
 			return this.optional( element ) || value >= param;
 		},
 
