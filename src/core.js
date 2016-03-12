@@ -275,8 +275,6 @@ $.extend( $.validator, {
 		oninput: function( element ) {
 			if ( element.name in this.submitted || element.name in this.invalid ) {
 				this.element( element );
-			} else {
-				return;
 			}
 		},
 
