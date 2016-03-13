@@ -390,6 +390,10 @@ $.extend( $.validator, {
 				rules[ key ] = $.validator.normalizeRule( value );
 			} );
 
+			// Delete `onkeyup` if `input` event is supported
+			// Otherwise, remove `oninput` handler
+			delete this.settings[ inputSupported ? "onkeyup" : "oninput" ];
+
 			function delegate( event ) {
 				var validator = $.data( this.form, "validator" ),
 					eventType = "on" + event.type.replace( /^validate/, "" ),
