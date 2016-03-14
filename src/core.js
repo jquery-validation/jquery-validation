@@ -375,7 +375,7 @@ $.extend( $.validator, {
 
 			var groups = ( this.groups = {} ),
 				inputSupported = "oninput" in document.createElement( "input" ),
-				inputOrKeyup = ( inputSupported ? "input" : "keyup" ) + ".validate",
+				inputOrKeyup = inputSupported ? "input" : "keyup",
 				rules;
 			$.each( this.settings.groups, function( key, value ) {
 				if ( typeof value === "string" ) {
@@ -404,7 +404,7 @@ $.extend( $.validator, {
 			}
 
 			$( this.currentForm )
-				.on( "focusin.validate focusout.validate " + inputOrKeyup,
+				.on( "focusin.validate focusout.validate " + inputOrKeyup + ".validate",
 					":text, [type='password'], [type='file'], select, textarea, [type='number'], [type='search'], " +
 					"[type='tel'], [type='url'], [type='email'], [type='datetime'], [type='date'], [type='month'], " +
 					"[type='week'], [type='time'], [type='datetime-local'], [type='range'], [type='color'], " +
