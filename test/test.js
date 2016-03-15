@@ -904,6 +904,98 @@ test( "", function() {
 	ok( v.element( numberInput ), "The fake number input is valid" );
 } );
 
+test( "elementValue() returns the file input's name without the prefix 'C:\\fakepath\\' ", function() {
+	var v = $( "#userForm" ).validate(),
+
+		// A fake file input
+		fileInput = {
+			name: "fakeFile",
+			type: "file",
+			files: {},
+			nodeName: "INPUT",
+			value: "C:\\fakepath\\somefile.txt",
+			form: $( "#userForm" )[ 0 ],
+			hasAttribute: function() { return false; },
+			getAttribute: function( name ) {
+				if ( name === "type" ) {
+					return "file";
+				}
+
+				return undefined;
+			},
+			setAttribute: function() {}
+		};
+
+	v.defaultShowErrors = function() {};
+	v.validationTargetFor = function() {
+		return fileInput;
+	};
+
+	equal( v.elementValue( fileInput ), "somefile.txt" );
+
+	$( fileInput ).rules( "add", {
+		minlength: 10
+	} );
+
+	ok( v.element( fileInput ), "The fake file input is valid (length = 12, minlength = 10)" );
+
+	fileInput.value = "C:\\fakepath\\file.txt";
+	ok( !v.element( fileInput ), "The fake file input is invalid (length = 8, minlength = 10)" );
+
+	$( fileInput ).rules( "remove" );
+	$( fileInput ).rules( "add", {
+		maxlength: 10
+	} );
+
+	ok( v.element( fileInput ), "The fake file input is valid (length = 8, maxlength = 10)" );
+
+	fileInput.value = "C:\\fakepath\\fakefile.txt";
+	ok( !v.element( fileInput ), "The fake file input is invalid (length = 12, maxlength = 10)" );
+} );
+
+test( "", function() {
+	var v = $( "#userForm" ).validate(),
+
+		// A fake number input
+		numberInput = {
+			name: "fakeNumber",
+			type: "number",
+			nodeName: "INPUT",
+			value: "",
+			form: $( "#userForm" )[ 0 ],
+			validity: {
+				badInput: false
+			},
+			hasAttribute: function() { return false; },
+			getAttribute: function( name ) {
+				return this[ name ];
+			},
+			setAttribute: function() {}
+		};
+
+	v.defaultShowErrors = function() {};
+	v.validationTargetFor = function() {
+		return numberInput;
+	};
+
+	$( numberInput ).rules( "add", {
+		required: true
+	} );
+
+	deepEqual( $( numberInput ).rules(), { required: true, number: true } );
+	ok( !v.element( numberInput ), "The fake number input is invalid" );
+	equal( v.errorList[ 0 ].message, $.validator.messages.required, "The error message should be the one of required rule." );
+
+	numberInput.value = "Not A Number";
+	numberInput.validity.badInput = true;
+	ok( !v.element( numberInput ), "The fake number input is invalid" );
+	equal( v.errorList[ 0 ].message, $.validator.messages.number, "The error message should be the one of number rule." );
+
+	numberInput.value = "2015";
+	numberInput.validity.badInput = false;
+	ok( v.element( numberInput ), "The fake number input is valid" );
+} );
+
 test( "validating multiple checkboxes with 'required'", function() {
 	expect( 3 );
 	var checkboxes = $( "#form input[name=check3]" ).prop( "checked", false ),
@@ -1088,6 +1180,16 @@ test( "works on contenteditable fields", function( assert ) {
 	assert.noErrorFor( $( "#contenteditableNumberValid" ) );
 	assert.noErrorFor( $( "#contenteditableRequiredValid" ) );
 } );
+
+test( "works on contenteditable fields", function( assert ) {
+	var form = $( "#contenteditableForm" );
+	form.valid();
+	assert.hasError( $( "#contenteditableNumberInvalid" ), "Please enter a valid number." );
+	assert.hasError( $( "#contenteditableRequiredInvalid" ), "This field is required." );
+	assert.hasError( $( "#contenteditableInput" ), "Please enter a valid number." );
+	assert.noErrorFor( $( "#contenteditableNumberValid" ) );
+	assert.noErrorFor( $( "#contenteditableRequiredValid" ) );
+});
 
 module( "misc" );
 
@@ -1605,6 +1707,35 @@ test( "[Remote rule] #1508: Validation fails to trigger when next field is alrea
 	check( "abc" );
 } );
 
+test( "#1508: Validation fails to trigger when next field is already filled out", function() {
+	// The next field is already filled out.
+	$( "#lastname" ).val( "something" );
+
+	var event     = $.Event( "keyup", { keyCode: 9 } ),
+		element   = $( "#firstname" ),
+		validator = $( "#testForm1" ).validate();
+
+	// Fill the first element
+	element.val( "abc" );
+
+	// Tab to the next field
+	element.blur();
+	$( "#lastname" ).trigger( event );
+	$( "#lastname" ).focus();
+
+	// Tab back to element
+	$( "#lastname" ).blur();
+	element.trigger( event );
+	element.focus();
+
+	// Delete the content
+	element.val( "" );
+	element.trigger( "keyup" );
+
+	// element should be invalid
+	equal( validator.isValidElement( element[ 0 ] ), false, "The element is not valid" );
+});
+
 test( "validate checkbox on click", function() {
 	function errors( expected, message ) {
 		equal( v.size(), expected, message );
@@ -1954,6 +2085,23 @@ test( "Min, Max and Step set by data-rule valid", function() {
 
 	label = $( "#ranges .error:not(input)" );
 	equal( label.text(), "", "Correct error label" );
+} );
+
+test( "Step attribute on element with unsupported input type", function() {
+	var form = $( "#stepOnUnsupportedType" ),
+		input = $( "#stepOnUnsupportedTypeInput" );
+
+	throws(
+		function() {
+			form.validate();
+			form.get( 0 ).reset();
+			input.valid();
+		},
+		function( err ) {
+			return err.message === "Step attribute on input type date is not supported.";
+		},
+		"Must throw an expected error to pass."
+	);
 } );
 
 test( "Step attribute on element with unsupported input type", function() {
