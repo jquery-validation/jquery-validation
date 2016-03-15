@@ -152,6 +152,7 @@ $.extend( $.fn, {
 					delete existingRules[ method ];
 					if ( method === "required" ) {
 						$( element ).removeAttr( "aria-required" );
+						$( element ).removeAttr( "required" );
 					}
 				} );
 				return filtered;
