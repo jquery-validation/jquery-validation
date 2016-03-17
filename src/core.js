@@ -174,6 +174,7 @@ $.extend( $.fn, {
 			delete data.required;
 			data = $.extend( { required: param }, data );
 			$( element ).attr( "aria-required", "true" );
+			$( element ).attr( "required", "true" );
 		}
 
 		// Make sure remote is at back
