@@ -34,7 +34,7 @@
 	],
 	"main": "dist/jquery.validate.js",
 	"dependencies": {
-		"jquery": "^1.7"
+		"jquery": "^1.7 || ^2.0"
 	},
 	"devDependencies": {
 		"commitplease": "^2.2.3",
