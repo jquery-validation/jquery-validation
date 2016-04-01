@@ -10,7 +10,7 @@
     git fetch --tags jzaefferer
     git checkout tags/X.YY.Z
     npm publish
-- Update MS CDN (see 1password for url and credentials)
+- Update MS CDN (Ping Chris Sfanos)
 - Check jsdelivr CDN: new git tags are automatically pulled, tested & merged via https://github.com/jsdelivr/jsdelivr/pulls
 - Check cdnjs CDN: new git tags are automatically committed into https://github.com/cdnjs/cdnjs/commits/master
 - Update validation-content/pages/index.html (may have to hold off on CDN updates until available)
