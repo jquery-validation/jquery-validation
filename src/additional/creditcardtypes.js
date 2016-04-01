@@ -38,31 +38,31 @@ $.validator.addMethod( "creditcardtypes", function( value, element, param ) {
 	if ( param.all ) {
 		validTypes = 0x0001 | 0x0002 | 0x0004 | 0x0008 | 0x0010 | 0x0020 | 0x0040 | 0x0080;
 	}
-	if ( validTypes & 0x0001 && /^(5[12345])/.test( value ) ) { // Mastercard
+	if ( validTypes & 0x0001 && /^(5[12345])/.test( value ) ) { //mastercard
 		return value.length === 16;
 	}
-	if ( validTypes & 0x0002 && /^(4)/.test( value ) ) { // Visa
+	if ( validTypes & 0x0002 && /^(4)/.test( value ) ) { //visa
 		return value.length === 16;
 	}
-	if ( validTypes & 0x0004 && /^(3[47])/.test( value ) ) { // Amex
+	if ( validTypes & 0x0004 && /^(3[47])/.test( value ) ) { //amex
 		return value.length === 15;
 	}
-	if ( validTypes & 0x0008 && /^(3(0[012345]|[68]))/.test( value ) ) { // Dinersclub
+	if ( validTypes & 0x0008 && /^(3(0[012345]|[68]))/.test( value ) ) { //dinersclub
 		return value.length === 14;
 	}
-	if ( validTypes & 0x0010 && /^(2(014|149))/.test( value ) ) { // Enroute
+	if ( validTypes & 0x0010 && /^(2(014|149))/.test( value ) ) { //enroute
 		return value.length === 15;
 	}
-	if ( validTypes & 0x0020 && /^(6011)/.test( value ) ) { // Discover
+	if ( validTypes & 0x0020 && /^(6011)/.test( value ) ) { //discover
 		return value.length === 16;
 	}
-	if ( validTypes & 0x0040 && /^(3)/.test( value ) ) { // Jcb
+	if ( validTypes & 0x0040 && /^(3)/.test( value ) ) { //jcb
 		return value.length === 16;
 	}
-	if ( validTypes & 0x0040 && /^(2131|1800)/.test( value ) ) { // Jcb
+	if ( validTypes & 0x0040 && /^(2131|1800)/.test( value ) ) { //jcb
 		return value.length === 15;
 	}
-	if ( validTypes & 0x0080 ) { // Unknown
+	if ( validTypes & 0x0080) { //unknown
 		return true;
 	}
 	return false;
