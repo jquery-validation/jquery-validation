@@ -80,6 +80,9 @@ $.mockjax( {
 	}
 } );
 
+var inputSupported = "oninput" in document.createElement( "input" );
+var inputOrKeyup = inputSupported ? "input" : "keyup";
+
 // Asserts that there is a visible error with the given text for the specified element
 QUnit.assert.hasError = function( element, text, message ) {
 	var errors = $( element ).closest( "form" ).validate().errorsFor( element[ 0 ] ),
@@ -407,6 +410,9 @@ asyncTest( "validation triggered on radio/checkbox when using keyboard", functio
 		onfocusout: function() {
 			triggeredEvents++;
 		},
+		oninput: function() {
+			triggeredEvents++;
+		},
 		onkeyup: function() {
 			triggeredEvents++;
 		}
@@ -415,7 +421,7 @@ asyncTest( "validation triggered on radio/checkbox when using keyboard", functio
 	events = [
 		$.Event( "focusin" ),
 		$.Event( "focusout" ),
-		$.Event( "keyup" )
+		$.Event( inputOrKeyup )
 	];
 
 	input = $( "#form :radio:first" );
@@ -1373,56 +1379,56 @@ test( "validate on blur", function() {
 	labels( 2 );
 } );
 
-test( "validate on keyup", function() {
+test( "validate on " + inputOrKeyup, function() {
 	function errors( expected, message ) {
 		equal( v.size(), expected, message );
 	}
-	function keyup( target ) {
-		target.trigger( "keyup" );
+	function keyupOrInput( target ) {
+		target.trigger( inputOrKeyup );
 	}
 	var e = $( "#firstname" ),
 		v = $( "#testForm1" ).validate();
 
-	keyup( e );
+	keyupOrInput( e );
 	errors( 0, "No value, no errors" );
 	e.val( "a" );
-	keyup( e );
+	keyupOrInput( e );
 	errors( 0, "Value, but not invalid" );
 	e.val( "" );
 	v.form();
 	errors( 2, "Both invalid" );
-	keyup( e );
+	keyupOrInput( e );
 	errors( 1, "Only one field validated, still invalid" );
 	e.val( "hh" );
-	keyup( e );
+	keyupOrInput( e );
 	errors( 0, "Not invalid anymore" );
 	e.val( "h" );
-	keyup( e );
+	keyupOrInput( e );
 	errors( 1, "Field didn't loose focus, so validate again, invalid" );
 	e.val( "hh" );
-	keyup( e );
+	keyupOrInput( e );
 	errors( 0, "Valid" );
 } );
 
-test( "validate on not keyup, only blur", function() {
+test( "validate on not " + inputOrKeyup + ", only blur", function() {
 	function errors( expected, message ) {
 		equal( v.size(), expected, message );
 	}
 	var e = $( "#firstname" ),
 		v = $( "#testForm1" ).validate( {
-			onkeyup: false
+			oninput: false,
+			onKeyup: false
 		} );
 
 	errors( 0 );
 	e.val( "a" );
-	e.trigger( "keyup" );
-	e.keyup();
+	e.trigger( inputOrKeyup );
 	errors( 0 );
 	e.trigger( "blur" ).trigger( "focusout" );
 	errors( 1 );
 } );
 
-test( "validate on keyup and blur", function() {
+test( "validate on " + inputOrKeyup + " and blur", function() {
 	function errors( expected, message ) {
 		equal( v.size(), expected, message );
 	}
@@ -1431,13 +1437,13 @@ test( "validate on keyup and blur", function() {
 
 	errors( 0 );
 	e.val( "a" );
-	e.trigger( "keyup" );
+	e.trigger( inputOrKeyup );
 	errors( 0 );
 	e.trigger( "blur" ).trigger( "focusout" );
 	errors( 1 );
 } );
 
-test( "validate email on keyup and blur", function() {
+test( "validate email on " + inputOrKeyup + " and blur", function() {
 	function errors( expected, message ) {
 		equal( v.size(), expected, message );
 	}
@@ -1447,14 +1453,14 @@ test( "validate email on keyup and blur", function() {
 	v.form();
 	errors( 2 );
 	e.val( "a" );
-	e.trigger( "keyup" );
+	e.trigger( inputOrKeyup );
 	errors( 1 );
 	e.val( "aa" );
-	e.trigger( "keyup" );
+	e.trigger( inputOrKeyup );
 	errors( 0 );
 } );
 
-test( "don't revalidate the field when pressing special characters", function() {
+QUnit[ inputSupported ? "skip" : "test" ]( "don't revalidate the field when pressing special characters", function() {
 	function errors( expected, message ) {
 		equal( v.size(), expected, message );
 	}
@@ -1539,7 +1545,7 @@ test( "#1508: Validation fails to trigger when next field is already filled out"
 
 			// Change the content
 			element.val( value );
-			element.trigger( "keyup" );
+			element.trigger( inputOrKeyup );
 		},
 		eq = function( expected, msg ) {
 			equal( validator.numberOfInvalids(), expected, "There is only one invalid element." );
@@ -1592,7 +1598,7 @@ test( "[Remote rule] #1508: Validation fails to trigger when next field is alrea
 
 				// Change the content
 				element.val( value );
-				element.trigger( "keyup" );
+				element.trigger( inputOrKeyup );
 
 				setTimeout( function() {
 					equal( validator.numberOfInvalids(), 1, "There is only one invalid element" );
@@ -1730,7 +1736,7 @@ test( "validate input with no type attribute, defaulting to text", function() {
 	e.valid();
 	errors( 1 );
 	e.val( "test" );
-	e.trigger( "keyup" );
+	e.trigger( inputOrKeyup );
 	errors( 0 );
 } );
 

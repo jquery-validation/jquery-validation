@@ -272,6 +272,14 @@ $.extend( $.validator, {
 				this.element( element );
 			}
 		},
+		oninput: function( element ) {
+			if ( element.name in this.submitted || element.name in this.invalid ) {
+				this.element( element );
+			}
+		},
+
+		// DEPRECATED
+		// Please use `oninput` instead.
 		onkeyup: function( element, event ) {
 
 			// Avoid revalidate the field when pressing one of the following keys
@@ -366,6 +374,8 @@ $.extend( $.validator, {
 			this.reset();
 
 			var groups = ( this.groups = {} ),
+				inputSupported = "oninput" in document.createElement( "input" ),
+				inputOrKeyup = inputSupported ? "input" : "keyup",
 				rules;
 			$.each( this.settings.groups, function( key, value ) {
 				if ( typeof value === "string" ) {
@@ -380,6 +390,10 @@ $.extend( $.validator, {
 				rules[ key ] = $.validator.normalizeRule( value );
 			} );
 
+			// Delete `onkeyup` if `input` event is supported
+			// Otherwise, remove `oninput` handler
+			delete this.settings[ inputSupported ? "onkeyup" : "oninput" ];
+
 			function delegate( event ) {
 				var validator = $.data( this.form, "validator" ),
 					eventType = "on" + event.type.replace( /^validate/, "" ),
@@ -390,7 +404,7 @@ $.extend( $.validator, {
 			}
 
 			$( this.currentForm )
-				.on( "focusin.validate focusout.validate keyup.validate",
+				.on( "focusin.validate focusout.validate " + inputOrKeyup + ".validate",
 					":text, [type='password'], [type='file'], select, textarea, [type='number'], [type='search'], " +
 					"[type='tel'], [type='url'], [type='email'], [type='datetime'], [type='date'], [type='month'], " +
 					"[type='week'], [type='time'], [type='datetime-local'], [type='range'], [type='color'], " +

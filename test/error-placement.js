@@ -162,10 +162,10 @@ test( "errorcontainer, show/hide only on submit", function() {
 	ok( labelContainer.is( ":visible" ), "must be visible" );
 	ok( container.is( ":visible" ), "must be visible" );
 
-	$( "#firstname" ).val( "hix" ).keyup();
-	$( "#testForm1" ).triggerHandler( "keyup", [
+	$( "#firstname" ).val( "hix" ).trigger( inputOrKeyup );
+	$( "#testForm1" ).triggerHandler( inputOrKeyup, [
 			jQuery.event.fix( {
-				type: "keyup",
+				type: inputOrKeyup,
 				target: $( "#firstname" )[ 0 ]
 			} )
 		] );
@@ -313,16 +313,16 @@ test( "test aria-describedby with input names contains CSS-selector meta-charact
 
 	// Re-run validation
 	field.val( "some" );
-	field.trigger( "keyup" );
+	field.trigger( inputOrKeyup );
 
 	field.val( "something" );
-	field.trigger( "keyup" );
+	field.trigger( inputOrKeyup );
 
 	equal( field.attr( "aria-describedby" ), "testForm21!#$%&'()*+,./:;<=>?@[\\]^`{|}~-error", "`aria-describedby` should remain the same as before." );
 
 	// Re-run validation
 	field.val( "something something" );
-	field.trigger( "keyup" );
+	field.trigger( inputOrKeyup );
 
 	ok( field.valid() );
 	equal( field.attr( "aria-describedby" ), "testForm21!#$%&'()*+,./:;<=>?@[\\]^`{|}~-error", "`aria-describedby` should remain the same as before." );
