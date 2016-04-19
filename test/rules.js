@@ -397,9 +397,14 @@ test( "rules(), normalizer", function() {
 	}, "This should throw a TypeError exception." );
 } );
 
-test( "rules() - on empty jquery set #1706", function() {
-	var element = $( "#firstname .mynonexistantclass" );
+test( "rules() - on unexpected input", function() {
+	var emptySet = $( "#firstname .mynonexistantclass" ),
+		nonFormElement = $( "div#foo" ),
+		result;
 
-	var result = element.rules( "add", "whatever" );
-	strictEqual( result, undefined, "can work on an empty set without a js error" );
+	result = emptySet.rules( "add", "whatever" );
+	deepEqual( result, undefined, "can work on an empty set without a js error" );
+
+	result = nonFormElement.rules( "add", "whatever" );
+	deepEqual( result, undefined, "can work on a non-form element" );
 } );
