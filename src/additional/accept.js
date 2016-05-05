@@ -3,8 +3,8 @@ $.validator.addMethod( "accept", function( value, element, param ) {
 
 	// Split mime on commas in case we have multiple types we can accept
 	var typeParam = typeof param === "string" ? param.replace( /\s/g, "" ) : "image/*",
-	optionalValue = this.optional( element ),
-	i, file, regex;
+		optionalValue = this.optional( element ),
+		i, file, regex;
 
 	// Element is optional
 	if ( optionalValue ) {
@@ -16,7 +16,10 @@ $.validator.addMethod( "accept", function( value, element, param ) {
 		// Escape string to be used in the regex
 		// see: http://stackoverflow.com/questions/3446170/escape-string-for-use-in-javascript-regex
 		// Escape also "/*" as "/.*" as a wildcard
-		typeParam = typeParam.replace( /[\-\[\]\/\{\}\(\)\+\?\.\\\^\$\|]/g, "\\$&" ).replace( /,/g, "|" ).replace( "\/*", "/.*" );
+		typeParam = typeParam
+				.replace( /[\-\[\]\/\{\}\(\)\+\?\.\\\^\$\|]/g, "\\$&" )
+				.replace( /,/g, "|" )
+				.replace( /\/\*/g, "/.*" );
 
 		// Check if the element has a FileList before checking each file
 		if ( element.files && element.files.length ) {
