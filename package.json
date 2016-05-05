@@ -37,17 +37,18 @@
 		"jquery": "^1.7 || ^2.0"
 	},
 	"devDependencies": {
-		"commitplease": "^2.2.3",
-		"grunt": "^0.4.4",
-		"grunt-contrib-compress": "^0.7",
-		"grunt-contrib-concat": "^0.3",
-		"grunt-contrib-copy": "^0.5",
-		"grunt-contrib-jshint": "^0.11.3",
-		"grunt-contrib-qunit": "^0.4",
-		"grunt-contrib-uglify": "^0.4",
-		"grunt-contrib-watch": "^0.6",
-		"grunt-jscs": "^2.2",
-		"grunt-text-replace": "^0.3.11"
+		"commitplease": "2.3.1",
+		"grunt": "1.0.1",
+		"grunt-contrib-compress": "1.2.0",
+		"grunt-contrib-concat": "1.0.1",
+		"grunt-contrib-copy": "1.0.0",
+		"grunt-contrib-jshint": "1.0.0",
+		"grunt-contrib-qunit": "1.2.0",
+		"grunt-contrib-uglify": "1.0.1",
+		"grunt-contrib-watch": "1.0.0",
+		"grunt-jscs": "2.8.0",
+		"grunt-text-replace": "0.4.0",
+		"qunitjs": "2.0.0-rc1"
 	},
 	"keywords": [
 		"jquery",
