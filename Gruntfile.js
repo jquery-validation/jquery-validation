@@ -17,7 +17,7 @@ banner = "/*!\n" +
 	" * <%= pkg.homepage %>\n" +
 	" *\n" +
 	" * Copyright (c) <%= grunt.template.today('yyyy') %> <%= pkg.author.name %>\n" +
-	" * Released under the <%= _.pluck(pkg.licenses, 'type').join(', ') %> license\n" +
+	" * Released under the <%= _.map(pkg.licenses, 'type').join(', ') %> license\n" +
 	" */\n";
 
 // Define UMD wrapper variables
