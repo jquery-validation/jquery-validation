@@ -1,6 +1,6 @@
-module( "aria" );
+QUnit.module( "aria" );
 
-test( "Invalid field adds aria-invalid=true", function() {
+QUnit.test( "Invalid field adds aria-invalid=true", function( assert ) {
 	var ariaInvalidFirstName = $( "#ariaInvalidFirstName" ),
 		form = $( "#ariaInvalid" );
 
@@ -11,10 +11,10 @@ test( "Invalid field adds aria-invalid=true", function() {
 	} );
 	ariaInvalidFirstName.val( "" );
 	ariaInvalidFirstName.valid();
-	equal( ariaInvalidFirstName.attr( "aria-invalid" ), "true" );
+	assert.equal( ariaInvalidFirstName.attr( "aria-invalid" ), "true" );
 } );
 
-test( "Valid field adds aria-invalid=false", function() {
+QUnit.test( "Valid field adds aria-invalid=false", function( assert ) {
 	var ariaInvalidFirstName = $( "#ariaInvalidFirstName" ),
 		form = $( "#ariaInvalid" );
 
@@ -25,11 +25,11 @@ test( "Valid field adds aria-invalid=false", function() {
 	} );
 	ariaInvalidFirstName.val( "not empty" );
 	ariaInvalidFirstName.valid();
-	equal( ariaInvalidFirstName.attr( "aria-invalid" ), "false" );
-	equal( $( "#ariaInvalid [aria-invalid=false]" ).length, 1 );
+	assert.equal( ariaInvalidFirstName.attr( "aria-invalid" ), "false" );
+	assert.equal( $( "#ariaInvalid [aria-invalid=false]" ).length, 1 );
 } );
 
-test( "resetForm(): removes all aria-invalid attributes", function() {
+QUnit.test( "resetForm(): removes all aria-invalid attributes", function( assert ) {
 	var ariaInvalidFirstName = $( "#ariaInvalidFirstName" ),
 		form = $( "#ariaInvalid" ),
 		validator = form.validate( {
@@ -41,34 +41,34 @@ test( "resetForm(): removes all aria-invalid attributes", function() {
 	ariaInvalidFirstName.val( "not empty" );
 	ariaInvalidFirstName.valid();
 	validator.resetForm();
-	equal( $( "#ariaInvalid [aria-invalid]" ).length, 0, "resetForm() should remove any aria-invalid attributes" );
+	assert.equal( $( "#ariaInvalid [aria-invalid]" ).length, 0, "resetForm() should remove any aria-invalid attributes" );
 } );
 
-test( "Static required field adds aria-required", function() {
+QUnit.test( "Static required field adds aria-required", function( assert ) {
 	var ariaRequiredStatic = $( "#ariaRequiredStatic" ),
 		form = $( "#ariaRequired" );
 
 	form.validate();
-	equal( ariaRequiredStatic.attr( "aria-required" ), "true" );
+	assert.equal( ariaRequiredStatic.attr( "aria-required" ), "true" );
 } );
 
-test( "Data required field adds aria-required", function() {
+QUnit.test( "Data required field adds aria-required", function( assert ) {
 	var ariaRequiredData = $( "#ariaRequiredData" ),
 		form = $( "#ariaRequired" );
 
 	form.validate();
-	equal( ariaRequiredData.attr( "aria-required" ), "true" );
+	assert.equal( ariaRequiredData.attr( "aria-required" ), "true" );
 } );
 
-test( "Class required field adds aria-required", function() {
+QUnit.test( "Class required field adds aria-required", function( assert ) {
 	var ariaRequiredClass = $( "#ariaRequiredClass" ),
 		form = $( "#ariaRequired" );
 
 	form.validate();
-	equal( ariaRequiredClass.attr( "aria-required" ), "true" );
+	assert.equal( ariaRequiredClass.attr( "aria-required" ), "true" );
 } );
 
-test( "Dynamically required field adds aria-required after valid()", function() {
+QUnit.test( "Dynamically required field adds aria-required after valid()", function( assert ) {
 	var ariaRequiredDynamic = $( "#ariaRequiredDynamic" ),
 		form = $( "#ariaRequired" );
 
@@ -79,5 +79,5 @@ test( "Dynamically required field adds aria-required after valid()", function() 
 		}
 	} );
 	ariaRequiredDynamic.valid();
-	equal( ariaRequiredDynamic.attr( "aria-required" ), "true" );
+	assert.equal( ariaRequiredDynamic.attr( "aria-required" ), "true" );
 } );

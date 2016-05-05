@@ -1,15 +1,15 @@
-module( "messages" );
+QUnit.module( "messages" );
 
-test( "predefined message not overwritten by addMethod( a, b, undefined )", function() {
+QUnit.test( "predefined message not overwritten by addMethod( a, b, undefined )", function( assert ) {
 	var message = "my custom message";
 	$.validator.messages.custom = message;
 	$.validator.addMethod( "custom", function() {} );
-	deepEqual( $.validator.messages.custom, message );
+	assert.deepEqual( $.validator.messages.custom, message );
 	delete $.validator.messages.custom;
 	delete $.validator.methods.custom;
 } );
 
-test( "group error messages", function() {
+QUnit.test( "group error messages", function( assert ) {
 	$.validator.addClassRules( {
 		requiredDateRange: { required: true, date: true, dateRange: true }
 	} );
@@ -29,39 +29,39 @@ test( "group error messages", function() {
 		}
 	} );
 
-	ok( !form.valid() );
-	equal( form.find( ".errorContainer *" ).length, 1 );
-	equal( form.find( ".errorContainer .error:not(input)" ).text(), "Please enter a valid date." );
+	assert.ok( !form.valid() );
+	assert.equal( form.find( ".errorContainer *" ).length, 1 );
+	assert.equal( form.find( ".errorContainer .error:not(input)" ).text(), "Please enter a valid date." );
 
 	$( "#fromDate" ).val( "12/03/2006" );
 	$( "#toDate" ).val( "12/01/2006" );
-	ok( !form.valid() );
-	equal( form.find( ".errorContainer .error:not(input)" ).text(), "Please specify a correct date range." );
+	assert.ok( !form.valid() );
+	assert.equal( form.find( ".errorContainer .error:not(input)" ).text(), "Please specify a correct date range." );
 
 	$( "#toDate" ).val( "12/04/2006" );
-	ok( form.valid() );
-	ok( form.find( ".errorContainer .error:not(input)" ).is( ":hidden" ) );
+	assert.ok( form.valid() );
+	assert.ok( form.find( ".errorContainer .error:not(input)" ).is( ":hidden" ) );
 } );
 
-test( "read messages from metadata", function() {
+QUnit.test( "read messages from metadata", function( assert ) {
 	var form = $( "#testForm9" ),
 		e, g;
 
 	form.validate();
 	e = $( "#testEmail9" );
 	e.valid();
-	equal( form.find( "#testEmail9" ).next( ".error:not(input)" ).text(), "required" );
+	assert.equal( form.find( "#testEmail9" ).next( ".error:not(input)" ).text(), "required" );
 	e.val( "bla" ).valid();
-	equal( form.find( "#testEmail9" ).next( ".error:not(input)" ).text(), "email" );
+	assert.equal( form.find( "#testEmail9" ).next( ".error:not(input)" ).text(), "email" );
 
 	g = $( "#testGeneric9" );
 	g.valid();
-	equal( form.find( "#testGeneric9" ).next( ".error:not(input)" ).text(), "generic" );
+	assert.equal( form.find( "#testGeneric9" ).next( ".error:not(input)" ).text(), "generic" );
 	g.val( "bla" ).valid();
-	equal( form.find( "#testGeneric9" ).next( ".error:not(input)" ).text(), "email" );
+	assert.equal( form.find( "#testGeneric9" ).next( ".error:not(input)" ).text(), "email" );
 } );
 
-test( "read messages from metadata, with meta option specified, but no metadata in there", function() {
+QUnit.test( "read messages from metadata, with meta option specified, but no metadata in there", function( assert ) {
 	var form = $( "#testForm1clean" );
 	form.validate( {
 		meta: "validate",
@@ -69,5 +69,5 @@ test( "read messages from metadata, with meta option specified, but no metadata 
 			firstnamec: "required"
 		}
 	} );
-	ok( !form.valid(), "not valid" );
+	assert.ok( !form.valid(), "not valid" );
 } );
