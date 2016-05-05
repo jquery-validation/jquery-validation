@@ -1087,6 +1087,12 @@ test( "works on contenteditable fields", function( assert ) {
 	assert.hasError( $( "#contenteditableInput" ), "Please enter a valid number." );
 	assert.noErrorFor( $( "#contenteditableNumberValid" ) );
 	assert.noErrorFor( $( "#contenteditableRequiredValid" ) );
+
+	var el = $( "#contenteditableRequiredValid" );
+	el.text( "" );
+	el.trigger( "focusout" );
+	el.trigger( "keyup" );
+	assert.hasError( el, "This field is required." );
 } );
 
 module( "misc" );
