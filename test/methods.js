@@ -1489,21 +1489,35 @@ test( "cpfBR", function() {
 
 test( "file accept - image wildcard", function() {
 	var input = acceptFileDummyInput( "test.png", "image/png" ),
-			$form = $( "<form />" ),
-			proxy = $.proxy( $.validator.methods.accept, new $.validator( {}, $form[ 0 ] ), null, input, "image/*" );
+		$form = $( "<form />" ),
+		proxy = $.proxy( $.validator.methods.accept, new $.validator( {}, $form[ 0 ] ), null, input, "image/*" );
 	ok( proxy(), "the selected file for upload has specified mime type" );
+} );
+
+QUnit.test( "file accept - multiple mimetypes", function( assert ) {
+	var input = acceptFileDummyInput( "test.png", "image/png" ),
+		$form = $( "<form />" ),
+		proxy = $.proxy( $.validator.methods.accept, new $.validator( {}, $form[ 0 ] ), null, input, "image/png,video/jpeg" );
+	assert.ok( proxy(), "the selected file for upload has specified mime type" );
+} );
+
+QUnit.test( "file accept - multiple mimetypes with wildcard", function( assert ) {
+	var input = acceptFileDummyInput( "test.mp3", "audio/mpeg" ),
+		$form = $( "<form />" ),
+		proxy = $.proxy( $.validator.methods.accept, new $.validator( {}, $form[ 0 ] ), null, input, "image/*,audio/*" );
+	assert.ok( proxy(), "the selected file for upload has specified mime type" );
 } );
 
 test( "file accept - specified mime type", function() {
 	var input = acceptFileDummyInput( "test.kml", "application/vnd.google-earth.kml+xml" ),
-			$form = $( "<form />" ),
-			proxy = $.proxy( $.validator.methods.accept, new $.validator( {}, $form[ 0 ] ), null, input, "application/vnd.google-earth.kml+xml" );
+		$form = $( "<form />" ),
+		proxy = $.proxy( $.validator.methods.accept, new $.validator( {}, $form[ 0 ] ), null, input, "application/vnd.google-earth.kml+xml" );
 	ok( proxy(), "the selected file for upload has specified mime type" );
 } );
 
 test( "file accept - invalid mime type", function() {
 	var input = acceptFileDummyInput( "test.kml", "foobar/vnd.google-earth.kml+xml" ),
-			$form = $( "<form />" ),
-			proxy = $.proxy( $.validator.methods.accept, new $.validator( {}, $form[ 0 ] ), null, input, "application/vnd.google-earth.kml+xml" );
+		$form = $( "<form />" ),
+		proxy = $.proxy( $.validator.methods.accept, new $.validator( {}, $form[ 0 ] ), null, input, "application/vnd.google-earth.kml+xml" );
 	equal( proxy(), false, "the selected file for upload has invalid mime type" );
 } );
