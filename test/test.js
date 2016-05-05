@@ -627,6 +627,17 @@ test( "option: (un)highlight, custom2", function() {
 	ok( !l.is( ".invalid" ) );
 } );
 
+QUnit.test( "option: errorPlacement", function( assert ) {
+	assert.expect( 1 );
+	var v = $( "#testForm1" ).validate( {
+		errorPlacement: function() {
+			assert.strictEqual( this, v, "'this' inside errorPlacement should be the plugin instance" );
+		}
+	} );
+
+	v.form();
+} );
+
 test( "option: focusCleanup default false", function() {
 	var form = $( "#userForm" );
 	form.validate();
