@@ -732,26 +732,29 @@ $.extend( $.validator, {
 
 			for ( method in rules ) {
 				rule = { method: method, parameters: rules[ method ] };
-				try {
-					result = $.validator.methods[ method ].call( this, val, element, rule.parameters );
+			    try {
+                    
+			        if ($(element).is(':focus') == true) {
+			            result = $.validator.methods[method].call(this, val, element, rule.parameters);
 
-					// If a method indicates that the field is optional and therefore valid,
-					// don't mark it as valid when there are no other rules
-					if ( result === "dependency-mismatch" && rulesCount === 1 ) {
-						dependencyMismatch = true;
-						continue;
-					}
-					dependencyMismatch = false;
+			            // If a method indicates that the field is optional and therefore valid,
+			            // don't mark it as valid when there are no other rules
+			            if (result === "dependency-mismatch" && rulesCount === 1) {
+			                dependencyMismatch = true;
+			                continue;
+			            }
+			            dependencyMismatch = false;
 
-					if ( result === "pending" ) {
-						this.toHide = this.toHide.not( this.errorsFor( element ) );
-						return;
-					}
+			            if (result === "pending") {
+			                this.toHide = this.toHide.not(this.errorsFor(element));
+			                return;
+			            }
 
-					if ( !result ) {
-						this.formatAndAdd( element, rule );
-						return false;
-					}
+			            if (!result) {
+			                this.formatAndAdd(element, rule);
+			                return false;
+			            }
+			        }
 				} catch ( e ) {
 					if ( this.settings.debug && window.console ) {
 						console.log( "Exception occurred when checking element " + element.id + ", check the '" + rule.method + "' method.", e );
