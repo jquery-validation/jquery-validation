@@ -1093,8 +1093,6 @@ test( "works on contenteditable fields on input event", function( assert ) {
 	$( "#contenteditableForm" ).validate();
 
 	$( "#contenteditableNumberInvalid" ).focus();
-	$( "#contenteditableRequiredInvalid" ).focus();
-	$( "#contenteditableInput" ).keyup();
 	$( "#contenteditableNumberValid" ).keyup();
 	$( "#contenteditableRequiredValid" ).keyup();
 
