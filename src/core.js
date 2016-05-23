@@ -383,7 +383,7 @@ $.extend( $.validator, {
 			function delegate( event ) {
 
 				// Set form expando on contenteditable
-				if ( this.hasAttribute( "contenteditable" ) ) {
+				if ( !this.form && this.hasAttribute( "contenteditable" ) ) {
 					this.form = $( this ).closest( "form" )[ 0 ];
 				}
 
