@@ -116,7 +116,6 @@ $.validator.addMethod( "iban", function( value, element ) {
 
 	// Now check the checksum, first convert to digits
 	ibancheck = iban.substring( 4, iban.length ) + iban.substring( 0, 4 );
-
 	for ( i = 0; i < ibancheck.length; i++ ) {
 		charAt = ibancheck.charAt( i );
 		if ( charAt !== "0" ) {
