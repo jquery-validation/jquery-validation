@@ -19,6 +19,16 @@ $.validator.addMethod( "iban", function( value, element ) {
 		cOperator = "",
 		countrycode, ibancheck, charAt, cChar, bbanpattern, bbancountrypatterns, ibanregexp, i, p;
 
+	// Check for IBAN code length.
+	// It contains:
+	// country code ISO 3166-1 - two letters,
+	// two check digits,
+	// Basic Bank Account Number (BBAN) - up to 30 chars
+	var minimalIBANlength = 5;
+	if ( iban.length < minimalIBANlength ) {
+		return false;
+	}
+
 	// Check the country code and find the country specific format
 	countrycode = iban.substring( 0, 2 );
 	bbancountrypatterns = {
@@ -106,6 +116,7 @@ $.validator.addMethod( "iban", function( value, element ) {
 
 	// Now check the checksum, first convert to digits
 	ibancheck = iban.substring( 4, iban.length ) + iban.substring( 0, 4 );
+
 	for ( i = 0; i < ibancheck.length; i++ ) {
 		charAt = ibancheck.charAt( i );
 		if ( charAt !== "0" ) {

@@ -823,6 +823,7 @@ test( "iban", function() {
 	ok( method( "NL20 INGB 00 0123 4567" ), "Valid IBAN: invalid spacing" );
 	ok( method( "XX40INGB000123456712341234" ), "Valid (more or less) IBAN: unknown country, but checksum OK" );
 
+	ok( !method( "1" ), "Invalid IBAN: too short" );
 	ok( !method( "NL20INGB000123456" ), "Invalid IBAN: too short" );
 	ok( !method( "NL20INGB00012345678" ), "Invalid IBAN: too long" );
 	ok( !method( "NL20INGB0001234566" ), "Invalid IBAN: checksum incorrect" );
