@@ -690,6 +690,30 @@ test( "option: errorClass with multiple classes", function() {
 test( "defaultMessage(), empty title is ignored", function() {
 	var v = $( "#userForm" ).validate();
 	equal( v.defaultMessage( $( "#username" )[ 0 ], { method: "required", parameters: true } ), "This field is required." );
+
+	// Using the old way when we pass the name of a method as the second parameters.
+	equal( v.defaultMessage( $( "#username" )[ 0 ], "required" ), "This field is required." );
+} );
+
+QUnit.test( "previousValue()", function( assert ) {
+	assert.expect( 2 );
+
+	var e = $( "#username" ),
+		v = $( "#userForm" ).validate(),
+		expectedRemote = {
+			old: null,
+			valid: true,
+			message: "Please fix this field."
+		}, expectedRequired = {
+			old: null,
+			valid: true,
+			message: "This field is required."
+		};
+
+	assert.deepEqual( v.previousValue( e[ 0 ] ), expectedRemote, "should be the same" );
+
+	e.removeData( "previousValue" );
+	assert.deepEqual( v.previousValue( e[ 0 ], "required" ), expectedRequired, "should be the same" );
 } );
 
 test( "#741: move message processing from formatAndAdd to defaultMessage", function() {
