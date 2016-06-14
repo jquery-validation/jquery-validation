@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>jQuery validation plug-in - iban code example</title>
+  <link rel="stylesheet" href="css/screen.css">
+  <link rel="stylesheet" href="css/cmxform.css">
+  <script src="../lib/jquery.js"></script>
+  <script src="../dist/jquery.validate.js"></script>
+  <script src="../dist/additional-methods.js"></script>
+  <script>
+  $(document).ready(function() {
+    $("#form").validate({
+      rules: {
+        iban: {
+          required: true,
+          iban: true
+        }
+      }
+    });
+  });
+  </script>
+</head>
+<body>
+<form class="cmxform" id="form" method="post" action="">
+  <fieldset>
+    <legend>Check your IBAN code:</legend>
+    <p>
+      <label for="code">Enter code</label>
+      <input type="text" id="code" name="iban" class="required" accept="text/plain">
+    </p>
+    <p>
+      <input class="submit" type="submit" value="Submit">
+    </p>
+  </fieldset>
+</form>
+</body>
+</html>
