@@ -457,7 +457,7 @@ $.extend( $.validator, {
 							cleanElement = v.validationTargetFor( v.clean( v.findByName( name ) ) );
 							if ( cleanElement && cleanElement.name in v.invalid ) {
 								v.currentElements.push( cleanElement );
-								result = result && v.check( cleanElement );
+								result = v.check( cleanElement ) && result;
 							}
 						}
 					} );
