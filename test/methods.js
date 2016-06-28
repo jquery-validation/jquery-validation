@@ -360,11 +360,23 @@ test( "step", function() {
 	var v = jQuery( "#form" ).validate(),
 		method = $.validator.methods.step,
 		param = 1000,
-		e = $( "#value1, #value2, #value3" );
+		e = $( "#value1, #value2, #value3, #value4" );
 
 	ok( method.call( v, e[ 0 ].value, e[ 0 ], param ), "Valid text input" );
 	ok( !method.call( v, e[ 1 ].value, e[ 1 ], param ), "Invalid text input" );
 	ok( method.call( v, e[ 2 ].value, e[ 2 ], param ), "Valid text input" );
+} );
+
+test( "#1760 - step modulo/remainder regression tests", function() {
+	var v = jQuery( "#form" ).validate(),
+		method = $.validator.methods.step,
+		param = 0.00125,
+		e = $( "#value4" );
+
+	for ( var i = 1; i <= 1000; i++ ) {
+		e[ 0 ].value = ( param * 100000 * i ) / 100000;
+		ok( method.call( v, e[ 0 ].value, e[ 0 ], param ), "Ensure " + e[ 0 ].value + " % " + param + " === 0 is valid" );
+	}
 } );
 
 test( "equalTo", function() {
