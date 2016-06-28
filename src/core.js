@@ -1390,39 +1390,39 @@ $.extend( $.validator, {
 		// http://jqueryvalidation.org/step-method/
 		step: function( value, element, param ) {
 			var type = $( element ).attr( "type" ),
-            errorMessage = "Step attribute on input type " + type + " is not supported.",
-            supportedTypes = [ "text", "number", "range" ],
-            re = new RegExp( "\\b" + type + "\\b" ),
-            notSupported = type && !re.test( supportedTypes.join() ),
-            decimalPlaces = function( num ) {
-              var match = ( "" + num ).match( /(?:\.(\d+))?$/ );
-              if ( !match ) {
-                return 0;
-              }
+				errorMessage = "Step attribute on input type " + type + " is not supported.",
+				supportedTypes = [ "text", "number", "range" ],
+				re = new RegExp( "\\b" + type + "\\b" ),
+				notSupported = type && !re.test( supportedTypes.join() ),
+				decimalPlaces = function( num ) {
+					var match = ( "" + num ).match( /(?:\.(\d+))?$/ );
+					if ( !match ) {
+						return 0;
+					}
 
-              // Number of digits right of decimal point.
-              return match[ 1 ] ? match[ 1 ].length : 0;
-            },
-            toInt = function( num ) {
-              return Math.round( num * Math.pow( 10, decimals ) );
-            },
-            valid = true,
-            decimals;
+					// Number of digits right of decimal point.
+					return match[ 1 ] ? match[ 1 ].length : 0;
+				},
+				toInt = function( num ) {
+					return Math.round( num * Math.pow( 10, decimals ) );
+				},
+				valid = true,
+				decimals;
 
-          // Works only for text, number and range input types
-          // TODO find a way to support input types date, datetime, datetime-local, month, time and week
-          if ( notSupported ) {
-            throw new Error( errorMessage );
-          }
+			// Works only for text, number and range input types
+			// TODO find a way to support input types date, datetime, datetime-local, month, time and week
+			if ( notSupported ) {
+				throw new Error( errorMessage );
+			}
 
-          decimals = decimalPlaces( param );
+			decimals = decimalPlaces( param );
 
-          // Value can't have too many decimals
-          if ( decimalPlaces( value ) > decimals || toInt( value ) % toInt( param ) !== 0 ) {
-            valid = false;
-          }
+			// Value can't have too many decimals
+			if ( decimalPlaces( value ) > decimals || toInt( value ) % toInt( param ) !== 0 ) {
+				valid = false;
+			}
 
-          return this.optional( element ) || valid;
+			return this.optional( element ) || valid;
 		},
 
 		// http://jqueryvalidation.org/equalTo-method/
