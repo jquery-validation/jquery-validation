@@ -1400,7 +1400,7 @@ $.extend( $.validator, {
 			if ( notSupported ) {
 				throw new Error( errorMessage );
 			}
-			return this.optional( element ) || ( value % param === 0 );
+			return this.optional( element ) || ( ( value / param ) % 1 === 0 );
 		},
 
 		// http://jqueryvalidation.org/equalTo-method/
