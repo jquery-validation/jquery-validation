@@ -311,17 +311,9 @@ $.extend( $.validator, {
 		},
 		onchange: function( element, event ) {
 
-			// If target element is a select, trigger focusout on change
+			// If target element is a select, trigger keyup on change
 			if ( element.tagName.toLowerCase() === "select" ) {
-				var _this = element;
-
-				if ( !_this.form && _this.hasAttribute( "contenteditable" ) ) {
-					_this.form = $( _this ).closest( "form" )[ 0 ];
-				}
-
-				var validator = $.data( _this.form, "validator" ),
-					settings = validator.settings;
-				settings.onkeyup.call( validator, _this, event );
+				this.settings.onkeyup.call( this, element, event );
 			}
 		},
 		highlight: function( element, errorClass, validClass ) {
