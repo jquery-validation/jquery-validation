@@ -42,7 +42,7 @@
 		$("#add").click(addRow);
 
 		// check keyup on quantity inputs to update totals field
-		$("#orderform").validateDelegate("input.quantity", "keyup", function(event) {
+		$("#orderform").on("keyup", "input.quantity", function(event) {
 			var totals = 0;
 			$("#orderitems input.quantity").each(function() {
 				totals += +this.value;
