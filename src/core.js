@@ -925,7 +925,17 @@ $.extend( $.validator, {
 				} else if ( this.settings.errorPlacement ) {
 					this.settings.errorPlacement.call( this, place, $( element ) );
 				} else {
-					place.insertAfter( element );
+					var $elm = $(element),
+						$h;
+
+					if ($elm.hasClass('select2-hidden-accessible')) {	// hidden by jquery.select2
+						$h = $elm.next('.select2-container');
+						$h[0] && place.insertAfter($h);
+					}
+					else {
+						place.insertAfter(element);
+					}
+					$elm = $h = null;
 				}
 
 				// Link error back to the element
