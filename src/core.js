@@ -186,7 +186,7 @@ $.extend( $.fn, {
 } );
 
 // Custom selectors
-$.extend( $.expr.pseudos, {
+$.extend( $.expr.pseudos || $.expr[ ":" ], {
 
 	// http://jqueryvalidation.org/blank-selector/
 	blank: function( a ) {
