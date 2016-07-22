@@ -1088,6 +1088,40 @@ test( "validating groups settings parameter", function() {
 	equal( validate.groups[ "input-six" ], "stringGroup" );
 } );
 
+QUnit.test( "validating group of elements", function( assert ) {
+	var form  = $( "#testForm26" ),
+		day   = form.find( "[name='day']" ),
+		month = form.find( "[name='month']" ),
+		year  = form.find( "[name='year']" ),
+		event = $.Event( "keyup", { keyCode: 9 } ),
+		v = form.validate( {
+			groups: {
+				mydate: "day month year"
+			}
+		} ),
+		invalidEls;
+
+	v.form();
+
+	assert.equal( v.invalidElements().length, 3, "All 3 elements are invalid" );
+
+	// Tab to `month`
+	day.blur();
+	month.trigger( event );
+	month.focus();
+
+	month.val( 2 );
+
+	// Trigger validation via click event
+	month.trigger( "click" );
+
+	invalidEls = v.invalidElements();
+
+	assert.equal( invalidEls.length, 2, "Only 2 elements are invalid" );
+	assert.deepEqual( invalidEls[ 0 ], day[ 0 ], "The day element is invalid" );
+	assert.deepEqual( invalidEls[ 1 ], year[ 0 ], "The year element is invalid" );
+} );
+
 test( "bypassing validation on form submission", function() {
 	var form = $( "#bypassValidation" ),
 		normalSubmission = $( "form#bypassValidation :input[id=normalSubmit]" ),
