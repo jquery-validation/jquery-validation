@@ -2,68 +2,68 @@
  * Redistributed under the the Apache License 2.0 at http://www.apache.org/licenses/LICENSE-2.0
  * Valid Types: mastercard, visa, amex, dinersclub, enroute, discover, jcb, unknown, all (overrides all other settings)
  */
-$.validator.addMethod("creditcardtypes", function(value, element, param) {
-	if (/[^0-9\-]+/.test(value)) {
+$.validator.addMethod( "creditcardtypes", function( value, element, param ) {
+	if ( /[^0-9\-]+/.test( value ) ) {
 		return false;
 	}
 
-	value = value.replace(/\D/g, "");
+	value = value.replace( /\D/g, "" );
 
 	var validTypes = 0x0000;
 
-	if (param.mastercard) {
+	if ( param.mastercard ) {
 		validTypes |= 0x0001;
 	}
-	if (param.visa) {
+	if ( param.visa ) {
 		validTypes |= 0x0002;
 	}
-	if (param.amex) {
+	if ( param.amex ) {
 		validTypes |= 0x0004;
 	}
-	if (param.dinersclub) {
+	if ( param.dinersclub ) {
 		validTypes |= 0x0008;
 	}
-	if (param.enroute) {
+	if ( param.enroute ) {
 		validTypes |= 0x0010;
 	}
-	if (param.discover) {
+	if ( param.discover ) {
 		validTypes |= 0x0020;
 	}
-	if (param.jcb) {
+	if ( param.jcb ) {
 		validTypes |= 0x0040;
 	}
-	if (param.unknown) {
+	if ( param.unknown ) {
 		validTypes |= 0x0080;
 	}
-	if (param.all) {
+	if ( param.all ) {
 		validTypes = 0x0001 | 0x0002 | 0x0004 | 0x0008 | 0x0010 | 0x0020 | 0x0040 | 0x0080;
 	}
-	if (validTypes & 0x0001 && /^(5[12345])/.test(value)) { //mastercard
+	if ( validTypes & 0x0001 && /^(5[12345])/.test( value ) ) { // Mastercard
 		return value.length === 16;
 	}
-	if (validTypes & 0x0002 && /^(4)/.test(value)) { //visa
+	if ( validTypes & 0x0002 && /^(4)/.test( value ) ) { // Visa
 		return value.length === 16;
 	}
-	if (validTypes & 0x0004 && /^(3[47])/.test(value)) { //amex
+	if ( validTypes & 0x0004 && /^(3[47])/.test( value ) ) { // Amex
 		return value.length === 15;
 	}
-	if (validTypes & 0x0008 && /^(3(0[012345]|[68]))/.test(value)) { //dinersclub
+	if ( validTypes & 0x0008 && /^(3(0[012345]|[68]))/.test( value ) ) { // Dinersclub
 		return value.length === 14;
 	}
-	if (validTypes & 0x0010 && /^(2(014|149))/.test(value)) { //enroute
+	if ( validTypes & 0x0010 && /^(2(014|149))/.test( value ) ) { // Enroute
 		return value.length === 15;
 	}
-	if (validTypes & 0x0020 && /^(6011)/.test(value)) { //discover
+	if ( validTypes & 0x0020 && /^(6011)/.test( value ) ) { // Discover
 		return value.length === 16;
 	}
-	if (validTypes & 0x0040 && /^(3)/.test(value)) { //jcb
+	if ( validTypes & 0x0040 && /^(3)/.test( value ) ) { // Jcb
 		return value.length === 16;
 	}
-	if (validTypes & 0x0040 && /^(2131|1800)/.test(value)) { //jcb
+	if ( validTypes & 0x0040 && /^(2131|1800)/.test( value ) ) { // Jcb
 		return value.length === 15;
 	}
-	if (validTypes & 0x0080) { //unknown
+	if ( validTypes & 0x0080 ) { // Unknown
 		return true;
 	}
 	return false;
-}, "Please enter a valid credit card number.");
+}, "Please enter a valid credit card number." );

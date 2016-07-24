@@ -1,3 +1,132 @@
+1.15.1 / 2016-07-22
+==================
+
+## Additional
+  * Fix multiple mime-type validation
+  * IBAN require at least 5 chars (Closes #1797, Fixes #1674)
+  * Correct notEqualTo jQuery reference
+
+## Core
+  * Added failing test for #1805
+  * Fix group validation with 3 and more fields
+  * Fix regressions introduced in #1644 and #1657 (Closes #1800)
+  * Update step validation to handle floating points correctly
+  * Fix error when calling $.fn.rules() on a non-form element
+  * Call `errorPlacement` in validator scope
+  * Fixed issue with contenteditable elements in forms where events for single input validation would cause exceptions
+
+## Demo
+  * Add links to Bootstrap and Semantic-UI demos to index.html
+  * Use `.on()` instead of `.validateDelegate()`
+
+## Localization
+  * Added Azeri language
+
+## Tests
+  * Added regression unit tests for PR #1760
+  
+1.15.0 / 2016-02-24
+==================
+
+## All
+  * Fixed code style issues
+
+## Core
+  * `resetForm` should also remove `valid` class from elements.
+  * Unhighlighting field if already highlighted when using remote rule.
+  * Bind the `blur` event just once in `equalTo` rule
+  * Fixed error when calling .rules() on empty jquery set.
+  * Fix handling of error messages with input groups.
+  * Fix TypeError in `showLabel` when using `groups` settings
+  * Adding a way to pass method name to remote
+  * Validation fails to trigger when next field is already filled out (Fixes #1508)
+  * Required rule take precedence over number & digits rules
+  * Error hidden but input error class not removed
+  * Remote validation uses wrong error messages
+  * Fixed field highlighting with remote validation.
+  * Fixed `:filled` selector for multiple select elements.
+  * Added doc reference to jQuery.validator.methods
+  * Move message processing from `formatAndAdd` to `defaultMessage`
+  * ErrorList should contain only the errors that it should
+  * Extract the file name without including "C:\fakepath\"
+  * HTML5 step attribute support. Fixes #1295
+  * Added support for "pending" class on outstanding requests
+  * Added normalizer (#1602)
+  * Split out `creditcard` method
+  * Escape errorID for use in the regex, not to build aria-describedby
+  * Escape single quotes in names avoiding a Sizzle Error being thrown
+  * Instead of using validating field's value to skip api call, use the serialized data object of the request
+  * Add support for contentEditable tags
+
+## Additional
+  * BIC: allow digits 1-9 in second place of location
+  * Accept method regex should be escaped properly.
+  * Case-insensitive check for BIC
+  * Correct postalCodeCA to exclude invalid combinations
+  * Make postalCodeCA method more lenient
+
+## Localization
+  * Added Macedonian localization.
+  * Added missing pattern message in Polish (adamwojtkiewicz)
+  * Fixed Persian translation of min/max message.
+  * Updated messages_sk.js
+  * Update Malay translation
+  * Included messages from additional methods
+  * Improving pt_BR translation and fixing a typo on the 'cifES' key.
+  
+1.14.0 / 2015-06-30
+==================
+
+## Core
+  * Remove unused removeAttrs method
+  * Replace regex for url method
+  * Remove bad url param in $.ajax, overwritten by $.extend
+  * Properly handle nested cancel submit button
+  * Fix indent
+  * Refactor attributeRules and dataRules to share noramlizer
+  * dataRules method to convert value to number for number inputs
+  * Update url method to allow for protocol-relative URLs
+  * Remove deprecated $.format placeholder
+  * Use jQuery 1.7+ on/off, add destroy method
+  * IE8 compatibility changed .indexOf to $.inArray
+  * Cast NaN value attributes to undefined for Opera Mini
+  * Stop trimming value inside required method
+  * Use :disabled selector to match disabled elements
+  * Exclude some keyboard keys to prevent revalidating the field
+  * Do not search the whole DOM for radio/checkbox elements
+  * Throw better errors for bad rule methods
+  * Fixed number validation error
+  * Fix reference to whatwg spec
+  * Focus invalid element when validating a custom set of inputs
+  * Reset element styles when using custom highlight methods
+  * Escape dollar sign in error id
+  * Revert "Ignore readonly as well as disabled fields."
+  * Update link in comment for Luhn algorithm
+
+## Additionals
+  * Update dateITA to address timezone issue
+  * Fix extension method to only method period
+  * Fix accept method to match period only
+  * Update time method to allow single digit hour
+  * Drop bad test for notEqualTo method
+  * Add notEqualTo method
+  * Use correct jQuery reference via `$`
+  * Remove useless regex check in iban method
+  * Brazilian CPF number
+
+## Localization
+  * Update messages_tr.js
+  * Update messages_sr_lat.js
+  * Adding Perú Spanish (ES PE)
+  * Adding Georgian (ქართული, ge)
+  * Fixed typo in catalan translation
+  * Improve Finnish (fi) translation
+  * Add armenian (hy_AM) locale
+  * Extend italian (it) translation with currency method
+  * Add bn_BD locale
+  * Update zh locale
+  * Remove full stop at the end of italian messages
+
 1.13.1 / 2014-10-14
 ==================
 

@@ -2,7 +2,7 @@
  * Translated default messages for the jQuery validation plugin.
  * Locale: FA (Persian; فارسی)
  */
-$.extend($.validator.messages, {
+$.extend( $.validator.messages, {
 	required: "تکمیل این فیلد اجباری است.",
 	remote: "لطفا این فیلد را تصحیح کنید.",
 	email: ".لطفا یک ایمیل صحیح وارد کنید",
@@ -15,12 +15,12 @@ $.extend($.validator.messages, {
 	creditcard: "لطفا کریدیت کارت صحیح وارد کنید.",
 	equalTo: "لطفا مقدار برابری وارد کنید",
 	extension: "لطفا مقداری وارد کنید که ",
-	maxlength: $.validator.format("لطفا بیشتر از {0} حرف وارد نکنید."),
-	minlength: $.validator.format("لطفا کمتر از {0} حرف وارد نکنید."),
-	rangelength: $.validator.format("لطفا مقداری بین {0} تا {1} حرف وارد کنید."),
-	range: $.validator.format("لطفا مقداری بین {0} تا {1} حرف وارد کنید."),
-	max: $.validator.format("لطفا مقداری کمتر از {0} حرف وارد کنید."),
-	min: $.validator.format("لطفا مقداری بیشتر از {0} حرف وارد کنید."),
-	minWords: $.validator.format("لطفا حداقل {0} کلمه وارد کنید."),
-	maxWords: $.validator.format("لطفا حداکثر {0} کلمه وارد کنید.")
-});
+	maxlength: $.validator.format( "لطفا بیشتر از {0} حرف وارد نکنید." ),
+	minlength: $.validator.format( "لطفا کمتر از {0} حرف وارد نکنید." ),
+	rangelength: $.validator.format( "لطفا مقداری بین {0} تا {1} حرف وارد کنید." ),
+	range: $.validator.format( "لطفا مقداری بین {0} تا {1} حرف وارد کنید." ),
+	max: $.validator.format( "لطفا مقداری کمتر از {0} وارد کنید." ),
+	min: $.validator.format( "لطفا مقداری بیشتر از {0} وارد کنید." ),
+	minWords: $.validator.format( "لطفا حداقل {0} کلمه وارد کنید." ),
+	maxWords: $.validator.format( "لطفا حداکثر {0} کلمه وارد کنید." )
+} );

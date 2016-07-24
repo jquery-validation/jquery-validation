@@ -2,7 +2,7 @@
  * Translated default messages for the jQuery validation plugin.
  * Locale: FR (French; français)
  */
-$.extend($.validator.messages, {
+$.extend( $.validator.messages, {
 	required: "Ce champ est obligatoire.",
 	remote: "Veuillez corriger ce champ.",
 	email: "Veuillez fournir une adresse électronique valide.",
@@ -14,15 +14,15 @@ $.extend($.validator.messages, {
 	creditcard: "Veuillez fournir un numéro de carte de crédit valide.",
 	equalTo: "Veuillez fournir encore la même valeur.",
 	extension: "Veuillez fournir une valeur avec une extension valide.",
-	maxlength: $.validator.format("Veuillez fournir au plus {0} caractères."),
-	minlength: $.validator.format("Veuillez fournir au moins {0} caractères."),
-	rangelength: $.validator.format("Veuillez fournir une valeur qui contient entre {0} et {1} caractères."),
-	range: $.validator.format("Veuillez fournir une valeur entre {0} et {1}."),
-	max: $.validator.format("Veuillez fournir une valeur inférieure ou égale à {0}."),
-	min: $.validator.format("Veuillez fournir une valeur supérieure ou égale à {0}."),
-	maxWords: $.validator.format("Veuillez fournir au plus {0} mots."),
-	minWords: $.validator.format("Veuillez fournir au moins {0} mots."),
-	rangeWords: $.validator.format("Veuillez fournir entre {0} et {1} mots."),
+	maxlength: $.validator.format( "Veuillez fournir au plus {0} caractères." ),
+	minlength: $.validator.format( "Veuillez fournir au moins {0} caractères." ),
+	rangelength: $.validator.format( "Veuillez fournir une valeur qui contient entre {0} et {1} caractères." ),
+	range: $.validator.format( "Veuillez fournir une valeur entre {0} et {1}." ),
+	max: $.validator.format( "Veuillez fournir une valeur inférieure ou égale à {0}." ),
+	min: $.validator.format( "Veuillez fournir une valeur supérieure ou égale à {0}." ),
+	maxWords: $.validator.format( "Veuillez fournir au plus {0} mots." ),
+	minWords: $.validator.format( "Veuillez fournir au moins {0} mots." ),
+	rangeWords: $.validator.format( "Veuillez fournir entre {0} et {1} mots." ),
 	letterswithbasicpunc: "Veuillez fournir seulement des lettres et des signes de ponctuation.",
 	alphanumeric: "Veuillez fournir seulement des lettres, nombres, espaces et soulignages.",
 	lettersonly: "Veuillez fournir seulement des lettres.",
@@ -35,7 +35,7 @@ $.extend($.validator.messages, {
 	phoneUS: "Veuillez fournir un numéro de téléphone valide.",
 	phoneUK: "Veuillez fournir un numéro de téléphone valide.",
 	mobileUK: "Veuillez fournir un numéro de téléphone mobile valide.",
-	strippedminlength: $.validator.format("Veuillez fournir au moins {0} caractères."),
+	strippedminlength: $.validator.format( "Veuillez fournir au moins {0} caractères." ),
 	email2: "Veuillez fournir une adresse électronique valide.",
 	url2: "Veuillez fournir une adresse URL valide.",
 	creditcardtypes: "Veuillez fournir un numéro de carte de crédit valide.",
@@ -46,4 +46,4 @@ $.extend($.validator.messages, {
 	nieES: "Veuillez fournir un numéro NIE valide.",
 	cifES: "Veuillez fournir un numéro CIF valide.",
 	postalCodeCA: "Veuillez fournir un code postal valide."
-});
+} );

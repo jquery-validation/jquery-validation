@@ -1,23 +1,36 @@
 /**
  * IBAN is the international bank account number.
  * It has a country - specific format, that is checked here too
+ *
+ * Validation is case-insensitive. Please make sure to normalize input yourself.
  */
-$.validator.addMethod("iban", function(value, element) {
-	// some quick simple tests to prevent needless work
-	if (this.optional(element)) {
+$.validator.addMethod( "iban", function( value, element ) {
+
+	// Some quick simple tests to prevent needless work
+	if ( this.optional( element ) ) {
 		return true;
 	}
 
-	// remove spaces and to upper case
-	var iban = value.replace(/ /g, "").toUpperCase(),
+	// Remove spaces and to upper case
+	var iban = value.replace( / /g, "" ).toUpperCase(),
 		ibancheckdigits = "",
 		leadingZeroes = true,
 		cRest = "",
 		cOperator = "",
 		countrycode, ibancheck, charAt, cChar, bbanpattern, bbancountrypatterns, ibanregexp, i, p;
 
-	// check the country code and find the country specific format
-	countrycode = iban.substring(0, 2);
+	// Check for IBAN code length.
+	// It contains:
+	// country code ISO 3166-1 - two letters,
+	// two check digits,
+	// Basic Bank Account Number (BBAN) - up to 30 chars
+	var minimalIBANlength = 5;
+	if ( iban.length < minimalIBANlength ) {
+		return false;
+	}
+
+	// Check the country code and find the country specific format
+	countrycode = iban.substring( 0, 2 );
 	bbancountrypatterns = {
 		"AL": "\\d{8}[\\dA-Z]{16}",
 		"AD": "\\d{8}[\\dA-Z]{12}",
@@ -85,7 +98,8 @@ $.validator.addMethod("iban", function(value, element) {
 		"VG": "[\\dA-Z]{4}\\d{16}"
 	};
 
-	bbanpattern = bbancountrypatterns[countrycode];
+	bbanpattern = bbancountrypatterns[ countrycode ];
+
 	// As new countries will start using IBAN in the
 	// future, we only check if the countrycode is known.
 	// This prevents false negatives, while almost all
@@ -93,30 +107,30 @@ $.validator.addMethod("iban", function(value, element) {
 	// by the checksum validation below anyway.
 	// Strict checking should return FALSE for unknown
 	// countries.
-	if (typeof bbanpattern !== "undefined") {
-		ibanregexp = new RegExp("^[A-Z]{2}\\d{2}" + bbanpattern + "$", "");
-		if (!(ibanregexp.test(iban))) {
-			return false; // invalid country specific format
+	if ( typeof bbanpattern !== "undefined" ) {
+		ibanregexp = new RegExp( "^[A-Z]{2}\\d{2}" + bbanpattern + "$", "" );
+		if ( !( ibanregexp.test( iban ) ) ) {
+			return false; // Invalid country specific format
 		}
 	}
 
-	// now check the checksum, first convert to digits
-	ibancheck = iban.substring(4, iban.length) + iban.substring(0, 4);
-	for (i = 0; i < ibancheck.length; i++) {
-		charAt = ibancheck.charAt(i);
-		if (charAt !== "0") {
+	// Now check the checksum, first convert to digits
+	ibancheck = iban.substring( 4, iban.length ) + iban.substring( 0, 4 );
+	for ( i = 0; i < ibancheck.length; i++ ) {
+		charAt = ibancheck.charAt( i );
+		if ( charAt !== "0" ) {
 			leadingZeroes = false;
 		}
-		if (!leadingZeroes) {
-			ibancheckdigits += "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ".indexOf(charAt);
+		if ( !leadingZeroes ) {
+			ibancheckdigits += "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ".indexOf( charAt );
 		}
 	}
 
-	// calculate the result of: ibancheckdigits % 97
-	for (p = 0; p < ibancheckdigits.length; p++) {
-		cChar = ibancheckdigits.charAt(p);
+	// Calculate the result of: ibancheckdigits % 97
+	for ( p = 0; p < ibancheckdigits.length; p++ ) {
+		cChar = ibancheckdigits.charAt( p );
 		cOperator = "" + cRest + "" + cChar;
 		cRest = cOperator % 97;
 	}
 	return cRest === 1;
-}, "Please specify a valid IBAN");
+}, "Please specify a valid IBAN" );

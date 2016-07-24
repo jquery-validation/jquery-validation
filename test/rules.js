@@ -1,87 +1,87 @@
-module("rules");
+QUnit.module( "rules" );
 
-test("rules() - internal - input", function() {
-	var element = $("#firstname");
+QUnit.test( "rules() - internal - input", function( assert ) {
+	var element = $( "#firstname" );
 
-	$("#testForm1").validate();
+	$( "#testForm1" ).validate();
 
-	deepEqual( element.rules(), { required: true, minlength: 2 } );
-});
+	assert.deepEqual( element.rules(), { required: true, minlength: 2 } );
+} );
 
-test("rules(), ignore method:false", function() {
-	var element = $("#firstnamec");
+QUnit.test( "rules(), ignore method:false", function( assert ) {
+	var element = $( "#firstnamec" );
 
-	$("#testForm1clean").validate({
+	$( "#testForm1clean" ).validate( {
 		rules: {
 			firstnamec: { required: false, minlength: 2 }
 		}
-	});
+	} );
 
-	deepEqual( element.rules(), { minlength: 2 } );
-});
+	assert.deepEqual( element.rules(), { minlength: 2 } );
+} );
 
-test("rules() HTML5 required (no value)", function() {
-	var element = $("#testForm11text1");
+QUnit.test( "rules() HTML5 required (no value)", function( assert ) {
+	var element = $( "#testForm11text1" );
 
-	$("#testForm11").validate();
+	$( "#testForm11" ).validate();
 
-	deepEqual( element.rules(), { required: true } );
-});
+	assert.deepEqual( element.rules(), { required: true } );
+} );
 
-test("rules() - internal - select", function() {
-	var element = $("#meal");
+QUnit.test( "rules() - internal - select", function( assert ) {
+	var element = $( "#meal" );
 
-	$("#testForm3").validate();
+	$( "#testForm3" ).validate();
 
-	deepEqual( element.rules(), { required: true } );
-});
+	assert.deepEqual( element.rules(), { required: true } );
+} );
 
-test("rules() - external", function() {
-	var element = $("#text1");
+QUnit.test( "rules() - external", function( assert ) {
+	var element = $( "#text1" );
 
-	$("#form").validate({
+	$( "#form" ).validate( {
 		rules: {
 			action: { date: true, min: 5 }
 		}
-	});
+	} );
 
-	deepEqual( element.rules(), { date: true, min: 5 } );
-});
+	assert.deepEqual( element.rules(), { date: true, min: 5 } );
+} );
 
-test("rules() - external - complete form", function() {
-	expect(1);
+QUnit.test( "rules() - external - complete form", function( assert ) {
+	assert.expect( 1 );
 
-	var methods = $.extend({}, $.validator.methods),
-		messages = $.extend({}, $.validator.messages),
+	var methods = $.extend( {}, $.validator.methods ),
+		messages = $.extend( {}, $.validator.messages ),
 		v;
 
-	$.validator.addMethod("verifyTest", function() {
-		ok( true, "method executed" );
+	$.validator.addMethod( "verifyTest", function() {
+		assert.ok( true, "method executed" );
 		return true;
-	});
-	v = $("#form").validate({
+	} );
+	v = $( "#form" ).validate( {
 		rules: {
 			action: { verifyTest: true }
 		}
-	});
+	} );
 	v.form();
 
 	$.validator.methods = methods;
 	$.validator.messages = messages;
-});
+} );
 
-test("rules() - internal - input", function() {
-	var element = $("#form8input");
+QUnit.test( "rules() - internal - input", function( assert ) {
+	var element = $( "#form8input" );
 
-	$("#testForm8").validate();
+	$( "#testForm8" ).validate();
 
-	deepEqual( element.rules(), { required: true, number: true, rangelength: [ 2, 8 ] } );
-});
+	assert.deepEqual( element.rules(), { required: true, number: true, rangelength: [ 2, 8 ] } );
+} );
 
-test("rules(), merge min/max to range, minlength/maxlength to rangelength", function() {
+QUnit.test( "rules(), merge min/max to range, minlength/maxlength to rangelength", function( assert ) {
 	jQuery.validator.autoCreateRanges = true;
 
-	$("#testForm1clean").validate({
+	$( "#testForm1clean" ).validate( {
 		rules: {
 			firstnamec: {
 				min: -15,
@@ -92,69 +92,70 @@ test("rules(), merge min/max to range, minlength/maxlength to rangelength", func
 				maxlength: 10
 			}
 		}
-	});
+	} );
 
-	deepEqual( $("#firstnamec").rules(), { range: [ -15, 0 ] } );
-	deepEqual( $("#lastnamec").rules(), { rangelength: [ 0, 10 ] } );
+	assert.deepEqual( $( "#firstnamec" ).rules(), { range: [ -15, 0 ] } );
+	assert.deepEqual( $( "#lastnamec" ).rules(), { rangelength: [ 0, 10 ] } );
 
 	jQuery.validator.autoCreateRanges = false;
-});
+} );
 
-test("rules(), guarantee that required is at front", function() {
-	$("#testForm1").validate();
-	var v = $("#v2").validate();
-	$("#subformRequired").validate();
-	function flatRules(element) {
+QUnit.test( "rules(), guarantee that required is at front", function( assert ) {
+	$( "#testForm1" ).validate();
+	var v = $( "#v2" ).validate(),
+		v1 = $( "#subformRequired" ).validate();
+	function flatRules( element ) {
 		var result = [];
-		jQuery.each($(element).rules(), function(key) { result.push(key); });
-		return result.join(" ");
+		jQuery.each( $( element ).rules(), function( key ) { result.push( key ); } );
+		return result.join( " " );
 	}
-	equal( "required minlength", flatRules("#firstname") );
-	equal( "required minlength maxlength", flatRules("#v2-i6") );
-	equal( "required maxlength", flatRules("#co_name") );
+	assert.equal( flatRules( "#firstname" ), "required minlength" );
+	assert.equal( flatRules( "#v2-i6" ), "required minlength maxlength" );
+	assert.equal( flatRules( "#co_name" ), "required maxlength" );
 
-	QUnit.reset();
+	v.destroy();
+	v1.destroy();
 	jQuery.validator.autoCreateRanges = true;
-	v = $("#v2").validate();
-	equal( "required rangelength", flatRules("#v2-i6") );
+	v = $( "#v2" ).validate();
+	assert.equal( flatRules( "#v2-i6" ), "required rangelength" );
 
-	$("#subformRequired").validate({
+	v1 = $( "#subformRequired" ).validate( {
 		rules: {
 			co_name: "required"
 		}
-	});
-	$("#co_name").removeClass();
-	equal( "required maxlength", flatRules("#co_name") );
+	} );
+	$( "#co_name" ).removeClass();
+	assert.equal( flatRules( "#co_name" ), "required maxlength" );
 	jQuery.validator.autoCreateRanges = false;
-});
+} );
 
-test("rules(), evaluate dynamic parameters", function() {
-	expect(2);
+QUnit.test( "rules(), evaluate dynamic parameters", function( assert ) {
+	assert.expect( 2 );
 
-	$("#testForm1clean").validate({
+	$( "#testForm1clean" ).validate( {
 		rules: {
 			firstnamec: {
-				min: function(element) {
-					equal( $("#firstnamec")[0], element );
+				min: function( element ) {
+					assert.equal( $( "#firstnamec" )[ 0 ], element );
 					return 12;
 				}
 			}
 		}
-	});
+	} );
 
-	deepEqual( $("#firstnamec").rules(), { min: 12 });
-});
+	assert.deepEqual( $( "#firstnamec" ).rules(), { min: 12 } );
+} );
 
-test("rules(), class and attribute combinations", function() {
+QUnit.test( "rules(), class and attribute combinations", function( assert ) {
 
-	$.validator.addMethod("customMethod1", function() {
+	$.validator.addMethod( "customMethod1", function() {
 		return false;
-	}, "");
-	$.validator.addMethod("customMethod2", function() {
+	}, "" );
+	$.validator.addMethod( "customMethod2", function() {
 		return false;
-	}, "");
+	}, "" );
 
-	$("#v2").validate({
+	$( "#v2" ).validate( {
 		rules: {
 			"v2-i7": {
 				required: true,
@@ -162,33 +163,34 @@ test("rules(), class and attribute combinations", function() {
 				customMethod: true
 			}
 		}
-	});
+	} );
 
-	deepEqual( $("#v2-i1").rules(), { required: true });
-	deepEqual( $("#v2-i2").rules(), { required: true, email: true });
-	deepEqual( $("#v2-i3").rules(), { url: true });
-	deepEqual( $("#v2-i4").rules(), { required: true, minlength: 2 });
-	deepEqual( $("#v2-i5").rules(), { required: true, minlength: 2, maxlength: 5, customMethod1: "123" });
+	assert.deepEqual( $( "#v2-i1" ).rules(), { required: true } );
+	assert.deepEqual( $( "#v2-i2" ).rules(), { required: true, email: true } );
+	assert.deepEqual( $( "#v2-i3" ).rules(), { url: true } );
+	assert.deepEqual( $( "#v2-i4" ).rules(), { required: true, minlength: 2 } );
+	assert.deepEqual( $( "#v2-i5" ).rules(), { required: true, minlength: 2, maxlength: 5, customMethod1: "123" } );
 	jQuery.validator.autoCreateRanges = true;
-	deepEqual( $("#v2-i5").rules(), { required: true, customMethod1: "123", rangelength: [ 2, 5 ] });
-	deepEqual( $("#v2-i6").rules(), { required: true, customMethod2: true, rangelength: [ 2, 5 ] });
+	assert.deepEqual( $( "#v2-i5" ).rules(), { required: true, customMethod1: "123", rangelength: [ 2, 5 ] } );
+	assert.deepEqual( $( "#v2-i6" ).rules(), { required: true, customMethod2: true, rangelength: [ 2, 5 ] } );
 	jQuery.validator.autoCreateRanges = false;
-	deepEqual( $("#v2-i7").rules(), { required: true, minlength: 2, customMethod: true });
+	assert.deepEqual( $( "#v2-i7" ).rules(), { required: true, minlength: 2, customMethod: true } );
 
 	delete $.validator.methods.customMethod1;
 	delete $.validator.messages.customMethod1;
 	delete $.validator.methods.customMethod2;
 	delete $.validator.messages.customMethod2;
-});
+	delete $.validator.classRuleSettings.customMethod2;
+} );
 
-test("rules(), dependency checks", function() {
-	var v = $("#testForm1clean").validate({
+QUnit.test( "rules(), dependency checks", function( assert ) {
+	var v = $( "#testForm1clean" ).validate( {
 			rules: {
 				firstnamec: {
 					min: {
 						param: 5,
-						depends: function(el) {
-							return (/^a/).test($(el).val());
+						depends: function( el ) {
+							return ( /^a/ ).test( $( el ).val() );
 						}
 					}
 				},
@@ -201,104 +203,210 @@ test("rules(), dependency checks", function() {
 					}
 				}
 			}
-		}),
-		rules = $("#firstnamec").rules();
+		} ),
+		rules = $( "#firstnamec" ).rules();
 
-	equal( 0, v.objectLength(rules) );
+	assert.equal( v.objectLength( rules ), 0 );
 
-	$("#firstnamec").val("ab");
-	deepEqual( $("#firstnamec").rules(), { min: 5 });
+	$( "#firstnamec" ).val( "ab" );
+	assert.deepEqual( $( "#firstnamec" ).rules(), { min: 5 } );
 
-	deepEqual( $("#lastnamec").rules(), { max: 12, email: true });
-});
+	assert.deepEqual( $( "#lastnamec" ).rules(), { max: 12, email: true } );
+} );
 
-test("rules(), add and remove", function() {
-	$.validator.addMethod("customMethod1", function() {
+QUnit.test( "rules(), add and remove", function( assert ) {
+	$.validator.addMethod( "customMethod1", function() {
 		return false;
-	}, "");
-	$("#v2").validate();
-	var removedAttrs = $("#v2-i5").removeClass("required").removeAttrs("minlength maxlength");
-	deepEqual( $("#v2-i5").rules(), { customMethod1: "123" });
+	}, "" );
+	$( "#v2" ).validate();
+	$( "#v2-i5" ).removeClass( "required" ).removeAttr( "minlength maxlength" );
+	assert.deepEqual( $( "#v2-i5" ).rules(), { customMethod1: "123" } );
 
-	$("#v2-i5").addClass("required").attr(removedAttrs);
-	deepEqual( $("#v2-i5").rules(), { required: true, minlength: 2, maxlength: 5, customMethod1: "123" });
+	$( "#v2-i5" ).addClass( "required" ).attr( {
+		minlength: 2,
+		maxlength: 5
+	} );
+	assert.deepEqual( $( "#v2-i5" ).rules(), { required: true, minlength: 2, maxlength: 5, customMethod1: "123" } );
 
-	$("#v2-i5").addClass("email").attr({ min: 5 });
-	deepEqual( $("#v2-i5").rules(), { required: true, email: true, minlength: 2, maxlength: 5, min: 5, customMethod1: "123" });
+	$( "#v2-i5" ).addClass( "email" ).attr( { min: 5 } );
+	assert.deepEqual( $( "#v2-i5" ).rules(), { required: true, email: true, minlength: 2, maxlength: 5, min: 5, customMethod1: "123" } );
 
-	$("#v2-i5").removeClass("required email").removeAttrs("minlength maxlength customMethod1 min");
-	deepEqual( $("#v2-i5").rules(), {});
+	$( "#v2-i5" ).removeClass( "required email" ).removeAttr( "minlength maxlength customMethod1 min" );
+	assert.deepEqual( $( "#v2-i5" ).rules(), {} );
 
 	delete $.validator.methods.customMethod1;
 	delete $.validator.messages.customMethod1;
-});
+} );
 
-test("rules(), add and remove static rules", function() {
+QUnit.test( "rules(), add and remove static rules", function( assert ) {
 
-	$("#testForm1clean").validate({
+	$( "#testForm1clean" ).validate( {
 		rules: {
 			firstnamec: "required date"
 		}
-	});
+	} );
 
-	deepEqual( $("#firstnamec").rules(), { required: true, date: true } );
+	assert.deepEqual( $( "#firstnamec" ).rules(), { required: true, date: true } );
 
-	$("#firstnamec").rules("remove", "date");
-	deepEqual( $("#firstnamec").rules(), { required: true } );
-	$("#firstnamec").rules("add", "email");
-	deepEqual( $("#firstnamec").rules(), { required: true, email: true } );
+	$( "#firstnamec" ).rules( "remove", "date" );
+	assert.deepEqual( $( "#firstnamec" ).rules(), { required: true } );
+	$( "#firstnamec" ).rules( "add", "email" );
+	assert.deepEqual( $( "#firstnamec" ).rules(), { required: true, email: true } );
 
-	$("#firstnamec").rules("remove", "required");
-	deepEqual( $("#firstnamec").rules(), { email: true } );
+	$( "#firstnamec" ).rules( "remove", "required" );
+	assert.deepEqual( $( "#firstnamec" ).rules(), { email: true } );
 
-	deepEqual( $("#firstnamec").rules("remove"), { email: true } );
-	deepEqual( $("#firstnamec").rules(), { } );
+	assert.deepEqual( $( "#firstnamec" ).rules( "remove" ), { email: true } );
+	assert.deepEqual( $( "#firstnamec" ).rules(), {} );
 
-	$("#firstnamec").rules("add", "required email");
-	deepEqual( $("#firstnamec").rules(), { required: true, email: true } );
+	$( "#firstnamec" ).rules( "add", "required email" );
+	assert.deepEqual( $( "#firstnamec" ).rules(), { required: true, email: true } );
 
-	deepEqual( $("#lastnamec").rules(), {} );
-	$("#lastnamec").rules("add", "required");
-	$("#lastnamec").rules("add", {
+	assert.deepEqual( $( "#lastnamec" ).rules(), {} );
+	$( "#lastnamec" ).rules( "add", "required" );
+	$( "#lastnamec" ).rules( "add", {
 		minlength: 2
-	});
-	deepEqual( $("#lastnamec").rules(), { required: true, minlength: 2 } );
+	} );
+	assert.deepEqual( $( "#lastnamec" ).rules(), { required: true, minlength: 2 } );
 
-	var removedRules = $("#lastnamec").rules("remove", "required email");
-	deepEqual( $("#lastnamec").rules(), { minlength: 2 } );
-	$("#lastnamec").rules("add", removedRules);
-	deepEqual( $("#lastnamec").rules(), { required: true, minlength: 2 } );
-});
+	var removedRules = $( "#lastnamec" ).rules( "remove", "required email" );
+	assert.deepEqual( $( "#lastnamec" ).rules(), { minlength: 2 } );
+	$( "#lastnamec" ).rules( "add", removedRules );
+	assert.deepEqual( $( "#lastnamec" ).rules(), { required: true, minlength: 2 } );
+} );
 
-test("rules(), add messages", function() {
-	$("#firstnamec").attr("title", null);
-	var v = $("#testForm1clean").validate({
+QUnit.test( "rules(), add messages", function( assert ) {
+	$( "#firstnamec" ).attr( "title", null );
+	var v = $( "#testForm1clean" ).validate( {
 		rules: {
 			firstnamec: "required"
 		}
-	});
-	$("#testForm1clean").valid();
-	$("#firstnamec").valid();
-	deepEqual( v.settings.messages.firstname, undefined );
+	} );
+	$( "#testForm1clean" ).valid();
+	$( "#firstnamec" ).valid();
+	assert.deepEqual( v.settings.messages.firstname, undefined );
 
-	$("#firstnamec").rules("add", {
+	$( "#firstnamec" ).rules( "add", {
 		messages: {
 			required: "required"
 		}
-	});
+	} );
 
-	$("#firstnamec").valid();
-	deepEqual( v.errorList[0] && v.errorList[0].message, "required" );
+	$( "#firstnamec" ).valid();
+	assert.deepEqual( v.errorList[ 0 ] && v.errorList[ 0 ].message, "required" );
 
-	$("#firstnamec").val("test");
-	$("#firstnamec").valid();
-	equal(v.errorList.length, 0);
-});
+	$( "#firstnamec" ).val( "test" );
+	$( "#firstnamec" ).valid();
+	assert.equal( v.errorList.length, 0 );
+} );
 
-test( "rules(), rangelength attribute as array", function() {
-	$("#testForm13").validate();
-	deepEqual( $("#cars-select").rules(), {
+QUnit.test( "rules(), rangelength attribute as array", function( assert ) {
+	$( "#testForm13" ).validate();
+	assert.deepEqual( $( "#cars-select" ).rules(), {
 		required: true,
 		rangelength: [ 2, 3 ]
-	});
-});
+	} );
+} );
+
+QUnit.test( "rules(), normalizer", function( assert ) {
+	var username = $( "#usernamec" ),
+		urlc = $( "#urlc" ),
+		lastname = $( "#lastnamec" ),
+		v;
+
+	username.val( "\t\t \r" );
+	urlc.val( "" );
+
+	v = $( "#testForm1clean" ).validate( {
+		rules: {
+			username: {
+				required: true,
+
+				// Using the normalizer to trim the value of the element
+				// before validating it.
+				normalizer: function( value ) {
+					assert.equal( this, username[ 0 ], "`this` in the normalizer should be the username element." );
+
+					// Trim the value of the input
+					return $.trim( value );
+				}
+			},
+			urlc: {
+				required: true,
+				url: true,
+
+				// Using the normalizer to append https:// if it's not
+				// present on the input value
+				normalizer: function( value ) {
+					assert.equal( this, urlc[ 0 ], "`this` in the normalizer should be the urlc element." );
+
+					var url = value;
+
+					// Check if it doesn't start with http:// or https:// or ftp://
+					if ( url && url.substr( 0, 7 ) !== "http://" &&
+						url.substr( 0, 8 ) !== "https://" &&
+						url.substr( 0, 6 ) !== "ftp://" ) {
+
+						// Then prefix with http:// or even https://
+						url = "https://" + url;
+					}
+
+					// Return the new url
+					return url;
+				}
+			},
+			lastname: {
+				required: true,
+
+				// Using the normalizer to trim the value of the element
+				// before validating it.
+				normalizer: function( value ) {
+					assert.equal( this, lastname[ 0 ], "`this` in the normalizer should be the lastname element." );
+
+					// Return null in order to make sure a exception is thrown
+					// when normalizer returns a non string value.
+					value = null;
+
+					return value;
+				}
+			}
+		}
+	} );
+
+	// Validate only the username and the url elements.
+	username.valid();
+	assert.equal( v.invalidElements()[ 0 ], username[ 0 ], "The username should be invalid" );
+
+	urlc.valid();
+	assert.equal( v.invalidElements()[ 0 ], urlc[ 0 ], "The url should be invalid" );
+
+	assert.equal( v.numberOfInvalids(), 2, "There is two invalid elements" );
+
+	username.val( "something" );
+	urlc.val( "google.com" );
+
+	username.trigger( "keyup" );
+	urlc.trigger( "keyup" );
+
+	assert.equal( v.numberOfInvalids(), 0, "All elements are valid" );
+	assert.equal( v.size(), 0, "All elements are valid" );
+
+	// Validate the lastname element, which will throw an exception
+	assert.throws( function() {
+		v.check( lastname[ 0 ] );
+	}, function( err ) {
+		return err.name === "TypeError" && err.message === "The normalizer should return a string value.";
+	}, "This should throw a TypeError exception." );
+} );
+
+QUnit.test( "rules() - on unexpected input", function( assert ) {
+	var emptySet = $( "#firstname .mynonexistantclass" ),
+		nonFormElement = $( "div#foo" ),
+		result;
+
+	result = emptySet.rules( "add", "whatever" );
+	assert.deepEqual( result, undefined, "can work on an empty set without a js error" );
+
+	result = nonFormElement.rules( "add", "whatever" );
+	assert.deepEqual( result, undefined, "can work on a non-form element" );
+} );

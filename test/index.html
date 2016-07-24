@@ -3,11 +3,11 @@
 <head>
 	<meta charset="utf-8">
 	<title>jQuery - Validation Test Suite</title>
-	<link rel="stylesheet" href="qunit/qunit.css">
+	<link rel="stylesheet" href="../node_modules/qunitjs/qunit/qunit.css">
 	<script src="../lib/jquery.js"></script>
 	<script src="../lib/jquery.simulate.js"></script>
 	<script src="../lib/jquery.form.js"></script>
-	<script src="qunit/qunit.js"></script>
+	<script src="../node_modules/qunitjs/qunit/qunit.js"></script>
 	<script src="../lib/jquery.mockjax.js"></script>
 	<script src="../dist/jquery.validate.js"></script>
 	<script src="../dist/additional-methods.js"></script>
@@ -15,13 +15,13 @@
 	<script src="rules.js"></script>
 	<script src="messages.js"></script>
 	<script src="methods.js"></script>
+	<script src="additional/creditcard.js"></script>
 	<script src="aria.js"></script>
 	<script src="error-placement.js"></script>
 </head>
 <body id="body">
 <h1 id="qunit-header">
 	<a href="http://jqueryvalidation.org/">jQuery Validation Plugin</a> Test Suite
-	<a href="?jquery=1.6.4">jQuery 1.6.4</a>
 	<a href="?jquery=1.7.2">jQuery 1.7.2</a>
 	<a href="?jquery=1.8.3">jQuery 1.8.3</a>
 	<a href="?jquery=1.9.1">jQuery 1.9.1</a>
@@ -72,6 +72,7 @@
 		<label id="errorFirstnamec" for="firstnamec" class="error">error for firstname</label>
 		<input title="buga" name="lastname" id="lastnamec">
 		<input name="username" id="usernamec">
+		<input id="urlc" type="text" name="urlc">
 	</form>
 	<form id="userForm">
 		<input type="text" data-rule-required="true" name="username" id="username">
@@ -178,8 +179,8 @@
 		<input name="testForm18[text]" id="testForm18[text]" required>
 	</form>
 	<form id="testForm19">
-	<!-- test id/name containing $ -->
-	<input name="testForm19$text" id="testForm19$text" required>
+		<!-- test id/name containing $ -->
+		<input name="testForm19$text" id="testForm19$text" required>
 	</form>
 	<form id="dataMessages">
 		<input name="dataMessagesName" id="dataMessagesName" class="required" data-msg-required="You must enter a value here">
@@ -203,13 +204,14 @@
 	</form>
 	<form id="form" action="formaction">
 		<input type="text" name="action" value="Test" id="text1">
-		<input type="text" name="text2" value="   " id="text1b">
+		<input type="text" name="text2" value="" id="text1b">
 		<input type="text" name="text2" value="T " id="text1c">
 		<input type="text" name="text2" value="T" id="text2">
 		<input type="text" name="text2" value="TestTestTest" id="text3">
 		<input type="text" name="action" value="0" id="value1">
 		<input type="text" name="text2" value="10" id="value2">
 		<input type="text" name="text2" value="1000" id="value3">
+		<input type="text" name="text2" value="0.00125" id="value4">
 		<input type="radio" name="radio1" id="radio1">
 		<input type="radio" name="radio1" id="radio1a">
 		<input type="radio" name="radio2" id="radio2" checked="checked">
@@ -311,7 +313,7 @@
 		<input type="date" id="rangeDateInvalidLess" name="rangeDateInvalidLess" min="2012-11-21" max="2013-01-21" value="2012-10-21">
 		<input type="date" id="maxDateValid" name="maxDateValid" max="2013-01-21" value="2012-12-21">
 		<input type="date" id="rangeDateValid" name="rangeDateValid" min="2012-11-21" max="2013-01-21" value="2012-12-21">
-		<!-- input type text is not supposed to have min/max according to html5,
+		<!-- input type text is not supposed to have min/max/step according to html5,
 			 but for backward compatibility with 1.10.0 we treat it as number.
 			 you can also use type="number", in which case the browser may also
 			 do validation, and mobile browsers may offer a numeric keypad to edit
@@ -320,20 +322,26 @@
 		  -->
 		<input type="text" id="rangeTextInvalidGreater" name="rangeTextInvalidGreater" min="50" max="200" value="1000">
 		<input type="text" id="rangeTextInvalidLess" name="rangeTextInvalidLess" min="200" max="1000" value="50">
+		<input type="text" id="rangeTextInvalidStep" name="rangeTextInvalidStep" min="200" max="1000" step="100" value="250">
 		<input id="rangeAbsentInvalidGreater" name="rangeAbsentInvalidGreater" min="50" max="200" value="1000">
 		<input id="rangeAbsentInvalidLess" name="rangeAbsentInvalidLess" min="200" max="1000" value="50">
-		<input type="text" id="rangeTextValid" name="rangeTextValid" min="50" max="1000" value="200">
-		<input id="rangeAbsentValid" name="rangeAbsentValid" min="50" max="1000" value="200">
+		<input id="rangeAbsentInvalidStep" name="rangeAbsentInvalidStep" min="200" max="1000" step="100" value="250">
+		<input type="text" id="rangeTextValid" name="rangeTextValid" min="50" max="1000" step="50" value="200">
+		<input type="text" id="rangeTextDataRuleValid" name="rangeTextValid" data-rule-min="50" data-rule-max="1000.00" data-rule-step="50.0" value="200">
+		<input id="rangeAbsentValid" name="rangeAbsentValid" min="50" max="1000" step="50" value="200">
 		<!-- ranges are like numbers in html5, except that browser is not required
 			 to demand an exact value.  User interface could be a slider.
 		  -->
-		<input type="range" id="rangeRangeValid" name="rangeRangeValid" min="50" max="1000" value="200">
+		<input type="range" id="rangeRangeValid" name="rangeRangeValid" min="50" max="1000" step="50" value="200">
 		<input type="number" id="rangeNumberValid" name="rangeNumberValid" min="50" max="1000" value="200">
 		<input type="number" id="rangeNumberInvalidGreater" name="rangeNumberInvalidGreater" min="50" max="200" value="1000">
 		<input type="number" id="rangeNumberInvalidLess" name="rangeNumberInvalidLess" min="50" max="200" value="6">
 		<input type="number" id="rangeMinZeroInvalidLess" name="rangeMinZeroInvalidLess" min="0" value="-1">
 		<input type="number" id="rangeMinZeroValidEqual" name="rangeMinZeroValidEqual" min="0" value="0">
 		<input type="number" id="rangeMinZeroValidGreater" name="rangeMinZeroValidGreater" min="0" value="1">
+	</form>
+	<form id="stepOnUnsupportedType">
+		<input type="date" id="stepOnUnsupportedTypeInput" name="stepOnUnsupportedTypeInput" step="1">
 	</form>
 	<form id="rangeMinDateValid">
 		<input type="date" id="minDateValid" name="minDateValid" min="2012-11-21" value="2012-12-21">
@@ -370,6 +378,61 @@
 		<input id="radiocheckbox-1-2" autocomplete="off" type="checkbox" name="radiocheckbox-1" required="required">
 		<input id="radiocheckbox-1-3" autocomplete="off" type="checkbox" name="radiocheckbox-1" required="required">
 	</form>
+	<form id="testForm20">
+		<!-- test id/name containing single quotes -->
+		<input name="testForm20['text input']" id="testForm20['textinput']" required>
+		<input type="checkbox" id="testForm20['checkboxinput']" name="testForm20['checkbox input']" required>
+		<input type="radio" id="testForm20['radioinput']" name="testForm20['radio input']" required>
+	</form>
+	<form id="testForm21">
+		<label for="testForm21!#$%&'()*+,./:;<=>?@[\]^`{|}~">Input text</label>
+		<input type="text" name="testForm21!#$%&'()*+,./:;<=>?@[\]^`{|}~" id="testForm21!#$%&'()*+,./:;<=>?@[\]^`{|}~" required minlength="15">
+	</form>
+	<form id="testForm22">
+		<label for="tF22Input">Input text</label>
+		<input type="text" name="tF22Input" id="tF22Input" required minlength="5" data-msg-minlength="You should enter at least {0} characters.">
+	</form>
+	<form id="contenteditableForm">
+		<div contenteditable id="contenteditableNumberInvalid" data-rule-number="true" name="field1">ABC</div>
+		<div contenteditable id="contenteditableNumberValid" data-rule-number="true" name="field2">123</div>
+		<div contenteditable id="contenteditableRequiredInvalid" data-rule-required="true" name="field3"></div>
+		<div contenteditable id="contenteditableRequiredValid" data-rule-required="true" name="field3">Some text</div>
+		<input id="contenteditableInput" type="text" data-rule-number="true" name="field4" value="ABC" />
+	</form>
+	<form id="testForm23">
+		<input name="box1" id="box1" type="text" value="" />
+		<input name="box2" id="box2" type="text" value="" />
+	</form>
+	<form id="testForm24">
+		<input id="val1" type="hidden" name="val1" value="hello" />
+		<input id="val2" type="text" name="val2" value="" />
+		<input id="val3" type="text" name="val3" value="" />
+	</form>
+	<form id="add-method-remote">
+		<input id="add-method-username" type="text" name="username" value="" data-rule-workemail="somevalue" required />
+	</form>
+	<form id="testForm25">
+		<input type="text" data-rule-required="true" title="something25" name="something25" id="something25" value="">
+	</form>
+	<form id="testForm26">
+		<select name="day" class="required">
+			<option value="">day</option>
+			<option value="1">1</option>
+			<option value="2">2</option>
+		</select>
+		<br>
+		<select name="month" class="required">
+			<option value="">month</option>
+			<option value="1">1</option>
+			<option value="2">2</option>
+		</select>
+		<br>
+		<select name="year" class="required">
+			<option value="">year</option>
+			<option value="2015">2015</option>
+			<option value="2016">2016</option>
+		</select>
+	</form>	
 </div>
 </body>
 </html>
