@@ -11,7 +11,7 @@ $.validator.addMethod( "nieES", function( value ) {
 
 	var nieRegEx = new RegExp( /^[MXYZ]{1}[0-9]{7,8}[TRWAGMYFPDXBNJZSQVHLCKET]{1}$/gi );
 	var validChars = "TRWAGMYFPDXBNJZSQVHLCKET",
-		letter = value.substr( value.length - 1 ),
+		letter = value.substr( value.length - 1 ).toUpperCase(),
 		number;
 
 	value = value.toString().toUpperCase();
