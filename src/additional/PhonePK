@@ -1,0 +1,7 @@
+/*
+Pakistan phone number having atleast 11 number( 03 must be inculuded at the start of every number)
+*/
+/**
+$.validator.addMethod( "phonePK", function( value, element ) {
+	return this.optional( element ) || /^((\+|00(\s|\s?\-\s?)?)03(\s|\s?\-\s?)?(\(0\)[\-\s]?)?|0)[1-9]((\s|\s?\-\s?)?[0-9]){9}$/.test( value );
+}, "Invalid phone number! Please insert in fllowing format 03XX-XXXXXXX" );
