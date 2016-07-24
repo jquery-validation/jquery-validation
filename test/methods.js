@@ -1344,20 +1344,25 @@ QUnit.test( "nieES", function( assert ) {
 	assert.ok( method( "Y1524243R" ), "NIE valid" );
 	assert.ok( method( "X3744072V" ), "NIE valid" );
 	assert.ok( method( "X7436800A" ), "NIE valid" );
+	assert.ok( method( "X00002153Z" ), "NIE valid" );
+	assert.ok( method( "X02323232W" ), "NIE valid" );
+	assert.ok( method( "Z0569549M" ), "NIE valid" );
+	assert.ok( method( "X0479906B" ), "NIE valid" );
 	assert.ok( method( "y7875935j" ), "NIE valid: lower case" );
-	assert.ok( !method( "X0093999 K" ), "NIE inválido: white space" );
-	assert.ok( !method( "X 0093999 K" ), "NIE inválido:  white space" );
-	assert.ok( !method( "11441059" ), "NIE inválido: no letter" );
-	assert.ok( !method( "11441059PR" ), "NIE inválido: two letters" );
-	assert.ok( !method( "11440059R" ), "NIE inválido: wrong number" );
-	assert.ok( !method( "11441059S" ), "NIE inválido: wrong letter" );
-	assert.ok( !method( "114410598R" ), "NIE inválido: > 8 digits" );
-	assert.ok( !method( "11441059-R" ), "NIE inválido: dash" );
-	assert.ok( !method( "asdasdasd" ), "NIE inválido: all letters" );
-	assert.ok( !method( "11.144.059R" ), "NIE inválido: two dots" );
-	assert.ok( !method( "05.122.654R" ), "NIE inválido: starts with 0 and dots" );
-	assert.ok( !method( "5.122.654-R" ), "NIE inválido: dots and dash" );
-	assert.ok( !method( "05.122.654-R" ), "NIE inválido: starts with zero and dot and dash" );
+
+	assert.ok( !method( "X0093999 K" ), "NIE invalid: white space" );
+	assert.ok( !method( "X 0093999 K" ), "NIE invalid:  white space" );
+	assert.ok( !method( "11441059" ), "NIE invalid: no letter" );
+	assert.ok( !method( "11441059PR" ), "NIE invalid: two letters" );
+	assert.ok( !method( "11440059R" ), "NIE invalid: wrong number" );
+	assert.ok( !method( "11441059S" ), "NIE invalid: wrong letter" );
+	assert.ok( !method( "114410598R" ), "NIE invalid: > 8 digits" );
+	assert.ok( !method( "11441059-R" ), "NIE invalid: dash" );
+	assert.ok( !method( "asdasdasd" ), "NIE invalid: all letters" );
+	assert.ok( !method( "11.144.059R" ), "NIE invalid: two dots" );
+	assert.ok( !method( "05.122.654R" ), "NIE invalid: starts with 0 and dots" );
+	assert.ok( !method( "5.122.654-R" ), "NIE invalid: dots and dash" );
+	assert.ok( !method( "05.122.654-R" ), "NIE invalid: starts with zero and dot and dash" );
 } );
 
 QUnit.test( "cifES", function( assert ) {
