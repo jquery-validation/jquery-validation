@@ -32,7 +32,8 @@ umdMiddle = "\t} else if (typeof module === \"object\" && module.exports) {\n" +
 	"\t}\n" +
 	"}(function( $ ) {\n\n";
 
-umdEnd = "\n}));";
+umdEnd = "return $;" +
+	"\n}));";
 
 umdStandardDefine = "\t\tdefine( [\"jquery\"], factory );\n";
 umdAdditionalDefine = "\t\tdefine( [\"jquery\", \"./jquery.validate\"], factory );\n";
