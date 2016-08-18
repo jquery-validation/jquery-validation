@@ -405,9 +405,11 @@ $.extend( $.validator, {
 				// "select" is provided as event.target when clicking a option
 				.on( "click.validate", "select, option, [type='radio'], [type='checkbox']", delegate );
 
-			if ( this.settings.invalidHandler ) {
-				$( this.currentForm ).on( "invalid-form.validate", this.settings.invalidHandler );
-			}
+			$( this.currentForm ).on( "invalid-form.validate", function (event, validator) {
+				if ( this.settings.invalidHandler ) {
+					validator.settings.invalidHandler( event, validator );
+				}
+			});
 
 			// Add aria-required to any Static/Data/Class required fields before first validation
 			// Screen readers require this attribute to be present before the initial submission http://www.w3.org/TR/WCAG-TECHS/ARIA2.html
