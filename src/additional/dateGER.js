@@ -21,13 +21,13 @@ $.validator.addMethod( "dateGER", function( value, element ) {
 	var check = false,
 		re = /^\d{1,2}\.\d{1,2}\.\d{4}$/,
 		adata, dd, mm, yyyy, xdata;
-	if ( re.test( value )) {
-		adata = value.split(".");
+	if ( re.test( value ) ) {
+		adata = value.split( "." );
 		dd = parseInt( adata[0],10 );
 		mm = parseInt( adata[1],10 );
 		yyyy = parseInt( adata[2],10 );
 		xdata = new Date( yyyy,mm-1,dd );
-		if (( xdata.getFullYear() == yyyy ) && ( xdata.getMonth () == mm - 1 ) && ( xdata.getDate() == dd )) {
+		if ( ( xdata.getFullYear() == yyyy ) && ( xdata.getMonth () == mm - 1 ) && ( xdata.getDate() == dd ) ) {
 			check = true;
 		} else {
 			check = false;
