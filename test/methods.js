@@ -1396,6 +1396,34 @@ QUnit.test( "cifES", function( assert ) {
 	assert.ok( !method( "B-43.522.192" ), "CIF invalid: dots and dash" );
 } );
 
+QUnit.test( "nipPL", function( assert ) {
+	var method = methodTest( "nipPL" );
+	assert.ok( method( "3514242002" ), "NIP valid" );
+	assert.ok( method( "8117892840" ), "NIP valid" );
+	assert.ok( method( "7249598309" ), "NIP valid" );
+	assert.ok( method( "6853539166" ), "NIP valid" );
+	assert.ok( method( "5715750580" ), "NIP valid" );
+	assert.ok( method( "3496120813" ), "NIP valid" );
+	assert.ok( method( "1565710251" ), "NIP valid" );
+	assert.ok( method( "8190761165" ), "NIP valid" );
+	assert.ok( method( "9487499667" ), "NIP valid" );
+	assert.ok( method( "9283384684" ), "NIP valid" );
+	assert.ok( method( "3887569138" ), "NIP valid" );
+	assert.ok( method( "3962898856" ), "NIP valid" );
+	assert.ok( !method( "76355753" ), "NIP invalid: too short" );
+	assert.ok( !method( "454" ), "NIP invalid: too short" );
+	assert.ok( !method( "234565545" ), "NIP invalid: too short" );
+	assert.ok( !method( "543455" ), "NIP invalid: too short" );
+	assert.ok( !method( "6345634563456" ), "NIP invalid: too long" );
+	assert.ok( !method( "53453453455335" ), "NIP invalid: too long" );
+	assert.ok( !method( "543453760902" ), "NIP invalid: too long" );
+	assert.ok( !method( "43090012454" ), "NIP invalid: too long" );
+	assert.ok( !method( "3958250194" ), "NIP invalid: wrong checksum" );
+	assert.ok( !method( "3928541049" ), "NIP invalid: wrong checksum" );
+	assert.ok( !method( "5920397295" ), "NIP invalid: wrong checksum" );
+	assert.ok( !method( "9502947712" ), "NIP invalid: wrong checksum" );
+} );
+
 QUnit.test( "maxWords", function( assert ) {
 	var method = methodTest( "maxWords" ),
 		maxWords = 6;
