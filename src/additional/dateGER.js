@@ -29,11 +29,7 @@ $.validator.addMethod( "dateGER", function( value, element ) {
 		xdata = new Date( yyyy, mm - 1, dd );
 		if ( ( xdata.getFullYear() === yyyy ) && ( xdata.getMonth() === mm - 1 ) && ( xdata.getDate() === dd ) ) {
 			check = true;
-		} else {
-			check = false;
 		}
-	} else {
-		check = false;
 	}
 	return this.optional( element ) || check;
 }, $.validator.messages.date );
