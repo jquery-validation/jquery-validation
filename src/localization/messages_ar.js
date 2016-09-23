@@ -18,6 +18,6 @@ $.extend( $.validator.messages, {
 	minlength: $.validator.format( "الحد الأدنى لعدد الحروف هو {0}" ),
 	rangelength: $.validator.format( "عدد الحروف يجب أن يكون بين {0} و {1}" ),
 	range: $.validator.format( "رجاء إدخال عدد قيمته بين {0} و {1}" ),
-	max: $.validator.format( "رجاء إدخال عدد أقل من أو يساوي (0}" ),
-	min: $.validator.format( "رجاء إدخال عدد أكبر من أو يساوي (0}" )
+	max: $.validator.format( "رجاء إدخال عدد أقل من أو يساوي {0}" ),
+	min: $.validator.format( "رجاء إدخال عدد أكبر من أو يساوي {0}" )
 } );
