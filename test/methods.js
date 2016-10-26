@@ -1537,3 +1537,16 @@ QUnit.test( "file accept - invalid mime type", function( assert ) {
 		proxy = $.proxy( $.validator.methods.accept, new $.validator( {}, $form[ 0 ] ), null, input, "application/vnd.google-earth.kml+xml" );
 	assert.equal( proxy(), false, "the selected file for upload has invalid mime type" );
 } );
+
+QUnit.test( "nisBR", function( assert ) {
+	var method = methodTest( "nisBR" );
+	assert.ok( method( "10757995753" ), "Valid NIS/PIS Number" );
+	assert.ok( method( "107.57995.75-3" ), "Valid NIS/PIS Number" );
+	assert.ok( method( "107.579.957-53" ), "Valid NIS/PIS Number" );
+	assert.ok( method( "107-579-957-53" ), "Valid NIS/PIS Number" );
+	assert.ok( method( "107.579.957.5-3" ), "Valid NIS/PIS Number" );
+	assert.ok( !method( "99999999999" ), "Invalid NIS/PIS Number: dump data" );
+	assert.ok( !method( "1075799575" ), "Invalid  NIS/PIS Number: < 11 digits" );
+	assert.ok( !method( "111444777355" ), "Invalid NIS/PIS Number: > 11 digits" );
+	assert.ok( !method( "10757995752" ), "Invalid NIS/PIS Number: check number failed" );
+} );
