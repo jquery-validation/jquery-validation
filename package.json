@@ -30,7 +30,8 @@
 	"files": [
 		"dist/localization/",
 		"dist/additional-methods.js",
-		"dist/jquery.validate.js"
+		"dist/jquery.validate.js",
+		"dist/jquery.validate.min.js"
 	],
 	"main": "dist/jquery.validate.js",
 	"dependencies": {
