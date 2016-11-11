@@ -3,7 +3,7 @@
 	"title": "jQuery Validation Plugin",
 	"description": "Client-side form validation made easy",
 	"version": "1.16.1-pre",
-	"homepage": "http://jqueryvalidation.org/",
+	"homepage": "https://jqueryvalidation.org/",
 	"license": "MIT",
 	"author": {
 		"name": "Jörn Zaefferer",
@@ -20,7 +20,7 @@
 	"licenses": [
 		{
 			"type": "MIT",
-			"url": "http://www.opensource.org/licenses/MIT"
+			"url": "https://www.opensource.org/licenses/MIT"
 		}
 	],
 	"scripts": {

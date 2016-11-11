@@ -1,7 +1,7 @@
-[jQuery Validation Plugin](http://jqueryvalidation.org/) - Form validation made easy
+[jQuery Validation Plugin](https://jqueryvalidation.org/) - Form validation made easy
 ================================
 
-[![Build Status](https://secure.travis-ci.org/jquery-validation/jquery-validation.svg)](http://travis-ci.org/jquery-validation/jquery-validation)
+[![Build Status](https://secure.travis-ci.org/jquery-validation/jquery-validation.svg)](https://travis-ci.org/jquery-validation/jquery-validation)
 [![devDependency Status](https://david-dm.org/jquery-validation/jquery-validation/dev-status.svg?theme=shields.io)](https://david-dm.org/jquery-validation/jquery-validation#info=devDependencies)
 
 The jQuery Validation Plugin provides drop-in validation for your existing forms, while making all kinds of customizations to fit your application really easy.
@@ -10,7 +10,7 @@ The jQuery Validation Plugin provides drop-in validation for your existing forms
 
 ### Downloading the prebuilt files
 
-Prebuilt files can be downloaded from http://jqueryvalidation.org/
+Prebuilt files can be downloaded from https://jqueryvalidation.org/
 
 ### Downloading the latest changes
 
@@ -43,14 +43,14 @@ define(["jquery", "jquery.validate"], function( $ ) {
 });
 ```
 
-For more information on how to setup a rules and customizations, [check the documentation](http://jqueryvalidation.org/documentation/).
+For more information on how to setup a rules and customizations, [check the documentation](https://jqueryvalidation.org/documentation/).
 
 ## Reporting issues and contributing code
 
 See the [Contributing Guidelines](CONTRIBUTING.md) for details.
 
-**IMPORTANT NOTE ABOUT EMAIL VALIDATION**. As of version 1.12.0 this plugin is using the same regular expression that the [HTML5 specification suggests for browsers to use](https://html.spec.whatwg.org/multipage/forms.html#valid-e-mail-address). We will follow their lead and use the same check. If you think the specification is wrong, please report the issue to them. If you have different requirements, consider [using a custom method](http://jqueryvalidation.org/jQuery.validator.addMethod/).
-In case you need to adjust the built-in validation regular expression patterns, please [follow the documentation](http://jqueryvalidation.org/jQuery.validator.methods/).
+**IMPORTANT NOTE ABOUT EMAIL VALIDATION**. As of version 1.12.0 this plugin is using the same regular expression that the [HTML5 specification suggests for browsers to use](https://html.spec.whatwg.org/multipage/forms.html#valid-e-mail-address). We will follow their lead and use the same check. If you think the specification is wrong, please report the issue to them. If you have different requirements, consider [using a custom method](https://jqueryvalidation.org/jQuery.validator.addMethod/).
+In case you need to adjust the built-in validation regular expression patterns, please [follow the documentation](https://jqueryvalidation.org/jQuery.validator.methods/).
 
 ## License
 Copyright &copy; Jörn Zaefferer<br>

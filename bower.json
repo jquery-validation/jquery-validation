@@ -1,9 +1,9 @@
 {
 	"name": "jquery-validation",
-	"homepage": "http://jqueryvalidation.org/",
+	"homepage": "https://jqueryvalidation.org/",
 	"repository": {
 		"type": "git",
-		"url": "git://github.com/jzaefferer/jquery-validation.git"
+		"url": "git://github.com/jquery-validation/jquery-validation.git"
 	},
 	"authors": [
 		"Jörn Zaefferer <joern.zaefferer@gmail.com>"
