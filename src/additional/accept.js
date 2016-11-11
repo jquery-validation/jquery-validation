@@ -14,7 +14,7 @@ $.validator.addMethod( "accept", function( value, element, param ) {
 	if ( $( element ).attr( "type" ) === "file" ) {
 
 		// Escape string to be used in the regex
-		// see: http://stackoverflow.com/questions/3446170/escape-string-for-use-in-javascript-regex
+		// see: https://stackoverflow.com/questions/3446170/escape-string-for-use-in-javascript-regex
 		// Escape also "/*" as "/.*" as a wildcard
 		typeParam = typeParam
 				.replace( /[\-\[\]\/\{\}\(\)\+\?\.\\\^\$\|]/g, "\\$&" )
