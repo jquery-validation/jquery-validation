@@ -1,6 +1,6 @@
 {
 	"name": "jquery-validation",
-	"homepage": "http://jqueryvalidation.org/",
+	"homepage": "https://jqueryvalidation.org/",
 	"repository": {
 		"type": "git",
 		"url": "git://github.com/jzaefferer/jquery-validation.git"
