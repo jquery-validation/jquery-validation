@@ -438,6 +438,42 @@ QUnit.test( "validation triggered on radio/checkbox when using keyboard", functi
 	} );
 } );
 
+QUnit.test( "validation triggered on button", function( assert ) {
+	assert.expect( 1 );
+	var input, i, events, triggeredEvents = 0,
+		done = assert.async();
+
+	$( "#form" ).validate( {
+		onfocusin: function() {
+			triggeredEvents++;
+		},
+		onfocusout: function() {
+			triggeredEvents++;
+		},
+		onkeyup: function() {
+			triggeredEvents++;
+		}
+	} );
+
+	events = [
+		$.Event( "focusin" ),
+		$.Event( "focusout" ),
+		$.Event( "keyup" )
+	];
+
+	input = $( "#form :button" );
+	for ( i = 0; i < events.length; i++ ) {
+		input.trigger( events[ i ] );
+	}
+
+	setTimeout( function() {
+
+		// Assert all event handlers fired
+		assert.equal( triggeredEvents, 6 );
+		done();
+	} );
+} );
+
 QUnit.test( "validation triggered on radio/checkbox when using mouseclick", function( assert ) {
     assert.expect( 1 );
 	var input, i, events, triggeredEvents = 0,
