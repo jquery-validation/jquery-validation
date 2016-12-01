@@ -1344,45 +1344,143 @@ QUnit.test( "nieES", function( assert ) {
 	assert.ok( method( "Y1524243R" ), "NIE valid" );
 	assert.ok( method( "X3744072V" ), "NIE valid" );
 	assert.ok( method( "X7436800A" ), "NIE valid" );
+	assert.ok( method( "X00002153Z" ), "NIE valid" );
+	assert.ok( method( "X02323232W" ), "NIE valid" );
+	assert.ok( method( "Z0569549M" ), "NIE valid" );
+	assert.ok( method( "X0479906B" ), "NIE valid" );
 	assert.ok( method( "y7875935j" ), "NIE valid: lower case" );
-	assert.ok( !method( "X0093999 K" ), "NIE inválido: white space" );
-	assert.ok( !method( "X 0093999 K" ), "NIE inválido:  white space" );
-	assert.ok( !method( "11441059" ), "NIE inválido: no letter" );
-	assert.ok( !method( "11441059PR" ), "NIE inválido: two letters" );
-	assert.ok( !method( "11440059R" ), "NIE inválido: wrong number" );
-	assert.ok( !method( "11441059S" ), "NIE inválido: wrong letter" );
-	assert.ok( !method( "114410598R" ), "NIE inválido: > 8 digits" );
-	assert.ok( !method( "11441059-R" ), "NIE inválido: dash" );
-	assert.ok( !method( "asdasdasd" ), "NIE inválido: all letters" );
-	assert.ok( !method( "11.144.059R" ), "NIE inválido: two dots" );
-	assert.ok( !method( "05.122.654R" ), "NIE inválido: starts with 0 and dots" );
-	assert.ok( !method( "5.122.654-R" ), "NIE inválido: dots and dash" );
-	assert.ok( !method( "05.122.654-R" ), "NIE inválido: starts with zero and dot and dash" );
+
+	assert.ok( !method( "X0093999 K" ), "NIE invalid: white space" );
+	assert.ok( !method( "X 0093999 K" ), "NIE invalid:  white space" );
+	assert.ok( !method( "11441059" ), "NIE invalid: no letter" );
+	assert.ok( !method( "11441059PR" ), "NIE invalid: two letters" );
+	assert.ok( !method( "11440059R" ), "NIE invalid: wrong number" );
+	assert.ok( !method( "11441059S" ), "NIE invalid: wrong letter" );
+	assert.ok( !method( "114410598R" ), "NIE invalid: > 8 digits" );
+	assert.ok( !method( "11441059-R" ), "NIE invalid: dash" );
+	assert.ok( !method( "asdasdasd" ), "NIE invalid: all letters" );
+	assert.ok( !method( "11.144.059R" ), "NIE invalid: two dots" );
+	assert.ok( !method( "05.122.654R" ), "NIE invalid: starts with 0 and dots" );
+	assert.ok( !method( "5.122.654-R" ), "NIE invalid: dots and dash" );
+	assert.ok( !method( "05.122.654-R" ), "NIE invalid: starts with zero and dot and dash" );
 } );
 
 QUnit.test( "cifES", function( assert ) {
 	var method = methodTest( "cifES" );
+	assert.ok( method( "A58818501" ), "CIF valid" );
 	assert.ok( method( "A79082244" ), "CIF valid" );
 	assert.ok( method( "A60917978" ), "CIF valid" );
 	assert.ok( method( "A39000013" ), "CIF valid" );
+	assert.ok( method( "A28315182" ), "CIF valid" );
+	assert.ok( method( "A75409573" ), "CIF valid" );
+	assert.ok( method( "A34396994" ), "CIF valid" );
+	assert.ok( method( "A08153538" ), "CIF valid" );
+	assert.ok( method( "A09681396" ), "CIF valid" );
+	assert.ok( method( "A06706303" ), "CIF valid" );
+	assert.ok( method( "A66242173" ), "CIF valid" );
+	assert.ok( method( "A61416699" ), "CIF valid" );
+	assert.ok( method( "A99545444" ), "CIF valid" );
+	assert.ok( method( "A10407252" ), "CIF valid" );
+	assert.ok( method( "A76170885" ), "CIF valid" );
+	assert.ok( method( "A83535047" ), "CIF valid" );
+	assert.ok( method( "A46031969" ), "CIF valid" );
+	assert.ok( method( "A97252910" ), "CIF valid" );
+	assert.ok( method( "A79082244" ), "CIF valid" );
+	assert.ok( !method( "A7908224D" ), "CIF invalid: digit control must be a number (4)" );
+
+	assert.ok( method( "B71413892" ), "CIF valid" );
+	assert.ok( method( "B37484755" ), "CIF valid" );
+	assert.ok( method( "B15940893" ), "CIF valid" );
+	assert.ok( method( "B55429161" ), "CIF valid" );
+	assert.ok( method( "B93337087" ), "CIF valid" );
 	assert.ok( method( "B43522192" ), "CIF valid" );
 	assert.ok( method( "B38624334" ), "CIF valid" );
-	assert.ok( method( "G72102064" ), "CIF valid" );
-	assert.ok( method( "F41190612" ), "CIF valid" );
-	assert.ok( method( "J85081081" ), "CIF valid" );
-	assert.ok( method( "S98038813" ), "CIF valid" );
-	assert.ok( method( "G32937757" ), "CIF valid" );
+	assert.ok( method( "B21920426" ), "CIF valid" );
+	assert.ok( method( "B74940156" ), "CIF valid" );
 	assert.ok( method( "B46125746" ), "CIF valid" );
-	assert.ok( method( "C27827559" ), "CIF valid" );
+	assert.ok( method( "B67077537" ), "CIF valid" );
+	assert.ok( method( "B21283155" ), "CIF valid" );
+	assert.ok( method( "B57104176" ), "CIF valid" );
+	assert.ok( method( "B25060179" ), "CIF valid" );
+	assert.ok( method( "B06536338" ), "CIF valid" );
+	assert.ok( method( "B50964592" ), "CIF valid" );
+	assert.ok( method( "B15653330" ), "CIF valid" );
+	assert.ok( method( "B83524710" ), "CIF valid" );
+	assert.ok( !method( "B8352471J" ), "CIF invalid: digit control must be a number (0)" );
+
+	assert.ok( !method( "C27827551" ), "CIF invalid: wrong digit control" );
+	assert.ok( !method( "C27827552" ), "CIF invalid: wrong digit control" );
+	assert.ok( !method( "C27827553" ), "CIF invalid: wrong digit control" );
+	assert.ok( !method( "C27827554" ), "CIF invalid: wrong digit control" );
+	assert.ok( !method( "C27827555" ), "CIF invalid: wrong digit control" );
+	assert.ok( !method( "C27827556" ), "CIF invalid: wrong digit control" );
+	assert.ok( !method( "C27827557" ), "CIF invalid: wrong digit control" );
+	assert.ok( !method( "C27827558" ), "CIF invalid: wrong digit control" );
+	assert.ok( !method( "C27827550" ), "CIF invalid: wrong digit control" );
+	assert.ok( !method( "C2782755A" ), "CIF invalid: wrong digit control" );
+	assert.ok( !method( "C2782755B" ), "CIF invalid: wrong digit control" );
+	assert.ok( !method( "C2782755C" ), "CIF invalid: wrong digit control" );
+	assert.ok( !method( "C2782755D" ), "CIF invalid: wrong digit control" );
+	assert.ok( !method( "C2782755E" ), "CIF invalid: wrong digit control" );
+	assert.ok( !method( "C2782755F" ), "CIF invalid: wrong digit control" );
+	assert.ok( !method( "C2782755G" ), "CIF invalid: wrong digit control" );
+	assert.ok( !method( "C2782755H" ), "CIF invalid: wrong digit control" );
+	assert.ok( !method( "C2782755J" ), "CIF invalid: wrong digit control" );
+	assert.ok( method( "C2782755I" ), "CIF valid. Digit control can be either a number or letter" );
+	assert.ok( method( "C27827559" ), "CIF valid. Digit control can be either a number or letter" );
+
 	assert.ok( method( "E48911572" ), "CIF valid" );
+	assert.ok( method( "E93928703" ), "CIF valid" );
+	assert.ok( method( "E17472952" ), "CIF valid" );
+	assert.ok( !method( "E1747295B" ), "CIF invalid: digit control must be a number (2)" );
+
+	assert.ok( method( "F41190612" ), "CIF valid" );
+	assert.ok( method( "F4119061B" ), "CIF valid. Digit control can be either a number or letter" );
+
+	assert.ok( method( "G72102064" ), "CIF valid" );
+	assert.ok( method( "G32937757" ), "CIF valid" );
+	assert.ok( method( "G8984953C" ), "CIF valid" );
+	assert.ok( method( "G3370454E" ), "CIF valid" );
+	assert.ok( method( "G33704545" ), "CIF valid. Digit control can be either a number or letter" );
+
+	assert.ok( method( "H48911572" ), "CIF valid" );
+	assert.ok( method( "H93928703" ), "CIF valid" );
+	assert.ok( method( "H17472952" ), "CIF valid" );
+	assert.ok( !method( "H1747295B" ), "CIF invalid: digit control must be a number (2)" );
+
+	assert.ok( !method( "I48911572" ), "CIF invalid: starts with I" );
+
+	assert.ok( method( "J85081081" ), "CIF valid" );
+	assert.ok( method( "J8508108A" ), "CIF valid" );
+
+	assert.ok( method( "K3902238I" ), "CIF valid" );
+	assert.ok( !method( "K39022389" ), "CIF invalid. Digit control must be a letter (I)" );
+
+	assert.ok( method( "M9916080F" ), "CIF valid" );
+	assert.ok( method( "M1566151E" ), "CIF valid" );
+	assert.ok( method( "M15661515" ), "CIF valid" );
+	assert.ok( method( "M4778730D" ), "CIF valid" );
+
+	assert.ok( method( "N1172218H" ), "CIF valid" );
+	assert.ok( method( "N4094938J" ), "CIF valid" );
+	assert.ok( method( "N40949380" ), "CIF valid. Digit control can be either a number or letter" );
+
+	assert.ok( method( "P5141387J" ), "CIF valid" );
+	assert.ok( method( "P9803881C" ), "CIF valid" );
+	assert.ok( !method( "P98038813" ), "CIF invalid: digit control must be a letter (C)" );
+
+	assert.ok( method( "Q5141387J" ), "CIF valid" );
+	assert.ok( method( "Q9803881C" ), "CIF valid" );
+	assert.ok( !method( "Q98038813" ), "CIF invalid: digit control must be a letter (C)" );
+
+	assert.ok( method( "S5141387J" ), "CIF valid" );
+	assert.ok( method( "S9803881C" ), "CIF valid" );
+	assert.ok( !method( "S98038813" ), "CIF invalid: digit control must be a letter (C)" );
 	assert.ok( method( "s98038813" ), "CIF valid: lower case" );
-	assert.ok( !method( "K48911572" ), "CIF invalid: starts with K" );
-	assert.ok( !method( "L48911572" ), "CIF invalid: starts with L" );
-	assert.ok( !method( "M48911572" ), "CIF invalid: starts with M" );
+
 	assert.ok( !method( "X48911572" ), "CIF invalid: starts with X" );
 	assert.ok( !method( "Y48911572" ), "CIF invalid: starts with Y" );
 	assert.ok( !method( "Z48911572" ), "CIF invalid: starts with Z" );
-	assert.ok( !method( "M15661515" ), "CIF invalid" );
 	assert.ok( !method( "Z98038813" ), "CIF invalid: wrong letter" );
 	assert.ok( !method( "B 43522192" ), "CIF invalid: white spaces" );
 	assert.ok( !method( "43522192" ), "CIF invalid: missing letter" );
