@@ -34,9 +34,6 @@
 		"dist/jquery.validate.min.js"
 	],
 	"main": "dist/jquery.validate.js",
-	"dependencies": {
-		"jquery": "^1.7 || ^2.0"
-	},
 	"devDependencies": {
 		"commitplease": "2.3.1",
 		"grunt": "1.0.1",
@@ -49,7 +46,8 @@
 		"grunt-contrib-watch": "1.0.0",
 		"grunt-jscs": "2.8.0",
 		"grunt-text-replace": "0.4.0",
-		"qunitjs": "2.0.0"
+		"qunitjs": "2.0.0",
+		"jquery": "^1.7 || ^2.0"
 	},
 	"keywords": [
 		"jquery",
