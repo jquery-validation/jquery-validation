@@ -76,7 +76,7 @@ grunt.initConfig( {
 				"<%= grunt.template.today('m/d/yyyy') %>\n" +
 				" * <%= pkg.homepage %>\n" +
 				" * Copyright (c) <%= grunt.template.today('yyyy') %> <%= pkg.author.name %>;" +
-				" Licensed <%= _.pluck(pkg.licenses, 'type').join(', ') %> */\n"
+				" Licensed <%= _.map(pkg.licenses, 'type').join(', ') %> */\n"
 		},
 		dist: {
 			files: {
