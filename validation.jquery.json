@@ -24,5 +24,6 @@
 	"download": "https://github.com/jzaefferer/jquery-validation/releases",
 	"dependencies": {
 		"jquery": ">=1.4.4"
-	}
+	},
+	"version": "1.16.0"
 }
