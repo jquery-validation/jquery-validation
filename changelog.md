@@ -1,3 +1,32 @@
+1.16.0 / 2016-12-01
+==================
+
+## Additional
+  * Refine cifES and nieES algorithms. Closes #1826
+
+## Build
+  * Include Minified Version in NPM Package
+  * Bump dev-dependencies to latest versions
+
+## Core
+  * Add binding for input with button type. Closes #1891
+  * Support jquery3. Closes #1866
+  * Change jQuery alias 'expr[":"]' to 'expr.pseudos'
+
+## Localisation
+  * Add Urdu translation. Closes #1873.
+
+## Localization
+  * Fixed wrong file-extension for az translation. Closes #1890.
+  * Added missing translation in pt-BR (Closes #1897)
+  * Fixed typo in arabien language file.
+
+## Tests
+  * Upgrade QUnit to 2.0.
+
+## UMD
+  * Better support for CommonJS.
+
 1.15.1 / 2016-07-22
 ==================
 
@@ -24,7 +53,7 @@
 
 ## Tests
   * Added regression unit tests for PR #1760
-  
+
 1.15.0 / 2016-02-24
 ==================
 
@@ -73,7 +102,7 @@
   * Update Malay translation
   * Included messages from additional methods
   * Improving pt_BR translation and fixing a typo on the 'cifES' key.
-  
+
 1.14.0 / 2015-06-30
 ==================
 
