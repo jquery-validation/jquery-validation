@@ -1,6 +1,6 @@
 /*
  * Translated default messages for the jQuery validation plugin.
- * Locale: SN (Sindhi; سنڌي)
+ * Locale: SD (Sindhi; سنڌي)
  */
 $.extend( $.validator.messages, {
     required: "هنن جاين جي ضرورت آهي",
