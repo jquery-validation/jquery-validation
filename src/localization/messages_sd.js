@@ -20,4 +20,4 @@ $.extend( $.validator.messages, {
     range: $.validator.format( "داخلا جو {0} ۽ {1}جي وچ ۾ هجڻ ضروري آهي" ),
     max: $.validator.format( "وڌ کان وڌ {0} جي داخلا ڪري سگهجي ٿي" ),
     min: $.validator.format( "گهٽ ۾ گهٽ {0} جي داخلا ڪرڻ ضروري آهي" )
-} ); 
+} );
