@@ -29,7 +29,7 @@ $.extend( $.fn, {
 				function getSubmitButton( element ) {
 					var $element = $( element );
 					if ( $element.is( "button, input" ) ) {
-						return $element;
+						return element;
 					}
 
 					// In case the submit button has descendants, the target might be a descendant.
