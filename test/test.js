@@ -412,7 +412,7 @@ QUnit.test( "submitHandler keeps submitting button, even if descendants are clic
 	} );
 	$( "#testForm27 [name=\"year\"]" ).val( "2016" );
 	button = $( "#testForm27 :submit" )[ 0 ];
-	buttonDescendant = $(button).find( "span" );
+	buttonDescendant = $( button ).find( "span" );
 	event = $.Event( "click" );
 	event.preventDefault();
 	$.event.trigger( event, null, buttonDescendant );
