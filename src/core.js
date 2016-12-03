@@ -26,8 +26,21 @@ $.extend( $.fn, {
 		if ( validator.settings.onsubmit ) {
 
 			this.on( "click.validate", ":submit", function( event ) {
+				function getSubmitButton( element ) {
+					var $element = $( element );
+					if ( $element.is( "button, input" ) ) {
+						return $element;
+					}
+					// In case the submit button has descendants, the target might be a descendant.
+					// Return the actual button instead, or undefined if none is found.
+					var buttonRoots = $element.parents( "button" );
+					if ( buttonRoots.length ) {
+						return buttonRoots[ 0 ];
+					}
+				}
+
 				if ( validator.settings.submitHandler ) {
-					validator.submitButton = event.target;
+					validator.submitButton = getSubmitButton( event.target );
 				}
 
 				// Allow suppressing validation by adding a cancel class to the submit button
