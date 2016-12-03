@@ -408,14 +408,13 @@ QUnit.test( "submitHandler keeps submitting button, even if descendants are clic
 			var hidden = $( form ).find( "input:hidden" )[ 0 ];
 			assert.deepEqual( hidden.value, button.value );
 			assert.deepEqual( hidden.name, button.name );
+			
+			return false;
 		}
 	} );
 	$( "#testForm27 [name=\"year\"]" ).val( "2016" );
 	button = $( "#testForm27 :submit" )[ 0 ];
-	buttonDescendant = $( button ).find( "span" );
-	event = $.Event( "click" );
-	event.preventDefault();
-	$.event.trigger( event, null, buttonDescendant );
+	$( button ).find( "span" ).click();
 } );
 
 QUnit.test( "validation triggered on radio/checkbox when using keyboard", function( assert ) {
