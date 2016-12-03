@@ -416,7 +416,6 @@ QUnit.test( "submitHandler keeps submitting button, even if descendants are clic
 	event = $.Event( "click" );
 	event.preventDefault();
 	$.event.trigger( event, null, buttonDescendant );
-	$( "#testForm27" ).submit();
 } );
 
 QUnit.test( "validation triggered on radio/checkbox when using keyboard", function( assert ) {
