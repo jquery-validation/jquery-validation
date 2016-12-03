@@ -31,6 +31,7 @@ $.extend( $.fn, {
 					if ( $element.is( "button, input" ) ) {
 						return $element;
 					}
+
 					// In case the submit button has descendants, the target might be a descendant.
 					// Return the actual button instead, or undefined if none is found.
 					var buttonRoots = $element.parents( "button" );
