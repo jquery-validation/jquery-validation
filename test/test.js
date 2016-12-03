@@ -398,7 +398,7 @@ QUnit.test( "submitHandler keeps submitting button", function( assert ) {
 } );
 
 QUnit.test( "submitHandler keeps submitting button, even if descendants are clicked", function( assert ) {
-	var button, event, buttonDescendant;
+	var button;
 
 	$( "#testForm27" ).validate( {
 		debug: true,
