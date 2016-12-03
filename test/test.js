@@ -397,6 +397,28 @@ QUnit.test( "submitHandler keeps submitting button", function( assert ) {
 	$( "#userForm" ).submit();
 } );
 
+QUnit.test( "submitHandler keeps submitting button, even if descendants are clicked", function( assert ) {
+	var button, event, buttonDescendant;
+
+	$( "#testForm27" ).validate( {
+		debug: true,
+		submitHandler: function( form ) {
+
+			// Dunno how to test this better; this tests the implementation that uses a hidden input
+			var hidden = $( form ).find( "input:hidden" )[ 0 ];
+			assert.deepEqual( hidden.value, button.value );
+			assert.deepEqual( hidden.name, button.name );
+		}
+	} );
+	$( "#testForm27 [name=\"year\"]" ).val( "2016" );
+	button = $( "#testForm27 :submit" )[ 0 ];
+	buttonDescendant = $(button).find("span");
+	event = $.Event( "click" );
+	event.preventDefault();
+	$.event.trigger( event, null, buttonDescendant );
+	$( "#testForm27" ).submit();
+} );
+
 QUnit.test( "validation triggered on radio/checkbox when using keyboard", function( assert ) {
     assert.expect( 1 );
 	var input, i, events, triggeredEvents = 0,
