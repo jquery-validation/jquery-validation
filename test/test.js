@@ -408,7 +408,7 @@ QUnit.test( "submitHandler keeps submitting button, even if descendants are clic
 			var hidden = $( form ).find( "input:hidden" )[ 0 ];
 			assert.deepEqual( hidden.value, button.value );
 			assert.deepEqual( hidden.name, button.name );
-			
+
 			return false;
 		}
 	} );
