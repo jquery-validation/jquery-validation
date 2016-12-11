@@ -308,7 +308,7 @@ QUnit.test( "rules(), rangelength attribute as array", function( assert ) {
 	} );
 } );
 
-QUnit.test( "rules(), normalizer", function( assert ) {
+QUnit.test( "rules(), global/local normalizer", function( assert ) {
 	var username = $( "#usernamec" ),
 		urlc = $( "#urlc" ),
 		lastname = $( "#lastnamec" ),
@@ -318,18 +318,21 @@ QUnit.test( "rules(), normalizer", function( assert ) {
 	urlc.val( "" );
 
 	v = $( "#testForm1clean" ).validate( {
+
+		// Using the normalizer to trim the value of all elements before validating them.
+		normalizer: function( value ) {
+
+			// This normalizer should only be called for the username element, and nothing else.
+			assert.notEqual( this, urlc[ 0 ], "This normalizer should not be called for urlc element." );
+			assert.equal( this, username[ 0 ], "`this` in this normalizer should be the username element." );
+
+			// Trim the value of the input
+			return $.trim( value );
+		},
+
 		rules: {
 			username: {
-				required: true,
-
-				// Using the normalizer to trim the value of the element
-				// before validating it.
-				normalizer: function( value ) {
-					assert.equal( this, username[ 0 ], "`this` in the normalizer should be the username element." );
-
-					// Trim the value of the input
-					return $.trim( value );
-				}
+				required: true
 			},
 			urlc: {
 				required: true,
@@ -357,13 +360,10 @@ QUnit.test( "rules(), normalizer", function( assert ) {
 			},
 			lastname: {
 				required: true,
-
-				// Using the normalizer to trim the value of the element
-				// before validating it.
 				normalizer: function( value ) {
 					assert.equal( this, lastname[ 0 ], "`this` in the normalizer should be the lastname element." );
 
-					// Return null in order to make sure a exception is thrown
+					// Return null in order to make sure an exception is thrown
 					// when normalizer returns a non string value.
 					value = null;
 
