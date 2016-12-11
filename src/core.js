@@ -717,21 +717,27 @@ $.extend( $.validator, {
 				} ).length,
 				dependencyMismatch = false,
 				val = this.elementValue( element ),
-				result, method, rule;
+				result, method, rule, normalizer;
 
-			// If a normalizer is defined for this element, then
-			// call it to retreive the changed value instead
+			// Prioritize the local normalizer defined for this element over the global one
+			// if the former exists, otherwise user the global one in case it exists.
+			if ( typeof rules.normalizer === "function" ) {
+				normalizer = rules.normalizer;
+			} else if (	typeof this.settings.normalizer === "function" ) {
+				normalizer = this.settings.normalizer;
+			}
+
+			// If normalizer is defined, then call it to retreive the changed value instead
 			// of using the real one.
 			// Note that `this` in the normalizer is `element`.
-			if ( typeof rules.normalizer === "function" ) {
-				val = rules.normalizer.call( element, val );
+			if ( normalizer ) {
+				val = normalizer.call( element, val );
 
 				if ( typeof val !== "string" ) {
 					throw new TypeError( "The normalizer should return a string value." );
 				}
 
-				// Delete the normalizer from rules to avoid treating
-				// it as a pre-defined method.
+				// Delete the normalizer from rules to avoid treating it as a pre-defined method.
 				delete rules.normalizer;
 			}
 
