@@ -614,7 +614,7 @@ $.extend( $.validator, {
 					console.error( "%o has no name assigned", this );
 				}
 
-				// reset name property, because contenteditables do not per se have that named property
+				// Reset name property, because contenteditables do not per se have that named property
 				this.name = name;
 
 				// Set form expando on contenteditable
