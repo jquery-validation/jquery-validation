@@ -614,6 +614,9 @@ $.extend( $.validator, {
 					console.error( "%o has no name assigned", this );
 				}
 
+				// reset name property, because contenteditables do not per se have that named property
+				this.name = name;
+
 				// Set form expando on contenteditable
 				if ( this.hasAttribute( "contenteditable" ) ) {
 					this.form = $( this ).closest( "form" )[ 0 ];
