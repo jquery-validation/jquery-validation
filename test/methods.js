@@ -1316,6 +1316,7 @@ QUnit.test( "nifES", function( assert ) {
 	assert.ok( method( "15762034L" ), "NIF valid" );
 	assert.ok( method( "05122654W" ), "NIF valid" );
 	assert.ok( method( "05122654w" ), "NIF valid: lower case" );
+	assert.ok( method( "M1503708Z" ), "NIF valid. Temporary foreign nif" );
 	assert.ok( !method( "1144105R" ), "NIF invalid: less than 8 digits without zero" );
 	assert.ok( !method( "11441059 R" ), "NIF invalid: white space" );
 	assert.ok( !method( "11441059" ), "NIF invalid: no letter" );
