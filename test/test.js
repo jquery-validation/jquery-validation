@@ -417,6 +417,30 @@ QUnit.test( "submitHandler keeps submitting button, even if descendants are clic
 	$( button ).find( "span" ).click();
 } );
 
+QUnit.test( "submitHandler keeps submitting button", function( assert ) {
+	var button = $( "#testForm27 :submit" )[ 0 ];
+	var v = $( "#testForm27" ).validate( {
+		debug: true,
+		submitHandler: function( form ) {
+
+			// Compare the button with the `submitButton` property
+			assert.deepEqual(
+				v.submitButton, button, "The submitButton property should be the same as button"
+			);
+
+			var hidden = $( form ).find( "input:hidden" )[ 0 ];
+			assert.deepEqual( hidden.value, button.value );
+			assert.deepEqual( hidden.name, button.name );
+
+			return false;
+		}
+	} );
+
+	$( "#testForm27 [name=\"year\"]" ).val( "2016" );
+
+	$( button ).find( "span" ).click();
+} );
+
 QUnit.test( "validation triggered on radio/checkbox when using keyboard", function( assert ) {
     assert.expect( 1 );
 	var input, i, events, triggeredEvents = 0,
