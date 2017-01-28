@@ -27,7 +27,7 @@ $.extend( $.fn, {
 
 			this.on( "click.validate", ":submit", function( event ) {
 				if ( validator.settings.submitHandler ) {
-					validator.submitButton = event.target;
+					validator.submitButton = event.currentTarget;
 				}
 
 				// Allow suppressing validation by adding a cancel class to the submit button
