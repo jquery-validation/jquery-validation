@@ -18,5 +18,6 @@ $.extend( $.validator.messages, {
 	min: $.validator.format( "Nem lehet kisebb, mint {0}." ),
 	creditcard: "Érvényes hitelkártyaszámnak kell lennie.",
 	remote: "Kérem javítsa ki ezt a mezőt.",
-	dateISO: "Kérem írjon be egy érvényes dátumot (ISO)."
+	dateISO: "Kérem írjon be egy érvényes dátumot (ISO).",
+	step: $.validator.format( "A {0} egyik többszörösét adja meg." )
 } );
