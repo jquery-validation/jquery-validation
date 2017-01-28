@@ -20,6 +20,7 @@ $.extend( $.validator.messages, {
 	range: $.validator.format( "Veuillez fournir une valeur entre {0} et {1}." ),
 	max: $.validator.format( "Veuillez fournir une valeur inférieure ou égale à {0}." ),
 	min: $.validator.format( "Veuillez fournir une valeur supérieure ou égale à {0}." ),
+	step: $.validator.format( "Veuillez fournir une valeur multiple de {0}." ),
 	maxWords: $.validator.format( "Veuillez fournir au plus {0} mots." ),
 	minWords: $.validator.format( "Veuillez fournir au moins {0} mots." ),
 	rangeWords: $.validator.format( "Veuillez fournir entre {0} et {1} mots." ),
