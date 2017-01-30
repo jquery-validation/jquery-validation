@@ -1,9 +1,9 @@
 [jQuery Validation Plugin](http://jqueryvalidation.org/) - Form validation made easy
 ================================
 
-[![Build Status](https://secure.travis-ci.org/jzaefferer/jquery-validation.svg)](http://travis-ci.org/jzaefferer/jquery-validation)
-[![devDependency Status](https://david-dm.org/jzaefferer/jquery-validation/dev-status.svg?theme=shields.io)](https://david-dm.org/jzaefferer/jquery-validation#info=devDependencies)
-[![Join the chat at https://gitter.im/jzaefferer/jquery-validation](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/jzaefferer/jquery-validation)
+[![Build Status](https://secure.travis-ci.org/jquery-validation/jquery-validation.svg)](http://travis-ci.org/jquery-validation/jquery-validation)
+[![devDependency Status](https://david-dm.org/jquery-validation/jquery-validation/dev-status.svg?theme=shields.io)](https://david-dm.org/jquery-validation/jquery-validation#info=devDependencies)
+[![Join the chat at https://gitter.im/jquery-validation/jquery-validation](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/jquery-validation/jquery-validation)
 
 The jQuery Validation Plugin provides drop-in validation for your existing forms, while making all kinds of customizations to fit your application really easy.
 
@@ -17,7 +17,7 @@ Prebuilt files can be downloaded from http://jqueryvalidation.org/
 
 The unreleased development files can be obtained by:
 
- 1. [Downloading](https://github.com/jzaefferer/jquery-validation/archive/master.zip) or Forking this repository
+ 1. [Downloading](https://github.com/jquery-validation/jquery-validation/archive/master.zip) or Forking this repository
  2. [Setup the build](CONTRIBUTING.md#build-setup)
  3. Run `grunt` to create the built files in the "dist" directory
 
