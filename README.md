@@ -3,7 +3,6 @@
 
 [![Build Status](https://secure.travis-ci.org/jquery-validation/jquery-validation.svg)](http://travis-ci.org/jquery-validation/jquery-validation)
 [![devDependency Status](https://david-dm.org/jquery-validation/jquery-validation/dev-status.svg?theme=shields.io)](https://david-dm.org/jquery-validation/jquery-validation#info=devDependencies)
-[![Join the chat at https://gitter.im/jquery-validation/jquery-validation](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/jquery-validation/jquery-validation)
 
 The jQuery Validation Plugin provides drop-in validation for your existing forms, while making all kinds of customizations to fit your application really easy.
 
