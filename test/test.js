@@ -313,6 +313,31 @@ QUnit.test( "check(): simple", function( assert ) {
 	assert.ok( v.size() === 0, "No more errors" );
 } );
 
+QUnit.test( "numberOfInvalids(): count invalid fields with empty message", function( assert ) {
+	assert.expect( 2 );
+
+	var v = $( "#testForm23" ).validate( {
+		rules: {
+			box1: {
+				required: true
+			},
+			box2: {
+				required: true
+			}
+		}
+	} );
+
+	var requiredMsg = $.validator.messages.required;
+	$.validator.messages.required = "";
+
+	v.form();
+
+	assert.equal( v.errorList.length, 2, "The form has two errors" );
+	assert.equal( v.numberOfInvalids(), 2, "The form has two errors" );
+
+	$.validator.messages.required = requiredMsg;
+} );
+
 QUnit.test( "hide(): input", function( assert ) {
 	assert.expect( 3 );
 	var errorLabel = $( "#errorFirstname" ),
@@ -2380,4 +2405,3 @@ QUnit.test( "addMethod, reusing remote in custom method", function( assert ) {
 	e.val( "john.doe@gmail.com" );
 	assert.strictEqual( v.element( e ), true, "still invalid, because remote validation must block until it returns; dependency-mismatch considered as valid though" );
 } );
-
