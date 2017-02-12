@@ -121,7 +121,16 @@ $.extend( $.fn, {
 			settings, staticRules, existingRules, data, param, filtered;
 
 		// If nothing is selected, return empty object; can't chain anyway
-		if ( element == null || element.form == null ) {
+		if ( element == null ) {
+			return;
+		}
+
+		if ( !element.form && element.hasAttribute( "contenteditable" ) ) {
+			element.form = this.closest( "form" )[ 0 ];
+			element.name = this.attr( "name" );
+		}
+
+		if ( element.form == null ) {
 			return;
 		}
 
@@ -384,6 +393,7 @@ $.extend( $.validator, {
 				// Set form expando on contenteditable
 				if ( !this.form && this.hasAttribute( "contenteditable" ) ) {
 					this.form = $( this ).closest( "form" )[ 0 ];
+					this.name = $( this ).attr( "name" );
 				}
 
 				var validator = $.data( this.form, "validator" ),
@@ -620,6 +630,7 @@ $.extend( $.validator, {
 				// Set form expando on contenteditable
 				if ( this.hasAttribute( "contenteditable" ) ) {
 					this.form = $( this ).closest( "form" )[ 0 ];
+					this.name = name;
 				}
 
 				// Select only the first element for each name, and only those with rules specified

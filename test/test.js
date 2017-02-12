@@ -1262,6 +1262,58 @@ QUnit.test( "works on contenteditable fields on input event", function( assert )
 	assert.noErrorFor( $( "#contenteditableRequiredValid" ) );
 } );
 
+QUnit.test( "Assign rules to contenteditable via .validate() method", function( assert ) {
+	assert.expect( 2 );
+	var form = $( "#_contenteditableForm" );
+	var v = form.validate( {
+		rules: {
+			first_name: {
+				required: true
+			},
+			something: {
+				required: true
+			}
+		}
+	} );
+	var firstNameRules = $( "#first_name", form ).rules();
+	var expectedRules = { required: true };
+
+	assert.deepEqual(
+		firstNameRules, expectedRules, "The rules should be the same"
+	);
+
+	v.form();
+
+	assert.equal( v.numberOfInvalids(), 2, "The form has two errors" );
+} );
+
+QUnit.test( "Assign rules to contenteditable via .rules() method", function( assert ) {
+	assert.expect( 2 );
+	var form = $( "#_contenteditableForm" );
+	var v = form.validate( {
+		rules: {
+			something: {
+				required: true
+			}
+		}
+	} );
+
+	$( "#first_name", form ).rules( "add", {
+		required: true
+	} );
+
+	var firstNameRules = $( "#first_name", form ).rules();
+	var expectedRules = { required: true };
+
+	assert.deepEqual(
+		firstNameRules, expectedRules, "The rules should be the same"
+	);
+
+	v.form();
+
+	assert.equal( v.numberOfInvalids(), 2, "The form has two errors" );
+} );
+
 QUnit.module( "misc" );
 
 QUnit.test( "success option", function( assert ) {
