@@ -659,6 +659,7 @@ $.extend( $.validator, {
 			this.errorMap = {};
 			this.toShow = $( [] );
 			this.toHide = $( [] );
+			this.raisedErrors = {};
 		},
 
 		reset: function() {
