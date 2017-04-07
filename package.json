@@ -12,10 +12,10 @@
 	},
 	"repository": {
 		"type": "git",
-		"url": "git://github.com/jzaefferer/jquery-validation.git"
+		"url": "git://github.com/jquery-validation/jquery-validation.git"
 	},
 	"bugs": {
-		"url": "https://github.com/jzaefferer/jquery-validation/issues"
+		"url": "https://github.com/jquery-validation/jquery-validation/issues"
 	},
 	"licenses": [
 		{

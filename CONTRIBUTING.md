@@ -7,8 +7,8 @@
 3. Indicate what browsers the issue can be reproduced in. **Note: IE Compatibilty mode issues will not be addressed. Make sure you test in a real browser!**
 4. What version of the plug-in is the issue reproducible in. Is it reproducible after updating to the latest version.
 
-Documentation issues are also tracked at the [jQuery Validation](https://github.com/jzaefferer/jquery-validation/issues) issue tracker.
-Pull Requests to improve the docs are welcome at the [jQuery Validation docs](https://github.com/jzaefferer/validation-content) repository, though.
+Documentation issues are also tracked at the [jQuery Validation](https://github.com/jquery-validation/jquery-validation/issues) issue tracker.
+Pull Requests to improve the docs are welcome at the [jQuery Validation docs](https://github.com/jquery-validation/validation-content) repository, though.
 
 **IMPORTANT NOTE ABOUT EMAIL VALIDATION**. As of version 1.12.0 this plugin is using the same regular expression that the [HTML5 specification suggests for browsers to use](https://html.spec.whatwg.org/multipage/forms.html#valid-e-mail-address). We will follow their lead and use the same check. If you think the specification is wrong, please report the issue to them. If you have different requirements, consider [using a custom method](http://jqueryvalidation.org/jQuery.validator.addMethod/).
 In case you need to adjust the built-in validation regular expression patterns, please [follow the documentation](http://jqueryvalidation.org/jQuery.validator.methods/).
@@ -46,8 +46,8 @@ Start with one browser while developing the fix, then run against others before 
 
 ## Documentation
 
-Please report documentation issues at the [jQuery Validation](https://github.com/jzaefferer/jquery-validation/issues) issue tracker.
-In case your pull request implements or changes public API it would be a plus you would provide a pull request against the [jQuery Validation docs](https://github.com/jzaefferer/validation-content) repository.
+Please report documentation issues at the [jQuery Validation](https://github.com/jquery-validation/jquery-validation/issues) issue tracker.
+In case your pull request implements or changes public API it would be a plus you would provide a pull request against the [jQuery Validation docs](https://github.com/jquery-validation/validation-content) repository.
 
 ## Linting
 

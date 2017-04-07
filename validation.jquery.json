@@ -18,10 +18,10 @@
 			"url": "http://www.opensource.org/licenses/MIT"
 		}
 	],
-	"bugs": "https://github.com/jzaefferer/jquery-validation/issues",
-	"homepage": "https://github.com/jzaefferer/jquery-validation",
+	"bugs": "https://github.com/jquery-validation/jquery-validation/issues",
+	"homepage": "https://github.com/jquery-validation/jquery-validation",
 	"docs": "http://jqueryvalidation.org/documentation/",
-	"download": "https://github.com/jzaefferer/jquery-validation/releases",
+	"download": "https://github.com/jquery-validation/jquery-validation/releases",
 	"dependencies": {
 		"jquery": ">=1.4.4"
 	}
