@@ -190,6 +190,13 @@ $.extend( $.fn, {
 			data = $.extend( data, { remote: param } );
 		}
 
+		// make sure remote is at back
+		if ( data.remote ) {
+			var param = data.remote;
+			delete data.remote;
+			data = $.extend(data, {remote: param});
+		}
+
 		return data;
 	}
 } );
