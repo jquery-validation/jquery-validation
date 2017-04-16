@@ -1,0 +1,11 @@
+(function($){
+	//Validate any regular expresion. Can be string or regex.
+	$.validator.addMethod(
+		"regex",
+		function(value,element,regex){
+			if(typeof regex === 'string') regex=new RegExp(regex);
+			return this.optional(element) || ( (regex instanceof RegExp) && regex.test(value) );
+		},
+		"Please check your input."
+	);
+})(jQuery);
