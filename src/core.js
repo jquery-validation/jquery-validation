@@ -1508,8 +1508,10 @@ $.extend( $.validator, {
 				data: data,
 				context: validator.currentForm,
 				success: function( response ) {
-					var valid = response === true || response === "true",
-						errors, message, submitted;
+                    var valid = (typeof param.validateResponse === 'function' && param.validateResponse(element, response))
+                            || response === true
+                            || response === "true",
+                        errors, message, submitted;
 
 					validator.settings.messages[ element.name ][ method ] = previous.originalMessage;
 					if ( valid ) {
