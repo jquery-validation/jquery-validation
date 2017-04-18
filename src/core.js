@@ -264,6 +264,7 @@ $.extend( $.validator, {
 		onsubmit: true,
 		ignore: ":hidden",
 		ignoreTitle: false,
+    ignoreMsgDot: false,
 		onfocusin: function( element ) {
 			this.lastActive = element;
 
@@ -850,6 +851,10 @@ $.extend( $.validator, {
 			} else if ( theregex.test( message ) ) {
 				message = $.validator.format( message.replace( theregex, "{$1}" ), rule.parameters );
 			}
+
+      if ( this.settings.ignoreMsgDot ) {
+        message = message.slice( 0, -1 );
+      }
 
 			return message;
 		},

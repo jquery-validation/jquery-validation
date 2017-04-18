@@ -71,3 +71,15 @@ QUnit.test( "read messages from metadata, with meta option specified, but no met
 	} );
 	assert.ok( !form.valid(), "not valid" );
 } );
+
+QUnit.test( "ignore message dot sign in the end of sentence", function( assert ) {
+	var form = $( "#testForm2" );
+	form.validate( {
+    ignoreMsgDot: true,
+		rules: {
+			agree: "required"
+		}
+	} );
+  assert.ok( !form.valid() );
+  assert.equal( form.find( "#agree-error" ).text(), "This field is required" );
+} );
