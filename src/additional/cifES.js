@@ -98,12 +98,12 @@ $.validator.addMethod( "cifES", function( value ) {
 	// Control must be a digit
 	if ( letter.match( /[ABEH]/ ) ) {
 		return control === control_digit;
-		
+
 	// Control must be a letter
 	} else if ( letter.match( /[KPQS]/ ) ) {
 		return control === control_letter;
 	}
-	
+
 	// Can be either
 	return control === control_digit || control === control_letter;
 
