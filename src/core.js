@@ -372,6 +372,7 @@ $.extend( $.validator, {
 			this.pending = {};
 			this.invalid = {};
 			this.reset();
+			this.raisedErrors = {};
 
 			var groups = ( this.groups = {} ),
 				rules;
@@ -658,6 +659,7 @@ $.extend( $.validator, {
 			this.errorMap = {};
 			this.toShow = $( [] );
 			this.toHide = $( [] );
+			this.raisedErrors = {};
 		},
 
 		reset: function() {
@@ -856,15 +858,24 @@ $.extend( $.validator, {
 
 		formatAndAdd: function( element, rule ) {
 			var message = this.defaultMessage( element, rule );
+			var id = element.id;
+			var method = rule.method;
 
 			this.errorList.push( {
 				message: message,
 				element: element,
-				method: rule.method
+				method: method,
+				id: id
 			} );
-
+			
 			this.errorMap[ element.name ] = message;
 			this.submitted[ element.name ] = message;
+			
+			if(!this.raisedErrors.hasOwnProperty(id)){
+				this.raisedErrors[id] = {};
+			}
+			this.raisedErrors[id][method] = message;
+			
 		},
 
 		addWrapper: function( toToggle ) {
