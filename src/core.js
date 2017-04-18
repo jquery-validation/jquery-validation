@@ -1499,8 +1499,15 @@ $.extend( $.validator, {
 			previous.old = optionDataString;
 			validator = this;
 			this.startRequest( element );
-			data = {};
-			data[ element.name ] = value;
+
+			// Identify data callback
+			if ( typeof param.parseData === "function" ) {
+				data = param.parseData( element );
+			} else {
+				data = {};
+				data[ element.name ] = value;
+			}
+
 			$.ajax( $.extend( true, {
 				mode: "abort",
 				port: "validate" + element.name,
