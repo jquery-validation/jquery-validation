@@ -440,3 +440,36 @@ QUnit.test( "#1632: Error hidden, but input error class not removed", function( 
 	assert.equal( v.numberOfInvalids(), 0, "There is no error" );
 	assert.equal( box2.hasClass( "error" ), false, "Box2 should not have an error class" );
 } );
+
+test( "#1632: Error hidden, but input error class not removed", function() {
+	var v = $( "#testForm23" ).validate( {
+			rules: {
+				box1: {
+					required: {
+						depends: function() {
+							return !!$( "#box2" ).val();
+						}
+					}
+				},
+				box2: {
+					required: {
+						depends: function() {
+							return !!$( "#box1" ).val();
+						}
+					}
+				}
+			}
+		} ),
+		box1 = $( "#box1" ),
+		box2 = $( "#box2" );
+
+	box1.val( "something" );
+	v.form();
+	equal( v.numberOfInvalids(), 1, "There is only one invlid element" );
+	equal( v.invalidElements()[ 0 ], box2[ 0 ], "The box2 element should be invalid" );
+
+	box1.val( "" );
+	v.form();
+	equal( v.numberOfInvalids(), 0, "There is no error" );
+	equal( box2.hasClass( "error" ), false, "Box2 should not have an error class" );
+} );
