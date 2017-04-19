@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>jQuery validation plug-in - select2 error demo</title>
+	<link rel="stylesheet" href="css/screen.css">
+	<link href="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet" >
+	<script src="../lib/jquery.js"></script>
+	<script src="../src/core.js"></script>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
+	<script>
+
+	$(document).ready(function() {
+		$('#lists').select2().prop('selectedIndex', -1).trigger('change');
+		$('#commentForm').validate();
+		$('#btn_validate').click(function() {
+			if ($('#commentForm').valid()) {
+				alert('t');
+			}
+			else {
+				alert('f');
+			}
+		});
+	});
+	</script>
+	<style>
+	#commentForm {
+		width: 500px;
+	}
+	#commentForm label {
+		width: 250px;
+	}
+	#commentForm label.error, #commentForm input.submit {
+		margin-left: 253px;
+	}
+	</style>
+</head>
+<body>
+<h1 id="banner"><a href="http://jqueryvalidation.org/">jQuery Validation Plugin</a> Demo</h1>
+<div id="main">
+	<p>Default submitHandler is set to display an alert into of submitting the form</p>
+	<form class="cmxform" id="commentForm" method="get" action="">
+		<fieldset>
+			<legend>Please click btn validate under select element unselected</legend>
+			<p>
+				<label for="lists">Area</label>
+				<select id="lists" data-placeholder="select one.." data-allow-clear="true" data-width="200px" required>
+					<option value="AL">Alabama</option>
+					<option value="WY">Wyoming</option>
+				</select>
+			</p>
+		</fieldset>
+		<input id="btn_validate" type="button" value="validate">
+	</form>
+</div>
+</body>
+</html>
