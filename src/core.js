@@ -357,6 +357,24 @@ $.extend( $.validator, {
 		min: $.validator.format( "Please enter a value greater than or equal to {0}." ),
 		step: $.validator.format( "Please enter a multiple of {0}." )
 	},
+	warnings: {
+		required: "This field is required.",
+		remote: "Please fix this field.",
+		email: "Please enter a valid email address.",
+		url: "Please enter a valid URL.",
+		date: "Please enter a valid date.",
+		dateISO: "Please enter a valid date (ISO).",
+		number: "Please enter a valid number.",
+		digits: "Please enter only digits.",
+		equalTo: "Please enter the same value again.",
+		maxlength: $.validator.format( "Please enter no more than {0} characters." ),
+		minlength: $.validator.format( "Please enter at least {0} characters." ),
+		rangelength: $.validator.format( "Please enter a value between {0} and {1} characters long." ),
+		range: $.validator.format( "Please enter a value between {0} and {1}." ),
+		max: $.validator.format( "Please enter a value less than or equal to {0}." ),
+		min: $.validator.format( "Please enter a value greater than or equal to {0}." ),
+		step: $.validator.format( "Please enter a multiple of {0}." )
+	},
 
 	autoCreateRanges: false,
 
@@ -769,8 +787,9 @@ $.extend( $.validator, {
 					dependencyMismatch = false;
 
 					if ( result === "pending" ) {
-						this.toHide = this.toHide.not( this.errorsFor( element ) );
-						return;
+						//this.toHide = this.toHide.not( this.errorsFor( element ) );
+						this.formatAndWarning( element, rule );
+						return false;
 					}
 
 					if ( !result ) {
@@ -805,12 +824,20 @@ $.extend( $.validator, {
 				method.substring( 1 ).toLowerCase() ) || $( element ).data( "msg" );
 		},
 
+		customDataWarning: function( element, method ) {
+			return $( element ).data( "warn" + method.charAt( 0 ).toUpperCase() +
+				method.substring( 1 ).toLowerCase() ) || $( element ).data( "warn" );
+		},
+
 		// Return the custom message for the given element name and validation method
 		customMessage: function( name, method ) {
 			var m = this.settings.messages[ name ];
 			return m && ( m.constructor === String ? m : m[ method ] );
 		},
-
+		customWarning: function( name, method ) {
+			var m = this.settings.warnings[ name ];
+			return m && ( m.constructor === String ? m : m[ method ] );
+		},
 		// Return the first defined argument, allowing empty strings
 		findDefined: function() {
 			for ( var i = 0; i < arguments.length; i++ ) {
@@ -854,6 +881,30 @@ $.extend( $.validator, {
 			return message;
 		},
 
+		defaultWarning: function( element, rule ) {
+			if ( typeof rule === "string" ) {
+				rule = { method: rule };
+			}
+
+			var warning = this.findDefined(
+					this.customWarning( element.name, rule.method ),
+					this.customDataWarning( element, rule.method ),
+
+					// 'title' is never undefined, so handle empty string as undefined
+					!this.settings.ignoreTitle && element.title || undefined,
+					$.validator.warnings[ rule.method ],
+					"<strong>Warning: No warning defined for " + element.name + "</strong>"
+				),
+				theregex = /\$?\{(\d+)\}/g;
+			if ( typeof warning === "function" ) {
+				warning = warning.call( this, rule.parameters, element );
+			} else if ( theregex.test( warning ) ) {
+				warning = $.validator.format( warning.replace( theregex, "{$1}" ), rule.parameters );
+			}
+
+			return warning;
+		},
+
 		formatAndAdd: function( element, rule ) {
 			var message = this.defaultMessage( element, rule );
 
@@ -865,6 +916,19 @@ $.extend( $.validator, {
 
 			this.errorMap[ element.name ] = message;
 			this.submitted[ element.name ] = message;
+		},
+
+		formatAndWarning: function( element, rule ) {
+			var warning = this.defaultWarning( element, rule );
+
+			this.errorList.push( {
+				message: warning,
+				element: element,
+				method: rule.method
+			} );
+
+			this.errorMap[ element.name ] = warning;
+			this.submitted[ element.name ] = warning;
 		},
 
 		addWrapper: function( toToggle ) {
