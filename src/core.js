@@ -715,6 +715,9 @@ $.extend( $.validator, {
 				// Just the file name
 				return val;
 			}
+			else if ( type === "number" && typeof element.validity !== "undefined" ) {
+				return !element.validity.badInput ? $(element).val() : false;
+			}
 
 			if ( typeof val === "string" ) {
 				return val.replace( /\r/g, "" );
