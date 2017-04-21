@@ -24,6 +24,7 @@
 		}
 	],
 	"scripts": {
+		"build": "npm install && grunt",
 		"test": "grunt",
 		"prepublish": "grunt"
 	},
