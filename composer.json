@@ -1,0 +1,12 @@
+{
+    "name": "jzaefferer/jquery-validation",
+    "description": "jQuery Validation Plugin",
+    "authors": [
+        {
+            "name": "Joern Zaefferer",
+            "email": "joern.zaefferer@gmail.com"
+        }
+    ],
+    "homepage": "http://jqueryvalidation.org",
+    "license": "MIT"
+}
