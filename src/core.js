@@ -633,8 +633,8 @@ $.extend( $.validator, {
 					this.name = name;
 				}
 
-				// Select only the first element for each name, and only those with rules specified
-				if ( name in rulesCache || !validator.objectLength( $( this ).rules() ) ) {
+				// Select elements for each name, and only those with rules specified
+				if ( !validator.objectLength( $( this ).rules() ) ) {
 					return false;
 				}
 
