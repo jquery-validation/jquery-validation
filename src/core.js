@@ -680,6 +680,10 @@ $.extend( $.validator, {
 				type = element.type,
 				val, idx;
 
+			if (val === $(element).attr("placeholder")) {
+				val = "";
+			}
+
 			if ( type === "radio" || type === "checkbox" ) {
 				return this.findByName( element.name ).filter( ":checked" ).val();
 			} else if ( type === "number" && typeof element.validity !== "undefined" ) {
