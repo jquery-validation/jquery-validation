@@ -1192,7 +1192,8 @@ $.extend( $.validator, {
 
 				// Some browsers return an empty string for the required attribute
 				// and non-HTML5 browsers might have required="" markup
-				if ( value === "" ) {
+				var isAttributeExist = $element.is('['+method+']');
+				if (isAttributeExist && value === "") {
 					value = true;
 				}
 
