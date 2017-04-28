@@ -1192,7 +1192,7 @@ $.extend( $.validator, {
 
 				// Some browsers return an empty string for the required attribute
 				// and non-HTML5 browsers might have required="" markup
-				if ( value === "" ) {
+				if ( value === "" && !navigator.userAgent.match(/MSIE 8\./) ) {
 					value = true;
 				}
 
