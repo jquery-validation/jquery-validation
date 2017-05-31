@@ -29,6 +29,7 @@
 			errorPlacement: function(error, element) {
 				error.appendTo(element.parent("td").next("td"));
 			},
+			validClass: "success",
 			success: function(label) {
 				label.text("ok!").addClass("success");
 			},
