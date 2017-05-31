@@ -577,8 +577,10 @@ $.extend( $.validator, {
 		},
 
 		hideThese: function( errors ) {
-			errors.not( this.containers ).text( "" );
-			this.addWrapper( errors ).hide();
+			var errs = errors.not( this.containers );
+			errs.text( "" );
+			this.addWrapper( errs ).hide();
+			this.containers.hide();
 		},
 
 		valid: function() {
