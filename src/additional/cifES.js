@@ -106,12 +106,9 @@ $.validator.addMethod( "cifES", function( value, element ) {
 	// Control must be a letter
 	} else if ( letter.match( /[KPQS]/ ) ) {
 		return control === control_letter;
-
-	// Can be either
-	} else {
-		return control === control_digit || control === control_letter;
 	}
 
-	return false;
+	// Can be either
+	return control === control_digit || control === control_letter;
 
 }, "Please specify a valid CIF number." );
