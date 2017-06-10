@@ -6,8 +6,12 @@
  * identification number. The CIF number (Certificado de Identificación Fiscal) is equivalent to the NIF, but applies to
  * companies rather than individuals. The NIE consists of an 'X' or 'Y' followed by 7 or 8 digits then another letter.
  */
-$.validator.addMethod( "nieES", function( value ) {
+$.validator.addMethod( "nieES", function( value, element ) {
 	"use strict";
+
+	if ( this.optional( element ) ) {
+		return true;
+	}
 
 	var nieRegEx = new RegExp( /^[MXYZ]{1}[0-9]{7,8}[TRWAGMYFPDXBNJZSQVHLCKET]{1}$/gi );
 	var validChars = "TRWAGMYFPDXBNJZSQVHLCKET",

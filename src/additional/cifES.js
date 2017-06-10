@@ -48,8 +48,12 @@
  *   S         Letter
  *
  */
-$.validator.addMethod( "cifES", function( value ) {
+$.validator.addMethod( "cifES", function( value, element ) {
 	"use strict";
+
+	if ( this.optional( element ) ) {
+		return true;
+	}
 
 	var cifRegEx = new RegExp( /^([ABCDEFGHJKLMNPQRSUVW])(\d{7})([0-9A-J])$/gi );
 	var letter  = value.substring( 0, 1 ), // [ T ]
