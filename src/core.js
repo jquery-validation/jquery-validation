@@ -158,9 +158,6 @@ $.extend( $.fn, {
 				$.each( argument.split( /\s/ ), function( index, method ) {
 					filtered[ method ] = existingRules[ method ];
 					delete existingRules[ method ];
-					if ( method === "required" ) {
-						$( element ).removeAttr( "aria-required" );
-					}
 				} );
 				return filtered;
 			}
@@ -180,7 +177,6 @@ $.extend( $.fn, {
 			param = data.required;
 			delete data.required;
 			data = $.extend( { required: param }, data );
-			$( element ).attr( "aria-required", "true" );
 		}
 
 		// Make sure remote is at back
@@ -418,10 +414,6 @@ $.extend( $.validator, {
 			if ( this.settings.invalidHandler ) {
 				$( this.currentForm ).on( "invalid-form.validate", this.settings.invalidHandler );
 			}
-
-			// Add aria-required to any Static/Data/Class required fields before first validation
-			// Screen readers require this attribute to be present before the initial submission https://www.w3.org/TR/WCAG-TECHS/ARIA2.html
-			$( this.currentForm ).find( "[required], [data-rule-required], .required" ).attr( "aria-required", "true" );
 		},
 
 		// https://jqueryvalidation.org/Validator.form/
