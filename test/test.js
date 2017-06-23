@@ -84,14 +84,18 @@ $.mockjax( {
 QUnit.assert.hasError = function( element, text, message ) {
 	var errors = $( element ).closest( "form" ).validate().errorsFor( element[ 0 ] ),
 		actual = ( errors.length === 1 && errors.is( ":visible" ) ) ? errors.text() : "";
-	this.push( actual, actual, text, message );
+	this.pushResult( {
+		result: actual, actual: actual, expected: text, message: message
+	} );
 };
 
 // Asserts that there is no visible error for the given element
 QUnit.assert.noErrorFor = function( element, message ) {
 	var errors = $( element ).closest( "form" ).validate().errorsFor( element[ 0 ] ),
 		hidden = ( errors.length === 0 ) || ( errors.is( ":hidden" ) && ( errors.text() === "" ) );
-	this.push( hidden, hidden, true, message );
+	this.pushResult( {
+		result: hidden, actual: hidden, expected: true, message: message
+	} );
 };
 
 QUnit.module( "validator" );
