@@ -450,6 +450,56 @@ QUnit.test( "submitHandler keeps submitting button, even if descendants are clic
 	$( button ).find( "span" ).click();
 } );
 
+QUnit.test( "handle() should ensure the value of the used submit button is passed on for scripted submit triggered by stopRequest()", function( assert ) {
+	var $form = $( "#userForm" );
+	var button = $( ":submit", $form )[ 0 ];
+	var done = assert.async();
+	var v = $form.validate( {
+		debug: true,
+		rules: {
+			username: {
+				remote: {
+					url: "issue1508.php"
+				}
+			}
+		}
+	} );
+	var i = 1;
+
+	// Register a `submit` event after the one registred by this plugin
+	$form.on( "submit", function() {
+
+		// Ignoring the first submit that was triggered manually by clicking
+		// the submit button. The first submit will be aborted by this plugin
+		// in order to wait for `remote` method to finish validating the input
+		if ( i > 0 ) {
+			i--;
+			return false;
+		}
+
+		// The second submit is the one triggered by `stopRequest()` after the
+		// `remote` method has finished processing its attached input.
+
+		// Compare the button with the `submitButton` property
+		assert.deepEqual(
+			v.submitButton, button, "The submitButton property should be the same as button"
+		);
+
+		var hidden = $form.find( "input:hidden" )[ 0 ];
+		assert.deepEqual( hidden.value, button.value );
+		assert.deepEqual( hidden.name, button.name );
+
+		done();
+
+		return false;
+	} );
+
+	$( "input[name='username']", $form ).val( "something" );
+
+	// Submit the form
+	$( button ).click();
+} );
+
 QUnit.test( "validation triggered on radio/checkbox when using keyboard", function( assert ) {
     assert.expect( 1 );
 	var input, i, events, triggeredEvents = 0,
