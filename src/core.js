@@ -1382,8 +1382,8 @@ $.extend( $.validator, {
 		},
 
 		// https://jqueryvalidation.org/dateISO-method/
-		dateISO: function (value, element) {
-			if (this.optional(element)) {
+		dateISO: function( value, element ) {
+			if ( this.optional( element ) ) {
 				return true;
 			}
 			var check = false,
@@ -1393,21 +1393,21 @@ $.extend( $.validator, {
 				mm,
 				dd,
 				isLeap;
-			if (re.test(value)) {
+			if ( re.test( value ) ) {
 				check = true;
 
 				// Do a sanity check to ensure the date is valid
-				adata = value.match(re);
-				yyyy = parseInt(adata[1], 10);
-				mm = parseInt(adata[2], 10);
-				dd = parseInt(adata[3], 10);
+				adata = value.match( re );
+				yyyy = parseInt( adata[ 1 ], 10 );
+				mm = parseInt( adata[ 2 ], 10 );
+				dd = parseInt( adata[ 3 ], 10 );
 
-				if ((mm === 4 || mm === 6 || mm === 9 || mm === 11) && dd === 31) {
+				if ( (mm === 4 || mm === 6 || mm === 9 || mm === 11) && dd === 31 ) {
 					check = false;
-				} else if (mm === 2) {
-					isLeap = (yyyy % 4 === 0 && (yyyy % 100 !== 0 || yyyy % 400 === 0));
+				} else if ( mm === 2 ) {
+					isLeap = ( yyyy % 4 === 0 && ( yyyy % 100 !== 0 || yyyy % 400 === 0 ) );
 
-					if (dd > 29 || (dd === 29 && !isLeap) ) {
+					if ( dd > 29 || ( dd === 29 && !isLeap ) ) {
 						check = false;
 					}
 				}
