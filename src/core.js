@@ -1407,7 +1407,7 @@ $.extend( $.validator, {
 				} else if (mm === 2) {
 					isLeap = (yyyy % 4 === 0 && (yyyy % 100 !== 0 || yyyy % 400 === 0));
 
-					if (dd > 29 || (dd === 29 && !isLeap)) {
+					if (dd > 29 || (dd === 29 && !isLeap) ) {
 						check = false;
 					}
 				}
