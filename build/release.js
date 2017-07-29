@@ -1,5 +1,6 @@
 /* Release checklist
 - Run `git changelog` and edit to match previous output (this should make use of jquey-release instead)
+- make sure the correct 'x.y.z-pre' version is defined in package.json
 - pull latest https://github.com/jquery/jquery-release
 - disable _generateChangelog task in release.js (BOOOO)
 - run
