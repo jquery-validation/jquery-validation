@@ -8,7 +8,7 @@
 - Wait a while, verify and confirm each step
 - Create GitHub release: Pick the new tag, add changelog, upload zip
 - Upload to NPM
-    git fetch --tags jzaefferer
+    git fetch --tags jquery-validation
     git checkout tags/X.YY.Z
     npm publish
 - Update MS CDN (Ping Chris Sfanos)
