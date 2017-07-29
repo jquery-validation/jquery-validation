@@ -3,7 +3,7 @@
 - pull latest https://github.com/jquery/jquery-release
 - disable _generateChangelog task in release.js (BOOOO)
 - run
-	node release.js --remote=jzaefferer/jquery-validation
+	node release.js --remote=jquery-validation/jquery-validation
 - Wait a while, verify and confirm each step
 - Create GitHub release: Pick the new tag, add changelog, upload zip
 - Upload to NPM
