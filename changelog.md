@@ -1,3 +1,45 @@
+1.17.0 / 2017-07-20
+==================
+
+## Core
+  * Pass on the value of the used submit button for scripted submits (#2019)
+  * Removed aria-required attribute (#2012)
+  * Assign rules to contenteditable via `.validate()` and `.rules()` (#1947)
+  * Count invalid fields with empty message in `numberOfInvalids()` (#1942)
+  * Added support for button elements with descendants (#1901)
+  * Add support for defining a global normalizer (#1905)
+
+## Additional
+  * Add localized number validation to methods_nl.js (#2014)
+  * Remove unreachable return from `cifES.js` (#1994)
+  * Add optional support to cifES, nifES and nieES (#1966)
+  * Add netmask validation method (#1955)
+  * Add Polish tax id validation method (#1850)
+  * Fixed validation for specific case for Spanish NIFs (#1914)
+
+## Localization
+  * Added Step Range Validation  to messages_ja (#1936)
+  * Add hungarian step message (#1888)
+  * Add Sindhi locale (#1900)
+  * Added norsk step translation (#1918)
+  * Add missing french step translation (#1928)
+  * Added nl- translation for "step" property (#1902)
+  * Add French translation for notEqualTo method (#2033)
+
+## Readme
+  * Add note about trimming whitespaces inside required method (#2028)
+
+## Tests
+  * Pass on the value of the used submit button for scripted submits (#2019)
+  * Use assert#pushResult instead of assert#push (#2018)
+  
+## All
+  * Fix links after move to organization
+  * Use https
+
+## Build
+  * Upgrade QUnit to 2.3.3 (#2018)
+
 1.16.0 / 2016-12-01
 ==================
 
