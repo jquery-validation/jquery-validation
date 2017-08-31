@@ -1,6 +1,3 @@
-// Brazillian Date validation
-// Rule: dd/MM/YYYY
-
 jQuery.validator.addMethod("dateBR", function(value, element) {            
                     if(value.length!=10) return false;
                     var data        = value;
