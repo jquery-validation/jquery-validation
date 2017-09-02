@@ -360,14 +360,11 @@ QUnit.test( "rules(), global/local normalizer", function( assert ) {
 			},
 			lastname: {
 				required: true,
-				normalizer: function( value ) {
+				normalizer: function() {
 					assert.equal( this, lastname[ 0 ], "`this` in the normalizer should be the lastname element." );
 
-					// Return null in order to make sure an exception is thrown
-					// when normalizer returns a non string value.
-					value = null;
-
-					return value;
+					// The normalizer can return any value
+					return null;
 				}
 			}
 		}
@@ -388,15 +385,10 @@ QUnit.test( "rules(), global/local normalizer", function( assert ) {
 	username.trigger( "keyup" );
 	urlc.trigger( "keyup" );
 
-	assert.equal( v.numberOfInvalids(), 0, "All elements are valid" );
-	assert.equal( v.size(), 0, "All elements are valid" );
+	lastname.valid();
 
-	// Validate the lastname element, which will throw an exception
-	assert.throws( function() {
-		v.check( lastname[ 0 ] );
-	}, function( err ) {
-		return err.name === "TypeError" && err.message === "The normalizer should return a string value.";
-	}, "This should throw a TypeError exception." );
+	assert.equal( v.numberOfInvalids(), 1, "Only one element is invalid" );
+	assert.equal( v.size(), 1, "Only one element is invalid" );
 } );
 
 QUnit.test( "rules() - on unexpected input", function( assert ) {

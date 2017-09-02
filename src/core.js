@@ -745,10 +745,6 @@ $.extend( $.validator, {
 			if ( normalizer ) {
 				val = normalizer.call( element, val );
 
-				if ( typeof val !== "string" ) {
-					throw new TypeError( "The normalizer should return a string value." );
-				}
-
 				// Delete the normalizer from rules to avoid treating it as a pre-defined method.
 				delete rules.normalizer;
 			}
