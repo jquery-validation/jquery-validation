@@ -1039,7 +1039,7 @@ QUnit.test( "elementValue() returns the file input's name without the prefix 'C:
 	assert.ok( !v.element( fileInput ), "The fake file input is invalid (length = 12, maxlength = 10)" );
 } );
 
-QUnit.test( "", function( assert ) {
+QUnit.test( "Required rule should not take precedence over number & digits rules", function( assert ) {
 	var v = $( "#userForm" ).validate(),
 
 		// A fake number input
