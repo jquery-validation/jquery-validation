@@ -402,3 +402,23 @@ QUnit.test( "rules() - on unexpected input", function( assert ) {
 	result = nonFormElement.rules( "add", "whatever" );
 	assert.deepEqual( result, undefined, "can work on a non-form element" );
 } );
+
+QUnit.test( "required method should return false for undefined & null values", function( assert ) {
+	var username = $( "#usernamec" ),
+		urlc = $( "#urlc" ),
+		v = $( "#testForm1clean" ).validate( {
+			rules: {
+				username: {
+					required: true,
+					normalizer: function() { return null; }
+				},
+				urlc: {
+					required: true,
+					normalizer: function() { return undefined; }
+				}
+			}
+		} );
+
+	assert.notOk( v.element( username ), "The username element should be invalid" );
+	assert.notOk( v.element( urlc ), "The urlc element should be invalid" );
+} );
