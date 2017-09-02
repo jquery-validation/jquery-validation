@@ -199,6 +199,10 @@ $.extend( $.fn, {
 // Custom selectors
 $.extend( $.expr.pseudos || $.expr[ ":" ], {		// '|| $.expr[ ":" ]' here enables backwards compatibility to jQuery 1.7. Can be removed when dropping jQ 1.7.x support
 
+	and: function( a, b, c ) {
+		return $.find( c[ 3 ] ).length !== 0;
+	},
+
 	// https://jqueryvalidation.org/blank-selector/
 	blank: function( a ) {
 		return !$.trim( "" + $( a ).val() );

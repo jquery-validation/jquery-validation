@@ -1568,6 +1568,15 @@ QUnit.test( "option: subformRequired", function( assert ) {
 
 QUnit.module( "expressions" );
 
+QUnit.test( "expression: :and", function( assert ) {
+	var e = $( "#check1" )[ 0 ];
+	assert.equal( $( e ).filter( ":checked:and(#check1b:checked)" ).length, 0 );
+	$( "#check1b" ).prop( "checked", true );
+	assert.equal( $( e ).filter( ":checked:and(#check1b:checked)" ).length, 1 );
+	e.checked = false;
+	assert.equal( $( e ).filter( ":checked:and(#check1b:checked)" ).length, 0 );
+} );
+
 QUnit.test( "expression: :blank", function( assert ) {
 	var e = $( "#lastname" )[ 0 ];
 	assert.equal( $( e ).filter( ":blank" ).length, 1 );
