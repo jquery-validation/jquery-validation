@@ -30,6 +30,7 @@
 	"files": [
 		"dist/localization/",
 		"dist/additional-methods.js",
+		"dist/additional-methods.min.js",
 		"dist/jquery.validate.js",
 		"dist/jquery.validate.min.js"
 	],
