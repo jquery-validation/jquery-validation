@@ -36,7 +36,9 @@ Release.define({
 
 	generateArtifacts: function( done ) {
 		Release.exec( "grunt release", "Grunt command failed" );
+		// Keep this list of files in sync with package.json's files key
 		done([
+			"dist/localization/",
 			"dist/additional-methods.js",
 			"dist/additional-methods.min.js",
 			"dist/jquery.validate.js",
