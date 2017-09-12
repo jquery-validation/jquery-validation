@@ -445,6 +445,26 @@
 		<br>
 		<input type="text" name="something" id="_something" />
 	</form>
+	<form id="customElements">
+		<input name="text1" required type="text" value="text1Value" />
+		<input name="text2" required type="text" />
+
+		<textarea name="textArea1" required>textArea1Value</textarea>
+		<textarea name="textArea2" required></textarea>
+
+		<select name="select1" required>
+			<option value=""></option>
+			<option value="select1Option1Value" selected>1</option>
+		</select>
+
+		<select name="select2" required>
+			<option value=""></option>
+			<option value="select2Option1Value">1</option>
+		</select>
+
+		<custom-input name="customInput1" required value=""></custom-input>
+		<custom-input name="customInput2" required value="customInput2Value"></custom-input>
+	</form>
 </div>
 </body>
 </html>
