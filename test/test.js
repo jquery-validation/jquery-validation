@@ -2440,7 +2440,7 @@ QUnit.test( "Validation triggered on radio and checkbox via click", function( as
 } );
 
 QUnit.test( "destroy()", function( assert ) {
-	assert.expect( 6 );
+	assert.expect( 14 );
 
 	var form = $( "#testForm5" ),
 		validate = form.validate();
@@ -2451,21 +2451,21 @@ QUnit.test( "destroy()", function( assert ) {
 	assert.equal( $( "#x1", form ).hasClass( "validate-equalTo-blur" ), true, "The blur event should be bound to this element" );
 	assert.equal( $( "#x2", form ).hasClass( "validate-equalTo-blur" ), true, "The blur event should be bound to this element" );
 
-/*TODO	assert.equal( $( "#y1", form ).hasClass( "validate-greaterThan-blur" ), true, "The blur event should be bound to this element" );
+	assert.equal( $( "#y1", form ).hasClass( "validate-greaterThan-blur" ), true, "The blur event should be bound to this element" );
 	assert.equal( $( "#y2", form ).hasClass( "validate-lessThan-blur" ), true, "The blur event should be bound to this element" );
 	assert.equal( $( "#z1", form ).hasClass( "validate-greaterThanEqual-blur" ), true, "The blur event should be bound to this element" );
 	assert.equal( $( "#z2", form ).hasClass( "validate-lessThanEqual-blur" ), true, "The blur event should be bound to this element" );
-*/
+
 	validate.destroy();
 	assert.strictEqual( form.data( "validator" ), undefined );
-	assert.equal( $( "#x1", form ).hasClass( "validate-equalTox-blur" ), false, "The blur event should be unbound from this element" );
+	assert.equal( $( "#x1", form ).hasClass( "validate-equalTo-blur" ), false, "The blur event should be unbound from this element" );
 	assert.equal( $( "#x2", form ).hasClass( "validate-equalTo-blur" ), false, "The blur event should be unbound from this element" );
 
-/*TODO	assert.equal( $( "#y1", form ).hasClass( "validate-lessThan-blur" ), false, "The blur event should be unbound from this element" );
+	assert.equal( $( "#y1", form ).hasClass( "validate-lessThan-blur" ), false, "The blur event should be unbound from this element" );
 	assert.equal( $( "#y2", form ).hasClass( "validate-greaterThan-blur" ), false, "The blur event should be unbound from this element" );
 	assert.equal( $( "#z1", form ).hasClass( "validate-equalTo-blur" ), false, "The blur event should be unbound from this element" );
 	assert.equal( $( "#z2", form ).hasClass( "validate-greaterThan-blur" ), false, "The blur event should be unbound from this element" );
-*/
+
 } );
 
 QUnit.test( "#1618: Errorlist containing more errors than it should", function( assert ) {
