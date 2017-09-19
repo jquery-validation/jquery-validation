@@ -1357,13 +1357,28 @@ $.extend( $.validator, {
 		},
 
 		// https://jqueryvalidation.org/email-method/
-		email: function( value, element ) {
+		email: function( value, element, no_multiple ) {
 
 			// From https://html.spec.whatwg.org/multipage/forms.html#valid-e-mail-address
 			// Retrieved 2014-01-14
 			// If you have a problem with this implementation, report a bug against the above spec
 			// Or use custom methods to implement your own email validation
-			return this.optional( element ) || /^[a-zA-Z0-9.!#$%&'*+\/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/.test( value );
+			if ( this.optional( element ) ) {
+				return true;
+			}
+			if ( !element.multiple || !no_multiple ) {
+				return /^[a-zA-Z0-9.!#$%&'*+\/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/.test( value );
+			} else {
+
+				var emails = value.split( /[,]+/ );
+				var valid = true;
+
+				for ( var i in emails ) {
+					value = emails[ i ];
+					valid = valid && $.validator.methods.email.call( this, $.trim( value ), element, false );
+				}
+				return valid;
+			}
 		},
 
 		// https://jqueryvalidation.org/url-method/
