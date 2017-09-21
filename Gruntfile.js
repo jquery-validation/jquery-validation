@@ -26,13 +26,26 @@ umdStart = "(function( factory ) {\n" +
 	"\tif ( typeof define === \"function\" && define.amd ) {\n";
 
 umdMiddle = "\t} else if (typeof module === \"object\" && module.exports) {\n" +
-	"\t\tmodule.exports = factory( require( \"jquery\" ) );\n" +
+	"\t\tmodule.exports = function( root, jQuery ) {\n" +
+	"\t\t\tif ( jQuery === undefined ) {\n" +
+	"\t\t\t\tif ( typeof window !== \'undefined\' ) {\n" +
+	"\t\t\t\t\tjQuery = require(\'jquery\');\n" +
+	"\t\t\t\t} else {\n" +
+	"\t\t\t\t\tjQuery = require(\'jquery\')(root);\n" +
+	"\t\t\t\t}\n" +
+	"\t\t\t}\n" +
+	"\t\t\tfactory(jQuery);\n" +
+	"\t\t\treturn jQuery;\n" +
+	"\t\t};\n" +
 	"\t} else {\n" +
 	"\t\tfactory( jQuery );\n" +
 	"\t}\n" +
 	"}(function( $ ) {\n\n";
 
 umdEnd = "return $;" +
+	"\nif (typeof module !== \'undefined\' \&\& module !== null \&\& module.exports) {\n" +
+	"\tmodule.exports = $.validate;\n" +
+	"}" +
 	"\n}));";
 
 umdStandardDefine = "\t\tdefine( [\"jquery\"], factory );\n";
