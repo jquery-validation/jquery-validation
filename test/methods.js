@@ -379,6 +379,26 @@ QUnit.test( "#1760 - step modulo/remainder regression tests", function( assert )
 	}
 } );
 
+QUnit.test( "lessThan", function( assert ) {
+	var v = jQuery( "#form" ).validate(),
+		method = $.validator.methods.lessThan,
+		e = $( "#value2" );
+
+	assert.ok( method.call( v, "1", e[ 0 ], "#value2" ), "Valid integer" );
+	assert.ok( !method.call( v, "10", e[ 0 ], "#value2" ), "Invalid integer" );
+	assert.ok( !method.call( v, "11", e[ 0 ], "#value2" ), "Invalid integer" );
+} );
+
+QUnit.test( "lessThanEqual", function( assert ) {
+	var v = jQuery( "#form" ).validate(),
+		method = $.validator.methods.lessThanEqual,
+		e = $( "#value2" );
+
+	assert.ok( method.call( v, "1", e[ 0 ], "#value2" ), "Valid integer" );
+	assert.ok( method.call( v, "10", e[ 0 ], "#value2" ), "Valid integer" );
+	assert.ok( !method.call( v, "11", e[ 0 ], "#value2" ), "Invalid integer" );
+} );
+
 QUnit.test( "equalTo", function( assert ) {
 	var v = jQuery( "#form" ).validate(),
 		method = $.validator.methods.equalTo,
@@ -386,6 +406,26 @@ QUnit.test( "equalTo", function( assert ) {
 
 	assert.ok( method.call( v, "Test", e[ 0 ], "#text1" ), "Text input" );
 	assert.ok( method.call( v, "T", e[ 1 ], "#text2" ), "Another one" );
+} );
+
+QUnit.test( "greaterThanEqual", function( assert ) {
+	var v = jQuery( "#form" ).validate(),
+		method = $.validator.methods.greaterThanEqual,
+		e = $( "#value2" );
+
+	assert.ok( !method.call( v, "1", e[ 0 ], "#value2" ), "Invalid integer" );
+	assert.ok( method.call( v, "10", e[ 0 ], "#value2" ), "Valid integer" );
+	assert.ok( method.call( v, "11", e[ 0 ], "#value2" ), "Valid integer" );
+} );
+
+QUnit.test( "greaterThan", function( assert ) {
+	var v = jQuery( "#form" ).validate(),
+		method = $.validator.methods.greaterThan,
+		e = $( "#value2" );
+
+	assert.ok( !method.call( v, "1", e[ 0 ], "#value2" ), "Invalid integer" );
+	assert.ok( !method.call( v, "10", e[ 0 ], "#value2" ), "Invalid integer" );
+	assert.ok( method.call( v, "11", e[ 0 ], "#value2" ), "Valid integer" );
 } );
 
 QUnit.test( "extension", function( assert ) {
