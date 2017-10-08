@@ -5,7 +5,7 @@ $.validator.addMethod( "maxfiles", function( value, element, param ) {
 	}
 
 	if ( $( element ).attr( "type" ) === "file" ) {
-		if ( element.files && element.files.length && element.files.length > param ) {
+		if ( element.files && element.files.length > param ) {
 			return false;
 		}
 	}
