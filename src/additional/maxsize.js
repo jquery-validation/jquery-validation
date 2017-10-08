@@ -1,4 +1,4 @@
-//Limit the size of each individual file in a FileList.
+// Limit the size of each individual file in a FileList.
 $.validator.addMethod( "maxsize", function( value, element, param ) {
 	if ( this.optional( element ) ) {
 		return true;

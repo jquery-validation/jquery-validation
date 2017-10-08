@@ -1,4 +1,4 @@
-//Limit the number of files in a FileList.
+// Limit the number of files in a FileList.
 $.validator.addMethod( "maxfiles", function( value, element, param ) {
 	if ( this.optional( element ) ) {
 		return true;
