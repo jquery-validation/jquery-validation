@@ -42,6 +42,39 @@ function acceptFileDummyInput( filename, mimeType ) {
 	};
 }
 
+function fileDummyInput( selectedFiles ) {
+	var aFiles = [],
+		oFiles;
+
+	for ( var i = 0; i < selectedFiles.length; i++ ) {
+		aFiles.push( {
+			name: selectedFiles[ i ].name,
+			size: selectedFiles[ i ].size,
+			type: "image/jpeg"
+		} );
+	}
+
+	//Convert the array of objects to an object.
+	oFiles = aFiles.reduce( function( acc, cur, i ) {
+		acc[ i ] = cur;
+		return acc;
+	}, {} );
+
+	//Add the "length" property to the object.
+	oFiles.length = selectedFiles.length;
+
+	//Add the "item()" method to the object.
+	oFiles.item = function( i ) { return aFiles[ i ]; };
+
+	return {
+		type: "file",
+		files: oFiles,
+		nodeName: "INPUT",
+		value: "/tmp/fake_value",
+		hasAttribute: function() { return false; }
+	};
+}
+
 QUnit.module( "methods" );
 
 QUnit.test( "default messages", function( assert ) {
@@ -1703,4 +1736,82 @@ QUnit.test( "file accept - invalid mime type", function( assert ) {
 		$form = $( "<form />" ),
 		proxy = $.proxy( $.validator.methods.accept, new $.validator( {}, $form[ 0 ] ), null, input, "application/vnd.google-earth.kml+xml" );
 	assert.equal( proxy(), false, "the selected file for upload has invalid mime type" );
+} );
+
+QUnit.test( "file size - below max", function( assert ) {
+	var input = acceptFileDummyInput( "test.png", "image/png" ),
+		$form = $( "<form />" ),
+		proxy = $.proxy( $.validator.methods.maxsize, new $.validator( {}, $form[ 0 ] ), null, input, "500001" );
+	assert.ok( proxy(), "the selected file for upload is smaller than max" );
+} );
+
+QUnit.test( "file size - over max", function( assert ) {
+	var input = acceptFileDummyInput( "test.png", "image/png" ),
+		$form = $( "<form />" ),
+		proxy = $.proxy( $.validator.methods.maxsize, new $.validator( {}, $form[ 0 ] ), null, input, "500000" );
+	assert.equal( proxy(), false, "the selected file for upload is greater than max" );
+} );
+
+QUnit.test( "file maxsize - valid size", function( assert ) {
+	var selectedFiles = [ { name: "test.jpg", size: 500000 } ],
+		input = fileDummyInput( selectedFiles ),
+		$form = $( "<form />" ),
+		proxy = $.proxy( $.validator.methods.maxsize, new $.validator( {}, $form[ 0 ] ), null, input, 500000 );
+	assert.ok( proxy(), "the size of the file does not exceed the maximum" );
+} );
+
+QUnit.test( "file maxsize - valid size for each file", function( assert ) {
+	var selectedFiles = [ { name: "test1.jpg", size: 500000 }, { name: "test2.jpg", size: 500000 } ],
+		input = fileDummyInput( selectedFiles ),
+	$form = $( "<form />" ),
+		proxy = $.proxy( $.validator.methods.maxsize, new $.validator( {}, $form[ 0 ] ), null, input, 500000 );
+	assert.ok( proxy(), "the size of the each file does not exceed the maximum" );
+} );
+
+QUnit.test( "file maxsize - too big", function( assert ) {
+	var selectedFiles = [ { name: "test.jpg", size: 500001 } ],
+		input = fileDummyInput( selectedFiles ),
+		$form = $( "<form />" ),
+		proxy = $.proxy( $.validator.methods.maxsize, new $.validator( {}, $form[ 0 ] ), null, input, 500000 );
+	assert.equal( proxy(), false, "the size of the file exceeds the maximum" );
+} );
+
+QUnit.test( "file maxsize - second file too big", function( assert ) {
+	var selectedFiles = [ { name: "test1.jpg", size: 500000 }, { name: "test2.jpg", size: 500001 } ],
+		input = fileDummyInput( selectedFiles ),
+		$form = $( "<form />" ),
+		proxy = $.proxy( $.validator.methods.maxsize, new $.validator( {}, $form[ 0 ] ), null, input, 500000 );
+	assert.equal( proxy(), false, "the size of the second file exceeds the maximum" );
+} );
+
+QUnit.test( "file maxsizetotal - valid size", function( assert ) {
+	var selectedFiles = [ { name: "test1.jpg", size: 250000 }, { name: "test2.jpg", size: 250000 } ],
+		input = fileDummyInput( selectedFiles ),
+		$form = $( "<form />" ),
+		proxy = $.proxy( $.validator.methods.maxsizetotal, new $.validator( {}, $form[ 0 ] ), null, input, 500000 );
+	assert.ok( proxy(), "the size of the files together does not exceed the maximum" );
+} );
+
+QUnit.test( "file maxsizetotal - too big", function( assert ) {
+	var selectedFiles = [ { name: "test1.jpg", size: 250000 }, { name: "test2.jpg", size: 250001 } ],
+		input = fileDummyInput( selectedFiles ),
+		$form = $( "<form />" ),
+		proxy = $.proxy( $.validator.methods.maxsizetotal, new $.validator( {}, $form[ 0 ] ), null, input, 500000 );
+	assert.equal( proxy(), false, "the size of the files together exceeds the maximum" );
+} );
+
+QUnit.test( "file maxfiles - valid number", function( assert ) {
+	var selectedFiles = [ { name: "test1.jpg", size: 500000 }, { name: "test2.jpg", size: 500000 } ],
+		input = fileDummyInput( selectedFiles ),
+		$form = $( "<form />" ),
+		proxy = $.proxy( $.validator.methods.maxfiles, new $.validator( {}, $form[ 0 ] ), null, input, 2 );
+	assert.ok( proxy(), "the number of files does not exceed the maximum" );
+} );
+
+QUnit.test( "file maxfiles - too many", function( assert ) {
+	var selectedFiles = [ { name: "test1.jpg", size: 500000 }, { name: "test2.jpg", size: 500000 }, { name: "test3.jpg", size: 500000 } ],
+		input = fileDummyInput( selectedFiles ),
+		$form = $( "<form />" ),
+		proxy = $.proxy( $.validator.methods.maxfiles, new $.validator( {}, $form[ 0 ] ), null, input, 2 );
+	assert.equal( proxy(), false, "the number of files exceeds the maximum" );
 } );
