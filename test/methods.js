@@ -1236,6 +1236,7 @@ QUnit.test( "creditcardtypes, all", function( assert ) {
 	} );
 
 	testCardTypeByNumber( assert, "4111-1111-1111-1111", "VISA", true );
+	testCardTypeByNumber( assert, "2211-1111-1111-1114", "MasterCard", true );
 	testCardTypeByNumber( assert, "5111-1111-1111-1118", "MasterCard", true );
 	testCardTypeByNumber( assert, "6111-1111-1111-1116", "Discover", true );
 	testCardTypeByNumber( assert, "3400-0000-0000-009", "AMEX", true );
@@ -1276,6 +1277,7 @@ QUnit.test( "creditcardtypes, mastercard", function( assert ) {
 		}
 	} );
 
+	testCardTypeByNumber( assert, "2211-1111-1111-1114", "MasterCard", true );
 	testCardTypeByNumber( assert, "5111-1111-1111-1118", "MasterCard", true );
 	testCardTypeByNumber( assert, "6111-1111-1111-1116", "Discover", false );
 	testCardTypeByNumber( assert, "3400-0000-0000-009", "AMEX", false );
