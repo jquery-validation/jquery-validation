@@ -4,6 +4,7 @@
  */
 $.extend( $.validator.messages, {
 	required: "Dette feltet er obligatorisk.",
+	remote: "Vennligst angi og ordne verdien i feltet.",
 	maxlength: $.validator.format( "Maksimalt {0} tegn." ),
 	minlength: $.validator.format( "Minimum {0} tegn." ),
 	rangelength: $.validator.format( "Angi minimum {0} og maksimum {1} tegn." ),
