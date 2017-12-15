@@ -1469,9 +1469,12 @@ $.extend( $.validator, {
 				case 'month':
 				case 'time':
 					value = this.getDateValue(value, type);
+					param = this.getDateValue(param, type);
 				default:
-					if (value !== false) {
+					if (value !== false && param !== false) {
 						valid = value >= param;
+					} else {
+						valid = false;
 					}
 			}
 
@@ -1503,9 +1506,12 @@ $.extend( $.validator, {
 				case 'month':
 				case 'time':
 					value = this.getDateValue(value, type);
+					param = this.getDateValue(param, type);
 				default:
-					if (value !== false) {
+					if (value !== false && param !== false) {
 						valid = value <= param;
+					} else {
+						valid = false;
 					}
 			}
 
