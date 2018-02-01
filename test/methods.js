@@ -1598,6 +1598,24 @@ QUnit.test( "nipPL", function( assert ) {
 	assert.ok( !method( "9502947712" ), "NIP invalid: wrong checksum" );
 } );
 
+QUnit.test( "phonePL", function( assert ) {
+    var method = methodTest( "phonePL" );
+	assert.ok( method( "+48 123 456 789" ), "Valid phone PL" );
+	assert.ok( method( "00 48 123 456 789" ), "Valid phone PL" );
+	assert.ok( method( "(+48) 123 456 789" ), "Valid phone PL" );
+	assert.ok( method( "(48) 123 456 789" ), "Valid phone PL" );
+	assert.ok( method( " 13 34 56 78  9 " ), "Valid phone PL" );
+	assert.ok( method( "13 345 67 89" ), "Valid phone PL" );
+	assert.ok( !method( "100 000 000" ), "Invalid phone PL: cannot start with 10x xxx xxx" );
+	assert.ok( !method( "111 111 111" ), "Invalid phone PL: cannot start with 11x xxx xxx" );
+	assert.ok( !method( "123 456 78" ), "Invalid phone PL: too short" );
+	assert.ok( !method( "123 4567890" ), "Invalid phone PL: too long" );
+	assert.ok( !method( "700 123 456" ), "Invalid phone PL: intelligent network, premium rate" );
+	assert.ok( !method( "800 123 456" ), "Invalid phone PL: intelligent network, freephone" );
+	assert.ok( !method( "980 000 000" ), "Invalid phone PL: cannot start with 98x xxx xxx" );
+	assert.ok( !method( "990 000 000" ), "Invalid phone PL: cannot start with 99x xxx xxx" );
+} );
+
 QUnit.test( "maxWords", function( assert ) {
 	var method = methodTest( "maxWords" ),
 		maxWords = 6;
