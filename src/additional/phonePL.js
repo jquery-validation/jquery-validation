@@ -10,7 +10,7 @@
  * 62, 63, 65, 67, 68, 71, 74, 75, 76, 77, 81, 82, 83, 84,
  * 85, 86, 87, 89, 91, 94, 95.
  *
- * Ministry of National numbers Defence and VoIP numbers starts with 26 and 39.
+ * Ministry of National Defence numbers and VoIP numbers starts with 26 and 39.
  *
  * Excludes intelligent networks (premium rate, shared cost, free phone numbers).
  *
