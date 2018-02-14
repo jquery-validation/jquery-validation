@@ -42,7 +42,10 @@ Release.define({
 			"dist/additional-methods.js",
 			"dist/additional-methods.min.js",
 			"dist/jquery.validate.js",
-			"dist/jquery.validate.min.js"
+			"dist/jquery.validate.min.js",
+
+			// The sub-resource integrity hashes of the distribution files
+			"dist/jquery-validation-sri.json"
 		]);
 	},
 
