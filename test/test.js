@@ -2522,3 +2522,61 @@ QUnit.test( "addMethod, reusing remote in custom method", function( assert ) {
 	e.val( "john.doe@gmail.com" );
 	assert.strictEqual( v.element( e ), true, "still invalid, because remote validation must block until it returns; dependency-mismatch considered as valid though" );
 } );
+
+QUnit.test( "inputSelector setting, defaults to native input tags", function( assert ) {
+	var expectedErrorCount = 3;
+	var form = $( "#customElements" );
+
+	var validator = form.validate();
+
+	assert.ok( !validator.form() );
+	assert.strictEqual( validator.numberOfInvalids(), expectedErrorCount );
+
+	validator.destroy();
+} );
+
+QUnit.test( "inputSelector setting, validates custom tags", function( assert ) {
+	var expectedErrorCount = 1;
+	var form = $( "#customElements" );
+	var validator;
+
+	form
+		.find( "custom-input" )
+		.each( function( index, element ) {
+			element.value = $( element ).attr( "value" );
+			element.name = $( element ).attr( "name" );
+			element.form = $( element ).closest( "form" )[ 0 ];
+		} );
+
+	validator = form.validate( {
+		inputSelector: "custom-input"
+	} );
+
+	assert.ok( !validator.form() );
+	assert.strictEqual( validator.numberOfInvalids(), expectedErrorCount );
+
+	validator.destroy();
+} );
+
+QUnit.test( "inputSelector setting, validates input and custom tags", function( assert ) {
+	var expectedErrorCount = 4;
+	var form = $( "#customElements" );
+	var validator;
+
+	form
+		.find( "custom-input" )
+		.each( function( index, element ) {
+			element.value = $( element ).attr( "value" );
+			element.name = $( element ).attr( "name" );
+			element.form = $( element ).closest( "form" )[ 0 ];
+		} );
+
+	validator = form.validate( {
+		inputSelector: "input, textarea, select, custom-input"
+	} );
+
+	assert.ok( !validator.form() );
+	assert.strictEqual( validator.numberOfInvalids(), expectedErrorCount );
+
+	validator.destroy();
+} );
