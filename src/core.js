@@ -375,7 +375,8 @@ $.extend( $.validator, {
 			this.invalid = {};
 			this.reset();
 
-			var groups = ( this.groups = {} ),
+			var currentForm = this.currentForm,
+				groups = ( this.groups = {} ),
 				rules;
 			$.each( this.settings.groups, function( key, value ) {
 				if ( typeof value === "string" ) {
@@ -396,6 +397,12 @@ $.extend( $.validator, {
 				if ( !this.form && this.hasAttribute( "contenteditable" ) ) {
 					this.form = $( this ).closest( "form" )[ 0 ];
 					this.name = $( this ).attr( "name" );
+				}
+
+				// Ignore the element if it belongs to another form. This will happen mainly
+				// when setting the `form` attribute of an input to the id of another form.
+				if ( currentForm !== this.form ) {
+					return;
 				}
 
 				var validator = $.data( this.form, "validator" ),
@@ -629,6 +636,11 @@ $.extend( $.validator, {
 				if ( this.hasAttribute( "contenteditable" ) ) {
 					this.form = $( this ).closest( "form" )[ 0 ];
 					this.name = name;
+				}
+
+				// Ignore elements that belong to other/nested forms
+				if ( this.form !== validator.currentForm ) {
+					return false;
 				}
 
 				// Select only the first element for each name, and only those with rules specified
