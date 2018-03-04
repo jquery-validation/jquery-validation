@@ -187,6 +187,173 @@ QUnit.test( "valid(), ignores ignored elements", function( assert ) {
 	assert.ok( $( "#firstnamec" ).valid() );
 } );
 
+QUnit.test( "valid() should ignore elements that belong to other/nested forms", function( assert ) {
+	var form = $( "#testForm28" );
+
+	form.validate();
+
+	// 1. Test with nested form
+	form.append(
+		"<form id='testForm28-nested'>" +
+		"    <input type='text' name='f28nestedinput' required>" +
+		"</form>"
+	);
+
+	try {
+		form.valid();
+		assert.ok( true, "It should ignore the input of nested form" );
+	} catch ( err ) {
+		assert.ok( false, "Shouldn't throw an error" );
+	}
+
+	// Remove the validator atteched to testForm28
+	form.removeData( "validator" );
+	$( "#testForm28-nested" ).remove();
+
+	// 2. Test using another form outside of validated one
+	form.parent().append(
+		"<form id='testForm28-other'>" +
+		"   <input type='text' name='f28otherinput' required>" +
+		"   <input type='text' name='f28input' form='testForm28' required>" +
+		"</form>"
+	);
+
+	$( "#testForm28-other" ).validate();
+
+	try {
+		$( "#testForm28-other" ).valid();
+		assert.ok( true, "It should ignore the input of other form" );
+	} catch ( err ) {
+		assert.ok( false, "Shouldn't throw an error" );
+	}
+
+	$( "#testForm28-other" ).remove();
+} );
+
+QUnit.test( "form() should ignore elements that belong to other/nested forms", function( assert ) {
+	var form = $( "#testForm28" );
+	var v = form.validate();
+
+	form.validate();
+
+	// 1. Test with nested form
+	form.append(
+		"<form id='testForm28-nested'>" +
+		"    <input type='text' name='f28nestedinput' required>" +
+		"</form>"
+	);
+
+	try {
+		v.form();
+		assert.ok( true, "It should ignore the input of nested form" );
+	} catch ( err ) {
+		assert.ok( false, "Shouldn't throw an error" );
+	}
+
+	// Remove the validator atteched to testForm28
+	form.removeData( "validator" );
+	$( "#testForm28-nested" ).remove();
+
+	// 2. Test using another form outside of validated one
+	form.parent().append(
+		"<form id='testForm28-other'>" +
+		"   <input type='text' name='f28otherinput' required>" +
+		"   <input type='text' name='f28input' form='testForm28' required>" +
+		"</form>"
+	);
+
+	v = $( "#testForm28-other" ).validate();
+
+	try {
+		v.form();
+		assert.ok( true, "It should ignore the input of other form" );
+	} catch ( err ) {
+		assert.ok( false, "Shouldn't throw an error" );
+	}
+
+	$( "#testForm28-other" ).remove();
+} );
+
+QUnit.test( "elements() should ignore elements that belong to other/nested forms", function( assert ) {
+	var form = $( "#testForm28" );
+	var v = form.validate();
+
+	// 1. Test with nested form
+	form.append(
+		"<form id='testForm28-nested'>" +
+		"    <input type='text' name='f28nestedinput' required>" +
+		"</form>"
+	);
+
+	try {
+		assert.equal( v.elements().length, 1, "There should be only one element to validate" );
+	} catch ( err ) {
+		assert.ok( false, "Shouldn't throw an error" );
+	}
+
+	// Remove the validator atteched to testForm28
+	form.removeData( "validator" );
+	$( "#testForm28-nested" ).remove();
+
+	// 2. Test using another form outside of validated one
+	form.parent().append(
+		"<form id='testForm28-other'>" +
+		"   <input type='text' name='f28otherinput' required>" +
+		"   <input type='text' name='f28input' form='testForm28' required>" +
+		"</form>"
+	);
+
+	v = $( "#testForm28-other" ).validate();
+
+	try {
+		assert.equal( v.elements().length, 1, "There should be only one element to validate" );
+	} catch ( err ) {
+		assert.ok( false, "Shouldn't throw an error" );
+	}
+
+	$( "#testForm28-other" ).remove();
+} );
+
+QUnit.test( "Ignore elements that have form attribute set to other forms", function( assert ) {
+
+	// Append a form that contains an input with form attribute set to "testForm28"
+	$( "#testForm28" ).parent().append(
+		"<form id='testForm28-other'>" +
+		"   <input type='text' name='f28otherinput' required>" +
+		"   <input type='text' name='f28input' form='testForm28' required>" +
+		"</form>"
+	);
+
+	// Attach the plugin to the appended form
+	$( "#testForm28-other" ).validate();
+
+	// 1. Simulate typing
+	try {
+		$( "[name='f28input']", "#testForm28-other" ).trigger( "keyup" );
+		assert.ok( true, "It should ignore the input of other form" );
+	} catch ( err ) {
+		assert.ok( false, "Shouldn't throw an error while typing" );
+	}
+
+	// 2. Simulate forcussing in the input
+	try {
+		$( "[name='f28input']", "#testForm28-other" ).trigger( "focusin" );
+		assert.ok( true, "It should ignore the input of other form" );
+	} catch ( err ) {
+		assert.ok( false, "Shouldn't throw an error on focus" );
+	}
+
+	// 3. Simulate focussing out the input
+	try {
+		$( "[name='f28input']", "#testForm28-other" ).trigger( "focusout" );
+		assert.ok( true, "It should ignore the input of other form" );
+	} catch ( err ) {
+		assert.ok( false, "Shouldn't throw an error on blur" );
+	}
+
+	$( "#testForm28-other" ).remove();
+} );
+
 QUnit.test( "addMethod", function( assert ) {
 	assert.expect( 3 );
 	$.validator.addMethod( "hi", function( value ) {
