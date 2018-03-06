@@ -92,6 +92,8 @@ $("#myform").validate({
 <span class="error" id="unique-id-here">This field is required</span>
 ```
 
+[Learn more about errorElement](https://jqueryvalidation.org/validate/#errorelement)
+
 ## License
 Copyright &copy; Jörn Zaefferer<br>
 Licensed under the MIT license.
