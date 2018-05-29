@@ -49,6 +49,7 @@
 		"grunt-contrib-uglify": "1.0.1",
 		"grunt-contrib-watch": "1.0.0",
 		"grunt-jscs": "2.8.0",
+		"grunt-sri": "0.2.0",
 		"grunt-text-replace": "0.4.0",
 		"qunitjs": "2.3.3"
 	},
