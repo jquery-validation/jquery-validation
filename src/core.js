@@ -1569,7 +1569,7 @@ $.extend( $.validator, {
 						message = response || validator.defaultMessage( element, { method: method, parameters: value } );
 						if ( response.statusText && response.status ) {
 							// This request failed - show ajax error instead of message.
-							message =  response.status + ": " + response.statusText;
+							message = response.status + ": " + response.statusText;
 						}
 						errors[ element.name ] = previous.message = message;
 						validator.invalid[ element.name ] = true;
