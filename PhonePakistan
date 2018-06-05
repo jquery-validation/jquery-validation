@@ -1,0 +1,5 @@
+jQuery.validator.addMethod("phone", function (phone_number, element) {
+        phone_number = phone_number.replace(/\s+/g, "");
+        return this.optional(element) || phone_number.length > 9 &&
+              phone_number.match(/^\(?[\d\s]{4}-[\d\s]{7}$/);
+    }, "Invalid phone number Please insert in fllowing format 0000-0000000");
