@@ -3,6 +3,8 @@
  * Locale: ZH (Chinese, 中文 (Zhōngwén), 汉语, 漢語)
  */
 $.extend( $.validator.messages, {
+	tel:"请输入有效的手机号码",
+	pattern:"请输入正确的格式",
 	required: "这是必填字段",
 	remote: "请修正此字段",
 	email: "请输入有效的电子邮件地址",
