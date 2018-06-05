@@ -272,7 +272,7 @@ $.extend( $.validator, {
 			// Hide error label and remove error class on focus if enabled
 			if ( this.settings.focusCleanup ) {
 				if ( this.settings.unhighlight ) {
-					this.settings.unhighlight.call( this, element, this.settings.errorClass, this.settings.validClass );
+					this.settings.unhighlight.call( this, element, this.settings.errorClass, false );
 				}
 				this.hideThese( this.errorsFor( element ) );
 			}
