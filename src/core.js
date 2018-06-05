@@ -264,7 +264,7 @@ $.extend( $.validator, {
 		errorContainer: $( [] ),
 		errorLabelContainer: $( [] ),
 		onsubmit: true,
-		ignore: ":hidden",
+		ignore: ":hidden, :disabled",
 		ignoreTitle: false,
 		onfocusin: function( element ) {
 			this.lastActive = element;
@@ -624,7 +624,7 @@ $.extend( $.validator, {
 			// Select all valid inputs inside the form (no submit or reset buttons)
 			return $( this.currentForm )
 			.find( "input, select, textarea, [contenteditable]" )
-			.not( ":submit, :reset, :image, :disabled" )
+            .not( ":submit, :reset, :image" )
 			.not( this.settings.ignore )
 			.filter( function() {
 				var name = this.name || $( this ).attr( "name" ); // For contenteditable
