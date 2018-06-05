@@ -450,7 +450,7 @@ $.extend( $.validator, {
 		},
 
 		// https://jqueryvalidation.org/Validator.element/
-		element: function( element ) {
+		element: function( element, rules, messages ) {
 			var cleanElement = this.clean( element ),
 				checkElement = this.validationTargetFor( cleanElement ),
 				v = this,
@@ -472,7 +472,7 @@ $.extend( $.validator, {
 							cleanElement = v.validationTargetFor( v.clean( v.findByName( name ) ) );
 							if ( cleanElement && cleanElement.name in v.invalid ) {
 								v.currentElements.push( cleanElement );
-								result = v.check( cleanElement ) && result;
+								result = v.check( cleanElement, rules, messages ) && result;
 							}
 						}
 					} );
@@ -732,10 +732,10 @@ $.extend( $.validator, {
 			return val;
 		},
 
-		check: function( element ) {
+		check: function( element, rules, messages ) {
 			element = this.validationTargetFor( this.clean( element ) );
 
-			var rules = $( element ).rules(),
+			var rules = rules || $( element ).rules(),
 				rulesCount = $.map( rules, function( n, i ) {
 					return i;
 				} ).length,
@@ -762,7 +762,7 @@ $.extend( $.validator, {
 			}
 
 			for ( method in rules ) {
-				rule = { method: method, parameters: rules[ method ] };
+				rule = { method: method, parameters: rules[ method ], message: messages && messages[method] ? messages[method] : null };
 				try {
 					result = $.validator.methods[ method ].call( this, val, element, rule.parameters );
 
@@ -861,7 +861,7 @@ $.extend( $.validator, {
 		},
 
 		formatAndAdd: function( element, rule ) {
-			var message = this.defaultMessage( element, rule );
+			var message = rule.message || this.defaultMessage( element, rule );
 
 			this.errorList.push( {
 				message: message,
