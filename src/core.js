@@ -320,6 +320,13 @@ $.extend( $.validator, {
 				this.element( element.parentNode );
 			}
 		},
+		onchange: function( element, event ) {
+
+			// If target element is a select, trigger keyup on change
+			if ( element.tagName.toLowerCase() === "select" ) {
+				this.settings.onkeyup.call( this, element, event );
+			}
+		},
 		highlight: function( element, errorClass, validClass ) {
 			if ( element.type === "radio" ) {
 				this.findByName( element.name ).addClass( errorClass ).removeClass( validClass );
@@ -414,7 +421,7 @@ $.extend( $.validator, {
 			}
 
 			$( this.currentForm )
-				.on( "focusin.validate focusout.validate keyup.validate",
+				.on( "focusin.validate focusout.validate change.validate keyup.validate",
 					":text, [type='password'], [type='file'], select, textarea, [type='number'], [type='search'], " +
 					"[type='tel'], [type='url'], [type='email'], [type='datetime'], [type='date'], [type='month'], " +
 					"[type='week'], [type='time'], [type='datetime-local'], [type='range'], [type='color'], " +
