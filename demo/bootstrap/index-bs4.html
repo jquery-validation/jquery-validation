@@ -11,8 +11,8 @@
 <body>
 	<div class="container">
 		<div class="row">
-			<div class="col-sm-8 col-sm-offset-2">
-				<div class="page-header">
+			<div class="col-sm-8 offset-sm-2">
+				<div class="border-bottom mb-4 mt-4 pb-2">
 					<div class="alert alert-info" role="alert">
 						<h6>This demo shows how to integrate JQuery-validation and the Bootstrap 4 framework.</h4>
 						<ul>
@@ -72,9 +72,8 @@
 							<div class="form-group row">
 								<div class="col-sm-6 offset-sm-4">
 									<div class="form-check">
-										<label>
-											<input type="checkbox" id="agree" name="agree" value="agree" class="form-check-input"/>Please agree to our policy
-										</label>
+										<input type="checkbox" id="agree" name="agree" value="agree" class="form-check-input"/>
+										<label class="form-check-label">Please agree to our policy</label>
 									</div>
 								</div>
 							</div>
@@ -142,20 +141,20 @@
 				},
 				errorElement: "em",
 				errorPlacement: function ( error, element ) {
-					// Add the `help-block` class to the error element
+					// Add the `invalid-feedback` class to the error element
 					error.addClass( "invalid-feedback" );
 
 					if ( element.prop( "type" ) === "checkbox" ) {
-						error.insertAfter( element.parent( "label" ) );
+						error.insertAfter( element.next( "label" ) );
 					} else {
 						error.insertAfter( element );
 					}
 				},
 				highlight: function ( element, errorClass, validClass ) {
-					$( element ).parents( ".col-sm-5" ).addClass( "is-invalid" ).removeClass( "is-valid" );
+					$( element ).addClass( "is-invalid" ).removeClass( "is-valid" );
 				},
 				unhighlight: function (element, errorClass, validClass) {
-					$( element ).parents( ".col-sm-5" ).addClass( "is-valid" ).removeClass( "is-invalid" );
+					$( element ).addClass( "is-valid" ).removeClass( "is-invalid" );
 				}
 			} );
 
