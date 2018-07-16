@@ -912,9 +912,16 @@ $.extend( $.validator, {
 		},
 
 		invalidElements: function() {
-			return $( this.errorList ).map( function() {
-				return this.element;
+			var
+				v = this,
+				invalid = v.invalid,
+				elements = $([]);
+			$.each(invalid, function(key, value) {
+				if ( value !== false && v.invalid.hasOwnProperty( key ) ) {
+					elements = elements.add( that.findByName( key ) );
+				}
 			} );
+			return elements;
 		},
 
 		showLabel: function( element, message ) {
