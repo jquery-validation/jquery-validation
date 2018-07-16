@@ -915,8 +915,8 @@ $.extend( $.validator, {
 			var
 				v = this,
 				invalid = v.invalid,
-				elements = $([]);
-			$.each(invalid, function(key, value) {
+				elements = $( [] );
+			$.each( invalid, function( key, value ) {
 				if ( value !== false && v.invalid.hasOwnProperty( key ) ) {
 					elements = elements.add( that.findByName( key ) );
 				}
