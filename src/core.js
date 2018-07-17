@@ -477,6 +477,7 @@ $.extend( $.validator, {
 						}
 					} );
 				}
+
 				rs = this.check( checkElement ) !== false;
 				result = result && rs;
 				if ( rs ) {
@@ -1566,6 +1567,7 @@ $.extend( $.validator, {
 				success: function( response ) {
 					var valid = response === true || response === "true",
 						errors, message, submitted;
+
 					validator.settings.messages[ element.name ][ method ] = previous.originalMessage;
 					if ( valid ) {
 						submitted = validator.formSubmitted;
