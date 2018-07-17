@@ -1582,7 +1582,7 @@ $.extend( $.validator, {
 						validator.invalid[ element.name ] = true;
 						validator.showErrors( errors );
 					}
-					// fix for QUnit test "remote" method with ajax immediate callback
+					// Fix for QUnit test "remote" method with ajax immediate callback
 					result = previous.valid = valid;
 					validator.stopRequest( element, valid );
 				}
