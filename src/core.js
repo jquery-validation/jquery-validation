@@ -477,7 +477,6 @@ $.extend( $.validator, {
 						}
 					} );
 				}
-
 				rs = this.check( checkElement ) !== false;
 				result = result && rs;
 				if ( rs ) {
@@ -914,14 +913,14 @@ $.extend( $.validator, {
 		invalidElements: function() {
 			var
 				v = this,
-				invalid = v.invalid,
-				elements = $( [] );
+				invalid = $.extend( {}, v.invalid ),
+				$elements = $( [] );
 			$.each( invalid, function( key, value ) {
-				if ( value !== false && v.invalid.hasOwnProperty( key ) ) {
-					elements = elements.add( v.findByName( key ) );
+				if ( value !== false && invalid.hasOwnProperty( key ) ) {
+					$elements = $elements.add( v.findByName( key ) );
 				}
 			} );
-			return elements;
+			return $elements;
 		},
 
 		showLabel: function( element, message ) {
@@ -1539,7 +1538,7 @@ $.extend( $.validator, {
 			method = typeof method === "string" && method || "remote";
 
 			var previous = this.previousValue( element, method ),
-				validator, data, optionDataString;
+				validator, data, optionDataString, result = "pending";
 
 			if ( !this.settings.messages[ element.name ] ) {
 				this.settings.messages[ element.name ] = {};
@@ -1567,7 +1566,6 @@ $.extend( $.validator, {
 				success: function( response ) {
 					var valid = response === true || response === "true",
 						errors, message, submitted;
-
 					validator.settings.messages[ element.name ][ method ] = previous.originalMessage;
 					if ( valid ) {
 						submitted = validator.formSubmitted;
@@ -1584,11 +1582,12 @@ $.extend( $.validator, {
 						validator.invalid[ element.name ] = true;
 						validator.showErrors( errors );
 					}
-					previous.valid = valid;
+					// fix for QUnit test "remote" method with ajax immediate callback
+					result = previous.valid = valid;
 					validator.stopRequest( element, valid );
 				}
 			}, param ) );
-			return "pending";
+			return result;
 		}
 	}
 
