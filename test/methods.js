@@ -500,9 +500,6 @@ QUnit.test( "remote", function( assert ) {
 					required: "Please",
 					remote: jQuery.validator.format( "{0} in use" )
 				}
-			},
-			submitHandler: function() {
-				assert.ok( false, "submitHandler may never be called when validating only elements" );
 			}
 		} ),
 		done = assert.async();
@@ -595,9 +592,6 @@ QUnit.test( "remote extensions", function( assert ) {
 				username: {
 					required: "Please"
 				}
-			},
-			submitHandler: function() {
-				assert.ok( false, "submitHandler may never be called when validating only elements" );
 			}
 		} ),
 		done = assert.async();

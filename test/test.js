@@ -167,14 +167,10 @@ QUnit.test( "valid() ???", function( assert ) {
 	v.errorList = errorList;
 	assert.ok( !v.valid(), "One error, must be invalid" );
 	v.destroy();
-	v = $( "#testForm3" ).validate( {
-		submitHandler: function() {
-			assert.ok( false, "Submit handler was called" );
-		}
-	} );
-	assert.ok( v.valid(), "No errors, must be valid and returning true, even with the submit handler" );
+	v = $( "#testForm3" ).validate();
+	assert.ok( v.valid(), "No errors, must be valid and returning true" );
 	v.errorList = errorList;
-	assert.ok( !v.valid(), "One error, must be invalid, no call to submit handler" );
+	assert.ok( !v.valid(), "One error, must be invalid" );
 } );
 
 QUnit.test( "valid(), ignores ignored elements", function( assert ) {
@@ -576,13 +572,14 @@ QUnit.test( "submitHandler keeps submitting button", function( assert ) {
 	var button, event;
 
 	$( "#userForm" ).validate( {
-		debug: true,
+		debug: false,
 		submitHandler: function( form ) {
 
-			// Dunno how to test this better; this tests the implementation that uses a hidden input
 			var hidden = $( form ).find( "input:hidden" )[ 0 ];
 			assert.deepEqual( hidden.value, button.value );
 			assert.deepEqual( hidden.name, button.name );
+
+			return false;
 		}
 	} );
 	$( "#username" ).val( "bla" );
@@ -596,7 +593,7 @@ QUnit.test( "submitHandler keeps submitting button", function( assert ) {
 QUnit.test( "submitHandler keeps submitting button, even if descendants are clicked", function( assert ) {
 	var button = $( "#testForm27 :submit" )[ 0 ];
 	var v = $( "#testForm27" ).validate( {
-		debug: true,
+		debug: false,
 		submitHandler: function( form ) {
 
 			// Compare the button with the `submitButton` property
@@ -1370,6 +1367,7 @@ QUnit.test( "ajaxSubmit", function( assert ) {
 	$( "#user" ).val( "Peter" );
 	$( "#password" ).val( "foobar" );
 	jQuery( "#signupForm" ).validate( {
+		debug: false,
 		submitHandler: function( form ) {
 			jQuery( form ).ajaxSubmit( {
 				success: function( response ) {
@@ -1377,6 +1375,8 @@ QUnit.test( "ajaxSubmit", function( assert ) {
 					done();
 				}
 			} );
+
+			return false;
 		}
 	} );
 	jQuery( "#signupForm" ).triggerHandler( "submit" );
@@ -2424,7 +2424,6 @@ QUnit.test( "calling blur on ignored element", function( assert ) {
 
 	form.validate( {
 		ignore: ".ignore",
-		submitHandler: $.noop,
 		invalidHandler: function() {
 			$( "#ss1" ).blur();
 		}
