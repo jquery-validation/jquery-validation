@@ -49,6 +49,7 @@ $.extend( $.fn, {
 					// Prevent form submit to be able to see console output
 					event.preventDefault();
 				}
+
 				function handle() {
 					var hidden, result;
 
@@ -64,7 +65,7 @@ $.extend( $.fn, {
 							.appendTo( validator.currentForm );
 					}
 
-					if ( validator.settings.submitHandler ) {
+					if ( validator.settings.submitHandler && !validator.settings.debug ) {
 						result = validator.settings.submitHandler.call( validator, validator.currentForm, event );
 						if ( hidden ) {
 
