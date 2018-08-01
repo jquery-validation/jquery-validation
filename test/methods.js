@@ -42,6 +42,39 @@ function acceptFileDummyInput( filename, mimeType ) {
 	};
 }
 
+function fileDummyInput( selectedFiles ) {
+	var aFiles = [],
+		oFiles;
+
+	for ( var i = 0; i < selectedFiles.length; i++ ) {
+		aFiles.push( {
+			name: selectedFiles[ i ].name,
+			size: selectedFiles[ i ].size,
+			type: "image/jpeg"
+		} );
+	}
+
+	//Convert the array of objects to an object.
+	oFiles = aFiles.reduce( function( acc, cur, i ) {
+		acc[ i ] = cur;
+		return acc;
+	}, {} );
+
+	//Add the "length" property to the object.
+	oFiles.length = selectedFiles.length;
+
+	//Add the "item()" method to the object.
+	oFiles.item = function( i ) { return aFiles[ i ]; };
+
+	return {
+		type: "file",
+		files: oFiles,
+		nodeName: "INPUT",
+		value: "/tmp/fake_value",
+		hasAttribute: function() { return false; }
+	};
+}
+
 QUnit.module( "methods" );
 
 QUnit.test( "default messages", function( assert ) {
@@ -379,6 +412,26 @@ QUnit.test( "#1760 - step modulo/remainder regression tests", function( assert )
 	}
 } );
 
+QUnit.test( "lessThan", function( assert ) {
+	var v = jQuery( "#form" ).validate(),
+		method = $.validator.methods.lessThan,
+		e = $( "#value2" );
+
+	assert.ok( method.call( v, "1", e[ 0 ], "#value2" ), "Valid integer" );
+	assert.ok( !method.call( v, "10", e[ 0 ], "#value2" ), "Invalid integer" );
+	assert.ok( !method.call( v, "11", e[ 0 ], "#value2" ), "Invalid integer" );
+} );
+
+QUnit.test( "lessThanEqual", function( assert ) {
+	var v = jQuery( "#form" ).validate(),
+		method = $.validator.methods.lessThanEqual,
+		e = $( "#value2" );
+
+	assert.ok( method.call( v, "1", e[ 0 ], "#value2" ), "Valid integer" );
+	assert.ok( method.call( v, "10", e[ 0 ], "#value2" ), "Valid integer" );
+	assert.ok( !method.call( v, "11", e[ 0 ], "#value2" ), "Invalid integer" );
+} );
+
 QUnit.test( "equalTo", function( assert ) {
 	var v = jQuery( "#form" ).validate(),
 		method = $.validator.methods.equalTo,
@@ -386,6 +439,26 @@ QUnit.test( "equalTo", function( assert ) {
 
 	assert.ok( method.call( v, "Test", e[ 0 ], "#text1" ), "Text input" );
 	assert.ok( method.call( v, "T", e[ 1 ], "#text2" ), "Another one" );
+} );
+
+QUnit.test( "greaterThanEqual", function( assert ) {
+	var v = jQuery( "#form" ).validate(),
+		method = $.validator.methods.greaterThanEqual,
+		e = $( "#value2" );
+
+	assert.ok( !method.call( v, "1", e[ 0 ], "#value2" ), "Invalid integer" );
+	assert.ok( method.call( v, "10", e[ 0 ], "#value2" ), "Valid integer" );
+	assert.ok( method.call( v, "11", e[ 0 ], "#value2" ), "Valid integer" );
+} );
+
+QUnit.test( "greaterThan", function( assert ) {
+	var v = jQuery( "#form" ).validate(),
+		method = $.validator.methods.greaterThan,
+		e = $( "#value2" );
+
+	assert.ok( !method.call( v, "1", e[ 0 ], "#value2" ), "Invalid integer" );
+	assert.ok( !method.call( v, "10", e[ 0 ], "#value2" ), "Invalid integer" );
+	assert.ok( method.call( v, "11", e[ 0 ], "#value2" ), "Valid integer" );
 } );
 
 QUnit.test( "extension", function( assert ) {
@@ -427,9 +500,6 @@ QUnit.test( "remote", function( assert ) {
 					required: "Please",
 					remote: jQuery.validator.format( "{0} in use" )
 				}
-			},
-			submitHandler: function() {
-				assert.ok( false, "submitHandler may never be called when validating only elements" );
 			}
 		} ),
 		done = assert.async();
@@ -522,9 +592,6 @@ QUnit.test( "remote extensions", function( assert ) {
 				username: {
 					required: "Please"
 				}
-			},
-			submitHandler: function() {
-				assert.ok( false, "submitHandler may never be called when validating only elements" );
 			}
 		} ),
 		done = assert.async();
@@ -741,9 +808,9 @@ QUnit.test( "phone (us)", function( assert ) {
 	assert.ok( method( "1(212)-999-2345" ), "Valid US phone number" );
 	assert.ok( method( "212 999 2344" ), "Valid US phone number" );
 	assert.ok( method( "212-999-0983" ), "Valid US phone number" );
+	assert.ok( method( "234-911-5678" ), "Valid US phone number" );
 	assert.ok( !method( "111-123-5434" ), "Invalid US phone number. Area Code cannot start with 1" );
 	assert.ok( !method( "212 123 4567" ), "Invalid US phone number. NXX cannot start with 1" );
-	assert.ok( !method( "234-911-5678" ), "Invalid US phone number, because the exchange code cannot be in the form N11" );
 	assert.ok( !method( "911-333-5678" ), "Invalid US phone number, because the area code cannot be in the form N11" );
 	assert.ok( method( "234-912-5678" ), "Valid US phone number" );
 } );
@@ -1163,6 +1230,7 @@ QUnit.test( "creditcardtypes, all", function( assert ) {
 	} );
 
 	testCardTypeByNumber( assert, "4111-1111-1111-1111", "VISA", true );
+	testCardTypeByNumber( assert, "2211-1111-1111-1114", "MasterCard", true );
 	testCardTypeByNumber( assert, "5111-1111-1111-1118", "MasterCard", true );
 	testCardTypeByNumber( assert, "6111-1111-1111-1116", "Discover", true );
 	testCardTypeByNumber( assert, "3400-0000-0000-009", "AMEX", true );
@@ -1203,6 +1271,7 @@ QUnit.test( "creditcardtypes, mastercard", function( assert ) {
 		}
 	} );
 
+	testCardTypeByNumber( assert, "2211-1111-1111-1114", "MasterCard", true );
 	testCardTypeByNumber( assert, "5111-1111-1111-1118", "MasterCard", true );
 	testCardTypeByNumber( assert, "6111-1111-1111-1116", "Discover", false );
 	testCardTypeByNumber( assert, "3400-0000-0000-009", "AMEX", false );
@@ -1316,6 +1385,7 @@ QUnit.test( "nifES", function( assert ) {
 	assert.ok( method( "15762034L" ), "NIF valid" );
 	assert.ok( method( "05122654W" ), "NIF valid" );
 	assert.ok( method( "05122654w" ), "NIF valid: lower case" );
+	assert.ok( method( "M1503708Z" ), "NIF valid. Temporary foreign nif" );
 	assert.ok( !method( "1144105R" ), "NIF invalid: less than 8 digits without zero" );
 	assert.ok( !method( "11441059 R" ), "NIF invalid: white space" );
 	assert.ok( !method( "11441059" ), "NIF invalid: no letter" );
@@ -1344,45 +1414,143 @@ QUnit.test( "nieES", function( assert ) {
 	assert.ok( method( "Y1524243R" ), "NIE valid" );
 	assert.ok( method( "X3744072V" ), "NIE valid" );
 	assert.ok( method( "X7436800A" ), "NIE valid" );
+	assert.ok( method( "X00002153Z" ), "NIE valid" );
+	assert.ok( method( "X02323232W" ), "NIE valid" );
+	assert.ok( method( "Z0569549M" ), "NIE valid" );
+	assert.ok( method( "X0479906B" ), "NIE valid" );
 	assert.ok( method( "y7875935j" ), "NIE valid: lower case" );
-	assert.ok( !method( "X0093999 K" ), "NIE inválido: white space" );
-	assert.ok( !method( "X 0093999 K" ), "NIE inválido:  white space" );
-	assert.ok( !method( "11441059" ), "NIE inválido: no letter" );
-	assert.ok( !method( "11441059PR" ), "NIE inválido: two letters" );
-	assert.ok( !method( "11440059R" ), "NIE inválido: wrong number" );
-	assert.ok( !method( "11441059S" ), "NIE inválido: wrong letter" );
-	assert.ok( !method( "114410598R" ), "NIE inválido: > 8 digits" );
-	assert.ok( !method( "11441059-R" ), "NIE inválido: dash" );
-	assert.ok( !method( "asdasdasd" ), "NIE inválido: all letters" );
-	assert.ok( !method( "11.144.059R" ), "NIE inválido: two dots" );
-	assert.ok( !method( "05.122.654R" ), "NIE inválido: starts with 0 and dots" );
-	assert.ok( !method( "5.122.654-R" ), "NIE inválido: dots and dash" );
-	assert.ok( !method( "05.122.654-R" ), "NIE inválido: starts with zero and dot and dash" );
+
+	assert.ok( !method( "X0093999 K" ), "NIE invalid: white space" );
+	assert.ok( !method( "X 0093999 K" ), "NIE invalid:  white space" );
+	assert.ok( !method( "11441059" ), "NIE invalid: no letter" );
+	assert.ok( !method( "11441059PR" ), "NIE invalid: two letters" );
+	assert.ok( !method( "11440059R" ), "NIE invalid: wrong number" );
+	assert.ok( !method( "11441059S" ), "NIE invalid: wrong letter" );
+	assert.ok( !method( "114410598R" ), "NIE invalid: > 8 digits" );
+	assert.ok( !method( "11441059-R" ), "NIE invalid: dash" );
+	assert.ok( !method( "asdasdasd" ), "NIE invalid: all letters" );
+	assert.ok( !method( "11.144.059R" ), "NIE invalid: two dots" );
+	assert.ok( !method( "05.122.654R" ), "NIE invalid: starts with 0 and dots" );
+	assert.ok( !method( "5.122.654-R" ), "NIE invalid: dots and dash" );
+	assert.ok( !method( "05.122.654-R" ), "NIE invalid: starts with zero and dot and dash" );
 } );
 
 QUnit.test( "cifES", function( assert ) {
 	var method = methodTest( "cifES" );
+	assert.ok( method( "A58818501" ), "CIF valid" );
 	assert.ok( method( "A79082244" ), "CIF valid" );
 	assert.ok( method( "A60917978" ), "CIF valid" );
 	assert.ok( method( "A39000013" ), "CIF valid" );
+	assert.ok( method( "A28315182" ), "CIF valid" );
+	assert.ok( method( "A75409573" ), "CIF valid" );
+	assert.ok( method( "A34396994" ), "CIF valid" );
+	assert.ok( method( "A08153538" ), "CIF valid" );
+	assert.ok( method( "A09681396" ), "CIF valid" );
+	assert.ok( method( "A06706303" ), "CIF valid" );
+	assert.ok( method( "A66242173" ), "CIF valid" );
+	assert.ok( method( "A61416699" ), "CIF valid" );
+	assert.ok( method( "A99545444" ), "CIF valid" );
+	assert.ok( method( "A10407252" ), "CIF valid" );
+	assert.ok( method( "A76170885" ), "CIF valid" );
+	assert.ok( method( "A83535047" ), "CIF valid" );
+	assert.ok( method( "A46031969" ), "CIF valid" );
+	assert.ok( method( "A97252910" ), "CIF valid" );
+	assert.ok( method( "A79082244" ), "CIF valid" );
+	assert.ok( !method( "A7908224D" ), "CIF invalid: digit control must be a number (4)" );
+
+	assert.ok( method( "B71413892" ), "CIF valid" );
+	assert.ok( method( "B37484755" ), "CIF valid" );
+	assert.ok( method( "B15940893" ), "CIF valid" );
+	assert.ok( method( "B55429161" ), "CIF valid" );
+	assert.ok( method( "B93337087" ), "CIF valid" );
 	assert.ok( method( "B43522192" ), "CIF valid" );
 	assert.ok( method( "B38624334" ), "CIF valid" );
-	assert.ok( method( "G72102064" ), "CIF valid" );
-	assert.ok( method( "F41190612" ), "CIF valid" );
-	assert.ok( method( "J85081081" ), "CIF valid" );
-	assert.ok( method( "S98038813" ), "CIF valid" );
-	assert.ok( method( "G32937757" ), "CIF valid" );
+	assert.ok( method( "B21920426" ), "CIF valid" );
+	assert.ok( method( "B74940156" ), "CIF valid" );
 	assert.ok( method( "B46125746" ), "CIF valid" );
-	assert.ok( method( "C27827559" ), "CIF valid" );
+	assert.ok( method( "B67077537" ), "CIF valid" );
+	assert.ok( method( "B21283155" ), "CIF valid" );
+	assert.ok( method( "B57104176" ), "CIF valid" );
+	assert.ok( method( "B25060179" ), "CIF valid" );
+	assert.ok( method( "B06536338" ), "CIF valid" );
+	assert.ok( method( "B50964592" ), "CIF valid" );
+	assert.ok( method( "B15653330" ), "CIF valid" );
+	assert.ok( method( "B83524710" ), "CIF valid" );
+	assert.ok( !method( "B8352471J" ), "CIF invalid: digit control must be a number (0)" );
+
+	assert.ok( !method( "C27827551" ), "CIF invalid: wrong digit control" );
+	assert.ok( !method( "C27827552" ), "CIF invalid: wrong digit control" );
+	assert.ok( !method( "C27827553" ), "CIF invalid: wrong digit control" );
+	assert.ok( !method( "C27827554" ), "CIF invalid: wrong digit control" );
+	assert.ok( !method( "C27827555" ), "CIF invalid: wrong digit control" );
+	assert.ok( !method( "C27827556" ), "CIF invalid: wrong digit control" );
+	assert.ok( !method( "C27827557" ), "CIF invalid: wrong digit control" );
+	assert.ok( !method( "C27827558" ), "CIF invalid: wrong digit control" );
+	assert.ok( !method( "C27827550" ), "CIF invalid: wrong digit control" );
+	assert.ok( !method( "C2782755A" ), "CIF invalid: wrong digit control" );
+	assert.ok( !method( "C2782755B" ), "CIF invalid: wrong digit control" );
+	assert.ok( !method( "C2782755C" ), "CIF invalid: wrong digit control" );
+	assert.ok( !method( "C2782755D" ), "CIF invalid: wrong digit control" );
+	assert.ok( !method( "C2782755E" ), "CIF invalid: wrong digit control" );
+	assert.ok( !method( "C2782755F" ), "CIF invalid: wrong digit control" );
+	assert.ok( !method( "C2782755G" ), "CIF invalid: wrong digit control" );
+	assert.ok( !method( "C2782755H" ), "CIF invalid: wrong digit control" );
+	assert.ok( !method( "C2782755J" ), "CIF invalid: wrong digit control" );
+	assert.ok( method( "C2782755I" ), "CIF valid. Digit control can be either a number or letter" );
+	assert.ok( method( "C27827559" ), "CIF valid. Digit control can be either a number or letter" );
+
 	assert.ok( method( "E48911572" ), "CIF valid" );
+	assert.ok( method( "E93928703" ), "CIF valid" );
+	assert.ok( method( "E17472952" ), "CIF valid" );
+	assert.ok( !method( "E1747295B" ), "CIF invalid: digit control must be a number (2)" );
+
+	assert.ok( method( "F41190612" ), "CIF valid" );
+	assert.ok( method( "F4119061B" ), "CIF valid. Digit control can be either a number or letter" );
+
+	assert.ok( method( "G72102064" ), "CIF valid" );
+	assert.ok( method( "G32937757" ), "CIF valid" );
+	assert.ok( method( "G8984953C" ), "CIF valid" );
+	assert.ok( method( "G3370454E" ), "CIF valid" );
+	assert.ok( method( "G33704545" ), "CIF valid. Digit control can be either a number or letter" );
+
+	assert.ok( method( "H48911572" ), "CIF valid" );
+	assert.ok( method( "H93928703" ), "CIF valid" );
+	assert.ok( method( "H17472952" ), "CIF valid" );
+	assert.ok( !method( "H1747295B" ), "CIF invalid: digit control must be a number (2)" );
+
+	assert.ok( !method( "I48911572" ), "CIF invalid: starts with I" );
+
+	assert.ok( method( "J85081081" ), "CIF valid" );
+	assert.ok( method( "J8508108A" ), "CIF valid" );
+
+	assert.ok( method( "K3902238I" ), "CIF valid" );
+	assert.ok( !method( "K39022389" ), "CIF invalid. Digit control must be a letter (I)" );
+
+	assert.ok( method( "M9916080F" ), "CIF valid" );
+	assert.ok( method( "M1566151E" ), "CIF valid" );
+	assert.ok( method( "M15661515" ), "CIF valid" );
+	assert.ok( method( "M4778730D" ), "CIF valid" );
+
+	assert.ok( method( "N1172218H" ), "CIF valid" );
+	assert.ok( method( "N4094938J" ), "CIF valid" );
+	assert.ok( method( "N40949380" ), "CIF valid. Digit control can be either a number or letter" );
+
+	assert.ok( method( "P5141387J" ), "CIF valid" );
+	assert.ok( method( "P9803881C" ), "CIF valid" );
+	assert.ok( !method( "P98038813" ), "CIF invalid: digit control must be a letter (C)" );
+
+	assert.ok( method( "Q5141387J" ), "CIF valid" );
+	assert.ok( method( "Q9803881C" ), "CIF valid" );
+	assert.ok( !method( "Q98038813" ), "CIF invalid: digit control must be a letter (C)" );
+
+	assert.ok( method( "S5141387J" ), "CIF valid" );
+	assert.ok( method( "S9803881C" ), "CIF valid" );
+	assert.ok( !method( "S98038813" ), "CIF invalid: digit control must be a letter (C)" );
 	assert.ok( method( "s98038813" ), "CIF valid: lower case" );
-	assert.ok( !method( "K48911572" ), "CIF invalid: starts with K" );
-	assert.ok( !method( "L48911572" ), "CIF invalid: starts with L" );
-	assert.ok( !method( "M48911572" ), "CIF invalid: starts with M" );
+
 	assert.ok( !method( "X48911572" ), "CIF invalid: starts with X" );
 	assert.ok( !method( "Y48911572" ), "CIF invalid: starts with Y" );
 	assert.ok( !method( "Z48911572" ), "CIF invalid: starts with Z" );
-	assert.ok( !method( "M15661515" ), "CIF invalid" );
 	assert.ok( !method( "Z98038813" ), "CIF invalid: wrong letter" );
 	assert.ok( !method( "B 43522192" ), "CIF invalid: white spaces" );
 	assert.ok( !method( "43522192" ), "CIF invalid: missing letter" );
@@ -1394,6 +1562,52 @@ QUnit.test( "cifES", function( assert ) {
 	assert.ok( !method( "Basdasdas" ), "CIF invalid: all letters" );
 	assert.ok( !method( "B43.522.192" ), "CIF invalid: dots" );
 	assert.ok( !method( "B-43.522.192" ), "CIF invalid: dots and dash" );
+} );
+
+QUnit.test( "nipPL", function( assert ) {
+	var method = methodTest( "nipPL" );
+	assert.ok( method( "3514242002" ), "NIP valid" );
+	assert.ok( method( "8117892840" ), "NIP valid" );
+	assert.ok( method( "7249598309" ), "NIP valid" );
+	assert.ok( method( "6853539166" ), "NIP valid" );
+	assert.ok( method( "5715750580" ), "NIP valid" );
+	assert.ok( method( "3496120813" ), "NIP valid" );
+	assert.ok( method( "1565710251" ), "NIP valid" );
+	assert.ok( method( "8190761165" ), "NIP valid" );
+	assert.ok( method( "9487499667" ), "NIP valid" );
+	assert.ok( method( "9283384684" ), "NIP valid" );
+	assert.ok( method( "3887569138" ), "NIP valid" );
+	assert.ok( method( "3962898856" ), "NIP valid" );
+	assert.ok( !method( "76355753" ), "NIP invalid: too short" );
+	assert.ok( !method( "454" ), "NIP invalid: too short" );
+	assert.ok( !method( "234565545" ), "NIP invalid: too short" );
+	assert.ok( !method( "543455" ), "NIP invalid: too short" );
+	assert.ok( !method( "6345634563456" ), "NIP invalid: too long" );
+	assert.ok( !method( "53453453455335" ), "NIP invalid: too long" );
+	assert.ok( !method( "543453760902" ), "NIP invalid: too long" );
+	assert.ok( !method( "43090012454" ), "NIP invalid: too long" );
+	assert.ok( !method( "3958250194" ), "NIP invalid: wrong checksum" );
+	assert.ok( !method( "3928541049" ), "NIP invalid: wrong checksum" );
+	assert.ok( !method( "5920397295" ), "NIP invalid: wrong checksum" );
+	assert.ok( !method( "9502947712" ), "NIP invalid: wrong checksum" );
+} );
+
+QUnit.test( "phonePL", function( assert ) {
+    var method = methodTest( "phonePL" );
+	assert.ok( method( "+48 123 456 789" ), "Valid phone PL" );
+	assert.ok( method( "00 48 123 456 789" ), "Valid phone PL" );
+	assert.ok( method( "(+48) 123 456 789" ), "Valid phone PL" );
+	assert.ok( method( "(48) 123 456 789" ), "Valid phone PL" );
+	assert.ok( method( " 13 34 56 78  9 " ), "Valid phone PL" );
+	assert.ok( method( "13 345 67 89" ), "Valid phone PL" );
+	assert.ok( !method( "100 000 000" ), "Invalid phone PL: cannot start with 10x xxx xxx" );
+	assert.ok( !method( "111 111 111" ), "Invalid phone PL: cannot start with 11x xxx xxx" );
+	assert.ok( !method( "123 456 78" ), "Invalid phone PL: too short" );
+	assert.ok( !method( "123 4567890" ), "Invalid phone PL: too long" );
+	assert.ok( !method( "700 123 456" ), "Invalid phone PL: intelligent network, premium rate" );
+	assert.ok( !method( "800 123 456" ), "Invalid phone PL: intelligent network, freephone" );
+	assert.ok( !method( "980 000 000" ), "Invalid phone PL: cannot start with 98x xxx xxx" );
+	assert.ok( !method( "990 000 000" ), "Invalid phone PL: cannot start with 99x xxx xxx" );
 } );
 
 QUnit.test( "maxWords", function( assert ) {
@@ -1503,6 +1717,19 @@ QUnit.test( "cpfBR", function( assert ) {
 	assert.ok( !method( "11144477737" ), "Invalid CPF Number: 2nd check number failed" );
 } );
 
+QUnit.test( "nisBR", function( assert ) {
+	var method = methodTest( "nisBR" );
+	assert.ok( method( "10757995753" ), "Valid NIS/PIS Number" );
+	assert.ok( method( "107.57995.75-3" ), "Valid NIS/PIS Number" );
+	assert.ok( method( "107.579.957-53" ), "Valid NIS/PIS Number" );
+	assert.ok( method( "107-579-957-53" ), "Valid NIS/PIS Number" );
+	assert.ok( method( "107.579.957.5-3" ), "Valid NIS/PIS Number" );
+	assert.ok( !method( "99999999999" ), "Invalid NIS/PIS Number: dump data" );
+	assert.ok( !method( "1075799575" ), "Invalid  NIS/PIS Number: < 11 digits" );
+	assert.ok( !method( "111444777355" ), "Invalid NIS/PIS Number: > 11 digits" );
+	assert.ok( !method( "10757995752" ), "Invalid NIS/PIS Number: check number failed" );
+} );
+
 QUnit.test( "file accept - image wildcard", function( assert ) {
 	var input = acceptFileDummyInput( "test.png", "image/png" ),
 		$form = $( "<form />" ),
@@ -1538,15 +1765,80 @@ QUnit.test( "file accept - invalid mime type", function( assert ) {
 	assert.equal( proxy(), false, "the selected file for upload has invalid mime type" );
 } );
 
-QUnit.test( "nisBR", function( assert ) {
-	var method = methodTest( "nisBR" );
-	assert.ok( method( "10757995753" ), "Valid NIS/PIS Number" );
-	assert.ok( method( "107.57995.75-3" ), "Valid NIS/PIS Number" );
-	assert.ok( method( "107.579.957-53" ), "Valid NIS/PIS Number" );
-	assert.ok( method( "107-579-957-53" ), "Valid NIS/PIS Number" );
-	assert.ok( method( "107.579.957.5-3" ), "Valid NIS/PIS Number" );
-	assert.ok( !method( "99999999999" ), "Invalid NIS/PIS Number: dump data" );
-	assert.ok( !method( "1075799575" ), "Invalid  NIS/PIS Number: < 11 digits" );
-	assert.ok( !method( "111444777355" ), "Invalid NIS/PIS Number: > 11 digits" );
-	assert.ok( !method( "10757995752" ), "Invalid NIS/PIS Number: check number failed" );
+QUnit.test( "file size - below max", function( assert ) {
+	var input = acceptFileDummyInput( "test.png", "image/png" ),
+		$form = $( "<form />" ),
+		proxy = $.proxy( $.validator.methods.maxsize, new $.validator( {}, $form[ 0 ] ), null, input, "500001" );
+	assert.ok( proxy(), "the selected file for upload is smaller than max" );
+} );
+
+QUnit.test( "file size - over max", function( assert ) {
+	var input = acceptFileDummyInput( "test.png", "image/png" ),
+		$form = $( "<form />" ),
+		proxy = $.proxy( $.validator.methods.maxsize, new $.validator( {}, $form[ 0 ] ), null, input, "500000" );
+	assert.equal( proxy(), false, "the selected file for upload is greater than max" );
+} );
+
+QUnit.test( "file maxsize - valid size", function( assert ) {
+	var selectedFiles = [ { name: "test.jpg", size: 500000 } ],
+		input = fileDummyInput( selectedFiles ),
+		$form = $( "<form />" ),
+		proxy = $.proxy( $.validator.methods.maxsize, new $.validator( {}, $form[ 0 ] ), null, input, 500000 );
+	assert.ok( proxy(), "the size of the file does not exceed the maximum" );
+} );
+
+QUnit.test( "file maxsize - valid size for each file", function( assert ) {
+	var selectedFiles = [ { name: "test1.jpg", size: 500000 }, { name: "test2.jpg", size: 500000 } ],
+		input = fileDummyInput( selectedFiles ),
+	$form = $( "<form />" ),
+		proxy = $.proxy( $.validator.methods.maxsize, new $.validator( {}, $form[ 0 ] ), null, input, 500000 );
+	assert.ok( proxy(), "the size of the each file does not exceed the maximum" );
+} );
+
+QUnit.test( "file maxsize - too big", function( assert ) {
+	var selectedFiles = [ { name: "test.jpg", size: 500001 } ],
+		input = fileDummyInput( selectedFiles ),
+		$form = $( "<form />" ),
+		proxy = $.proxy( $.validator.methods.maxsize, new $.validator( {}, $form[ 0 ] ), null, input, 500000 );
+	assert.equal( proxy(), false, "the size of the file exceeds the maximum" );
+} );
+
+QUnit.test( "file maxsize - second file too big", function( assert ) {
+	var selectedFiles = [ { name: "test1.jpg", size: 500000 }, { name: "test2.jpg", size: 500001 } ],
+		input = fileDummyInput( selectedFiles ),
+		$form = $( "<form />" ),
+		proxy = $.proxy( $.validator.methods.maxsize, new $.validator( {}, $form[ 0 ] ), null, input, 500000 );
+	assert.equal( proxy(), false, "the size of the second file exceeds the maximum" );
+} );
+
+QUnit.test( "file maxsizetotal - valid size", function( assert ) {
+	var selectedFiles = [ { name: "test1.jpg", size: 250000 }, { name: "test2.jpg", size: 250000 } ],
+		input = fileDummyInput( selectedFiles ),
+		$form = $( "<form />" ),
+		proxy = $.proxy( $.validator.methods.maxsizetotal, new $.validator( {}, $form[ 0 ] ), null, input, 500000 );
+	assert.ok( proxy(), "the size of the files together does not exceed the maximum" );
+} );
+
+QUnit.test( "file maxsizetotal - too big", function( assert ) {
+	var selectedFiles = [ { name: "test1.jpg", size: 250000 }, { name: "test2.jpg", size: 250001 } ],
+		input = fileDummyInput( selectedFiles ),
+		$form = $( "<form />" ),
+		proxy = $.proxy( $.validator.methods.maxsizetotal, new $.validator( {}, $form[ 0 ] ), null, input, 500000 );
+	assert.equal( proxy(), false, "the size of the files together exceeds the maximum" );
+} );
+
+QUnit.test( "file maxfiles - valid number", function( assert ) {
+	var selectedFiles = [ { name: "test1.jpg", size: 500000 }, { name: "test2.jpg", size: 500000 } ],
+		input = fileDummyInput( selectedFiles ),
+		$form = $( "<form />" ),
+		proxy = $.proxy( $.validator.methods.maxfiles, new $.validator( {}, $form[ 0 ] ), null, input, 2 );
+	assert.ok( proxy(), "the number of files does not exceed the maximum" );
+} );
+
+QUnit.test( "file maxfiles - too many", function( assert ) {
+	var selectedFiles = [ { name: "test1.jpg", size: 500000 }, { name: "test2.jpg", size: 500000 }, { name: "test3.jpg", size: 500000 } ],
+		input = fileDummyInput( selectedFiles ),
+		$form = $( "<form />" ),
+		proxy = $.proxy( $.validator.methods.maxfiles, new $.validator( {}, $form[ 0 ] ), null, input, 2 );
+	assert.equal( proxy(), false, "the number of files exceeds the maximum" );
 } );

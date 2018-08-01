@@ -84,14 +84,18 @@ $.mockjax( {
 QUnit.assert.hasError = function( element, text, message ) {
 	var errors = $( element ).closest( "form" ).validate().errorsFor( element[ 0 ] ),
 		actual = ( errors.length === 1 && errors.is( ":visible" ) ) ? errors.text() : "";
-	this.push( actual, actual, text, message );
+	this.pushResult( {
+		result: actual, actual: actual, expected: text, message: message
+	} );
 };
 
 // Asserts that there is no visible error for the given element
 QUnit.assert.noErrorFor = function( element, message ) {
 	var errors = $( element ).closest( "form" ).validate().errorsFor( element[ 0 ] ),
 		hidden = ( errors.length === 0 ) || ( errors.is( ":hidden" ) && ( errors.text() === "" ) );
-	this.push( hidden, hidden, true, message );
+	this.pushResult( {
+		result: hidden, actual: hidden, expected: true, message: message
+	} );
 };
 
 QUnit.module( "validator" );
@@ -163,14 +167,10 @@ QUnit.test( "valid() ???", function( assert ) {
 	v.errorList = errorList;
 	assert.ok( !v.valid(), "One error, must be invalid" );
 	v.destroy();
-	v = $( "#testForm3" ).validate( {
-		submitHandler: function() {
-			assert.ok( false, "Submit handler was called" );
-		}
-	} );
-	assert.ok( v.valid(), "No errors, must be valid and returning true, even with the submit handler" );
+	v = $( "#testForm3" ).validate();
+	assert.ok( v.valid(), "No errors, must be valid and returning true" );
 	v.errorList = errorList;
-	assert.ok( !v.valid(), "One error, must be invalid, no call to submit handler" );
+	assert.ok( !v.valid(), "One error, must be invalid" );
 } );
 
 QUnit.test( "valid(), ignores ignored elements", function( assert ) {
@@ -181,6 +181,173 @@ QUnit.test( "valid(), ignores ignored elements", function( assert ) {
 		}
 	} );
 	assert.ok( $( "#firstnamec" ).valid() );
+} );
+
+QUnit.test( "valid() should ignore elements that belong to other/nested forms", function( assert ) {
+	var form = $( "#testForm28" );
+
+	form.validate();
+
+	// 1. Test with nested form
+	form.append(
+		"<form id='testForm28-nested'>" +
+		"    <input type='text' name='f28nestedinput' required>" +
+		"</form>"
+	);
+
+	try {
+		form.valid();
+		assert.ok( true, "It should ignore the input of nested form" );
+	} catch ( err ) {
+		assert.ok( false, "Shouldn't throw an error" );
+	}
+
+	// Remove the validator atteched to testForm28
+	form.removeData( "validator" );
+	$( "#testForm28-nested" ).remove();
+
+	// 2. Test using another form outside of validated one
+	form.parent().append(
+		"<form id='testForm28-other'>" +
+		"   <input type='text' name='f28otherinput' required>" +
+		"   <input type='text' name='f28input' form='testForm28' required>" +
+		"</form>"
+	);
+
+	$( "#testForm28-other" ).validate();
+
+	try {
+		$( "#testForm28-other" ).valid();
+		assert.ok( true, "It should ignore the input of other form" );
+	} catch ( err ) {
+		assert.ok( false, "Shouldn't throw an error" );
+	}
+
+	$( "#testForm28-other" ).remove();
+} );
+
+QUnit.test( "form() should ignore elements that belong to other/nested forms", function( assert ) {
+	var form = $( "#testForm28" );
+	var v = form.validate();
+
+	form.validate();
+
+	// 1. Test with nested form
+	form.append(
+		"<form id='testForm28-nested'>" +
+		"    <input type='text' name='f28nestedinput' required>" +
+		"</form>"
+	);
+
+	try {
+		v.form();
+		assert.ok( true, "It should ignore the input of nested form" );
+	} catch ( err ) {
+		assert.ok( false, "Shouldn't throw an error" );
+	}
+
+	// Remove the validator atteched to testForm28
+	form.removeData( "validator" );
+	$( "#testForm28-nested" ).remove();
+
+	// 2. Test using another form outside of validated one
+	form.parent().append(
+		"<form id='testForm28-other'>" +
+		"   <input type='text' name='f28otherinput' required>" +
+		"   <input type='text' name='f28input' form='testForm28' required>" +
+		"</form>"
+	);
+
+	v = $( "#testForm28-other" ).validate();
+
+	try {
+		v.form();
+		assert.ok( true, "It should ignore the input of other form" );
+	} catch ( err ) {
+		assert.ok( false, "Shouldn't throw an error" );
+	}
+
+	$( "#testForm28-other" ).remove();
+} );
+
+QUnit.test( "elements() should ignore elements that belong to other/nested forms", function( assert ) {
+	var form = $( "#testForm28" );
+	var v = form.validate();
+
+	// 1. Test with nested form
+	form.append(
+		"<form id='testForm28-nested'>" +
+		"    <input type='text' name='f28nestedinput' required>" +
+		"</form>"
+	);
+
+	try {
+		assert.equal( v.elements().length, 1, "There should be only one element to validate" );
+	} catch ( err ) {
+		assert.ok( false, "Shouldn't throw an error" );
+	}
+
+	// Remove the validator atteched to testForm28
+	form.removeData( "validator" );
+	$( "#testForm28-nested" ).remove();
+
+	// 2. Test using another form outside of validated one
+	form.parent().append(
+		"<form id='testForm28-other'>" +
+		"   <input type='text' name='f28otherinput' required>" +
+		"   <input type='text' name='f28input' form='testForm28' required>" +
+		"</form>"
+	);
+
+	v = $( "#testForm28-other" ).validate();
+
+	try {
+		assert.equal( v.elements().length, 1, "There should be only one element to validate" );
+	} catch ( err ) {
+		assert.ok( false, "Shouldn't throw an error" );
+	}
+
+	$( "#testForm28-other" ).remove();
+} );
+
+QUnit.test( "Ignore elements that have form attribute set to other forms", function( assert ) {
+
+	// Append a form that contains an input with form attribute set to "testForm28"
+	$( "#testForm28" ).parent().append(
+		"<form id='testForm28-other'>" +
+		"   <input type='text' name='f28otherinput' required>" +
+		"   <input type='text' name='f28input' form='testForm28' required>" +
+		"</form>"
+	);
+
+	// Attach the plugin to the appended form
+	$( "#testForm28-other" ).validate();
+
+	// 1. Simulate typing
+	try {
+		$( "[name='f28input']", "#testForm28-other" ).trigger( "keyup" );
+		assert.ok( true, "It should ignore the input of other form" );
+	} catch ( err ) {
+		assert.ok( false, "Shouldn't throw an error while typing" );
+	}
+
+	// 2. Simulate forcussing in the input
+	try {
+		$( "[name='f28input']", "#testForm28-other" ).trigger( "focusin" );
+		assert.ok( true, "It should ignore the input of other form" );
+	} catch ( err ) {
+		assert.ok( false, "Shouldn't throw an error on focus" );
+	}
+
+	// 3. Simulate focussing out the input
+	try {
+		$( "[name='f28input']", "#testForm28-other" ).trigger( "focusout" );
+		assert.ok( true, "It should ignore the input of other form" );
+	} catch ( err ) {
+		assert.ok( false, "Shouldn't throw an error on blur" );
+	}
+
+	$( "#testForm28-other" ).remove();
 } );
 
 QUnit.test( "addMethod", function( assert ) {
@@ -313,6 +480,31 @@ QUnit.test( "check(): simple", function( assert ) {
 	assert.ok( v.size() === 0, "No more errors" );
 } );
 
+QUnit.test( "numberOfInvalids(): count invalid fields with empty message", function( assert ) {
+	assert.expect( 2 );
+
+	var v = $( "#testForm23" ).validate( {
+		rules: {
+			box1: {
+				required: true
+			},
+			box2: {
+				required: true
+			}
+		}
+	} );
+
+	var requiredMsg = $.validator.messages.required;
+	$.validator.messages.required = "";
+
+	v.form();
+
+	assert.equal( v.errorList.length, 2, "The form has two errors" );
+	assert.equal( v.numberOfInvalids(), 2, "The form has two errors" );
+
+	$.validator.messages.required = requiredMsg;
+} );
+
 QUnit.test( "hide(): input", function( assert ) {
 	assert.expect( 3 );
 	var errorLabel = $( "#errorFirstname" ),
@@ -380,13 +572,14 @@ QUnit.test( "submitHandler keeps submitting button", function( assert ) {
 	var button, event;
 
 	$( "#userForm" ).validate( {
-		debug: true,
+		debug: false,
 		submitHandler: function( form ) {
 
-			// Dunno how to test this better; this tests the implementation that uses a hidden input
 			var hidden = $( form ).find( "input:hidden" )[ 0 ];
 			assert.deepEqual( hidden.value, button.value );
 			assert.deepEqual( hidden.name, button.name );
+
+			return false;
 		}
 	} );
 	$( "#username" ).val( "bla" );
@@ -395,6 +588,80 @@ QUnit.test( "submitHandler keeps submitting button", function( assert ) {
 	event.preventDefault();
 	$.event.trigger( event, null, button );
 	$( "#userForm" ).submit();
+} );
+
+QUnit.test( "submitHandler keeps submitting button, even if descendants are clicked", function( assert ) {
+	var button = $( "#testForm27 :submit" )[ 0 ];
+	var v = $( "#testForm27" ).validate( {
+		debug: false,
+		submitHandler: function( form ) {
+
+			// Compare the button with the `submitButton` property
+			assert.deepEqual(
+				v.submitButton, button, "The submitButton property should be the same as button"
+			);
+
+			var hidden = $( form ).find( "input:hidden" )[ 0 ];
+			assert.deepEqual( hidden.value, button.value );
+			assert.deepEqual( hidden.name, button.name );
+
+			return false;
+		}
+	} );
+
+	$( "#testForm27 [name=\"year\"]" ).val( "2016" );
+
+	$( button ).find( "span" ).click();
+} );
+
+QUnit.test( "handle() should ensure the value of the used submit button is passed on for scripted submit triggered by stopRequest()", function( assert ) {
+	var $form = $( "#userForm" );
+	var button = $( ":submit", $form )[ 0 ];
+	var done = assert.async();
+	var v = $form.validate( {
+		debug: true,
+		rules: {
+			username: {
+				remote: {
+					url: "issue1508.php"
+				}
+			}
+		}
+	} );
+	var i = 1;
+
+	// Register a `submit` event after the one registred by this plugin
+	$form.on( "submit", function() {
+
+		// Ignoring the first submit that was triggered manually by clicking
+		// the submit button. The first submit will be aborted by this plugin
+		// in order to wait for `remote` method to finish validating the input
+		if ( i > 0 ) {
+			i--;
+			return false;
+		}
+
+		// The second submit is the one triggered by `stopRequest()` after the
+		// `remote` method has finished processing its attached input.
+
+		// Compare the button with the `submitButton` property
+		assert.deepEqual(
+			v.submitButton, button, "The submitButton property should be the same as button"
+		);
+
+		var hidden = $form.find( "input:hidden" )[ 0 ];
+		assert.deepEqual( hidden.value, button.value );
+		assert.deepEqual( hidden.name, button.name );
+
+		done();
+
+		return false;
+	} );
+
+	$( "input[name='username']", $form ).val( "something" );
+
+	// Submit the form
+	$( button ).click();
 } );
 
 QUnit.test( "validation triggered on radio/checkbox when using keyboard", function( assert ) {
@@ -426,6 +693,42 @@ QUnit.test( "validation triggered on radio/checkbox when using keyboard", functi
 	}
 
 	input = $( "#form :checkbox:first" );
+	for ( i = 0; i < events.length; i++ ) {
+		input.trigger( events[ i ] );
+	}
+
+	setTimeout( function() {
+
+		// Assert all event handlers fired
+		assert.equal( triggeredEvents, 6 );
+		done();
+	} );
+} );
+
+QUnit.test( "validation triggered on button", function( assert ) {
+	assert.expect( 1 );
+	var input, i, events, triggeredEvents = 0,
+		done = assert.async();
+
+	$( "#form" ).validate( {
+		onfocusin: function() {
+			triggeredEvents++;
+		},
+		onfocusout: function() {
+			triggeredEvents++;
+		},
+		onkeyup: function() {
+			triggeredEvents++;
+		}
+	} );
+
+	events = [
+		$.Event( "focusin" ),
+		$.Event( "focusout" ),
+		$.Event( "keyup" )
+	];
+
+	input = $( "#form :button" );
 	for ( i = 0; i < events.length; i++ ) {
 		input.trigger( events[ i ] );
 	}
@@ -900,7 +1203,7 @@ QUnit.test( "elementValue() returns the file input's name without the prefix 'C:
 	assert.ok( !v.element( fileInput ), "The fake file input is invalid (length = 12, maxlength = 10)" );
 } );
 
-QUnit.test( "", function( assert ) {
+QUnit.test( "Required rule should not take precedence over number & digits rules", function( assert ) {
 	var v = $( "#userForm" ).validate(),
 
 		// A fake number input
@@ -1064,6 +1367,7 @@ QUnit.test( "ajaxSubmit", function( assert ) {
 	$( "#user" ).val( "Peter" );
 	$( "#password" ).val( "foobar" );
 	jQuery( "#signupForm" ).validate( {
+		debug: false,
 		submitHandler: function( form ) {
 			jQuery( form ).ajaxSubmit( {
 				success: function( response ) {
@@ -1071,6 +1375,8 @@ QUnit.test( "ajaxSubmit", function( assert ) {
 					done();
 				}
 			} );
+
+			return false;
 		}
 	} );
 	jQuery( "#signupForm" ).triggerHandler( "submit" );
@@ -1175,6 +1481,58 @@ QUnit.test( "works on contenteditable fields on input event", function( assert )
 	assert.hasError( $( "#contenteditableNumberInvalid" ), "Please enter a valid number." );
 	assert.noErrorFor( $( "#contenteditableNumberValid" ) );
 	assert.noErrorFor( $( "#contenteditableRequiredValid" ) );
+} );
+
+QUnit.test( "Assign rules to contenteditable via .validate() method", function( assert ) {
+	assert.expect( 2 );
+	var form = $( "#_contenteditableForm" );
+	var v = form.validate( {
+		rules: {
+			first_name: {
+				required: true
+			},
+			something: {
+				required: true
+			}
+		}
+	} );
+	var firstNameRules = $( "#first_name", form ).rules();
+	var expectedRules = { required: true };
+
+	assert.deepEqual(
+		firstNameRules, expectedRules, "The rules should be the same"
+	);
+
+	v.form();
+
+	assert.equal( v.numberOfInvalids(), 2, "The form has two errors" );
+} );
+
+QUnit.test( "Assign rules to contenteditable via .rules() method", function( assert ) {
+	assert.expect( 2 );
+	var form = $( "#_contenteditableForm" );
+	var v = form.validate( {
+		rules: {
+			something: {
+				required: true
+			}
+		}
+	} );
+
+	$( "#first_name", form ).rules( "add", {
+		required: true
+	} );
+
+	var firstNameRules = $( "#first_name", form ).rules();
+	var expectedRules = { required: true };
+
+	assert.deepEqual(
+		firstNameRules, expectedRules, "The rules should be the same"
+	);
+
+	v.form();
+
+	assert.equal( v.numberOfInvalids(), 2, "The form has two errors" );
 } );
 
 QUnit.module( "misc" );
@@ -2066,7 +2424,6 @@ QUnit.test( "calling blur on ignored element", function( assert ) {
 
 	form.validate( {
 		ignore: ".ignore",
-		submitHandler: $.noop,
 		invalidHandler: function() {
 			$( "#ss1" ).blur();
 		}
@@ -2249,7 +2606,7 @@ QUnit.test( "Validation triggered on radio and checkbox via click", function( as
 } );
 
 QUnit.test( "destroy()", function( assert ) {
-	assert.expect( 6 );
+	assert.expect( 14 );
 
 	var form = $( "#testForm5" ),
 		validate = form.validate();
@@ -2260,10 +2617,21 @@ QUnit.test( "destroy()", function( assert ) {
 	assert.equal( $( "#x1", form ).hasClass( "validate-equalTo-blur" ), true, "The blur event should be bound to this element" );
 	assert.equal( $( "#x2", form ).hasClass( "validate-equalTo-blur" ), true, "The blur event should be bound to this element" );
 
+	assert.equal( $( "#y1", form ).hasClass( "validate-greaterThan-blur" ), true, "The blur event should be bound to this element" );
+	assert.equal( $( "#y2", form ).hasClass( "validate-lessThan-blur" ), true, "The blur event should be bound to this element" );
+	assert.equal( $( "#z1", form ).hasClass( "validate-greaterThanEqual-blur" ), true, "The blur event should be bound to this element" );
+	assert.equal( $( "#z2", form ).hasClass( "validate-lessThanEqual-blur" ), true, "The blur event should be bound to this element" );
+
 	validate.destroy();
 	assert.strictEqual( form.data( "validator" ), undefined );
 	assert.equal( $( "#x1", form ).hasClass( "validate-equalTo-blur" ), false, "The blur event should be unbound from this element" );
 	assert.equal( $( "#x2", form ).hasClass( "validate-equalTo-blur" ), false, "The blur event should be unbound from this element" );
+
+	assert.equal( $( "#y1", form ).hasClass( "validate-lessThan-blur" ), false, "The blur event should be unbound from this element" );
+	assert.equal( $( "#y2", form ).hasClass( "validate-greaterThan-blur" ), false, "The blur event should be unbound from this element" );
+	assert.equal( $( "#z1", form ).hasClass( "validate-equalTo-blur" ), false, "The blur event should be unbound from this element" );
+	assert.equal( $( "#z2", form ).hasClass( "validate-greaterThan-blur" ), false, "The blur event should be unbound from this element" );
+
 } );
 
 QUnit.test( "#1618: Errorlist containing more errors than it should", function( assert ) {
@@ -2320,4 +2688,3 @@ QUnit.test( "addMethod, reusing remote in custom method", function( assert ) {
 	e.val( "john.doe@gmail.com" );
 	assert.strictEqual( v.element( e ), true, "still invalid, because remote validation must block until it returns; dependency-mismatch considered as valid though" );
 } );
-
