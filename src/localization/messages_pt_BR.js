@@ -72,5 +72,6 @@ $.extend( $.validator.messages, {
 	vinUS: "O n&uacute;mero de identifica&ccedil;&atilde;o de ve&iacute;culo informado (VIN) &eacute; inv&aacute;lido.",
 	zipcodeUS: "Por favor, forne&ccedil;a um c&oacute;digo postal americano v&aacute;lido.",
 	ziprange: "O c&oacute;digo postal deve estar entre 902xx-xxxx e 905xx-xxxx",
-	cpfBR: "Por favor, forne&ccedil;a um CPF v&aacute;lido."
+	cpfBR: "Por favor, forne&ccedil;a um CPF v&aacute;lido.",
+	nisBR: "Por favor, forne&ccedil;a um NIS/PIS v&aacute;lido"
 } );
