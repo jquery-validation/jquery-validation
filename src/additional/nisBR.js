@@ -24,8 +24,10 @@ $.validator.addMethod( "nisBR", function( value ) {
 		return false;
 	}
 
+
 	//Get check number of value
 	cn = parseInt( value.substring( 10, 11 ), 10 );
+
 
 	//Get number with 10 digits of the value
 	number = parseInt( value.substring( 0, 10 ), 10 );
