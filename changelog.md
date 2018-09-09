@@ -1,3 +1,57 @@
+1.18.0 / 2018-09-09
+===================
+
+## Additional
+  * Add Brazillian PIS/NIS number validation method (#2204)
+  * Add validation method for Polish telephone number (#2136)
+  * Updated link to EAN docs in creditcard.js (#2120)
+  * Allow N11 exchange for non-geo US phone (#2098)
+  * Add new BIN range for MasterCard (#2088)
+  * Add maxfiles, maxsize and maxsizetotal methods (#2087)
+  * Add greaterThan and lessThan methods (#2061)
+
+## Build
+  * Test on node 6.x and drop node 0.12.x (#2133)
+  * Generate sub-resource integrity hashes of the distribution files (#2082)
+  * Include localization files in tagged releases (#2057)
+  * Include minified version of additional methods in npm package (#2057)
+
+## Core
+  * Don't call submitHandler when in debug mode (#2193)
+  * Cast empty data attributes to 'true' (#2182)
+  * Ignore elements that belong to other/nested forms (#2147)
+  * Use element.isContentEditable instead of hasAttribute (#2142)
+  * Add deprecation warning to 'date' method (#2138)
+  * Allow the normalizer to return any value (#2054)
+  * Guard against null & undefined values in required method (#2053)
+
+## Demo
+  * Add sample code for Bootstrap 4 usage (#2173)
+
+## Localization
+  * Added Czech and Slovak translations for STEP method (#2197)
+  * Add localized methods for italian culture (it) (#2195)
+  * Add step validation string to message_zh (#2177)
+  * Fix typo in pt-BR localization file (#2139)
+  * Add message for phonePL method (#2136)
+  * Update Norwegian language file (#2132)
+  * Update Persian language file (#2122)
+  * Update German language file (#2115)
+  * Fix meaning in Bulgarian sentence (#2112)
+  * Add remote translation to no (#2097)
+  * Fixed wrong placeholder in vi translation (#2085)
+  * Add missing format method in message_{fr,tr}.js files (#2075)
+  * Fix typos in messages_pt_BR.js (#2073)
+  * Add new danish translations (#2067)
+  * Add Swedish validation message for remote (#2066)
+
+## Test
+  * Cast empty data attributes to 'true' (#2182)
+  * Ignore elements that belong to other/nested forms (#2147)
+  * Add tests for phonePL method (#2136)
+  * Add missing description to a test (#2055)
+  * Required method should return false for null & undefined values (#2053)
+
 1.17.0 / 2017-07-20
 ==================
 
