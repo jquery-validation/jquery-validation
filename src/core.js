@@ -268,7 +268,7 @@ $.extend( $.validator, {
 		ignore: ":hidden",
 		ignoreTitle: false,
 		onfocusin: function( element ) {
-			element = this.isSummernote(element); // To Fix Bug with Summernote Plugin
+			element = this.isSummernote( element ); // To Fix Bug with Summernote Plugin
 			this.lastActive = element;
 
 			// Hide error label and remove error class on focus if enabled
@@ -280,13 +280,13 @@ $.extend( $.validator, {
 			}
 		},
 		onfocusout: function( element ) {
-			element = this.isSummernote(element); // To Fix Bug with Summernote Plugin
+			element = this.isSummernote( element ); // To Fix Bug with Summernote Plugin
 			if ( !this.checkable( element ) && ( element.name in this.submitted || !this.optional( element ) ) ) {
 				this.element( element );
 			}
 		},
 		onkeyup: function( element, event ) {
-			element = this.isSummernote(element); // To Fix Bug with Summernote Plugin
+			element = this.isSummernote( element ); // To Fix Bug with Summernote Plugin
 			// Avoid revalidate the field when pressing one of the following keys
 			// Shift       => 16
 			// Ctrl        => 17
@@ -313,7 +313,7 @@ $.extend( $.validator, {
 			}
 		},
 		onclick: function( element ) {
-			element = this.isSummernote(element); // To Fix Bug with Summernote Plugin
+			element = this.isSummernote( element ); // To Fix Bug with Summernote Plugin
 			// Click on selects, radiobuttons and checkboxes
 			if ( element.name in this.submitted ) {
 				this.element( element );
@@ -324,7 +324,7 @@ $.extend( $.validator, {
 			}
 		},
 		highlight: function( element, errorClass, validClass ) {
-			element = this.isSummernote(element); // To Fix Bug with Summernote Plugin
+			element = this.isSummernote( element ); // To Fix Bug with Summernote Plugin
 			if ( element.type === "radio" ) {
 				this.findByName( element.name ).addClass( errorClass ).removeClass( validClass );
 			} else {
@@ -332,7 +332,7 @@ $.extend( $.validator, {
 			}
 		},
 		unhighlight: function( element, errorClass, validClass ) {
-			element = this.isSummernote(element); // To Fix Bug with Summernote Plugin
+			element = this.isSummernote( element ); // To Fix Bug with Summernote Plugin
 			if ( element.type === "radio" ) {
 				this.findByName( element.name ).removeClass( errorClass ).addClass( validClass );
 			} else {
@@ -1041,9 +1041,10 @@ $.extend( $.validator, {
 			// Always apply ignore filter
 			return $( element ).not( this.settings.ignore )[ 0 ];
 		},
-		isSummernote: function(element) {
-			if ($(element).hasClass('note-editable')) {
-				return $(element).parent().parent().parent().find('textarea')
+		isSummernote: function( element ) {
+			if ( $( element ).hasClass( "note-editable" ) ) {
+				element = $( element ).parent().parent().parent().find( "textarea" );
+				return this.clean( element );
 			}
 			return element;
 		},
