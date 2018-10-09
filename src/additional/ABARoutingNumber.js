@@ -4,7 +4,7 @@
  * systems.  A very common use case would be to validate a form for
  * an ACH bill payment.
  */
-$.validator.addMethod( "ABARoutingNumber", function( value ) {
+$.validator.addMethod( "abaRoutingNumber", function( value ) {
 	var checksum = 0;
 	var tokens = value.split( "" );
 	var length = tokens.length;

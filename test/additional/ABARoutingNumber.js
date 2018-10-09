@@ -1,5 +1,5 @@
-QUnit.test( "ABARoutingNumber", function( assert ) {
-	var method = methodTest( "ABARoutingNumber" );
+QUnit.test( "abaRoutingNumber", function( assert ) {
+	var method = methodTest( "abaRoutingNumber" );
 
 	// Bounds
 	assert.ok( !method( "12345678" ), "Invalid routing number." );
