@@ -18,5 +18,6 @@ $.extend( $.validator.messages, {
 	range: $.validator.format( "Ange ett v&auml;rde mellan {0} och {1}." ),
 	max: $.validator.format( "Ange ett v&auml;rde som &auml;r mindre eller lika med {0}." ),
 	min: $.validator.format( "Ange ett v&auml;rde som &auml;r st&ouml;rre eller lika med {0}." ),
-	creditcard: "Ange ett korrekt kreditkortsnummer."
+	creditcard: "Ange ett korrekt kreditkortsnummer.",
+	pattern: "Ogiltigt format."
 } );
