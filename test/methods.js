@@ -133,7 +133,8 @@ QUnit.test( "url2 (tld optional)", function( assert ) {
 } );
 
 QUnit.test( "email", function( assert ) {
-	var method = methodTest( "email" );
+	var method = methodTest( "email" ),
+		v;
 	assert.ok( method( "name@domain.tld" ), "Valid email" );
 	assert.ok( method( "name@domain.tl" ), "Valid email" );
 	assert.ok( method( "bart+bart@tokbox.com" ), "Valid email" );
@@ -152,6 +153,17 @@ QUnit.test( "email", function( assert ) {
 	assert.ok( !method( "name,@domain.tld" ), "Invalid email" );
 	assert.ok( !method( "name;@domain.tld" ), "Invalid email" );
 	assert.ok( !method( "name;@domain.tld." ), "Invalid email" );
+
+	v = jQuery( "#testForm28" ).validate();
+	method = function( value, param ) {
+		return $.validator.methods.email.call( v, value, $( "#email1" )[ 0 ], param );
+	};
+
+	assert.ok( !method( "name1@domain.tld,name2@domain.tld", false ), "Invalid single email" );
+	assert.ok( method( "name1@domain.tld,name2@domain.tld", true ), "Valid multiple emails" );
+	assert.ok( method( "name1@domain.tld, name2@domain.tld", true ), "Valid multiple emails" );
+	assert.ok( !method( "name1@domain.tld;name2@domain.tld", true ), "Invalid multiple emails due to separator" );
+	assert.ok( !method( "name1@domain.tld;name2", true ), "Invalid multiple emails" );
 } );
 
 QUnit.test( "number", function( assert ) {
