@@ -58,7 +58,7 @@ $.extend( $.fn, {
 					//   - A user defined a `submitHandler`
 					//   - There was a pending request due to `remote` method and `stopRequest()`
 					//     was called to submit the form in case it's valid
-					if ( validator.submitButton && ( validator.settings.submitHandler || validator.formSubmitted ) ) {
+					if ( validator.submitButton && ( validator.settings.submitHandler || validator.formSubmitted ) && !validator.settings.disableSubmitSec ) {
 						hidden = $( "<input type='hidden'/>" )
 							.attr( "name", validator.submitButton.name )
 							.val( $( validator.submitButton ).val() )
@@ -261,6 +261,7 @@ $.extend( $.validator, {
 		validClass: "valid",
 		errorElement: "label",
 		focusCleanup: false,
+		disableSubmitSec: false,
 		focusInvalid: true,
 		errorContainer: $( [] ),
 		errorLabelContainer: $( [] ),
