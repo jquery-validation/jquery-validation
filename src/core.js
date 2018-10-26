@@ -672,9 +672,9 @@ $.extend( $.validator, {
 			return $( selector )[ 0 ];
 		},
 
-		errors: function() {
+		errors: function( errorContext ) {
 			var errorClass = this.settings.errorClass.split( " " ).join( "." );
-			return $( this.settings.errorElement + "." + errorClass, this.errorContext );
+			return $( this.settings.errorElement + "." + errorClass, errorContext ? errorContext : this.errorContext  );
 		},
 
 		resetInternals: function() {
@@ -1025,9 +1025,17 @@ $.extend( $.validator, {
 					.replace( /\s+/g, ", #" );
 			}
 
-			return this
+			var errors = this
 				.errors()
 				.filter( selector );
+
+			if ( errors.length === 0 && $( element ).closest( element.form ).length === 0 ) {
+				errors = this
+					.errors( $( element ).parent() )
+					.filter( selector );
+			}
+
+			return errors;
 		},
 
 		// See https://api.jquery.com/category/selectors/, for CSS
