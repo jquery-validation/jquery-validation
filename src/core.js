@@ -623,8 +623,13 @@ $.extend( $.validator, {
 				rulesCache = {};
 
 			// Select all valid inputs inside the form (no submit or reset buttons)
-			return $( this.currentForm )
-			.find( "input, select, textarea, [contenteditable]" )
+			var $elements;
+			if ( this.currentForm.elements ) {
+				$elements = $( this.currentForm ).find( "[contenteditable]" ).add( this.currentForm.elements );
+			} else {
+				$elements = $( this.currentForm ).find( "input, select, textarea, [contenteditable]" );
+			}
+			return $elements
 			.not( ":submit, :reset, :image, :disabled" )
 			.not( this.settings.ignore )
 			.filter( function() {
