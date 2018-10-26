@@ -414,16 +414,25 @@ $.extend( $.validator, {
 				}
 			}
 
+			var TEXT_EVENTS = "focusin.validate focusout.validate keyup.validate";
+			var TEXT_FILTER = ":text, [type='password'], [type='file'], select, textarea, [type='number'], [type='search'], " +
+				"[type='tel'], [type='url'], [type='email'], [type='datetime'], [type='date'], [type='month'], " +
+				"[type='week'], [type='time'], [type='datetime-local'], [type='range'], [type='color'], " +
+				"[type='radio'], [type='checkbox'], [contenteditable], [type='button']";
+			var SELECT_EVENTS = "click.validate";
+			var SELECT_FILTER = "select, option, [type='radio'], [type='checkbox']";
 			$( this.currentForm )
-				.on( "focusin.validate focusout.validate keyup.validate",
-					":text, [type='password'], [type='file'], select, textarea, [type='number'], [type='search'], " +
-					"[type='tel'], [type='url'], [type='email'], [type='datetime'], [type='date'], [type='month'], " +
-					"[type='week'], [type='time'], [type='datetime-local'], [type='range'], [type='color'], " +
-					"[type='radio'], [type='checkbox'], [contenteditable], [type='button']", delegate )
+				.on( TEXT_EVENTS, TEXT_FILTER, delegate )
 
 				// Support: Chrome, oldIE
 				// "select" is provided as event.target when clicking a option
-				.on( "click.validate", "select, option, [type='radio'], [type='checkbox']", delegate );
+				.on( SELECT_EVENTS, SELECT_FILTER, delegate );
+			$( this.currentForm.elements ).filter( function( i, el ) {
+				return $( el ).closest( el.form ).length === 0;
+			} )
+				.filter( TEXT_FILTER )
+					.on( TEXT_EVENTS, delegate ).end()
+				.filter( SELECT_FILTER ).on( SELECT_EVENTS, delegate );
 
 			if ( this.settings.invalidHandler ) {
 				$( this.currentForm ).on( "invalid-form.validate", this.settings.invalidHandler );
