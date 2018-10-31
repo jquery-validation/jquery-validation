@@ -13,7 +13,7 @@ $.validator.addMethod( "cnhBR", function( value ) {
   }
 
   var sum = 0, dsc = 0, firstChar,
-		firstCN, secondCN, i, j;
+		firstCN, secondCN, i, j, v;
 
   firstChar = value.charAt( 0 );
 
