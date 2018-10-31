@@ -41,7 +41,7 @@ $.validator.addMethod( "cnhBR", function( value ) {
   if ( secondCN >= 10 ) {
     secondCN = 0;
   } else {
-    secondCN = secondCN - dsc;  
+    secondCN = secondCN - dsc;
   }
 
   return ( String( firstCN ).concat( secondCN ) == value.substr( -2 ) );
