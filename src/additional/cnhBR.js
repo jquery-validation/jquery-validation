@@ -15,14 +15,14 @@ $.validator.addMethod( "cnhBR", function( value ) {
 	var sum = 0, dsc = 0, firstChar,
 		firstCN, secondCN, i, j;
 
-  firstChar = value.charAt( 0 )
-  
+  firstChar = value.charAt( 0 );
+
   if( firstChar.repeat( 11 ) == value ) {
     return false;
   }
 
-	// Step 1 - using first Check Number:
-	for ( var i = 0, j = 9, v = 0; i < 9; ++i, --j ) {
+  // Step 1 - using first Check Number:
+  for ( var i = 0, j = 9, v = 0; i < 9; ++i, --j ) {
     sum += +( value.charAt( i ) * j );
   }
   
