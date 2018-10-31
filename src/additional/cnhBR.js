@@ -4,15 +4,15 @@
  */
 $.validator.addMethod( "cnhBR", function( value ) {
 
-	// Removing special characters from value
-	value = value.replace( /([~!@#$%^&*()_+=`{}\[\]\-|\\:;'<>,.\/? ])+/g, "" );
+  // Removing special characters from value
+  value = value.replace( /([~!@#$%^&*()_+=`{}\[\]\-|\\:;'<>,.\/? ])+/g, "" );
 
-	// Checking value to have 11 digits only
-	if ( value.length !== 11 ) {
-		return false;
-	}
+  // Checking value to have 11 digits only
+  if ( value.length !== 11 ) {
+    return false;
+  }
 
-	var sum = 0, dsc = 0, firstChar,
+  var sum = 0, dsc = 0, firstChar,
 		firstCN, secondCN, i, j;
 
   firstChar = value.charAt( 0 );
