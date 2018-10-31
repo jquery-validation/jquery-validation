@@ -15,26 +15,26 @@ $.validator.addMethod( "cnhBR", function( value ) {
 	var sum = 0, dsc = 0, firstChar,
 		firstCN, secondCN, i, j;
 
-  firstChar = value.charAt(0)
+  firstChar = value.charAt( 0 )
   
-  if(firstChar.repeat(11) == value) {
+  if( firstChar.repeat( 11 ) == value ) {
     return false;
   }
 
 	// Step 1 - using first Check Number:
 	for ( var i = 0, j = 9, v = 0; i < 9; ++i, --j ) {
-    sum += +( value.charAt(i) * j );
+    sum += +( value.charAt( i ) * j );
   }
   
   firstCN = sum % 11;
-  if ( firstCN >= 10) {
+  if ( firstCN >= 10 ) {
     firstCN = 0;
     dsc = 2;
   }
   
   sum = 0;
   for ( i = 0, j = 1, v = 0; i < 9; ++i, ++j ) {
-    sum += +(value.charAt(i) * j);
+    sum += +( value.charAt( i ) * j );
   }
   
   secondCN = sum % 11;
@@ -44,6 +44,6 @@ $.validator.addMethod( "cnhBR", function( value ) {
     secondCN = secondCN - dsc;  
   }
   
-  return (String(firstCN).concat(secondCN) == value.substr(-2));
+  return ( String( firstCN ).concat( secondCN ) == value.substr( -2 ) );
 
 }, "Please specify a valid CNH number" );
