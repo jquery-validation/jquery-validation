@@ -17,7 +17,7 @@ $.validator.addMethod( "cnhBR", function( value ) {
 
   firstChar = value.charAt( 0 );
 
-  if( firstChar.repeat( 11 ) == value ) {
+  if ( firstChar.repeat( 11 ) == value ) {
     return false;
   }
 
@@ -25,25 +25,25 @@ $.validator.addMethod( "cnhBR", function( value ) {
   for ( var i = 0, j = 9, v = 0; i < 9; ++i, --j ) {
     sum += +( value.charAt( i ) * j );
   }
-  
+
   firstCN = sum % 11;
   if ( firstCN >= 10 ) {
     firstCN = 0;
     dsc = 2;
   }
-  
+
   sum = 0;
   for ( i = 0, j = 1, v = 0; i < 9; ++i, ++j ) {
     sum += +( value.charAt( i ) * j );
   }
-  
+
   secondCN = sum % 11;
   if ( secondCN >= 10 ) {
     secondCN = 0;
   } else {
     secondCN = secondCN - dsc;  
   }
-  
+
   return ( String( firstCN ).concat( secondCN ) == value.substr( -2 ) );
 
 }, "Please specify a valid CNH number" );
