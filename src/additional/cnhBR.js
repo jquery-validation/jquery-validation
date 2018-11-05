@@ -17,7 +17,7 @@ $.validator.addMethod( "cnhBR", function( value ) {
 
   firstChar = value.charAt( 0 );
 
-  if ( firstChar.repeat( 11 ) === value ) {
+  if ( new Array( 12 ).join( firstChar ) === value ) {
     return false;
   }
 
