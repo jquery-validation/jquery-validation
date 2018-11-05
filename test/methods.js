@@ -868,6 +868,15 @@ QUnit.test( "mobileUK", function( assert ) {
 	assert.ok( !method( "+4444342343234" ), "Invalid UK Mobile Number" );
 } );
 
+QUnit.test( "mobileRU", function( assert ) {
+	var method = methodTest( "mobileRU" );
+	assert.ok( method( "+74957207089" ), "Valid RU Mobile Number" );
+	assert.ok( method( "84957207089" ), "Valid RU Mobile Number" );
+	assert.ok( !method( "+447604234323" ), "Invalid RU Mobile Number" );
+	assert.ok( !method( "9477342343234" ), "Invalid RU Mobile Number" );
+	assert.ok( !method( "344342343234" ), "Invalid RU Mobile Number" );
+} );
+
 QUnit.test( "dateITA", function( assert ) {
 	var method = methodTest( "dateITA" );
 	assert.ok( method( "01/01/1900" ), "Valid date ITA" );
