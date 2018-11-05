@@ -74,5 +74,6 @@ $.extend( $.validator.messages, {
 	ziprange: "O c&oacute;digo postal deve estar entre 902xx-xxxx e 905xx-xxxx",
 	cpfBR: "Por favor, forne&ccedil;a um CPF v&aacute;lido.",
 	nisBR: "Por favor, forne&ccedil;a um NIS/PIS v&aacute;lido",
-	cnhBR: "Por favor, forne&ccedil;a um CNH v&aacute;lido."
+	cnhBR: "Por favor, forne&ccedil;a um CNH v&aacute;lido.",
+	cnpjBR: "Por favor, forne&ccedil;a um CNPJ v&aacute;lido."
 } );

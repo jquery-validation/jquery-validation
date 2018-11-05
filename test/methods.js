@@ -1717,6 +1717,26 @@ QUnit.test( "cpfBR", function( assert ) {
 	assert.ok( !method( "11144477737" ), "Invalid CPF Number: 2nd check number failed" );
 } );
 
+QUnit.test( "cnpjBR", function( assert ) {
+	var method = methodTest( "cnpjBR" );
+	assert.ok( method( "18517604000175" ), "Valid CNPJ Number" );
+	assert.ok( method( "18.517.604/0001-75" ), "Valid CNPJ Number" );
+	assert.ok( method( "06994660000111" ), "Valid CNPJ Number" );
+	assert.ok( method( "06.994.660/0001-11" ), "Valid CNPJ Number" );
+	assert.ok( !method( "00000000000000" ), "Invalid CNPJ Number: dump data" );
+	assert.ok( !method( "11111111111111" ), "Invalid CNPJ Number: dump data" );
+	assert.ok( !method( "22222222222222" ), "Invalid CNPJ Number: dump data" );
+	assert.ok( !method( "99999999999999" ), "Invalid CNPJ Number: dump data" );
+	assert.ok( !method( "8517604000175" ), "Invalid CNPJ Number: < 14 digits" );
+	assert.ok( !method( "8.517.604/0001-75" ), "Invalid CNPJ Number: < 14 digits" );
+	assert.ok( !method( "1185176040001750" ), "Invalid CNPJ Number: > 14 digits" );
+	assert.ok( !method( "18.517.604/0001-750" ), "Invalid CNPJ Number: > 14 digits" );
+	assert.ok( !method( "18517604000174" ), "Invalid CNPJ Number" );
+	assert.ok( !method( "18.517.604/0001-74" ), "Invalid CNPJ Number" );
+	assert.ok( !method( "06994660000211" ), "Invalid CNPJ Number" );
+	assert.ok( !method( "06.994.660/0002-11" ), "Invalid CNPJ Number" );
+} );
+
 QUnit.test( "nisBR", function( assert ) {
 	var method = methodTest( "nisBR" );
 	assert.ok( method( "10757995753" ), "Valid NIS/PIS Number" );
