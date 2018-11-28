@@ -2,7 +2,7 @@
 	"name": "jquery-validation",
 	"title": "jQuery Validation Plugin",
 	"description": "Client-side form validation made easy",
-	"version": "1.18.1-pre",
+	"version": "1.19.0-pre",
 	"homepage": "https://jqueryvalidation.org/",
 	"license": "MIT",
 	"author": {
