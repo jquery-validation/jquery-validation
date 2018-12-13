@@ -703,9 +703,9 @@ $.extend( $.validator, {
 			}
 
 			if ( isContentEditable ) {
-				val = $element.text();
-			} else {
 				val = $element.val();
+			} else {
+				val = $element.text();
 			}
 
 			if ( type === "file" ) {
