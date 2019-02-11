@@ -625,8 +625,8 @@ $.extend( $.validator, {
 				rulesCache = {};
 
 			// Select all valid inputs inside the form (no submit or reset buttons)
-			return $( this.currentForm )
-			.find( "input, select, textarea, [contenteditable]" )
+			return $( this.currentForm ).fields()
+			.filter( "input, select, textarea, [contenteditable]" )
 			.not( ":submit, :reset, :image, :disabled" )
 			.not( this.settings.ignore )
 			.filter( function() {
@@ -664,7 +664,7 @@ $.extend( $.validator, {
 
 		errors: function() {
 			var errorClass = this.settings.errorClass.split( " " ).join( "." );
-			return $( this.settings.errorElement + "." + errorClass, this.errorContext );
+			return $( this.settings.errorElement + "." + errorClass );
 		},
 
 		resetInternals: function() {
