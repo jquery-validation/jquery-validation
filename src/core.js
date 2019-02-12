@@ -625,8 +625,6 @@ $.extend( $.validator, {
 				rulesCache = {};
 
 			// Select all valid inputs inside the form (no submit or reset buttons)
-			console.error( $.merge( $( this.currentForm ).find( "input, select, textarea, [contenteditable]" ),
-            $( this.currentForm.elements ).filter( "input, select, textarea, [contenteditable]" ) ) );
 			return $.merge( $( this.currentForm ).find( "input, select, textarea, [contenteditable]" ),
             $( this.currentForm.elements ).filter( "input, select, textarea, [contenteditable]" ) )
 			.not( ":submit, :reset, :image, :disabled" )
