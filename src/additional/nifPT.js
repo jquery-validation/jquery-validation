@@ -27,15 +27,25 @@ jQuery.validator.addMethod( "nifPT", function( value, element )
         var control;
 
         if ( mod === 0 || mod === 1 )
+		{
             control = 0;
+		}
         else
+		{
             control = 11 - mod;
+		}
 
-        if ( nif[8] === control )
+        if ( nif[ 8 ] === control )
+		{
             return true;
+		}
         else
+		{
             return false;
+		}
     }
     else
+	{
         return false;
+	}
 }, "Please specify a valid NIF number." );
