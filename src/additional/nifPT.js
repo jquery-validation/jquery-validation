@@ -29,8 +29,7 @@ jQuery.validator.addMethod( "nifPT", function( value, element )
         if ( mod === 0 || mod === 1 )
 		{
             control = 0;
-		}
-        else
+		} else
 		{
             control = 11 - mod;
 		}
@@ -38,13 +37,11 @@ jQuery.validator.addMethod( "nifPT", function( value, element )
         if ( nif[ 8 ] === control )
 		{
             return true;
-		}
-        else
+		} else
 		{
             return false;
 		}
-    }
-    else
+    } else
 	{
         return false;
 	}
