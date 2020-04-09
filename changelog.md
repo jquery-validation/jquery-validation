@@ -760,7 +760,7 @@ The hashes for the 1.19.0 release can be found in the file [`jquery-validation-s
 * Added dependency feature: The requires method accepts both String (jQuery expressions) and Functions as the argument
 * Heavily improved customizing of error message display: Use normal messages and show/hide an additional container; Completely replace message display with own mechanism (while being able to delegate to the default handler; Customize placing of generated labels (instead of default below-element)
 * Fixed two major bugs in IE (error containers) and Opera (metadata)
-* Modified validation methods to accept empty fields as valid (exception: of course �required� and also �equalTo� methods)
+* Modified validation methods to accept empty fields as valid (exception: of course "required" and also "equalTo" methods)
 * Renamed "min" to "minLength", "max" to "maxLength", "length" to "rangeLength"
 * Added "minValue", "maxValue" and "rangeValue"
 * Streamlined API for support of different events. The default, submit, can be disabled. If any event is specified, that is applied to each element (instead of the entire form). Combining keyup-validation with submit-validation is now extremely easy to setup
