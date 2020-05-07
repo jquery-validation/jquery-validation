@@ -1,3 +1,12 @@
+// JQuery trim is deprecated, polyfill native js method if not defined
+if ( !String.prototype.trim ) {
+
+	// https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/trim#Polyfill
+	String.prototype.trim = function() {
+		return this.replace( /^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g, "" );
+	};
+}
+
 $.extend( $.fn, {
 
 	// https://jqueryvalidation.org/validate/
@@ -203,13 +212,13 @@ $.extend( $.expr.pseudos || $.expr[ ":" ], {		// '|| $.expr[ ":" ]' here enables
 
 	// https://jqueryvalidation.org/blank-selector/
 	blank: function( a ) {
-		return !$.trim( "" + $( a ).val() );
+		return !( "" + $( a ).val() ).trim();
 	},
 
 	// https://jqueryvalidation.org/filled-selector/
 	filled: function( a ) {
 		var val = $( a ).val();
-		return val !== null && !!$.trim( "" + val );
+		return val !== null && !!( "" + val ).trim();
 	},
 
 	// https://jqueryvalidation.org/unchecked-selector/
