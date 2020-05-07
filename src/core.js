@@ -1,10 +1,3 @@
-// JQuery trim is deprecated, provide a trim method based on String.prototype.trim
-function trim( str ) {
-
-	// https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/trim#Polyfill
-	return str.replace( /^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g, "" );
-}
-
 $.extend( $.fn, {
 
 	// https://jqueryvalidation.org/validate/
@@ -204,6 +197,13 @@ $.extend( $.fn, {
 		return data;
 	}
 } );
+
+// JQuery trim is deprecated, provide a trim method based on String.prototype.trim
+var trim = function( str ) {
+
+	// https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/trim#Polyfill
+	return str.replace( /^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g, "" );
+};
 
 // Custom selectors
 $.extend( $.expr.pseudos || $.expr[ ":" ], {		// '|| $.expr[ ":" ]' here enables backwards compatibility to jQuery 1.7. Can be removed when dropping jQ 1.7.x support
