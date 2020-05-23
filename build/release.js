@@ -13,6 +13,7 @@
     git fetch --tags upstream
     git checkout tags/X.YY.Z
     npm publish
+- double check NPM for new release https://www.npmjs.com/package/jquery-validation
 - Update MS CDN (Ping Chris Sfanos)
 - Check jsdelivr CDN: new git tags are automatically pulled, tested & merged via https://github.com/jsdelivr/jsdelivr/pulls
 - Check cdnjs CDN: new git tags are automatically committed into https://github.com/cdnjs/cdnjs/commits/master or ping @cdnjs
