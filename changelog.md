@@ -1,3 +1,9 @@
+1.19.2 / 2020-05-23
+===================
+
+## Core
+  * Core: Fixes deprecated calls to jQuery trim for compat with newer jQuery core versions (#2328)
+
 1.19.1 / 2019-06-15
 ===================
 
