@@ -1313,7 +1313,7 @@ $.extend( $.validator, {
 
 		// Evaluate parameters
 		$.each( rules, function( rule, parameter ) {
-			rules[ rule ] = $.isFunction( parameter ) && rule !== "normalizer" ? parameter( element ) : parameter;
+			rules[ rule ] = typeof parameter === "function" && rule !== "normalizer" ? parameter( element ) : parameter;
 		} );
 
 		// Clean number parameters
@@ -1325,7 +1325,7 @@ $.extend( $.validator, {
 		$.each( [ "rangelength", "range" ], function() {
 			var parts;
 			if ( rules[ this ] ) {
-				if ( $.isArray( rules[ this ] ) ) {
+				if ( Array.isArray( rules[ this ] ) ) {
 					rules[ this ] = [ Number( rules[ this ][ 0 ] ), Number( rules[ this ][ 1 ] ) ];
 				} else if ( typeof rules[ this ] === "string" ) {
 					parts = rules[ this ].replace( /[\[\]]/g, "" ).split( /[\s,]+/ );
@@ -1454,19 +1454,19 @@ $.extend( $.validator, {
 
 		// https://jqueryvalidation.org/minlength-method/
 		minlength: function( value, element, param ) {
-			var length = $.isArray( value ) ? value.length : this.getLength( value, element );
+			var length = Array.isArray( value ) ? value.length : this.getLength( value, element );
 			return this.optional( element ) || length >= param;
 		},
 
 		// https://jqueryvalidation.org/maxlength-method/
 		maxlength: function( value, element, param ) {
-			var length = $.isArray( value ) ? value.length : this.getLength( value, element );
+			var length = Array.isArray( value ) ? value.length : this.getLength( value, element );
 			return this.optional( element ) || length <= param;
 		},
 
 		// https://jqueryvalidation.org/rangelength-method/
 		rangelength: function( value, element, param ) {
-			var length = $.isArray( value ) ? value.length : this.getLength( value, element );
+			var length = Array.isArray( value ) ? value.length : this.getLength( value, element );
 			return this.optional( element ) || ( length >= param[ 0 ] && length <= param[ 1 ] );
 		},
 
