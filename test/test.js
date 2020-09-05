@@ -202,7 +202,7 @@ QUnit.test( "valid() should ignore elements that belong to other/nested forms", 
 		assert.ok( false, "Shouldn't throw an error" );
 	}
 
-	// Remove the validator atteched to testForm28
+	// Remove the validator attached to testForm28
 	form.removeData( "validator" );
 	$( "#testForm28-nested" ).remove();
 
@@ -246,7 +246,7 @@ QUnit.test( "form() should ignore elements that belong to other/nested forms", f
 		assert.ok( false, "Shouldn't throw an error" );
 	}
 
-	// Remove the validator atteched to testForm28
+	// Remove the validator attached to testForm28
 	form.removeData( "validator" );
 	$( "#testForm28-nested" ).remove();
 
@@ -287,7 +287,7 @@ QUnit.test( "elements() should ignore elements that belong to other/nested forms
 		assert.ok( false, "Shouldn't throw an error" );
 	}
 
-	// Remove the validator atteched to testForm28
+	// Remove the validator attached to testForm28
 	form.removeData( "validator" );
 	$( "#testForm28-nested" ).remove();
 
