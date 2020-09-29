@@ -500,9 +500,6 @@ QUnit.test( "remote", function( assert ) {
 					required: "Please",
 					remote: jQuery.validator.format( "{0} in use" )
 				}
-			},
-			submitHandler: function() {
-				assert.ok( false, "submitHandler may never be called when validating only elements" );
 			}
 		} ),
 		done = assert.async();
@@ -595,9 +592,6 @@ QUnit.test( "remote extensions", function( assert ) {
 				username: {
 					required: "Please"
 				}
-			},
-			submitHandler: function() {
-				assert.ok( false, "submitHandler may never be called when validating only elements" );
 			}
 		} ),
 		done = assert.async();
@@ -872,6 +866,15 @@ QUnit.test( "mobileUK", function( assert ) {
 	assert.ok( !method( "+447604234323" ), "Invalid UK Mobile Number" );
 	assert.ok( !method( "+4477342343234" ), "Invalid UK Mobile Number" );
 	assert.ok( !method( "+4444342343234" ), "Invalid UK Mobile Number" );
+} );
+
+QUnit.test( "mobileRU", function( assert ) {
+	var method = methodTest( "mobileRU" );
+	assert.ok( method( "+74957207089" ), "Valid RU Mobile Number" );
+	assert.ok( method( "84957207089" ), "Valid RU Mobile Number" );
+	assert.ok( !method( "+447604234323" ), "Invalid RU Mobile Number" );
+	assert.ok( !method( "9477342343234" ), "Invalid RU Mobile Number" );
+	assert.ok( !method( "344342343234" ), "Invalid RU Mobile Number" );
 } );
 
 QUnit.test( "dateITA", function( assert ) {
@@ -1721,6 +1724,39 @@ QUnit.test( "cpfBR", function( assert ) {
 	assert.ok( !method( "111444777355" ), "Invalid CPF Number: > 11 digits" );
 	assert.ok( !method( "11144477715" ), "Invalid CPF Number: 1st check number failed" );
 	assert.ok( !method( "11144477737" ), "Invalid CPF Number: 2nd check number failed" );
+} );
+
+QUnit.test( "cnpjBR", function( assert ) {
+	var method = methodTest( "cnpjBR" );
+	assert.ok( method( "18517604000175" ), "Valid CNPJ Number" );
+	assert.ok( method( "18.517.604/0001-75" ), "Valid CNPJ Number" );
+	assert.ok( method( "06994660000111" ), "Valid CNPJ Number" );
+	assert.ok( method( "06.994.660/0001-11" ), "Valid CNPJ Number" );
+	assert.ok( !method( "00000000000000" ), "Invalid CNPJ Number: dump data" );
+	assert.ok( !method( "11111111111111" ), "Invalid CNPJ Number: dump data" );
+	assert.ok( !method( "22222222222222" ), "Invalid CNPJ Number: dump data" );
+	assert.ok( !method( "99999999999999" ), "Invalid CNPJ Number: dump data" );
+	assert.ok( !method( "8517604000175" ), "Invalid CNPJ Number: < 14 digits" );
+	assert.ok( !method( "8.517.604/0001-75" ), "Invalid CNPJ Number: < 14 digits" );
+	assert.ok( !method( "1185176040001750" ), "Invalid CNPJ Number: > 14 digits" );
+	assert.ok( !method( "18.517.604/0001-750" ), "Invalid CNPJ Number: > 14 digits" );
+	assert.ok( !method( "18517604000174" ), "Invalid CNPJ Number" );
+	assert.ok( !method( "18.517.604/0001-74" ), "Invalid CNPJ Number" );
+	assert.ok( !method( "06994660000211" ), "Invalid CNPJ Number" );
+	assert.ok( !method( "06.994.660/0002-11" ), "Invalid CNPJ Number" );
+} );
+
+QUnit.test( "nisBR", function( assert ) {
+	var method = methodTest( "nisBR" );
+	assert.ok( method( "10757995753" ), "Valid NIS/PIS Number" );
+	assert.ok( method( "107.57995.75-3" ), "Valid NIS/PIS Number" );
+	assert.ok( method( "107.579.957-53" ), "Valid NIS/PIS Number" );
+	assert.ok( method( "107-579-957-53" ), "Valid NIS/PIS Number" );
+	assert.ok( method( "107.579.957.5-3" ), "Valid NIS/PIS Number" );
+	assert.ok( !method( "99999999999" ), "Invalid NIS/PIS Number: dump data" );
+	assert.ok( !method( "1075799575" ), "Invalid  NIS/PIS Number: < 11 digits" );
+	assert.ok( !method( "111444777355" ), "Invalid NIS/PIS Number: > 11 digits" );
+	assert.ok( !method( "10757995752" ), "Invalid NIS/PIS Number: check number failed" );
 } );
 
 QUnit.test( "file accept - image wildcard", function( assert ) {

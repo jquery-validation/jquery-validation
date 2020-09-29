@@ -157,7 +157,7 @@ QUnit.test( "rules(), class and attribute combinations", function( assert ) {
 
 	$( "#v2" ).validate( {
 		rules: {
-			"v2-i7": {
+			"v2-i9": {
 				required: true,
 				minlength: 2,
 				customMethod: true
@@ -173,8 +173,10 @@ QUnit.test( "rules(), class and attribute combinations", function( assert ) {
 	jQuery.validator.autoCreateRanges = true;
 	assert.deepEqual( $( "#v2-i5" ).rules(), { required: true, customMethod1: "123", rangelength: [ 2, 5 ] } );
 	assert.deepEqual( $( "#v2-i6" ).rules(), { required: true, customMethod2: true, rangelength: [ 2, 5 ] } );
+	assert.deepEqual( $( "#v2-i7" ).rules(), { required: true, number: true } );
+	assert.deepEqual( $( "#v2-i8" ).rules(), { required: true, number: true } );
 	jQuery.validator.autoCreateRanges = false;
-	assert.deepEqual( $( "#v2-i7" ).rules(), { required: true, minlength: 2, customMethod: true } );
+	assert.deepEqual( $( "#v2-i9" ).rules(), { required: true, minlength: 2, customMethod: true } );
 
 	delete $.validator.methods.customMethod1;
 	delete $.validator.messages.customMethod1;

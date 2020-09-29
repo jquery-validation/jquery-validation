@@ -15,8 +15,10 @@
 	<script src="rules.js"></script>
 	<script src="messages.js"></script>
 	<script src="methods.js"></script>
+	<script src="additional/cnhBR.js"></script>
 	<script src="additional/creditcard.js"></script>
 	<script src="additional/netmask.js"></script>
+	<script src="additional/abaRoutingNumber.js"></script>
 	<script src="aria.js"></script>
 	<script src="error-placement.js"></script>
 </head>
@@ -277,7 +279,9 @@
 		<input id="v2-i4" name="v2-i4" class="required" minlength="2">
 		<input id="v2-i5" name="v2-i5" class="required" minlength="2" maxlength="5" customMethod1="123">
 		<input id="v2-i6" name="v2-i6" class="required customMethod2" data-rule-maxlength="5" data-rule-minlength="2">
-		<input id="v2-i7" name="v2-i7">
+		<input id="v2-i7" name="v2-i7" data-rule-number data-rule-required>
+		<input id="v2-i8" name="v2-i8" data-rule-number="" data-rule-required="">
+		<input id="v2-i9" name="v2-i9">
 	</form>
 	<form id="checkables">
 		<input type="checkbox" id="checkable1" name="checkablesgroup" class="required">
@@ -444,6 +448,12 @@
 		<input name="year"/>
 		<button name="submitForm27" value="someValue" type="submit"><span>Submit</span></button>
 	</form>
+	
+	<form id="cnhFormTest">
+		<input id="cnhnumber" name="cnhnumber" required>
+		<button name="submitFormCnh" value="submitFormCnh" type="submit"><span>Submit</span></button>
+	</form>
+	
 	<form id="_contenteditableForm">
 		<div name="first_name" id="first_name" contenteditable placeholder="First Name"></div>
 		<br>

@@ -1,16 +1,19 @@
 /* Release checklist
 - Run `git changelog` and edit to match previous output (this should make use of jquey-release instead)
 - make sure the correct 'x.y.z-pre' version is defined in package.json
-- pull latest https://github.com/jquery/jquery-release
-- disable _generateChangelog task in release.js (BOOOO)
+- `cd jquery-release` into your local https://github.com/jquery/jquery-release fork
+- `git pull` latest https://github.com/jquery/jquery-release
+- disable _generateChangelog task in release.js (BOOOO), by commenting this lines: https://github.com/jquery/jquery-release/blob/a9823df8a5dff4c96d1f6645b09daa591adc2f06/release.js#L43-L44
 - run
 	node release.js --remote=jquery-validation/jquery-validation
 - Wait a while, verify and confirm each step
-- Create GitHub release: Pick the new tag, add changelog, upload zip
+- Create GitHub release: Pick the new tag, add changelog, upload zip (from __release/repo/dist/*.zip)
 - Upload to NPM
-    git fetch --tags jquery-validation
+    cd into your local jquery-validation fork
+    git fetch --tags upstream
     git checkout tags/X.YY.Z
     npm publish
+- double check NPM for new release https://www.npmjs.com/package/jquery-validation
 - Update MS CDN (Ping Chris Sfanos)
 - Check jsdelivr CDN: new git tags are automatically pulled, tested & merged via https://github.com/jsdelivr/jsdelivr/pulls
 - Check cdnjs CDN: new git tags are automatically committed into https://github.com/cdnjs/cdnjs/commits/master or ping @cdnjs
