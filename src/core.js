@@ -1461,7 +1461,9 @@ $.extend( $.validator, {
 		// https://jqueryvalidation.org/maxlength-method/
 		maxlength: function( value, element, param ) {
 			var length = Array.isArray( value ) ? value.length : this.getLength( value, element );
-			return this.optional( element ) || length <= param;
+
+			// If param is equal to 0, it means maxlength has no limitation
+			return this.optional( element ) || param === 0 || length <= param;
 		},
 
 		// https://jqueryvalidation.org/rangelength-method/
