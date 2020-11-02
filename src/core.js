@@ -657,6 +657,10 @@ $.extend( $.validator, {
 
 				// Select only the first element for each name, and only those with rules specified
 				if ( name in rulesCache || !validator.objectLength( $( this ).rules() ) ) {
+					// If the elment don't need check,just rest it's class
+					if ( this.settings.unhighlight ) {
+						validator.settings.unhighlight( $(this), validator.settings.errorClass, validator.settings.validClass )
+					}
 					return false;
 				}
 
