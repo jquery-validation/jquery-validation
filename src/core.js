@@ -915,7 +915,7 @@ $.extend( $.validator, {
 					this.settings.unhighlight.call( this, elements[ i ], this.settings.errorClass, this.settings.validClass );
 				}
 			}
-			this.toHide = this.toHide.not( this.toShow );
+			this.toHide = this.toHide.not( this.toShow ).filter( function ( i, e ) { return $( e ).closest( 'form' ).is( this.form ) });
 			this.hideErrors();
 			this.addWrapper( this.toShow ).show();
 		},
