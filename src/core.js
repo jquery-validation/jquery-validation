@@ -670,8 +670,16 @@ $.extend( $.validator, {
 		},
 
 		errors: function() {
+			var context = this;
+			var getElementsNames = function ( elements ) {
+				return elements.map( function () { return context.idOrName( this ) });
+			}.bind( this );
+
+			var names = getElementsNames( this.elements() ).toArray();
 			var errorClass = this.settings.errorClass.split( " " ).join( "." );
-			return $( this.settings.errorElement + "." + errorClass, this.errorContext );
+			var result = $( this.settings.errorElement + "." + errorClass, this.errorContext )
+				.filter( function ( i, e ) { return names.includes( $( e ).attr( "for" )); });
+			return $( result, this.errorContext );
 		},
 
 		resetInternals: function() {
@@ -915,7 +923,7 @@ $.extend( $.validator, {
 					this.settings.unhighlight.call( this, elements[ i ], this.settings.errorClass, this.settings.validClass );
 				}
 			}
-			this.toHide = this.toHide.not( this.toShow ).filter( function ( i, e ) { return $( e ).closest( 'form' ).is( this.form ) });
+			this.toHide = this.toHide.not( this.toShow );
 			this.hideErrors();
 			this.addWrapper( this.toShow ).show();
 		},
