@@ -1,3 +1,17 @@
+1.19.3 / 2021-01-09
+===================
+
+## Core
+  * fixed Regular Expression Denial of Service vulnerability (#2371)
+  * Replaced deprecated jQuery functions (#2335)
+
+## Chore
+  * Add Accessibility section to Readme (#2149)
+
+## Localization
+  * Add "pattern" translation for French (#2363) 
+  * add phone validate translate for Turkish translation (#2343)
+
 1.19.2 / 2020-05-23
 ===================
 
