@@ -2,7 +2,7 @@
 ===================
 
 ## Core
-  * fixed Regular Expression Denial of Service vulnerability (#2371)
+  * CVE-2021-21252: fixed Regular Expression Denial of Service vulnerability (#2371)
   * Replaced deprecated jQuery functions (#2335)
 
 ## Chore
