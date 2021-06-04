@@ -1504,17 +1504,17 @@ $.extend( $.validator, {
 				toFixed = function( x ) {
 					let e;
 					if ( Math.abs( x ) < 1.0 ) {
-						e = parseInt( x.toString().split( "e-" )[1] );
+						e = parseInt( x.toString().split( "e-" )[ 1 ] );
 						if ( e ) {
-							x *= Math.pow( 10, e-1 );
+							x *= Math.pow( 10, e - 1 );
 							x = "0." + ( new Array( e ) ).join( "0" ) + x.toString().substring( 2 );
 						}
 					} else {
-						e = parseInt( x.toString().split( "+" )[1] );
+						e = parseInt( x.toString().split( "+" )[ 1 ] );
 						if ( e > 20 ) {
 							e -= 20;
 							x /= Math.pow( 10, e );
-							x += ( new Array( e+1 ) ).join( "0" );
+							x += ( new Array( e + 1 ) ).join( "0" );
 						}
 					}
 					return x;
@@ -1531,7 +1531,7 @@ $.extend( $.validator, {
 				throw new Error( errorMessage );
 			}
 
-			decimals = decimalPlaces( toFixed(param) );
+			decimals = decimalPlaces( toFixed( param ) );
 
 			// Value can't have too many decimals
 			if ( decimalPlaces( value ) > decimals || toInt( value ) % toInt( param ) !== 0 ) {
