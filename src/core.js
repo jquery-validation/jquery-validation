@@ -1032,6 +1032,10 @@ $.extend( $.validator, {
 		// meta-characters that should be escaped in order to be used with JQuery
 		// as a literal part of a name/id or any selector.
 		escapeCssMeta: function( string ) {
+			if( string === undefined ){
+				console.warn("selector is undefined");
+				return;
+			}
 			return string.replace( /([\\!"#$%&'()*+,./:;<=>?@\[\]^`{|}~])/g, "\\$1" );
 		},
 
