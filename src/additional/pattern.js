@@ -20,7 +20,7 @@ $.validator.addMethod( "pattern", function( value, element, param ) {
 	}
 	var ignoreCase = false;
 	if ( Array.isArray( param ) ) {
-		ignoreCase = (typeof param[1] === "boolean" && param[1]);
+		ignoreCase = ( typeof param[1] === "boolean" && param[1] );
 		param = param[0];
 	}
 	if ( typeof param === "string" ) {
