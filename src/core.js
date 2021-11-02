@@ -270,6 +270,7 @@ $.extend( $.validator, {
 		errorElement: "label",
 		focusCleanup: false,
 		focusInvalid: true,
+		errorElementCleanup: false,
 		errorContainer: $( [] ),
 		errorLabelContainer: $( [] ),
 		onsubmit: true,
@@ -905,7 +906,7 @@ $.extend( $.validator, {
 			if ( this.errorList.length ) {
 				this.toShow = this.toShow.add( this.containers );
 			}
-			if ( this.settings.success ) {
+			if ( this.settings.success || this.settings.errorElementCleanup ) {
 				for ( i = 0; this.successList[ i ]; i++ ) {
 					this.showLabel( this.successList[ i ] );
 				}
@@ -936,7 +937,28 @@ $.extend( $.validator, {
 				elementID = this.idOrName( element ),
 				describedBy = $( element ).attr( "aria-describedby" );
 
-			if ( error.length ) {
+			if ( message === undefined ) {
+				if ( this.settings.success ) {
+					error.text( "" );
+					if ( typeof this.settings.success === "string" ) {
+						error.addClass( this.settings.success );
+					} else {
+						this.settings.success( error, element );
+					}
+				} else if ( this.settings.errorElementCleanup ) {
+					var describedByIds = describedBy.split( " " ),
+						ind = describedByIds.indexOf(error.attr('id'));
+
+					if ( ind > -1 ) {
+						describedByIds.splice(ind, 1);
+					}
+					if (describedByIds.length) {
+						$( element ).attr('aria-describedby', describedByIds.join(" "));
+					} else {
+						$( element ).removeAttr('aria-describedby');
+					}
+				}
+			} else if ( error.length ) {
 
 				// Refresh error/success class
 				error.removeClass( this.settings.validClass ).addClass( this.settings.errorClass );
@@ -1001,15 +1023,12 @@ $.extend( $.validator, {
 					}
 				}
 			}
-			if ( !message && this.settings.success ) {
-				error.text( "" );
-				if ( typeof this.settings.success === "string" ) {
-					error.addClass( this.settings.success );
-				} else {
-					this.settings.success( error, element );
-				}
+			if (message !== undefined || this.settings.success ) {
+				this.toShow = this.toShow.add( error );
+			} else {
+
 			}
-			this.toShow = this.toShow.add( error );
+
 		},
 
 		errorsFor: function( element ) {
