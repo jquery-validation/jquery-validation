@@ -270,7 +270,7 @@ $.extend( $.validator, {
 		errorElement: "label",
 		focusCleanup: false,
 		focusInvalid: true,
-		errorElementCleanup: false,
+		validAttributeCleanup: false,
 		errorContainer: $( [] ),
 		errorLabelContainer: $( [] ),
 		onsubmit: true,
@@ -906,9 +906,14 @@ $.extend( $.validator, {
 			if ( this.errorList.length ) {
 				this.toShow = this.toShow.add( this.containers );
 			}
-			if ( this.settings.success || this.settings.errorElementCleanup ) {
+			if ( this.settings.success || this.settings.validAttributeCleanup ) {
 				for ( i = 0; this.successList[ i ]; i++ ) {
-					this.showLabel( this.successList[ i ] );
+					if (this.settings.success) {
+						this.showLabel( this.successList[ i ] );
+					} else if ( this.settings.validAttributeCleanup ) {
+						this.ariaCleanup( this.successList[ i ] );
+					}
+
 				}
 			}
 			if ( this.settings.unhighlight ) {
@@ -930,36 +935,50 @@ $.extend( $.validator, {
 				return this.element;
 			} );
 		},
+		addErrorToDescription: function(element) {
+			var errorID,
+				error = this.errorsFor( element ),
+				describedBy = $( element ).attr( "aria-describedby" );
+				errorID = error.attr( "id" );
 
+			// Respect existing non-error aria-describedby
+			if ( !describedBy ) {
+				describedBy = errorID;
+			} else if ( !describedBy.match( new RegExp( "\\b" + this.escapeCssMeta( errorID ) + "\\b" ) ) ) {
+
+				// Add to end of list if not already present
+				describedBy += " " + errorID;
+			}
+			$( element ).attr( "aria-describedby", describedBy );
+		},
+		removeErrorFromDescription: function(element) {
+			var error = this.errorsFor( element ),
+				describedBy = $( element ).attr( "aria-describedby" ),
+				describedByIds = describedBy.split( " " ),
+				ind = describedByIds.indexOf(error.attr('id'));
+
+			if ( ind > -1 ) {
+				describedByIds.splice(ind, 1);
+			}
+			if (describedByIds.length) {
+				$( element ).attr('aria-describedby', describedByIds.join(" "));
+			} else {
+				$( element ).removeAttr('aria-describedby');
+			}
+
+
+		},
+// maybe pass success class as message and add third arg for isSuccess?
 		showLabel: function( element, message ) {
 			var place, group, errorID, v,
 				error = this.errorsFor( element ),
 				elementID = this.idOrName( element ),
 				describedBy = $( element ).attr( "aria-describedby" );
 
-			if ( message === undefined ) {
-				if ( this.settings.success ) {
-					error.text( "" );
-					if ( typeof this.settings.success === "string" ) {
-						error.addClass( this.settings.success );
-					} else {
-						this.settings.success( error, element );
-					}
-				} else if ( this.settings.errorElementCleanup ) {
-					var describedByIds = describedBy.split( " " ),
-						ind = describedByIds.indexOf(error.attr('id'));
-
-					if ( ind > -1 ) {
-						describedByIds.splice(ind, 1);
-					}
-					if (describedByIds.length) {
-						$( element ).attr('aria-describedby', describedByIds.join(" "));
-					} else {
-						$( element ).removeAttr('aria-describedby');
-					}
+			if ( error.length ) {
+				if (describedBy.split(" ").indexOf(error.attr('id')) == -1) {
+					this.addErrorToDescription(element);
 				}
-			} else if ( error.length ) {
-
 				// Refresh error/success class
 				error.removeClass( this.settings.validClass ).addClass( this.settings.errorClass );
 
@@ -1023,12 +1042,15 @@ $.extend( $.validator, {
 					}
 				}
 			}
-			if (message !== undefined || this.settings.success ) {
-				this.toShow = this.toShow.add( error );
-			} else {
-
+			if ( !message && this.settings.success ) {
+				error.text( "" );
+				if ( typeof this.settings.success === "string" ) {
+					error.addClass( this.settings.success );
+				} else {
+					this.settings.success( error, element );
+				}
 			}
-
+			this.toShow = this.toShow.add( error );
 		},
 
 		errorsFor: function( element ) {
@@ -1040,6 +1062,8 @@ $.extend( $.validator, {
 			if ( describer ) {
 				selector = selector + ", #" + this.escapeCssMeta( describer )
 					.replace( /\s+/g, ", #" );
+			} else {
+				selector = selector + ", #" + name + "-error";
 			}
 
 			return this
