@@ -591,10 +591,57 @@ $.extend( $.validator, {
 		hideErrors: function() {
 			this.hideThese( this.toHide );
 		},
+		addErrorAriaDescribedby: function(element, error) {
+			var errorID,
+				describedBy = $( element ).attr( "aria-describedby" );
+				errorID = error.attr( "id" );
+
+			// Respect existing non-error aria-describedby
+			if ( !describedBy ) {
+				describedBy = errorID;
+			} else if ( !describedBy.match( new RegExp( "\\b" + this.escapeCssMeta( errorID ) + "\\b" ) ) ) {
+
+				// Add to end of list if not already present
+				describedBy += " " + errorID;
+			}
+			$( element ).attr( "aria-describedby", describedBy );
+		},
+
+		removeErrorAriaDescribedby: function(element, error) {
+
+			var describedBy = $( element ).attr( "aria-describedby" ),
+				describedByIds = describedBy.split( " " ),
+				errorID = error.attr('id'),
+				ind = describedByIds.indexOf(errorID);
+
+			if ( ind > -1 ) {
+				describedByIds.splice(ind, 1);
+			}
+			if (describedByIds.length) {
+				$( element ).attr('aria-describedby', describedByIds.join(" "));
+			} else {
+				$( element ).removeAttr('aria-describedby');
+			}
+
+		},
 
 		hideThese: function( errors ) {
-			errors.not( this.containers ).text( "" );
-			this.addWrapper( errors ).hide();
+
+			for ( var i = 0; errors[ i ]; i++ ) {
+				var error = $(errors[i]),
+					element = $('[aria-describedby*="' + error.attr('id') + '"]');
+				if ( this.settings.validAttributeCleanup && element.length ) {
+					this.removeErrorAriaDescribedby(element, error);
+				}
+				if ( !error.is(this.containers) ) {
+					error.text('');
+				}
+				this.addWrapper( error ).hide();
+			}
+
+
+			// errors.not( this.containers ).text( "" );
+			// this.addWrapper( errors ).hide();
 		},
 
 		valid: function() {
@@ -906,13 +953,11 @@ $.extend( $.validator, {
 			if ( this.errorList.length ) {
 				this.toShow = this.toShow.add( this.containers );
 			}
-			if ( this.settings.success || this.settings.validAttributeCleanup ) {
+			if ( this.settings.success ) {
 				for ( i = 0; this.successList[ i ]; i++ ) {
-					if (this.settings.success) {
-						this.showLabel( this.successList[ i ] );
-					} else if ( this.settings.validAttributeCleanup ) {
-						this.ariaCleanup( this.successList[ i ] );
-					}
+
+					this.showLabel( this.successList[ i ] );
+
 
 				}
 			}
@@ -935,39 +980,7 @@ $.extend( $.validator, {
 				return this.element;
 			} );
 		},
-		addErrorToDescription: function(element) {
-			var errorID,
-				error = this.errorsFor( element ),
-				describedBy = $( element ).attr( "aria-describedby" );
-				errorID = error.attr( "id" );
 
-			// Respect existing non-error aria-describedby
-			if ( !describedBy ) {
-				describedBy = errorID;
-			} else if ( !describedBy.match( new RegExp( "\\b" + this.escapeCssMeta( errorID ) + "\\b" ) ) ) {
-
-				// Add to end of list if not already present
-				describedBy += " " + errorID;
-			}
-			$( element ).attr( "aria-describedby", describedBy );
-		},
-		removeErrorFromDescription: function(element) {
-			var error = this.errorsFor( element ),
-				describedBy = $( element ).attr( "aria-describedby" ),
-				describedByIds = describedBy.split( " " ),
-				ind = describedByIds.indexOf(error.attr('id'));
-
-			if ( ind > -1 ) {
-				describedByIds.splice(ind, 1);
-			}
-			if (describedByIds.length) {
-				$( element ).attr('aria-describedby', describedByIds.join(" "));
-			} else {
-				$( element ).removeAttr('aria-describedby');
-			}
-
-
-		},
 // maybe pass success class as message and add third arg for isSuccess?
 		showLabel: function( element, message ) {
 			var place, group, errorID, v,
@@ -976,8 +989,9 @@ $.extend( $.validator, {
 				describedBy = $( element ).attr( "aria-describedby" );
 
 			if ( error.length ) {
-				if (describedBy.split(" ").indexOf(error.attr('id')) == -1) {
-					this.addErrorToDescription(element);
+				// Error exists but is not currently associated with element via aria-describedby
+				if ( describedBy.split(" ").indexOf(error.attr('id')) == -1 ) {
+					this.addErrorAriaDescribedby(element);
 				}
 				// Refresh error/success class
 				error.removeClass( this.settings.validClass ).addClass( this.settings.errorClass );
@@ -1017,17 +1031,8 @@ $.extend( $.validator, {
 					// If the element is not a child of an associated label, then it's necessary
 					// to explicitly apply aria-describedby
 				} else if ( error.parents( "label[for='" + this.escapeCssMeta( elementID ) + "']" ).length === 0 ) {
-					errorID = error.attr( "id" );
 
-					// Respect existing non-error aria-describedby
-					if ( !describedBy ) {
-						describedBy = errorID;
-					} else if ( !describedBy.match( new RegExp( "\\b" + this.escapeCssMeta( errorID ) + "\\b" ) ) ) {
-
-						// Add to end of list if not already present
-						describedBy += " " + errorID;
-					}
-					$( element ).attr( "aria-describedby", describedBy );
+					this.addErrorAriaDescribedby(element, error);
 
 					// If this element is grouped, then assign to all elements in the same group
 					group = this.groups[ element.name ];
@@ -1035,8 +1040,7 @@ $.extend( $.validator, {
 						v = this;
 						$.each( v.groups, function( name, testgroup ) {
 							if ( testgroup === group ) {
-								$( "[name='" + v.escapeCssMeta( name ) + "']", v.currentForm )
-									.attr( "aria-describedby", error.attr( "id" ) );
+								this.addErrorAriaDescribedby($( "[name='" + v.escapeCssMeta( name ) + "']", v.currentForm ), error);
 							}
 						} );
 					}
