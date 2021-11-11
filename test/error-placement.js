@@ -347,7 +347,32 @@ QUnit.test( "test existing non-error aria-describedby", function( assert ) {
 	assert.strictEqual( $( "#testForm17text-description" ).text(), "This is where you enter your data" );
 	assert.strictEqual( $( "#testForm17text-error" ).text(), "", "Error label is empty for valid field" );
 } );
+QUnit.test( "test aria-describedby cleanup when field becomes valid", function( assert ) {
+	assert.expect( 2 );
+	var form = $( "#ariaDescribedbyCleanup" ),
+		field = $( "#ariaDescribedbyCleanupText" );
+	assert.ok( !field.valid() );
+	assert.equal( field.attr( "aria-describedby" ), "ariaDescribedbyCleanupText-error" );
+	assert.hasError( field, "required" );
+	var errorElement = form.validate().errorsFor( field[ 0 ] );
+	assert.ok( errorElement );
+	assert.equal( errorElement.length, 1 );
+	assert.true(  field.attr( "aria-describedby" ).split( " " ).indexOf( errorElement.attr( "id" ) ) > -1 );
+	field.val( "foo" );
 
+	assert.ok( field.valid() );
+	assert.noErrorFor( field );
+	assert.notOk( field.attr( "aria-describedby" ) );
+	assert.true( field.is( ":hidden" ) );
+	field.val( "" ).trigger( "keyup" );
+	assert.ok( !field.valid() );
+	assert.equal( field.attr( "aria-describedby" ), "ariaDescribedbyCleanupText-error" );
+	assert.hasError( field, "required" );
+	errorElement = form.validate().errorsFor( field[ 0 ] );
+	assert.ok( errorElement );
+	assert.equal( errorElement.length, 1 );
+	assert.true(  field.attr( "aria-describedby" ).split( " " ).indexOf( errorElement.attr( "id" ) ) > -1 );
+} );
 QUnit.test( "test pre-assigned non-error aria-describedby", function( assert ) {
 	assert.expect( 7 );
 	var form = $( "#testForm17" ),
