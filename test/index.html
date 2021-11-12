@@ -193,6 +193,23 @@
 		<label for="ariaDescribedbyCleanupText">My label</label>
 		<input name="ariaDescribedbyCleanupText" id="ariaDescribedbyCleanupText" data-rule-required="true" data-msg="required"/>
 	</form>
+	<form id="ariaDescribedbyCleanupGroup">
+		<!-- Test aria-describedby cleanup on valid fields in a group -->
+		<fieldset>
+			<legend>
+				Name
+			</legend>
+			<label for="ariaDescribedbyCleanupGroupFirst">First</label>
+			<input name="ariaDescribedbyCleanupGroupFirst" id="ariaDescribedbyCleanupGroupFirst" data-rule-required="true" data-msg="required"/>
+			<label for="ariaDescribedbyCleanupGroupMiddle">Middle</label>
+			<input name="ariaDescribedbyCleanupGroupMiddle" id="ariaDescribedbyCleanupGroupMiddle" data-rule-required="true" data-msg="required"/>
+			<label for="ariaDescribedbyCleanupGroupLast">Last</label>
+			<input name="ariaDescribedbyCleanupGroupLast" id="ariaDescribedbyCleanupGroupLast" data-rule-required="true" data-msg="required"/>
+		</fieldset>
+		<label for="ariaDescribedbyCleanupGroupEmail">Email</label>
+		<input name="ariaDescribedbyCleanupGroupEmail" id="ariaDescribedbyCleanupGroupEmail" type="email" data-rule-email="true" data-rule-required="true"/>
+		<button>Submit</button>
+	</form>
 	<form id="testForm18">
 		<!-- test id/name containing brackets -->
 		<input name="testForm18[text]" id="testForm18[text]" required>

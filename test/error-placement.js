@@ -417,6 +417,85 @@ QUnit.test( "test aria-describedby cleanup when field becomes valid", function( 
 	assert.ok( field.attr( "aria-describedby" ) );
 	assert.equal( field.attr( "aria-describedby" ), errorID );
 } );
+QUnit.test( "test aria-describedby cleanup on group", function( assert ) {
+	assert.expect( 16 );
+	var form = $( "#ariaDescribedbyCleanupGroup" ),
+		firstID = "ariaDescribedbyCleanupGroupFirst",
+		first = $( "#" + firstID ),
+		middleID = "ariaDescribedbyCleanupGroupMiddle",
+		middle = $( "#" + middleID ),
+		lastID = "ariaDescribedbyCleanupGroupLast",
+		last = $( "#" + lastID ),
+		emailID = "ariaDescribedbyCleanupGroupEmail",
+		email = $( "#" + emailID ),
+		groupName = "ariaDescribedbyCleanupGroupName",
+		groupOptions = {};
+		groupOptions[groupName] = firstID + " " + middleID + " " + lastID;
+	// First test an invalid value
+	form.validate( { errorElement: "span", ariaDescribedbyCleanup: true, groups: groupOptions } );
+	form.trigger( "submit" );
+	assert.equal( first.attr( "aria-describedby" ), groupName + "-error" );
+	assert.hasError( first, "required" );
+	assert.hasError( middle, "required" );
+	assert.hasError( last, "required" );
+	var errorElement = form.validate().errorsFor( first[ 0 ] );
+
+	// Previous behavior was for error to apply to all group members. It still does that, but now it removes aria-describedby from each individual field (or at least I think that's what's happening because when first name has an error, middle and last are valid and don't have aria-describedby)
+	assert.equal( errorElement.attr( "id" ), groupName + "-error" );
+	assert.equal( middle.attr( "aria-describedby" ), groupName + "-error" );
+	assert.equal( last.attr( "aria-describedby" ), groupName + "-error" );
+
+
+	// Check email field
+	assert.hasError( email, "required" );
+	assert.equal( email.attr( "aria-describedby" ), emailID + "-error" );
+
+	// Then make it valid again to ensure that the aria-describedby relationship is restored
+	first.val( "Person" );
+	middle.val( "Syntax" );
+	last.val( "Personname" );
+
+	email.val( "aa" );
+
+	form.trigger( "submit" );
+
+	assert.hasError( email, "email" );
+	assert.equal( email.attr("aria-describedby" ), emailID + "-error" );
+	var emailError = form.validate().errorsFor( email[ 0 ] );
+	assert.equal( emailError.attr( "id" ), email.attr( "aria-describedby" ) );
+
+	assert.ok( first.valid() );
+	assert.noErrorFor( first );
+	assert.notOk( first.attr( "aria-describedby" ) );
+	assert.noErrorFor( middle );
+	assert.notOk( middle.attr( "aria-describedby" ) );
+	assert.noErrorFor( last );
+	assert.notOk( last.attr( "aria-describedby" ) );
+	assert.strictEqual( true, errorElement.is( ":hidden" ) );
+
+	// Then make it invalid again
+	first.val( "" ).trigger( "keyup" );
+	assert.hasError( first, "required" );
+	assert.equal( first.attr( "aria-describedby" ), groupName + "-error" );
+	assert.equal( errorElement.attr( "id" ), groupName + "-error" );
+	assert.equal( middle.attr( "aria-describedby" ), groupName + "-error" );
+	assert.equal( last.attr( "aria-describedby" ), groupName + "-error" );
+	assert.ok( !first.valid() );
+
+	// Make sure there's not more than one error
+	assert.equal( $( "[id=" + groupName + "-error]" ).length, 1 );
+	assert.equal( $( "[id=" + emailID + "-error]" ).length, 1 );
+
+	email.val( "test@test.com" ).trigger( "keyup" );
+	first.val( "Person" ).trigger( "keyup" );
+
+	assert.noErrorFor( first );
+	assert.noErrorFor( email );
+	assert.notOk( email.attr( "aria-describedby" ) );
+	assert.notOk( first.attr( "aria-describedby" ) );
+	assert.notOk( middle.attr( "aria-describedby" ) );
+	assert.notOk( last.attr( "aria-describedby" ) );
+} );
 QUnit.test( "test pre-assigned non-error aria-describedby", function( assert ) {
 	assert.expect( 7 );
 	var form = $( "#testForm17" ),
