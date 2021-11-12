@@ -348,22 +348,30 @@ QUnit.test( "test existing non-error aria-describedby", function( assert ) {
 	assert.strictEqual( $( "#testForm17text-error" ).text(), "", "Error label is empty for valid field" );
 } );
 QUnit.test( "test aria-describedby cleanup when field becomes valid", function( assert ) {
-	assert.expect( 2 );
+	assert.expect( 18 );
 	var form = $( "#ariaDescribedbyCleanup" ),
 		field = $( "#ariaDescribedbyCleanupText" );
+
+	// First test an invalid value
+	form.validate( { errorElement: "span", ariaDescribedbyCleanup: true } );
 	assert.ok( !field.valid() );
 	assert.equal( field.attr( "aria-describedby" ), "ariaDescribedbyCleanupText-error" );
 	assert.hasError( field, "required" );
 	var errorElement = form.validate().errorsFor( field[ 0 ] );
 	assert.ok( errorElement );
 	assert.equal( errorElement.length, 1 );
-	assert.true(  field.attr( "aria-describedby" ).split( " " ).indexOf( errorElement.attr( "id" ) ) > -1 );
+	assert.ok( field.attr( "aria-describedby" ) );
+	assert.equal( field.attr( "aria-describedby" ), errorElement.attr( "id" ) );
+
+	// Then make it valid again to ensure that the aria-describedby relationship is restored
 	field.val( "foo" );
 
 	assert.ok( field.valid() );
 	assert.noErrorFor( field );
 	assert.notOk( field.attr( "aria-describedby" ) );
-	assert.true( field.is( ":hidden" ) );
+	assert.strictEqual( true, errorElement.is( ":hidden" ) );
+
+	// Then make it invalid again
 	field.val( "" ).trigger( "keyup" );
 	assert.ok( !field.valid() );
 	assert.equal( field.attr( "aria-describedby" ), "ariaDescribedbyCleanupText-error" );
@@ -371,7 +379,9 @@ QUnit.test( "test aria-describedby cleanup when field becomes valid", function( 
 	errorElement = form.validate().errorsFor( field[ 0 ] );
 	assert.ok( errorElement );
 	assert.equal( errorElement.length, 1 );
-	assert.true(  field.attr( "aria-describedby" ).split( " " ).indexOf( errorElement.attr( "id" ) ) > -1 );
+	assert.ok( field.attr( "aria-describedby" ) );
+
+	assert.equal( field.attr( "aria-describedby" ), errorElement.attr( "id" ) );
 } );
 QUnit.test( "test pre-assigned non-error aria-describedby", function( assert ) {
 	assert.expect( 7 );

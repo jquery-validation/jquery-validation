@@ -633,7 +633,7 @@ $.extend( $.validator, {
 					errorID = this.escapeCssMeta( error.attr( "id" ) ),
 					element = ( errorID ) ? this.currentElements.filter( '[aria-describedby~="' + errorID + '"]' ) : [];
 
-				if ( this.settings.validAttributeCleanup && element.length ) {
+				if ( this.settings.ariaDescribedbyCleanup && element.length ) {
 					this.removeErrorAriaDescribedby( element, error );
 				}
 
@@ -996,7 +996,7 @@ $.extend( $.validator, {
 			if ( error.length ) {
 
 				// Non-label error exists but is not currently associated with element via aria-describedby
-				if ( error.closest( "label[for='" + this.escapeCssMeta( elementID ) + "']" ).length > 0 && describedBy !== undefined && describedBy.split( " " ).indexOf( error.attr( "id" ) ) === -1 ) {
+				if ( error.closest( "label[for='" + this.escapeCssMeta( elementID ) + "']" ).length === 0 && ( describedBy === undefined || describedBy.split( " " ).indexOf( error.attr( "id" ) ) === -1 ) ) {
 					this.addErrorAriaDescribedby( element, error );
 				}
 
@@ -1047,7 +1047,7 @@ $.extend( $.validator, {
 						v = this;
 						$.each( v.groups, function( name, testgroup ) {
 							if ( testgroup === group ) {
-								this.addErrorAriaDescribedby( $( "[name='" + v.escapeCssMeta( name ) + "']", v.currentForm ), error );
+								v.addErrorAriaDescribedby( $( "[name='" + v.escapeCssMeta( name ) + "']", v.currentForm ), error );
 							}
 						} );
 					}
