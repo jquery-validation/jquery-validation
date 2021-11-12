@@ -630,7 +630,7 @@ $.extend( $.validator, {
 
 			for ( var i = 0; errors[ i ]; i++ ) {
 				var error = $( errors[ i ] ),
-					errorID = this.escapeCssMeta( error.attr( "id" ) ),
+					errorID = error.attr( "id" ) ? this.escapeCssMeta( error.attr( "id" ) ) : undefined,
 					element = ( errorID ) ? this.currentElements.filter( '[aria-describedby~="' + errorID + '"]' ) : [];
 
 				if ( this.settings.ariaDescribedbyCleanup && element.length ) {
