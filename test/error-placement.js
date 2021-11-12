@@ -347,10 +347,45 @@ QUnit.test( "test existing non-error aria-describedby", function( assert ) {
 	assert.strictEqual( $( "#testForm17text-description" ).text(), "This is where you enter your data" );
 	assert.strictEqual( $( "#testForm17text-error" ).text(), "", "Error label is empty for valid field" );
 } );
+QUnit.test( "test aria-describedby cleanup with existing non-error aria-describedby", function( assert ) {
+	assert.expect( 13 );
+
+	var form = $( "#ariaDescribedbyCleanupWithExistingNonError" ),
+		field = $( "#testCleanupExistingNonErrortext" ),
+		errorID = "testCleanupExistingNonErrortext-error",
+		descriptionID = "testCleanupExistingNonErrortext-description";
+
+	assert.equal( field.attr( "aria-describedby" ), descriptionID );
+
+	// First test an invalid value
+	form.validate( { errorElement: "span", ariaDescribedbyCleanup: true } );
+	assert.ok( !field.valid() );
+	assert.equal( ( field.attr( "aria-describedby" ).split( " " ).indexOf( errorID ) > -1 && field.attr( "aria-describedby" ).split( " " ).indexOf( descriptionID ) > -1 ), true );
+	assert.hasError( field, "required" );
+	var errorElement = form.validate().errorsFor( field[ 0 ] );
+	assert.equal( errorElement.attr( "id" ), errorID );
+
+	// Then make it valid again to ensure that the aria-describedby relationship is restored
+	field.val( "foo" );
+	assert.ok( field.valid() );
+	assert.noErrorFor( field );
+	assert.equal( field.attr( "aria-describedby" ), descriptionID );
+	assert.strictEqual( true, errorElement.is( ":hidden" ) );
+
+	// Then make it invalid again
+	field.val( "" ).trigger( "keyup" );
+	assert.ok( !field.valid() );
+	assert.hasError( field, "required" );
+
+	// Make sure there's not more than one error
+	assert.equal( $( "[id=" + errorID + "]" ).length, 1 );
+	assert.equal( ( field.attr( "aria-describedby" ).split( " " ).indexOf( errorID ) > -1 && field.attr( "aria-describedby" ).split( " " ).indexOf( descriptionID ) > -1 ), true );
+} );
 QUnit.test( "test aria-describedby cleanup when field becomes valid", function( assert ) {
-	assert.expect( 18 );
+	assert.expect( 16 );
 	var form = $( "#ariaDescribedbyCleanup" ),
-		field = $( "#ariaDescribedbyCleanupText" );
+		field = $( "#ariaDescribedbyCleanupText" ),
+		errorID = "ariaDescribedbyCleanupText-error";
 
 	// First test an invalid value
 	form.validate( { errorElement: "span", ariaDescribedbyCleanup: true } );
@@ -358,10 +393,8 @@ QUnit.test( "test aria-describedby cleanup when field becomes valid", function( 
 	assert.equal( field.attr( "aria-describedby" ), "ariaDescribedbyCleanupText-error" );
 	assert.hasError( field, "required" );
 	var errorElement = form.validate().errorsFor( field[ 0 ] );
-	assert.ok( errorElement );
-	assert.equal( errorElement.length, 1 );
-	assert.ok( field.attr( "aria-describedby" ) );
-	assert.equal( field.attr( "aria-describedby" ), errorElement.attr( "id" ) );
+	assert.equal( field.attr( "aria-describedby" ), errorID );
+	assert.equal( errorElement.attr( "id" ), errorID );
 
 	// Then make it valid again to ensure that the aria-describedby relationship is restored
 	field.val( "foo" );
@@ -378,10 +411,11 @@ QUnit.test( "test aria-describedby cleanup when field becomes valid", function( 
 	assert.hasError( field, "required" );
 	errorElement = form.validate().errorsFor( field[ 0 ] );
 	assert.ok( errorElement );
-	assert.equal( errorElement.length, 1 );
-	assert.ok( field.attr( "aria-describedby" ) );
 
-	assert.equal( field.attr( "aria-describedby" ), errorElement.attr( "id" ) );
+	// Make sure there's not more than one error
+	assert.equal( $( "[id=" + errorID + "]" ).length, 1 );
+	assert.ok( field.attr( "aria-describedby" ) );
+	assert.equal( field.attr( "aria-describedby" ), errorID );
 } );
 QUnit.test( "test pre-assigned non-error aria-describedby", function( assert ) {
 	assert.expect( 7 );

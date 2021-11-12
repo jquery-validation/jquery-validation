@@ -1073,9 +1073,10 @@ $.extend( $.validator, {
 			if ( describer ) {
 				selector = selector + ", #" + this.escapeCssMeta( describer )
 					.replace( /\s+/g, ", #" );
-			} else {
-				selector = selector + ", #" + name + "-error";
 			}
+
+			// There may be hidden error elements not currently associated via aria-describedby (if ariaDescribedbyCleanup is true)
+			selector = selector + ", #" + name + "-error";
 
 			return this
 				.errors()

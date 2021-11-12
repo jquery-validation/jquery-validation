@@ -182,7 +182,14 @@
 		<input name="testForm17text" id="testForm17text" data-rule-required="true" data-msg="required" aria-describedby="testForm17text-description">
 		<span id="testForm17text-description">This is where you enter your data</span>
 	</form>
+	<form id="ariaDescribedbyCleanupWithExistingNonError">
+		<!-- test existing non-error aria-describedby with aria-describedby cleanup on valid fields -->
+		<label for="testCleanupExistingNonErrortext">My Label</label>
+		<input name="testCleanupExistingNonErrortext" id="testCleanupExistingNonErrortext" data-rule-required="true" data-msg="required" aria-describedby="testCleanupExistingNonErrortext-description">
+		<span id="testCleanupExistingNonErrortext-description">This is where you enter your data</span>
+	</form>
 	<form id="ariaDescribedbyCleanup">
+		<!-- Test aria-describedby cleanup on valid fields -->
 		<label for="ariaDescribedbyCleanupText">My label</label>
 		<input name="ariaDescribedbyCleanupText" id="ariaDescribedbyCleanupText" data-rule-required="true" data-msg="required"/>
 	</form>
