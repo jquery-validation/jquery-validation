@@ -418,7 +418,7 @@ QUnit.test( "test aria-describedby cleanup when field becomes valid", function( 
 	assert.equal( field.attr( "aria-describedby" ), errorID );
 } );
 QUnit.test( "test aria-describedby cleanup on group", function( assert ) {
-	assert.expect( 16 );
+	assert.expect( 34 );
 	var form = $( "#ariaDescribedbyCleanupGroup" ),
 		firstID = "ariaDescribedbyCleanupGroupFirst",
 		first = $( "#" + firstID ),
@@ -429,8 +429,9 @@ QUnit.test( "test aria-describedby cleanup on group", function( assert ) {
 		emailID = "ariaDescribedbyCleanupGroupEmail",
 		email = $( "#" + emailID ),
 		groupName = "ariaDescribedbyCleanupGroupName",
-		groupOptions = {};
-		groupOptions[groupName] = firstID + " " + middleID + " " + lastID;
+		groupOptions = { };
+		groupOptions[ groupName ] = firstID + " " + middleID + " " + lastID;
+
 	// First test an invalid value
 	form.validate( { errorElement: "span", ariaDescribedbyCleanup: true, groups: groupOptions } );
 	form.trigger( "submit" );
@@ -444,7 +445,6 @@ QUnit.test( "test aria-describedby cleanup on group", function( assert ) {
 	assert.equal( errorElement.attr( "id" ), groupName + "-error" );
 	assert.equal( middle.attr( "aria-describedby" ), groupName + "-error" );
 	assert.equal( last.attr( "aria-describedby" ), groupName + "-error" );
-
 
 	// Check email field
 	assert.hasError( email, "required" );
@@ -460,7 +460,7 @@ QUnit.test( "test aria-describedby cleanup on group", function( assert ) {
 	form.trigger( "submit" );
 
 	assert.hasError( email, "email" );
-	assert.equal( email.attr("aria-describedby" ), emailID + "-error" );
+	assert.equal( email.attr( "aria-describedby" ), emailID + "-error" );
 	var emailError = form.validate().errorsFor( email[ 0 ] );
 	assert.equal( emailError.attr( "id" ), email.attr( "aria-describedby" ) );
 
