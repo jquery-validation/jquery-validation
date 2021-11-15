@@ -481,6 +481,8 @@ $.extend( $.validator, {
 					$.each( this.groups, function( name, testgroup ) {
 						if ( testgroup === group && name !== checkElement.name ) {
 							cleanElement = v.validationTargetFor( v.clean( v.findByName( name ) ) );
+
+							// Don't want to check fields if a user hasn't gotten to them yet
 							if ( cleanElement && ( cleanElement.name in v.invalid || cleanElement.name in v.submitted ) ) {
 								v.currentElements.push( cleanElement );
 								result = v.check( cleanElement ) && result;
@@ -648,7 +650,7 @@ $.extend( $.validator, {
 			for ( var i = 0; errors[ i ]; i++ ) {
 				var error = $( errors[ i ] ),
 					errorID = error.attr( "id" ) ? this.escapeCssMeta( error.attr( "id" ) ) : undefined,
-					element = ( errorID ) ? this.currentElements.filter( '[aria-describedby~="' + errorID + '"]' ) : [];
+					element = ( errorID ) ? this.elements().filter( '[aria-describedby~="' + errorID + '"]' ) : [];
 
 				if ( this.settings.ariaDescribedbyCleanup && element.length ) {
 					this.removeErrorAriaDescribedby( element, error );
