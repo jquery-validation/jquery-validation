@@ -270,7 +270,7 @@ $.extend( $.validator, {
 		errorElement: "label",
 		focusCleanup: false,
 		focusInvalid: true,
-		ariaDescribedbyCleanup: false,
+		ariaDescribedByCleanup: false,
 		errorContainer: $( [] ),
 		errorLabelContainer: $( [] ),
 		onsubmit: true,
@@ -483,7 +483,7 @@ $.extend( $.validator, {
 							cleanElement = v.validationTargetFor( v.clean( v.findByName( name ) ) );
 
 							// Don't want to check fields if a user hasn't gotten to them yet
-							if ( cleanElement && ( cleanElement.name in v.invalid || cleanElement.name in v.submitted ) ) {
+							if ( cleanElement && cleanElement.name in v.invalid ) {
 								v.currentElements.push( cleanElement );
 								result = v.check( cleanElement ) && result;
 							}
@@ -593,7 +593,7 @@ $.extend( $.validator, {
 		hideErrors: function() {
 			this.hideThese( this.toHide );
 		},
-		addErrorAriaDescribedby: function( element, error, updateGroupMembers ) {
+		addErrorariaDescribedBy: function( element, error, updateGroupMembers ) {
 			updateGroupMembers = ( updateGroupMembers === undefined ) ? false : updateGroupMembers;
 
 			var errorID, v, group,
@@ -619,14 +619,14 @@ $.extend( $.validator, {
 					v = this;
 					$.each( v.groups, function( name, testgroup ) {
 						if ( testgroup === group ) {
-							v.addErrorAriaDescribedby( $( "[name='" + v.escapeCssMeta( name ) + "']", v.currentForm ), error, false );
+							v.addErrorariaDescribedBy( $( "[name='" + v.escapeCssMeta( name ) + "']", v.currentForm ), error, false );
 						}
 					} );
 				}
 			}
 		},
 
-		removeErrorAriaDescribedby: function( element, error ) {
+		removeErrorariaDescribedBy: function( element, error ) {
 
 			var describedBy = $( element ).attr( "aria-describedby" ),
 				describedByIds = describedBy.split( " " ),
@@ -652,8 +652,8 @@ $.extend( $.validator, {
 					errorID = error.attr( "id" ) ? this.escapeCssMeta( error.attr( "id" ) ) : undefined,
 					element = ( errorID ) ? this.elements().filter( '[aria-describedby~="' + errorID + '"]' ) : [];
 
-				if ( this.settings.ariaDescribedbyCleanup && element.length ) {
-					this.removeErrorAriaDescribedby( element, error );
+				if ( this.settings.ariaDescribedByCleanup && element.length ) {
+					this.removeErrorariaDescribedBy( element, error );
 				}
 
 				if ( !error.is( this.containers ) ) {
@@ -1016,7 +1016,7 @@ $.extend( $.validator, {
 
 				// Non-label error exists but is not currently associated with element via aria-describedby
 				if ( error.closest( "label[for='" + this.escapeCssMeta( elementID ) + "']" ).length === 0 && ( describedBy === undefined || describedBy.split( " " ).indexOf( error.attr( "id" ) ) === -1 ) ) {
-					this.addErrorAriaDescribedby( element, error, true );
+					this.addErrorariaDescribedBy( element, error, true );
 				}
 
 				// Refresh error/success class
@@ -1057,7 +1057,7 @@ $.extend( $.validator, {
 				// If the element is not a child of an associated label, then it's necessary
 				// to explicitly apply aria-describedby
 				} else if ( error.parents( "label[for='" + this.escapeCssMeta( elementID ) + "']" ).length === 0 ) {
-					this.addErrorAriaDescribedby( element, error, true );
+					this.addErrorariaDescribedBy( element, error, true );
 				}
 			}
 			if ( !message && this.settings.success ) {
@@ -1082,7 +1082,7 @@ $.extend( $.validator, {
 					.replace( /\s+/g, ", #" );
 			}
 
-			// There may be hidden error elements not currently associated via aria-describedby (if ariaDescribedbyCleanup is true)
+			// There may be hidden error elements not currently associated via aria-describedby (if ariaDescribedByCleanup is true)
 			selector = selector + ", #" + name + "-error";
 
 			return this

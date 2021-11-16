@@ -350,7 +350,7 @@ QUnit.test( "test existing non-error aria-describedby", function( assert ) {
 QUnit.test( "test aria-describedby cleanup with existing non-error aria-describedby", function( assert ) {
 	assert.expect( 13 );
 
-	var form = $( "#ariaDescribedbyCleanupWithExistingNonError" ),
+	var form = $( "#ariaDescribedByCleanupWithExistingNonError" ),
 		field = $( "#testCleanupExistingNonErrortext" ),
 		errorID = "testCleanupExistingNonErrortext-error",
 		descriptionID = "testCleanupExistingNonErrortext-description";
@@ -358,7 +358,7 @@ QUnit.test( "test aria-describedby cleanup with existing non-error aria-describe
 	assert.equal( field.attr( "aria-describedby" ), descriptionID );
 
 	// First test an invalid value
-	form.validate( { errorElement: "span", ariaDescribedbyCleanup: true } );
+	form.validate( { errorElement: "span", ariaDescribedByCleanup: true } );
 	assert.ok( !field.valid() );
 	assert.equal( ( field.attr( "aria-describedby" ).split( " " ).indexOf( errorID ) > -1 && field.attr( "aria-describedby" ).split( " " ).indexOf( descriptionID ) > -1 ), true );
 	assert.hasError( field, "required" );
@@ -383,14 +383,14 @@ QUnit.test( "test aria-describedby cleanup with existing non-error aria-describe
 } );
 QUnit.test( "test aria-describedby cleanup when field becomes valid", function( assert ) {
 	assert.expect( 16 );
-	var form = $( "#ariaDescribedbyCleanup" ),
-		field = $( "#ariaDescribedbyCleanupText" ),
-		errorID = "ariaDescribedbyCleanupText-error";
+	var form = $( "#ariaDescribedByCleanup" ),
+		field = $( "#ariaDescribedByCleanupText" ),
+		errorID = "ariaDescribedByCleanupText-error";
 
 	// First test an invalid value
-	form.validate( { errorElement: "span", ariaDescribedbyCleanup: true } );
+	form.validate( { errorElement: "span", ariaDescribedByCleanup: true } );
 	assert.ok( !field.valid() );
-	assert.equal( field.attr( "aria-describedby" ), "ariaDescribedbyCleanupText-error" );
+	assert.equal( field.attr( "aria-describedby" ), "ariaDescribedByCleanupText-error" );
 	assert.hasError( field, "required" );
 	var errorElement = form.validate().errorsFor( field[ 0 ] );
 	assert.equal( field.attr( "aria-describedby" ), errorID );
@@ -407,7 +407,7 @@ QUnit.test( "test aria-describedby cleanup when field becomes valid", function( 
 	// Then make it invalid again
 	field.val( "" ).trigger( "keyup" );
 	assert.ok( !field.valid() );
-	assert.equal( field.attr( "aria-describedby" ), "ariaDescribedbyCleanupText-error" );
+	assert.equal( field.attr( "aria-describedby" ), "ariaDescribedByCleanupText-error" );
 	assert.hasError( field, "required" );
 	errorElement = form.validate().errorsFor( field[ 0 ] );
 	assert.ok( errorElement );
@@ -419,21 +419,21 @@ QUnit.test( "test aria-describedby cleanup when field becomes valid", function( 
 } );
 QUnit.test( "test aria-describedby cleanup on group", function( assert ) {
 	assert.expect( 34 );
-	var form = $( "#ariaDescribedbyCleanupGroup" ),
-		firstID = "ariaDescribedbyCleanupGroupFirst",
+	var form = $( "#ariaDescribedByCleanupGroup" ),
+		firstID = "ariaDescribedByCleanupGroupFirst",
 		first = $( "#" + firstID ),
-		middleID = "ariaDescribedbyCleanupGroupMiddle",
+		middleID = "ariaDescribedByCleanupGroupMiddle",
 		middle = $( "#" + middleID ),
-		lastID = "ariaDescribedbyCleanupGroupLast",
+		lastID = "ariaDescribedByCleanupGroupLast",
 		last = $( "#" + lastID ),
-		emailID = "ariaDescribedbyCleanupGroupEmail",
+		emailID = "ariaDescribedByCleanupGroupEmail",
 		email = $( "#" + emailID ),
-		groupName = "ariaDescribedbyCleanupGroupName",
+		groupName = "ariaDescribedByCleanupGroupName",
 		groupOptions = { };
 		groupOptions[ groupName ] = firstID + " " + middleID + " " + lastID;
 
 	// First test an invalid value
-	form.validate( { errorElement: "span", ariaDescribedbyCleanup: true, groups: groupOptions } );
+	form.validate( { errorElement: "span", ariaDescribedByCleanup: true, groups: groupOptions } );
 	form.trigger( "submit" );
 	assert.equal( first.attr( "aria-describedby" ), groupName + "-error" );
 	assert.hasError( first, "required" );
