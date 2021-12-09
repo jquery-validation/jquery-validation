@@ -593,7 +593,7 @@ $.extend( $.validator, {
 		hideErrors: function() {
 			this.hideThese( this.toHide );
 		},
-		addErrorariaDescribedBy: function( element, error, updateGroupMembers ) {
+		addErrorAriaDescribedBy: function( element, error, updateGroupMembers ) {
 			updateGroupMembers = ( updateGroupMembers === undefined ) ? false : updateGroupMembers;
 
 			var errorID, v, group,
@@ -619,14 +619,14 @@ $.extend( $.validator, {
 					v = this;
 					$.each( v.groups, function( name, testgroup ) {
 						if ( testgroup === group ) {
-							v.addErrorariaDescribedBy( $( "[name='" + v.escapeCssMeta( name ) + "']", v.currentForm ), error, false );
+							v.addErrorAriaDescribedBy( $( "[name='" + v.escapeCssMeta( name ) + "']", v.currentForm ), error, false );
 						}
 					} );
 				}
 			}
 		},
 
-		removeErrorariaDescribedBy: function( element, error ) {
+		removeErrorAriaDescribedBy: function( element, error ) {
 
 			var describedBy = $( element ).attr( "aria-describedby" ),
 				describedByIds = describedBy.split( " " ),
@@ -653,7 +653,7 @@ $.extend( $.validator, {
 					element = ( errorID ) ? this.elements().filter( '[aria-describedby~="' + errorID + '"]' ) : [];
 
 				if ( this.settings.ariaDescribedByCleanup && element.length ) {
-					this.removeErrorariaDescribedBy( element, error );
+					this.removeErrorAriaDescribedBy( element, error );
 				}
 
 				if ( !error.is( this.containers ) ) {
@@ -663,8 +663,6 @@ $.extend( $.validator, {
 				this.addWrapper( error ).hide();
 			}
 
-			// A errors.not( this.containers ).text( "" );
-			// A this.addWrapper( errors ).hide();
 		},
 
 		valid: function() {
@@ -1016,7 +1014,7 @@ $.extend( $.validator, {
 
 				// Non-label error exists but is not currently associated with element via aria-describedby
 				if ( error.closest( "label[for='" + this.escapeCssMeta( elementID ) + "']" ).length === 0 && ( describedBy === undefined || describedBy.split( " " ).indexOf( error.attr( "id" ) ) === -1 ) ) {
-					this.addErrorariaDescribedBy( element, error, true );
+					this.addErrorAriaDescribedBy( element, error, true );
 				}
 
 				// Refresh error/success class
@@ -1057,7 +1055,7 @@ $.extend( $.validator, {
 				// If the element is not a child of an associated label, then it's necessary
 				// to explicitly apply aria-describedby
 				} else if ( error.parents( "label[for='" + this.escapeCssMeta( elementID ) + "']" ).length === 0 ) {
-					this.addErrorariaDescribedBy( element, error, true );
+					this.addErrorAriaDescribedBy( element, error, true );
 				}
 			}
 			if ( !message && this.settings.success ) {
