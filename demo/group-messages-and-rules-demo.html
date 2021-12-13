@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>jQuery validation plug-in - comment form example</title>
+	<link rel="stylesheet" media="screen" href="css/screen.css">
+	<script src="../lib/jquery.js"></script>
+	<script src="../dist/jquery.validate.js"></script>
+	<script>
+	$(document).ready(function() {
+
+		$("#commentForm").validate({
+			rules: {
+				middle: {
+					required: false
+				},
+				email: {
+					email: true
+				}
+			},
+			messages: {
+				email: {
+					required: "Test override required message"
+				}
+			},
+			groups: {
+				contactInfo: {
+					fields: "first middle last email",
+					rules: {
+						required: true,
+						minlength: 2
+					},
+					messages: {
+						required: "Test required message.",
+						minlength: jQuery.validator.format("Minimum length is {0}", 2)
+
+					}
+				},
+
+			}
+		});
+	});
+	</script>
+	<style>
+	form {
+		width: 500px;
+	}
+	form label {
+		width: 250px;
+	}
+	form label.error, form input.submit {
+		margin-left: 253px;
+	}
+	</style>
+</head>
+<body>
+<h1 id="banner"><a href="https://jqueryvalidation.org/">jQuery Validation Plugin</a> Demo</h1>
+<div id="main">
+	<p>Take a look at the source to see how messages can be customized with metadata.</p>
+	<!-- Custom rules and messages via data- attributes -->
+	<form class="cmxform" id="commentForm" method="post" action="">
+		<fieldset>
+			<legend>Contact Person Information</legend>
+			<p>
+				<label for="first">First Name *</label>
+				<input id="first" name="first" type="text">
+			</p>
+			<p>
+				<label for="middle">Middle Name</label>
+				<input id="middle" name="middle" type="text">
+			</p>
+			<p>
+				<label for="first">Last Name</label>
+				<input id="last" name="last" type="text">
+			</p>
+
+			<p>
+				<label for="email">Email</label>
+				<input id="email" name="email" type="email"/>
+			</p>
+		</fieldset>
+		<input type="submit" value="Submit"/>
+	</form>
+
+	<a href="index.html">Back to main page</a>
+</div>
+</body>
+</html>

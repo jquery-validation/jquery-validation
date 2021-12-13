@@ -386,18 +386,42 @@ $.extend( $.validator, {
 
 			var currentForm = this.currentForm,
 				groups = ( this.groups = {} ),
-				rules;
-			$.each( this.settings.groups, function( key, value ) {
-				if ( typeof value === "string" ) {
-					value = value.split( /\s/ );
-				}
-				$.each( value, function( index, name ) {
-					groups[ name ] = key;
-				} );
-			} );
-			rules = this.settings.rules;
+				rules = this.settings.rules;
+
 			$.each( rules, function( key, value ) {
 				rules[ key ] = $.validator.normalizeRule( value );
+			} );
+
+			$.each( this.settings.groups, function( key, value ) {
+				var members = value,
+					groupRules;
+
+				if ( typeof value === "object" && !Array.isArray( value ) ) {
+					members = value.fields;
+
+				}
+				if ( typeof members === "string" ) {
+					members = members.split( /\s/ );
+				}
+
+				if (  value.hasOwnProperty( "rules" ) ) {
+					groupRules = $.validator.normalizeRule( value.rules );
+				}
+
+				$.each( members, function( index, name ) {
+
+					// Add rules for the group (individual element rules will override this)
+					if ( typeof groupRules !== "undefined" ) {
+
+						if ( typeof rules[ name ] === "undefined" ) {
+							rules[ name ] = $.validator.normalizeRule( value.rules );
+						} else {
+							rules[ name ] = $.extend( $.extend( {}, groupRules ), rules[ name ] );
+						}
+
+					}
+					groups[ name ] = key;
+				} );
 			} );
 
 			function delegate( event ) {
@@ -830,6 +854,16 @@ $.extend( $.validator, {
 			return m && ( m.constructor === String ? m : m[ method ] );
 		},
 
+		// Return custom message for group that element name is a part of (if there is one)
+		customGroupMessage: function( name, method ) {
+			if ( this.groups[ name ] && this.settings.groups[ this.groups[ name ] ].messages ) {
+				var m = this.settings.groups[ this.groups[ name ] ].messages;
+				return m && ( m.constructor === String ? m : m[ method ] );
+			} else {
+				return undefined;
+			}
+		},
+
 		// Return the first defined argument, allowing empty strings
 		findDefined: function() {
 			for ( var i = 0; i < arguments.length; i++ ) {
@@ -857,6 +891,7 @@ $.extend( $.validator, {
 			var message = this.findDefined(
 					this.customMessage( element.name, rule.method ),
 					this.customDataMessage( element, rule.method ),
+					this.customGroupMessage( element.name, rule.method ),
 
 					// 'title' is never undefined, so handle empty string as undefined
 					!this.settings.ignoreTitle && element.title || undefined,
@@ -1032,7 +1067,7 @@ $.extend( $.validator, {
 		// meta-characters that should be escaped in order to be used with JQuery
 		// as a literal part of a name/id or any selector.
 		escapeCssMeta: function( string ) {
-			if (string === undefined) return "";
+			if ( string === undefined ) { return ""; }
 			return string.replace( /([\\!"#$%&'()*+,./:;<=>?@\[\]^`{|}~])/g, "\\$1" );
 		},
 
