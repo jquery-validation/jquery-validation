@@ -20,7 +20,7 @@
 			},
 			messages: {
 				email: {
-					required: "Test override required message"
+					required: "Required message for the email field that overrides the message for the group."
 				}
 			},
 			groups: {
@@ -31,12 +31,19 @@
 						minlength: 2
 					},
 					messages: {
-						required: "Test required message.",
+						required: "Required message for the contactInfo group.",
 						minlength: jQuery.validator.format("Minimum length is {0}", 2)
 
 					}
 				},
 
+			},
+			errorPlacement: function( error, element ) {
+				if ( element.closest( ".group" ).length ) {
+					error.appendTo(element.closest( ".group" ));
+				} else {
+					error.insertAfter( element );
+				}
 			}
 		});
 	});
@@ -59,7 +66,7 @@
 	<p>Take a look at the source to see how messages can be customized with metadata.</p>
 	<!-- Custom rules and messages via data- attributes -->
 	<form class="cmxform" id="commentForm" method="post" action="">
-		<fieldset>
+		<fieldset class="group">
 			<legend>Contact Person Information</legend>
 			<p>
 				<label for="first">First Name *</label>
@@ -70,7 +77,7 @@
 				<input id="middle" name="middle" type="text">
 			</p>
 			<p>
-				<label for="first">Last Name</label>
+				<label for="last">Last Name</label>
 				<input id="last" name="last" type="text">
 			</p>
 
@@ -79,6 +86,10 @@
 				<input id="email" name="email" type="email"/>
 			</p>
 		</fieldset>
+		<p>
+			<label for="description">Description</label>
+			<textarea id="description" name="description"></textarea>
+		</p>
 		<input type="submit" value="Submit"/>
 	</form>
 

@@ -133,6 +133,30 @@
 		<input id="toDate" name="toDate" class="requiredDateRange" value="y">
 		<span class="errorContainer"></span>
 	</form>
+	<form id="groupMessages">
+		<fieldset class="group">
+			<legend>Contact Person Information</legend>
+
+				<label for="groupMessagesFirst">First Name *</label>
+				<input id="groupMessagesFirst" name="groupMessagesFirst" type="text">
+
+				<label for="groupMessagesMiddle">Middle Name</label>
+				<input id="groupMessagesMiddle" name="groupMessagesMiddle" type="text">
+
+				<label for="groupMessagesLast">Last Name</label>
+				<input id="groupMessagesLast" name="groupMessagesLast" type="text">
+
+
+				<label for="groupMessagesEmail">Email</label>
+				<input id="groupMessagesEmail" name="groupMessagesEmail" type="email"/>
+
+		</fieldset>
+
+			<label for="groupMessagesDescription">Description</label>
+			<textarea id="groupMessagesDescription" name="groupMessagesDescription"></textarea>
+
+		<input type="submit" value="Submit" id="groupMessagesSubmit"/>
+	</form>
 	<form id="testForm8">
 		<input id="form8input" data-rule-required="true" data-rule-number="true" data-rule-rangelength="2,8" name="abc">
 		<input type="radio" name="radio1">
@@ -282,6 +306,30 @@
 		<input id="v2-i7" name="v2-i7" data-rule-number data-rule-required>
 		<input id="v2-i8" name="v2-i8" data-rule-number="" data-rule-required="">
 		<input id="v2-i9" name="v2-i9">
+	</form>
+	<form id="groupRules">
+		<fieldset class="group">
+			<legend>Contact Person Information</legend>
+
+				<label for="groupRulesFirst">First Name *</label>
+				<input id="groupRulesFirst" name="groupRulesFirst" type="text">
+
+				<label for="groupRulesMiddle">Middle Name</label>
+				<input id="groupRulesMiddle" name="groupRulesMiddle" type="text">
+
+				<label for="groupRulesLast">Last Name</label>
+				<input id="groupRulesLast" name="groupRulesLast" type="text">
+
+
+				<label for="groupRulesEmail">Email</label>
+				<input id="groupRulesEmail" name="groupRulesEmail" type="Email"/>
+
+		</fieldset>
+
+			<label for="groupRulesDescription">Description</label>
+			<textarea id="groupRulesDescription" name="groupRulesDescription"></textarea>
+
+		<input type="submit" value="Submit" id="groupRulesSubmit"/>
 	</form>
 	<form id="checkables">
 		<input type="checkbox" id="checkable1" name="checkablesgroup" class="required">
@@ -448,12 +496,12 @@
 		<input name="year"/>
 		<button name="submitForm27" value="someValue" type="submit"><span>Submit</span></button>
 	</form>
-	
+
 	<form id="cnhFormTest">
 		<input id="cnhnumber" name="cnhnumber" required>
 		<button name="submitFormCnh" value="submitFormCnh" type="submit"><span>Submit</span></button>
 	</form>
-	
+
 	<form id="_contenteditableForm">
 		<div name="first_name" id="first_name" contenteditable placeholder="First Name"></div>
 		<br>

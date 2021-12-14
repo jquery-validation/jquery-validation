@@ -48,6 +48,42 @@ QUnit.test( "rules() - external", function( assert ) {
 	assert.deepEqual( element.rules(), { date: true, min: 5 } );
 } );
 
+QUnit.test( "rules() - group ", function( assert ) {
+	var first = $( "#groupRulesFirst" ),
+		middle = $( "#groupRulesMiddle" ),
+		email = $( "#groupRulesEmail" );
+
+	$( "#groupRules" ).validate( {
+		rules: {
+			groupRulesMiddle: {
+				required: false
+			},
+			groupRulesEmail: {
+				email: true
+			}
+		},
+		groups: {
+			contactInfo: {
+				fields: "groupRulesFirst groupRulesMiddle groupRulesLast groupRulesEmail",
+				rules: {
+					required: true,
+					minlength: 2
+				},
+				messages: {
+					required: "Required message for the contactInfo group.",
+					minlength: jQuery.validator.format( "Minimum length is {0}", 2 )
+
+				}
+			}
+		}
+	} );
+
+	assert.deepEqual( first.rules(), { required: true, minlength: 2 } );
+
+	// Rules that are set to false should be deleted
+	assert.deepEqual( middle.rules(), { minlength: 2 } );
+	assert.deepEqual( email.rules(), { required: true, minlength: 2, email: true } );
+} );
 QUnit.test( "rules() - external - complete form", function( assert ) {
 	assert.expect( 1 );
 

@@ -42,7 +42,58 @@ QUnit.test( "group error messages", function( assert ) {
 	assert.ok( form.valid() );
 	assert.ok( form.find( ".errorContainer .error:not(input)" ).is( ":hidden" ) );
 } );
+QUnit.test( "error messages set for group ", function( assert ) {
+	var email = $( "#groupMessagesEmail" ),
+		form = $( "#groupMessages" ),
+		emailRequiredMessage = "Required message for the email field that overrides the message for the group.",
+		groupRequiredMessage = "Required message for the contactInfo group.";
 
+	$( "#groupMessages" ).validate( {
+		rules: {
+			groupMessagesMiddle: {
+				required: false
+			},
+			groupMessagesEmail: {
+				email: true
+			}
+		},
+		messages: {
+			groupMessagesEmail: {
+				required: emailRequiredMessage
+			}
+		},
+		groups: {
+			contactInfo: {
+				fields: "groupMessagesFirst groupMessagesMiddle groupMessagesLast groupMessagesEmail",
+				rules: {
+					required: true,
+					minlength: 2
+				},
+				messages: {
+					required: groupRequiredMessage,
+					minlength: jQuery.validator.format( "Minimum length is {0}", 2 )
+
+				}
+			}
+
+		},
+		errorPlacement: function( error, element ) {
+			if ( element.closest( ".group" ).length ) {
+				error.appendTo( element.closest( ".group" ) );
+			} else {
+				error.insertAfter( element );
+			}
+		}
+	} );
+
+	assert.ok( !form.valid() );
+	assert.equal( form.find( "#contactInfo-error" ).length, 1 );
+	assert.equal( form.find( "#contactInfo-error" ).text(), emailRequiredMessage );
+	email.val( "test@sfhsuidfhiusdfs.test" );
+	email.trigger( "blur" );
+	assert.equal( form.find( "#contactInfo-error" ).text(), groupRequiredMessage );
+
+} );
 QUnit.test( "read messages from metadata", function( assert ) {
 	var form = $( "#testForm9" ),
 		e, g;
