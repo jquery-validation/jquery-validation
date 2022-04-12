@@ -2,7 +2,7 @@
 ================================
 
 [![release](https://img.shields.io/github/release/jquery-validation/jquery-validation.svg)](https://github.com/jquery-validation/jquery-validation/releases/latest)
-[![Build Status](https://secure.travis-ci.org/jquery-validation/jquery-validation.svg)](https://travis-ci.org/jquery-validation/jquery-validation)
+[![Build Status](https://github.com/jquery-validation/jquery-validation/actions/workflows/ci.yml/badge.svg)](https://github.com/jquery-validation/jquery-validation/actions/workflows/ci.yml)
 [![devDependency Status](https://david-dm.org/jquery-validation/jquery-validation/dev-status.svg?theme=shields.io)](https://david-dm.org/jquery-validation/jquery-validation#info=devDependencies)
 [![jsDelivr Hits](https://data.jsdelivr.com/v1/package/npm/jquery-validation/badge?style=rounded)](https://www.jsdelivr.com/package/npm/jquery-validation)
 
