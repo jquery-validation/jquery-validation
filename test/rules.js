@@ -424,3 +424,8 @@ QUnit.test( "required method should return false for undefined & null values", f
 	assert.notOk( v.element( username ), "The username element should be invalid" );
 	assert.notOk( v.element( urlc ), "The urlc element should be invalid" );
 } );
+
+QUnit.test( "rules() - returns dateISO for input type=date", function( assert ) {
+	$( "#rangesMinDateInvalid" ).validate();
+	assert.deepEqual( $( "#minDateInvalid" ).rules(), { dateISO: true, min: "2012-12-21" } );
+} );
