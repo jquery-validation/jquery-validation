@@ -1032,7 +1032,10 @@ $.extend( $.validator, {
 		// meta-characters that should be escaped in order to be used with JQuery
 		// as a literal part of a name/id or any selector.
 		escapeCssMeta: function( string ) {
-			if ( string === undefined ) { return ""; }
+			if ( string === undefined ) {
+				return "";
+			}
+
 			return string.replace( /([\\!"#$%&'()*+,./:;<=>?@\[\]^`{|}~])/g, "\\$1" );
 		},
 
@@ -1109,7 +1112,7 @@ $.extend( $.validator, {
 			}
 			delete this.pending[ element.name ];
 			$( element ).removeClass( this.settings.pendingClass );
-			if ( valid && this.pendingRequest === 0 && this.formSubmitted && this.form() ) {
+			if ( valid && this.pendingRequest === 0 && this.formSubmitted && this.form() && this.pendingRequest === 0 ) {
 				$( this.currentForm ).submit();
 
 				// Remove the hidden input that was used as a replacement for the
