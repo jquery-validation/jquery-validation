@@ -1,3 +1,22 @@
+1.19.4 / 2022-05-19
+===================
+
+## Build
+  * Add License.md to zip tarball (#2386)
+
+## Chore
+  * Updated build status badges (#2424)
+  * Enabled stable bot (#2425)
+
+## Core
+  * Fixed validation for input type="date" (#2360)
+  * Wait for pendingRequests to finish before submitting form (#2369)
+  * Fixed bug for Html Editors (#2154) (#2422)
+  * Fixed ReDoS vulnerability in URL2 validation (#2428)
+
+## Test
+  * Switch from Travis to GitHub workflows (#2423)
+
 1.19.3 / 2021-01-09
 ===================
 
