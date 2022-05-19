@@ -5,7 +5,7 @@
 - `git pull` latest https://github.com/jquery/jquery-release
 - disable _generateChangelog task in release.js (BOOOO), by commenting this lines: https://github.com/jquery/jquery-release/blob/a9823df8a5dff4c96d1f6645b09daa591adc2f06/release.js#L43-L44
 - run
-	node release.js --remote=jquery-validation/jquery-validation
+	node release.js --remote=jquery-validation/jquery-validation --branch=master
 - Wait a while, verify and confirm each step
 - Create GitHub release: Pick the new tag, add changelog, upload zip (from __release/repo/dist/*.zip)
 - Upload to NPM
