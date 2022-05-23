@@ -1113,7 +1113,7 @@ $.extend( $.validator, {
 			delete this.pending[ element.name ];
 			$( element ).removeClass( this.settings.pendingClass );
 			if ( valid && this.pendingRequest === 0 && this.formSubmitted && this.form() && this.pendingRequest === 0 ) {
-				$( this.currentForm ).submit();
+				$( this.currentForm ).trigger( 'submit' );
 
 				// Remove the hidden input that was used as a replacement for the
 				// missing submit button. The hidden input is added by `handle()`
