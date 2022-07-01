@@ -123,9 +123,9 @@ QUnit.test( "url2 (tld optional)", function( assert ) {
 	assert.ok( method( "http://www.føtex.dk/" ), "Valid url, danish unicode characters" );
 	assert.ok( method( "http://bösendorfer.de/" ), "Valid url, german unicode characters" );
 	assert.ok( method( "http://142.42.1.1" ), "Valid IP Address" );
+	assert.ok( method( "http://bassistance" ), "Valid URL (optional TLD)" );
+	assert.ok( method( "http://bassistance." ), "Valid URL (optional TLD)" );
 	assert.ok( !method( "http://192.168.8." ), "Invalid IP Address" );
-	assert.ok( method( "http://bassistance" ), "Invalid url" );
-	assert.ok( method( "http://bassistance." ), "Invalid url" );
 	assert.ok( !method( "http://bassistance,de" ), "Invalid url" );
 	assert.ok( !method( "http://bassistance;de" ), "Invalid url" );
 	assert.ok( !method( "http://.bassistancede" ), "Invalid url" );
