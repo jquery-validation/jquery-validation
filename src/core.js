@@ -454,7 +454,16 @@ $.extend( $.validator, {
 		checkForm: function() {
 			this.prepareForm();
 			for ( var i = 0, elements = ( this.currentElements = this.elements() ); elements[ i ]; i++ ) {
-				this.check( elements[ i ] );
+				var toBeChecked = this.findByName( elements[ i ].name );
+
+				//Fix validation for name array within form
+				if ( toBeChecked.length > 1 && toBeChecked.attr( "type" ) !== "checkbox" && toBeChecked.attr( "type" ) !== "radio" ) {
+					for ( var cnt = 0; cnt < toBeChecked.length; cnt++ ) {
+						this.check( toBeChecked[ cnt ] );
+					}
+				} else {
+					this.check( elements[ i ] );
+				}
 			}
 			return this.valid();
 		},
