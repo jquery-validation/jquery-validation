@@ -801,6 +801,36 @@ QUnit.test( "Fix #697: remote validation uses wrong error messages", function( a
 	} );
 } );
 
+QUnit.test( "Fix #2434: race condition in remote validation rules", function( assert ) {
+	var e = $( "#username" ),
+		done1 = assert.async(),
+		v = $( "#userForm" ).validate( {
+			rules: {
+				username: {
+					required: true,
+					remote: {
+						url: "users.php"
+					}
+				}
+			},
+			messages: {
+				username: {
+					remote: $.validator.format( "{0} in use" )
+				}
+			}
+		} );
+
+	e.val( "Peter" );
+	v.element( e );
+
+	e.val( "" );
+	v.element( e );
+	setTimeout( function() {
+		assert.equal( v.errorList[ 0 ].message, "This field is required." );
+		done1();
+	} );
+} );
+
 QUnit.module( "additional methods" );
 
 QUnit.test( "phone (us)", function( assert ) {
