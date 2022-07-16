@@ -822,11 +822,19 @@ QUnit.test( "Fix #2434: race condition in remote validation rules", function( as
 
 	e.val( "Peter" );
 	v.element( e );
+	assert.equal( e.hasClass( "error" ), false, "Field 'username' should not have the error class" );
+	assert.equal( e.hasClass( "pending" ), true, "field 'username' should have the pending class" );
 
 	e.val( "" );
 	v.element( e );
+	assert.equal( v.errorList[ 0 ].message, "This field is required." );
+	assert.equal( e.hasClass( "error" ), true, "Field 'username' should have the error class" );
+	assert.equal( e.hasClass( "pending" ), false, "field 'username' should not have the pending class" );
+
 	setTimeout( function() {
 		assert.equal( v.errorList[ 0 ].message, "This field is required." );
+		assert.equal( e.hasClass( "error" ), true, "Field 'username' should have the error class" );
+		assert.equal( e.hasClass( "pending" ), false, "field 'username' should not have the pending class" );
 		done1();
 	} );
 } );
