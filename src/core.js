@@ -1152,6 +1152,7 @@ $.extend( $.validator, {
 				}
 
 				delete this.pending[ element.name ];
+				$( element ).removeClass( this.settings.pendingClass );
 			}
 		},
 
