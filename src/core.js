@@ -1515,6 +1515,18 @@ $.extend( $.validator, {
 			return this.optional( element ) || ( value >= param[ 0 ] && value <= param[ 1 ] );
 		},
 
+		// Check any number greater than other number
+		greaterThan: function( value, element, param ) {
+			var $otherElement = $( param );
+			return parseInt( value, 10 ) > parseInt( $otherElement.val(), 10 );
+		},
+
+		// Check any number less than other number
+		lessThan: function( value, element, param ) {
+			var $otherElement = $( param );
+			return parseInt( value, 10 ) < parseInt( $otherElement.val(), 10 );
+		},
+
 		// https://jqueryvalidation.org/step-method/
 		step: function( value, element, param ) {
 			var type = $( element ).attr( "type" ),
