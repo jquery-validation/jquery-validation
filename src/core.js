@@ -1205,10 +1205,17 @@ $.extend( $.validator, {
 
 	addClassRules: function( className, rules ) {
 		if ( className.constructor === String ) {
-			this.classRuleSettings[ className ] = rules;
-		} else {
-			$.extend( this.classRuleSettings, className );
+			var obj = {};
+			obj[className] = rules;
+			className = obj;
 		}
+
+		$.each(className, function (n, r) {
+			$("." + n).each(function (i, e) {
+				var self = j(e)
+				self.rules('add', r);
+			});
+		});
 	},
 
 	classRules: function( element ) {
