@@ -1206,16 +1206,18 @@ $.extend( $.validator, {
 	addClassRules: function( className, rules ) {
 		if ( className.constructor === String ) {
 			var obj = {};
-			obj[className] = rules;
+			obj[ className ] = rules;
 			className = obj;
 		}
 
-		$.each(className, function (n, r) {
-			$("." + n).each(function (i, e) {
-				var self = j(e)
-				self.rules('add', r);
-			});
-		});
+		$.each( className, function( n, r ) {
+			$( "." + n ).each( function( i, e ) {
+						var self = $( e );
+						self.rules( "add", r );
+					}
+				);
+			}
+		);
 	},
 
 	classRules: function( element ) {
