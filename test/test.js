@@ -2745,3 +2745,41 @@ QUnit.test( "stopRequest() should submit the form once pendingRequests === 0", f
     // Submit the form
     $( button ).click();
 } );
+
+QUnit.test( "addClassRules() with custom messages", function( assert ) {
+	assert.expect( 2 );
+	var form = $( "#testForm29" ),
+	message = "Custom message";
+
+	var v = form.validate( {
+		debug: true
+	} );
+
+	$.validator.addClassRules( "class-required-field", {
+        required: true,
+        messages: {
+                required: message
+            }
+    } );
+
+	// $( "#form29field1" ).rules("add", {
+	// 	required: true,
+	// 	messages: {
+	// 		required: message
+	// 	}
+	// });
+	// $( "#form29field2" ).rules("add", {
+	// 	required: true,
+	// 	messages: {
+	// 		required: message
+	// 	}
+	// });
+
+	v.form();
+
+	var label1 = $( "#form29field1" ).next( ".error:not(input)" ).text();
+	assert.deepEqual( label1, message );
+
+	var label2 = $( "#form29field2" ).next( ".error:not(input)" ).text();
+	assert.deepEqual( label2, message );
+} );
