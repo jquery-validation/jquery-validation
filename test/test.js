@@ -2745,3 +2745,37 @@ QUnit.test( "stopRequest() should submit the form once pendingRequests === 0", f
     // Submit the form
     $( button ).click();
 } );
+
+QUnit.test( "destroy()", function( assert ) {
+
+	var form = $( "#testForm29" ),
+	v = form.validate( {
+		debug: true
+	} );
+
+	$( "#testForm29n2" ).rules( "add", {
+		greaterThan:  $( "#testForm29p1" ),
+		normalizer: function( value ) {
+			return Math.abs( value ).toString();
+		},
+		messages: {
+			greaterThan: "abs(-2) should be more than 1"
+		}
+	} );
+
+	$( "#testForm29p1" ).rules( "add", {
+		required: true,
+		lessThan:  $( "#testForm29n2" ),
+		normalizer: function( value ) {
+			return Math.abs( value ).toString(); },
+		messages: {
+			lessThan: "1 should be less than abs(-2)"
+		}
+	} );
+
+	v.form();
+	var label0 = $( "#testForm29p1" ).next( ".error:not(input)" ).text();
+	assert.deepEqual( label0, "" );
+	var label1 = $( "#testForm29n2" ).next( ".error:not(input)" ).text();
+	assert.deepEqual( label1, "" );
+} );
