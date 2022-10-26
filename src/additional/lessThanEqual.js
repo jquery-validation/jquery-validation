@@ -6,8 +6,8 @@ $.validator.addMethod( "lessThanEqual", function( value, element, param ) {
             $( element ).valid();
         } );
     }
-	var val = target.val(), normalizer;
-	if (rules = target.rules()) {
+	var val = target.val(), normalizer, rules;
+	if ( rules = target.rules() ) {
 		if ( typeof rules.normalizer === "function" ) {
 			normalizer = rules.normalizer;
 		} else if (	typeof this.settings.normalizer === "function" ) {
