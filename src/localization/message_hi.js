@@ -1,6 +1,6 @@
 /*
  * Translated default messages for the jQuery validation plugin.
- * Locale: Hi-IN (Hindi; हिंदी)
+ * Locale: Hindi; हिंदी
  */
 $.extend( $.validator.messages, {
 	required: "आवश्यक फ़ील्ड।",
