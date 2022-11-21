@@ -26,7 +26,7 @@ $.extend( $.validator.messages, {
 	minWords: $.validator.format( "Veuillez fournir au moins {0} mots." ),
 	rangeWords: $.validator.format( "Veuillez fournir entre {0} et {1} mots." ),
 	letterswithbasicpunc: "Veuillez fournir seulement des lettres et des signes de ponctuation.",
-	alphanumeric: "Veuillez fournir seulement des lettres, nombres, espaces et soulignages.",
+	alphanumeric: "Veuillez fournir seulement des lettres, nombres et soulignages.",
 	lettersonly: "Veuillez fournir seulement des lettres.",
 	nowhitespace: "Veuillez ne pas inscrire d'espaces blancs.",
 	ziprange: "Veuillez fournir un code postal entre 902xx-xxxx et 905-xx-xxxx.",
