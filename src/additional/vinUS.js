@@ -25,6 +25,7 @@ $.validator.addMethod( "vinUS", function( v ) {
 		f = FL[ i ];
 		d = v.slice( i, i + 1 );
 		if ( i === 8 ) {
+			// check digit vin is an integer
 			cdv = d;
 		}
 		if ( !isNaN( d ) ) {
@@ -35,6 +36,7 @@ $.validator.addMethod( "vinUS", function( v ) {
 					d = VL[ n ];
 					d *= f;
 					if ( isNaN( cdv ) && n === 8 ) {
+						// check digit vin is a string
 						cdv = LL[ n ];
 					}
 					break;
@@ -43,11 +45,15 @@ $.validator.addMethod( "vinUS", function( v ) {
 		}
 		rs += d;
 	}
-	cd = rs % 11;
+	
+    // check digit is an integer
+    cd = rs % 11;
 	if ( cd === 10 ) {
-		cd = "X";
+		// check digit is a string
+        cd = "X";
 	}
-	if ( cd === cdv ) {
+	// cd and cdv can be either integer  string
+	if ( cd == cdv ) {
 		return true;
 	}
 	return false;
