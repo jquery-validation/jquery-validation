@@ -24,21 +24,20 @@ $.validator.addMethod( "vinUS", function( v ) {
     for ( i = 0; i < 17; i++ ) {
         f = FL[ i ];
         d = v.slice( i, i + 1 );
-        if( isNaN( d ) ) {
+        if ( isNaN( d ) ) {
             d = d.toUpperCase();
-            n = VL[LL.indexOf(d)];
+            n = VL[ LL.indexOf( d ) ];
+        } else {
+            n = parseInt( d, 10 );
         }
-        else {
-            n = parseInt(d);
-        }
-        if (i === 8 )
+        if ( i === 8 )
         {
             cdv = n;
-            if(d === 'X') {
+            if ( d === "X" ) {
                 cdv = 10;
             }
         }
-        rs += n * f
+        rs += n * f;
     }
     cd = rs % 11;
     if ( cd === cdv ) {
