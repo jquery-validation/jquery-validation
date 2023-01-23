@@ -1,3 +1,90 @@
+1.19.5 / 2022-07-01
+===================
+
+## Chore
+  * Add CodeQL analysis [3d3c1fb](https://github.com/jquery-validation/jquery-validation/commit/3d3c1fb880c3c623da334e9b6b32a861a16efeb8)
+
+## Core
+  * Fixed jQuery .submit() event shorthand deprecation notice [#2430](https://github.com/jquery-validation/jquery-validation/pull/2430)
+  * Fixed ReDos vulnerability in url, and url2 validation [5bbd80d](https://github.com/jquery-validation/jquery-validation/commit/5bbd80d27fc6b607d2f7f106c89522051a9fb0dd)
+
+## Localisation
+  * Added periods to messages [#2266](https://github.com/jquery-validation/jquery-validation/pull/2266)
+
+1.19.4 / 2022-05-19
+===================
+
+## Build
+  * Add License.md to zip tarball (#2386)
+
+## Chore
+  * Updated build status badges (#2424)
+  * Enabled stable bot (#2425)
+
+## Core
+  * Fixed validation for input type="date" (#2360)
+  * Wait for pendingRequests to finish before submitting form (#2369)
+  * Fixed bug for Html Editors (#2154) (#2422)
+  * Fixed ReDoS vulnerability in URL2 validation (#2428)
+
+## Test
+  * Switch from Travis to GitHub workflows (#2423)
+
+1.19.3 / 2021-01-09
+===================
+
+## Core
+  * CVE-2021-21252: fixed Regular Expression Denial of Service vulnerability (#2371)
+  * Replaced deprecated jQuery functions (#2335)
+
+## Chore
+  * Add Accessibility section to Readme (#2149)
+
+## Localization
+  * Add "pattern" translation for French (#2363)
+  * add phone validate translate for Turkish translation (#2343)
+
+1.19.2 / 2020-05-23
+===================
+
+## Core
+  * Core: Fixes deprecated calls to jQuery trim for compat with newer jQuery core versions (#2328)
+
+1.19.1 / 2019-06-15
+===================
+
+## Core
+  * Change focus() to trigger("focus") (#2243)
+
+## Build
+  * Set jQuery as a peer dependency (#2248)
+
+## Localization
+  * Add zh_TW translation for step message (#2245)
+  * Adding Serbian translation for step method message (#2251)
+
+1.19.0 / 2018-11-28
+===================
+
+## Subresource Integrity hashes
+
+As of 1.18.0, we started to provide Subresource Integrity hashes of all distribution files.
+
+The hashes for the 1.19.0 release can be found in the file [`jquery-validation-sri.json`](https://raw.githubusercontent.com/jquery-validation/jquery-validation/1.19.0/dist/jquery-validation-sri.json) under `dist` folder.
+
+## Additional
+  * Don't fail when field is optional in CNPJBR & CPFBR rules (#2236)
+  * Add validation rule for mobile number of Russia Federation (#2207)
+  * Add Brazillian CNPJ validation rule (#2222)
+  * Add Brazillian CNH number (Carteira Nacional de Habilitacao) (#2234)
+  * Add ABA Routing Number Validation (#2216)
+
+## Core
+  * Fix contenteditable detection's regression introduced in #2142 (#2235)
+
+## Localization
+  * Add Swedish translation for pattern (#2227)
+
 1.18.0 / 2018-09-09
 ===================
 
@@ -86,7 +173,7 @@
 ## Tests
   * Pass on the value of the used submit button for scripted submits (#2019)
   * Use assert#pushResult instead of assert#push (#2018)
-  
+
 ## All
   * Fix links after move to organization
   * Use https

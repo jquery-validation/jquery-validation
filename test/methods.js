@@ -122,10 +122,10 @@ QUnit.test( "url2 (tld optional)", function( assert ) {
 	assert.ok( method( "ftp://bassistance.de/jquery/plugin.php?bla=blu" ), "Valid url" );
 	assert.ok( method( "http://www.føtex.dk/" ), "Valid url, danish unicode characters" );
 	assert.ok( method( "http://bösendorfer.de/" ), "Valid url, german unicode characters" );
-	assert.ok( method( "http://192.168.8.5" ), "Valid IP Address" );
+	assert.ok( method( "http://142.42.1.1" ), "Valid IP Address" );
+	assert.ok( method( "http://bassistance" ), "Valid URL (optional TLD)" );
+	assert.ok( method( "http://bassistance." ), "Valid URL (optional TLD)" );
 	assert.ok( !method( "http://192.168.8." ), "Invalid IP Address" );
-	assert.ok( method( "http://bassistance" ), "Invalid url" );
-	assert.ok( method( "http://bassistance." ), "Invalid url" );
 	assert.ok( !method( "http://bassistance,de" ), "Invalid url" );
 	assert.ok( !method( "http://bassistance;de" ), "Invalid url" );
 	assert.ok( !method( "http://.bassistancede" ), "Invalid url" );
@@ -798,6 +798,44 @@ QUnit.test( "Fix #697: remote validation uses wrong error messages", function( a
 				done3();
 			} );
 		} );
+	} );
+} );
+
+QUnit.test( "Fix #2434: race condition in remote validation rules", function( assert ) {
+	var e = $( "#username" ),
+		done1 = assert.async(),
+		v = $( "#userForm" ).validate( {
+			rules: {
+				username: {
+					required: true,
+					remote: {
+						url: "users.php"
+					}
+				}
+			},
+			messages: {
+				username: {
+					remote: $.validator.format( "{0} in use" )
+				}
+			}
+		} );
+
+	e.val( "Peter" );
+	v.element( e );
+	assert.equal( e.hasClass( "error" ), false, "Field 'username' should not have the error class" );
+	assert.equal( e.hasClass( "pending" ), true, "field 'username' should have the pending class" );
+
+	e.val( "" );
+	v.element( e );
+	assert.equal( v.errorList[ 0 ].message, "This field is required." );
+	assert.equal( e.hasClass( "error" ), true, "Field 'username' should have the error class" );
+	assert.equal( e.hasClass( "pending" ), false, "field 'username' should not have the pending class" );
+
+	setTimeout( function() {
+		assert.equal( v.errorList[ 0 ].message, "This field is required." );
+		assert.equal( e.hasClass( "error" ), true, "Field 'username' should have the error class" );
+		assert.equal( e.hasClass( "pending" ), false, "field 'username' should not have the pending class" );
+		done1();
 	} );
 } );
 
