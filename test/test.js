@@ -2060,37 +2060,36 @@ QUnit.test( "[Remote rule] #1508: Validation fails to trigger when next field is
 	check( "abc" );
 } );
 
-
-$.mockjax({
+$.mockjax( {
 	url: "issue2150TestForm.action",
 	response: function() {
 		this.responseText = "true";
 	},
 	responseTime: 1
-});
+} );
 
-QUnit.test("Remote validation should not reset existing errors (#2150)", function( assert ) {
+QUnit.test( "Remote validation should not reset existing errors (#2150)", function( assert ) {
 	assert.expect( 3 );
 	var done = assert.async();
-	$("#issue2150TestForm").validate({
+	$( "#issue2150TestForm" ).validate( {
 		rules: {
 			remoteTestedInput: {
 				remote: "issue2150TestForm.action"
 			},
-			requiredInput: "required",
+			requiredInput: "required"
 		}
-	});
+	} );
 
 	assert.equal( $( "#requiredInput" ).attr( "class" ), undefined, "#requiredInput should not have any class" );
 
 	var isValid = $( "#issue2150TestForm" ).valid();
 
-	setTimeout(function() {
+	setTimeout( function() {
 		assert.equal( $( "#requiredInput" ).attr( "class" ), "error", "#requiredInput should have \"error\" class" );
 		assert.equal( isValid, false, "Form should have error" );
 		done();
-	});
-});
+	} );
+} );
 
 QUnit.test( "validate checkbox on click", function( assert ) {
 	function errors( expected, message ) {
