@@ -6,6 +6,16 @@ $.validator.addMethod( "lessThanEqual", function( value, element, param ) {
             $( element ).valid();
         } );
     }
-
-    return value <= target.val();
+	var val = target.val(), normalizer, rules;
+	if ( rules = target.rules() ) {
+		if ( typeof rules.normalizer === "function" ) {
+			normalizer = rules.normalizer;
+		} else if (	typeof this.settings.normalizer === "function" ) {
+			normalizer = this.settings.normalizer;
+		}
+		if ( normalizer ) {
+			val = normalizer.call( element, val );
+		}
+	}
+    return value <= val;
 }, "Please enter a lesser value." );
