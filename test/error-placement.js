@@ -440,3 +440,60 @@ QUnit.test( "#1632: Error hidden, but input error class not removed", function( 
 	assert.equal( v.numberOfInvalids(), 0, "There is no error" );
 	assert.equal( box2.hasClass( "error" ), false, "Box2 should not have an error class" );
 } );
+
+QUnit.test( "test settings.escapeHtml undefined", function( assert ) {
+	var form = $( "#escapeHtmlForm1" ),
+		field = $( "#escapeHtmlForm1text" );
+
+	form.validate( {
+		messages: {
+			escapeHtmlForm1text: {
+				required: "<script>console.log('!!!');</script>"
+			}
+		}
+	} );
+
+	assert.ok( !field.valid() );
+	assert.hasError( field, "required" );
+
+	var label = form.find( "label" );
+	assert.equal( label.length, 1 );
+	assert.equal( label.html(), "<script>console.log('!!!');</script>" );
+
+	label.html( "" );
+	assert.ok( !field.valid() );
+	assert.equal( label.html(), "<script>console.log('!!!');</script>" );
+
+	field.val( "foo" );
+	assert.ok( field.valid() );
+	assert.noErrorFor( field );
+} );
+
+QUnit.test( "test settings.escapeHtml true", function( assert ) {
+	var form = $( "#escapeHtmlForm2" ),
+		field = $( "#escapeHtmlForm2text" );
+
+	form.validate( {
+		escapeHtml: true,
+		messages: {
+			escapeHtmlForm2text: {
+				required: "<script>console.log('!!!');</script>"
+			}
+		}
+	} );
+
+	assert.ok( !field.valid() );
+	assert.hasError( field, "required" );
+
+	var label = form.find( "label" );
+	assert.equal( label.length, 1 );
+	assert.equal( label.html(), "&lt;script&gt;console.log('!!!');&lt;/script&gt;" );
+
+	label.html( "" );
+	assert.ok( !field.valid() );
+	assert.equal( label.html(), "&lt;script&gt;console.log('!!!');&lt;/script&gt;" );
+
+	field.val( "foo" );
+	assert.ok( field.valid() );
+	assert.noErrorFor( field );
+} );
