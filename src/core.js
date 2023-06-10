@@ -1630,7 +1630,14 @@ $.extend( $.validator, {
 					}
 					previous.valid = valid;
 					validator.stopRequest( element, valid );
-				}
+				},error: function(jqXHR, textStatus, errorThrown){
+						var errors = {}; 
+						var message = "Looks like the connection was lost while validating this field, please check your connection and try again or reload the page";
+						errors[element.name] = previous.message = $.isFunction(message) ? message(value) : message;
+						validator.invalid[element.name] = true;
+						validator.showErrors(errors);		
+						jQuery(element).removeData("previousValue");	
+				},
 			}, param ) );
 			return "pending";
 		}
