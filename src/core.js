@@ -1637,7 +1637,7 @@ $.extend( $.validator, {
 						validator.invalid[element.name] = true;
 						validator.showErrors(errors);		
 						jQuery(element).removeData("previousValue");	
-				},
+				}
 			}, param ) );
 			return "pending";
 		}
