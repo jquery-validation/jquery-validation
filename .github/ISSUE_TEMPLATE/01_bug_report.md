@@ -1,7 +1,7 @@
 ---
 name: Bug report
 about: Report something that's broken. Please ensure that you're using the latest version.
-labels: Bug
+labels: ["Bug", "Status: Unverified"]
 
 ---
 
