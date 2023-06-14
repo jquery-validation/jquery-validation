@@ -22,10 +22,7 @@ jobs:
               with:
                   repo-token: ${{ secrets.GITHUB_TOKEN }}
                   stale-issue-message: >
-                      This issue/proposal has been automatically marked as idle and stale because it hasn't
-                      had any recent activity. It will be automatically closed if no further activity
-                      occurs. If you think this is wrong, or the problem still persists, just pop
-                      a reply in the comments and one of the maintainers will (try!) to follow up.
+                      This issue lacks verification. Please provide a reproduction link.
 
                       Thank you for contributing :)
                   stale-pr-message: >
@@ -38,5 +35,5 @@ jobs:
                   stale-issue-label: 'stale'
                   stale-pr-label: 'stale'
                   exempt-all-milestones: true
-                  exempt-issue-labels: 'bug, help wanted'
+                  exempt-issue-labels: 'Status: Verified'
                   exempt-pr-labels: 'MERGE ME, NEEDS REVIEW'
