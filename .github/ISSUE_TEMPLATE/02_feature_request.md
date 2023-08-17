@@ -1,7 +1,7 @@
 ---
 name: Feature request
 about: Wouldn't it be nice if jquery-validate could ...
-labels: Feature
+labels: ["Type: Feature"]
 
 ---
 
