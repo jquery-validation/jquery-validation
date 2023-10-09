@@ -1,3 +1,23 @@
+1.20.0 / 2023-10-10
+===================
+
+## Additional
+  * Fixed vinUS validation failing on valid vin numbers [#2460](https://github.com/jquery-validation/jquery-validation/pull/2460)
+
+## Core
+  * Fixed race condition in remote validation rules [#2435](https://github.com/jquery-validation/jquery-validation/pull/2435)
+  * Removed pending class from fields with an aborted request [#2436](https://github.com/jquery-validation/jquery-validation/pull/2436)
+  * Fixed remote validation error tracking [#2242](https://github.com/jquery-validation/jquery-validation/pull/2242)
+  * Added escapeHtml option to avoid XSS attacks via showLabel method [#2462](https://github.com/jquery-validation/jquery-validation/pull/2462)
+
+## Demo
+  * Fixed minlength validation in ajaxSubmit-integration-demo.html [#2454](https://github.com/jquery-validation/jquery-validation/pull/2454)
+
+## Localisation
+  * Improved required translation in pt_BR [#2445](https://github.com/jquery-validation/jquery-validation/pull/2445)
+  * Added Hindi translation [#2453](https://github.com/jquery-validation/jquery-validation/pull/2453)
+  * Added French currency translation [#2471](https://github.com/jquery-validation/jquery-validation/pull/2471)
+
 1.19.5 / 2022-07-01
 ===================
 
