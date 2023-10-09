@@ -38,7 +38,7 @@ Release.define({
 	},
 
 	generateArtifacts: function( done ) {
-		Release.exec( "grunt release", "Grunt command failed" );
+		Release.exec( "npx grunt release", "Grunt command failed" );
 		// Keep this list of files in sync with package.json's files key
 		done([
 			"dist/localization/",
