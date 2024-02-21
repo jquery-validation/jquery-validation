@@ -32,6 +32,16 @@ $.mockjax( {
 } );
 
 $.mockjax( {
+	url: "users3.php",
+	data: {
+		lastname: "last-name"
+	},
+	responseText: "false",
+	responseStatus: 200,
+	responseTime: 1
+} );
+
+$.mockjax( {
 	url: "echo.php",
 	response: function( data ) {
 		this.responseText = JSON.stringify( data.data );
