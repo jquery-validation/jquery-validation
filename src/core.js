@@ -1048,8 +1048,7 @@ $.extend( $.validator, {
 		getDateValue: function( value, type ) {
 			switch (type) {
 				case 'date':
-					value = (new Date(value)).getDate();
-					break;
+					value = value + ' 00:00:00';
 				case 'datetime':
 				case 'datetime-local':
 					value = (new Date(value)).getTime() / 1000;
