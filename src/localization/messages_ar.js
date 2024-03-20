@@ -2,7 +2,7 @@
  * Translated default messages for the jQuery validation plugin.
  * Locale: AR (Arabic; العربية)
  */
-$.extend($.validator.messages, {
+$.extend( $.validator.messages, {
 	required: "هذا الحقل إلزامي",
 	remote: "يرجى تصحيح هذا الحقل للمتابعة",
 	email: "رجاء إدخال عنوان بريد إلكتروني صحيح",
@@ -49,4 +49,4 @@ $.extend($.validator.messages, {
 	cifES: "يرجى تقديم رقم CIF صالح",
 	postalCodeCA: "يرجى تقديم رمز بريدي صالح",
 	pattern: "التنسيق غير صالح"
-});
+} );
