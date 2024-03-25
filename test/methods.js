@@ -623,7 +623,7 @@ QUnit.test( "remote, data previous querystring", function( assert ) {
 			rules: {
 				lastname: {
 					remote: {
-						url: "users.php",
+						url: "users3.php",
 						type: "POST",
 						data: {
 							firstname: function() {
@@ -833,6 +833,42 @@ QUnit.test( "Fix #2434: race condition in remote validation rules", function( as
 
 	setTimeout( function() {
 		assert.equal( v.errorList[ 0 ].message, "This field is required." );
+		assert.equal( e.hasClass( "error" ), true, "Field 'username' should have the error class" );
+		assert.equal( e.hasClass( "pending" ), false, "field 'username' should not have the pending class" );
+		done1();
+	} );
+} );
+
+QUnit.test( "Fix #2479: Remote validation fails when input is the same as in aborted request", function( assert ) {
+	var e = $( "#username" ),
+		done1 = assert.async(),
+		v = $( "#userForm" ).validate( {
+			rules: {
+				username: {
+					remote: {
+						url: "users.php"
+					}
+				}
+			},
+			messages: {
+				username: {
+					remote: $.validator.format( "{0} in use" )
+				}
+			}
+		} );
+
+	e.val( "Peter" );
+	v.element( e );
+	assert.equal( e.hasClass( "error" ), false, "Field 'username' should not have the error class" );
+	assert.equal( e.hasClass( "pending" ), true, "field 'username' should have the pending class" );
+
+	e.val( "Peter" );
+	v.element( e );
+	assert.equal( e.hasClass( "error" ), false, "Field 'username' should not have the error class" );
+	assert.equal( e.hasClass( "pending" ), true, "field 'username' should have the pending class" );
+
+	setTimeout( function() {
+		assert.equal( v.errorList[ 0 ].message, "Peter in use" );
 		assert.equal( e.hasClass( "error" ), true, "Field 'username' should have the error class" );
 		assert.equal( e.hasClass( "pending" ), false, "field 'username' should not have the pending class" );
 		done1();
