@@ -75,5 +75,6 @@ $.extend( $.validator.messages, {
 	cpfBR: "Por favor, forne&ccedil;a um CPF v&aacute;lido.",
 	nisBR: "Por favor, forne&ccedil;a um NIS/PIS v&aacute;lido.",
 	cnhBR: "Por favor, forne&ccedil;a um CNH v&aacute;lido.",
-	cnpjBR: "Por favor, forne&ccedil;a um CNPJ v&aacute;lido."
+	cnpjBR: "Por favor, forne&ccedil;a um CNPJ v&aacute;lido.",
+	matriculaCertidaoBR: "Por favor, forne&ccedil;a uma matr&iacute;cula de certid&atilde;o v&aacute;lida."
 } );
