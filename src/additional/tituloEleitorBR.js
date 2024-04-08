@@ -1,50 +1,52 @@
 /*
- * Calcula se um título eleitoral é válido
+ * Brazillian voter registration number.
  *
- * Título de eleitor deve possuir 12 dígitos.
+ * Voter registration number should have 12 or 13 digits.
  *
- * - Os caracteres 1 a 8 são números sequenciais.
+ * - The characters 1 to 8 are sequencial numbers.
  *
- * - Os caracteres 9 e 10 representam os estados da federação onde o título
- *   foi emitido (01 = SP, 02 = MG, 03 = RJ, 04 = RS, 05 = BA, 06 = PR, 07 = CE, 08 = PE,
+ * - The characters 9 and 10 represent the federation states where the registration
+ *   has been issued
+ *  (01 = SP, 02 = MG, 03 = RJ, 04 = RS, 05 = BA, 06 = PR, 07 = CE, 08 = PE,
  *   09 = SC, 10 = GO,  11 = MA12 = PB, 13 = PA, 14 = ES, 15 = PI, 16 = RN, 17 = AL,
  *   18 = MT, 19 = MS, 20 = DF, 21 = SE, 22 = AM, 23 = RO, 24 = AC, 25 = AP, 26 = RR,
- *   27 = TO, 28 = Exterior(ZZ).
+ *   27 = TO, 28 = Abroad(ZZ).
  *
- * - Os caracteres 11 e 12 são dígitos verificadores.
+ * - The characters 11 and 12 are verification digits.
  *
- * 1) Partes do número
+ * 1) Number parts
  * ------------------------------------------------
- * |       Número Sequencial      |  UF   |   DV  |
+ * |       Sequential Number      |  UF   |   VD  |
  *  1   0   2   3   8   5   0   1   0   6   7   1
  *
- * 2) Cálculo do primeiro DV.
+ * 2) Computation of first VD.
  *
- *  - Soma-se o produto das algarismos 1 a 8 pelos números 2, 3, 4, 5, 6, 7, 8 e 9.
+ *  - We sum the product of the numerals 1 through 8 by the numbers 2, 3, 4, 5, 6, 7, 8 and 9.
  *
  *   1   0   2   3   8   5   0   1
  *   x   x   x   x   x   x   x   x
  *   2   3   4   5   6   7   8   9
  * = 2 + 0 + 8 +15 +48 +35 + 0 + 9  = 117
  *
- *  - O somatório encontrado é dividido por 11. O DV1 é o resto da divisão. Se o
- *    resto for 10, o DV1 é 0.
+ *  - The resulting sum is divided by 11.
+ *    The VD1 is the remainer of the division.
+ *    If the remainer is 10, the VD1 is 0.
  *
- * 2.1) 117 / 11 tem resto igual a 7.
+ * 2.1) 117 / 11 has remainer iqual to 7.
  *
- * 3) Cálculo do segundo DV
+ * 3) Computation of second VD.
  *
- * - Soma-se o produto dos algarismos 9 a 11 (relativos aos 2 dígitos da UF e o novo
- *   DV1 que acabou de ser calculado) e os multiplicam pelos números 7, 8 e 9. Se o
- *   resto for 10, DV2 será 0.
+ * - We sum the product of the numerals 9 through 11 (relative to the 2 UF digits and the new
+ *   VD1 just computed before) by the numbers 7, 8 and 9.
+ *   If the remainer is 10, the VD2 is 0.
  *   0   6   7
  *   x   x   x
  *   7   8   9
  * = 0 +48 +63 = 111
  *
- * 3.1) 111 / 11 tem resto igual a 1.
+ * 3.1) 111 / 11 has remainer iqual to 1.
  *
- * Fontes: http://clubes.obmep.org.br/blog/a-matematica-nos-documentos-titulo-de-eleitor/
+ * Source: http://clubes.obmep.org.br/blog/a-matematica-nos-documentos-titulo-de-eleitor/
  *         https://siga0984.wordpress.com/2019/05/01/algoritmos-validacao-de-titulo-de-eleitor/
  *
  */
@@ -92,9 +94,9 @@ $.validator.addMethod( "tituloEleitorBR", function( value, element ) {
 		var result = sum % 11;
 		if ( ( result === 0 ) && ( ufs[ uf ] === "SP" || ufs[ uf ] === "MG" ) ) {
 
-			// Regra especial para São Paulo e Minas Gerais
-			// Se o resto da divisão for zero, o digito
-			// verificador é 1
+			// Special rule for the states of São Paulo and Minas Gerais
+			// If the ramainder of the division is zero, the verification
+			// digit is 1
 			result = 1;
 
 		} else if ( ( result === 10 ) ) {

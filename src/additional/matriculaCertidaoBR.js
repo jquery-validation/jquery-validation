@@ -1,26 +1,26 @@
 /*
- * Calcula se uma matrícula de Certidão de Nascimento, Casamento ou Óbito é válida
+ * Brazillian certificate registration.
  *
- * O Número de Matrícula tem a configuração aaaaaa.bb.cc.dddd.e.fffff.ggg.hhhhhhh-ii, onde:
+ * Certificate registration number follows the pattern aaaaaa.bb.cc.dddd.e.fffff.ggg.hhhhhhh-ii, where:
  *
- * aaaaaa indica o Código Nacional da Serventia (identificação única do cartório) ex.: 10453-9 (v. Nota final)
- * bb indica o Código do Acervo (01-Acervo Próprio e 02-Acervos incorporados)
- * cc indica o Tipo de Serviço Prestado (55 - Serviço de Registro Civil das Pessoas Naturais)
- * dddd indica o Ano do Registro - ex.: 2013
- * e indica o Tipo do livro - 1-Livro A (Nascimento),
- *                            2-Livro B (Casamento),
- *                            3-Livro B Auxiliar (Registro de casamentos religiosos para fins civis),
- *                            4-Livro C (Óbito),
- *                            5-Livro C Auxiliar (Registro de Natimortos),
- *                            6-Livro D (Registro de Proclamas),
- *                            7-Livro E (Demais atos relativos ao Registro Civil ou Livro E Único),
- *                            8-Livro E (Desdobrado para registro específico das Emancipações) e
- *                            9-Livro E (Desdobrado para registro específico das Interdições)
- * fffff indica o Número do livro - ex.: 00012
- * ggg indica o Número da folha - ex.: 021
- * hhhhhhh indica o Número do Termo - ex.: 0000123
- * ii indica o Dígito Verificador DV, cujo cálculo obedece ao seguinte esquema, dentro do critério
- * de DV MÓDULO 11 já conhecido:
+ * aaaaaa indicates the Código Nacional da Serventia (notary's office unique identification) ex.: 10453-9 (v. Nota final)
+ * bb indicates the Collection Code (01-Proper collection e 02-Incorporated collection)
+ * cc indicates the Type of Service Provided (55 - Civil Registration Service for Natural Persons)
+ * dddd indicates the registration year - ex.: 2013
+ * e indicates The book category - 1-Book A (Birth),
+ *                                 2-Book B (Marriage),
+ *                                 3-Book B Auxiliary (Religious weddings registrations with civil effects),
+ *                                 4-Book C (Deaths),
+ *                                 5-Book C Auxiliary (Stillbirth registrations),
+ *                                 6-Book D (Banns of marriage registrations),
+ *                                 7-Book E (Other acts related to Civil registration or unique E Book),
+ *                                 8-Book E (Unfolded for specific Emancipations registraion) and
+ *                                 9-Book E (Unfolded for specific Interdictions registraion)
+ * fffff indicates the book number - ex.: 00012
+ * ggg indicates the page number - ex.: 021
+ * hhhhhhh indicates the term number - ex.: 0000123
+ * ii indicates the Verification digits VD, of which the computation obeys the following rule, according to the
+ * known VD MODULE 11:
  *
  * 1  0  4  5  3  9  0  1  5  5  2  0  1  3  1  0  0  0  1  2  0  2  1  0  0  0  0  1  2  3 = 2
  * x  x  x  x  x  x  x  x  x  x  x  x  x  x  x  x  x  x  x  x  x  x  x  x  x  x  x  x  x  x
@@ -28,7 +28,7 @@
  * ----------------------------------------------------------------------------------------
  * 2+ 0+16+25+18+63+ 0+ 9+50+ 0+ 2+ 0+ 3+12+ 5+ 0+ 0+ 0+ 9+20+ 0+ 2+ 2+ 0+ 0+ 0+ 0+ 7+16+27 = 288
  *
- * 288÷11=26, com resto 2 (este  o 1º dígito do DV) - Nota: se o resto for "10", o DV será "1"
+ * 288÷11=26, with remainer 2 (this is the 1st digit of the VD) - Note: if the remainder is "10", the VD1 is "1"
  *
  * 1  0  4  5  3  9  0  1  5  5  2  0  1  3  1  0  0  0  1  2  0  2  1  0  0  0  0  1  2  3  2 = 1
  * x  x  x  x  x  x  x  x  x  x  x  x  x  x  x  x  x  x  x  x  x  x  x  x  x  x  x  x  x  x  x
@@ -36,11 +36,11 @@
  * -------------------------------------------------------------------------------------------
  * 1+ 0+12+20+15+54+ 0+ 8+45+50+ 0+ 0+ 2+ 9+ 4+ 0+ 0+ 0+ 8+18+ 0+ 0+ 1+ 0+ 0+ 0+ 0+ 6+14+24+18 = 309
  *
- * 309÷11=28, com resto 1 (este é o 2º dígito do DV) - Nota: se o resto for "10", o DV será "1"
+ * 309÷11=28, with remainer 1 (this is the 2nd digit of the VD) - Note: if the remainder is "10", the VD2 is "1"
  *
- * Portanto, o Número de Matrícula+DV = 104539.01.55.2013.1.00012.021.0000123-21
+ * Therefore, the Certificate registration number+VD = 104539.01.55.2013.1.00012.021.0000123-21
  *
- * Fonte: http://ghiorzi.org/DVnew.htm#zc
+ * Source: http://ghiorzi.org/DVnew.htm#zc
  *
  */
 $.validator.addMethod( "matriculaCertidaoBR", function( value, element ) {
