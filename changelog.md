@@ -1,3 +1,12 @@
+1.20.1 / 2024-06-13
+===================
+
+## Core
+  * Fix remote validation when input is the same as in aborted request [#2481](https://github.com/jquery-validation/jquery-validation/pull/2481)
+
+## Localisation
+  * Update Arabic translations [#2485](https://github.com/jquery-validation/jquery-validation/pull/2485)
+
 1.20.0 / 2023-10-10
 ===================
 
