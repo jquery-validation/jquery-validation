@@ -115,7 +115,17 @@ grunt.initConfig( {
 		}
 	},
 	qunit: {
-		files: "test/index.html"
+		files: "test/index.html",
+		options: {
+			puppeteer: {
+				args: [
+					"--headless",
+					"--disable-web-security",
+					"--allow-file-access-from-files"
+				]
+			},
+			timeout: 10000
+		}
 	},
 	jshint: {
 		options: {

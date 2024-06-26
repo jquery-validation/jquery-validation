@@ -4,3 +4,4 @@ test/qunit/
 dist/
 demo/
 *.min.js
+test/custom-elements.js
