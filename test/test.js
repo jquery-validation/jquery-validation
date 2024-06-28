@@ -2786,3 +2786,24 @@ QUnit.test( "stopRequest() should submit the form once pendingRequests === 0", f
     // Submit the form
     $( button ).click();
 } );
+
+QUnit.test( "Assign rules to customElement via .validate() method", function( assert ) {
+	var form = $( "#customElementsForm" );
+	var v = form.validate( {
+		customElements: [ "custom-text" ],
+		rules: {
+			customTextElement: {
+				required: true
+			}
+		}
+	} );
+	var customTextElementRules = $( "#customTextElement", form ).rules();
+	var expectedRules = { required: true };
+
+	assert.deepEqual(
+		customTextElementRules, expectedRules, "The rules should be the same"
+	);
+
+	v.form();
+	assert.equal( v.numberOfInvalids(), 1, "The form has one error" );
+} );
