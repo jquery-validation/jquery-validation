@@ -2,8 +2,13 @@
  * Brazillian CNH number (Carteira Nacional de Habilitacao) is the License Driver number.
  * CNH numbers have 11 digits in total: 9 numbers followed by 2 check numbers that are being used for validation.
  */
-$.validator.addMethod( "cnhBR", function( value ) {
-
+$.validator.addMethod( "cnhBR", function( value, element ) {
+  
+  // Field not required
+  if ( value.length === 0 && this.optional( element ) ) {
+	return true;
+  }
+	
   // Removing special characters from value
   value = value.replace( /([~!@#$%^&*()_+=`{}\[\]\-|\\:;'<>,.\/? ])+/g, "" );
 
