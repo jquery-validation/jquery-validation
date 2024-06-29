@@ -177,6 +177,7 @@ QUnit.test( "number", function( assert ) {
 	assert.ok( method( "123,000.00" ), "Valid decimal" );
 	assert.ok( method( "-123,000.00" ), "Valid decimal" );
 	assert.ok( method( ".100" ), "Valid decimal" );
+	assert.ok( method( "-.100" ), "Valid decimal" );
 	assert.ok( !method( "1230,000.00" ), "Invalid decimal" );
 	assert.ok( !method( "123.0.0,0" ), "Invalid decimal" );
 	assert.ok( !method( "x123" ), "Invalid decimal" );
