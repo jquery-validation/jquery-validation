@@ -457,7 +457,7 @@ $.extend( $.validator, {
 			
 			this.prepareForm();
 			for ( var i = 0, elements = ( this.currentElements = this.elements() ); elements[ i ]; i++ ) {
-				var element = elements[ i ];
+				var element = elements.eq(i);
 				
 				var type = element.attr( "type" );
 				if ( type === 'checkbox' || type === 'radio' ) {
