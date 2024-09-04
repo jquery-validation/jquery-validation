@@ -453,9 +453,22 @@ $.extend( $.validator, {
 		},
 
 		checkForm: function() {
+			var checkedCache = {};
+			
 			this.prepareForm();
 			for ( var i = 0, elements = ( this.currentElements = this.elements() ); elements[ i ]; i++ ) {
-				this.check( elements[ i ] );
+				var element = elements[ i ];
+				
+				var type = element.attr( "type" );
+				if ( type === 'checkbox' || type === 'radio' ) {
+					// only check the first checkbox/radio input ( https://github.com/jquery-validation/jquery-validation/pull/2431#issuecomment-1172835268 )
+					if ( element.name in checkedCache ) {
+						continue;
+					}
+					checkedCache[ element.name ] = true;
+				}
+				
+				this.check( element );
 			}
 			return this.valid();
 		},
@@ -657,8 +670,12 @@ $.extend( $.validator, {
 					return false;
 				}
 
-				// Select only the first element for each name, and only those with rules specified
-				if ( name in rulesCache || !validator.objectLength( $( this ).rules() ) ) {
+				if ( name in rulesCache ) {
+					return true;
+				}
+
+				// return only those with rules specified
+				if ( !validator.objectLength( $( this ).rules() ) ) {
 					return false;
 				}
 
