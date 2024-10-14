@@ -465,10 +465,12 @@ QUnit.test( "greaterThan", function( assert ) {
 QUnit.test( "extension", function( assert ) {
 	var method = methodTest( "extension" ),
 		v;
+	assert.ok( method( "picture.avif" ), "Valid default accept type" );
 	assert.ok( method( "picture.gif" ), "Valid default accept type" );
 	assert.ok( method( "picture.jpg" ), "Valid default accept type" );
 	assert.ok( method( "picture.jpeg" ), "Valid default accept type" );
 	assert.ok( method( "picture.png" ), "Valid default accept type" );
+	assert.ok( method( "picture.webp" ), "Valid default accept type" );
 	assert.ok( !method( "picture.pgn" ), "Invalid default accept type" );
 
 	v = jQuery( "#form" ).validate();
