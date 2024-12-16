@@ -35,5 +35,5 @@ jobs:
                   stale-issue-label: 'stale'
                   stale-pr-label: 'stale'
                   exempt-all-milestones: true
-                  exempt-issue-labels: 'Status: Verified'
+                  exempt-issue-labels: 'Status: Verified, Type: Feature'
                   exempt-pr-labels: 'MERGE ME, NEEDS REVIEW'
