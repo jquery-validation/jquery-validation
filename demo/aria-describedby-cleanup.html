@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>jQuery Validation Plugin Demo - ariaDescribedByCleanup set to true</title>
+	<link rel="stylesheet" href="css/screen.css">
+	<script src="../lib/jquery.js"></script>
+	<script src="../dist/jquery.validate.js"></script>
+	<script>
+	$.validator.setDefaults({
+		submitHandler: function() {
+			alert("submitted!");
+		}
+	});
+
+	$().ready(function() {
+		var valid = $("#group-form").validate({
+		  errorElement: 'div',
+
+		  groups: {
+		    fullName: "first middle last"
+		  },
+		  ariaDescribedByCleanup: true,
+		  rules: {
+
+		    first: { required: true, minlength: 2 },
+		    middle: {required: true, minlength: 2 },
+		    last: {required: true},
+		    email: { required: true, email: true },
+			phone: { required: true },
+			comment: {required: true, maxlength: 300}
+		  }
+		});
+		$('button[type="reset"]').on('click',function(){
+		  valid.resetForm();
+		});
+
+	});
+	</script>
+	<style>
+		#group-form {
+			width: 35rem;
+		}
+		.textarea-container {
+			display: inline-block;
+		}
+		.description {
+			display: block;
+		}
+	</style>
+</head>
+<body>
+<h1 id="banner"><a href="https://jqueryvalidation.org/">jQuery Validation Plugin</a> Demo - ariaDescribedByCleanup set to true</h1>
+<main id="main">
+
+	<form id="group-form" class="cmxform" aria-labelledby="group-example-title" aria-describedby="required-note">
+
+	<div class="box">
+		<h2 id="group-example-title">Example with group</h2>
+		<div><p id="required-note">Fields marked with * are required</p></div>
+
+	    <div id="errorlabelcontainer"></div>
+	    <fieldset>
+			<legend>Name*</legend>
+			<div class="row">
+				<div class="col">
+	  	    <label for="first">First</label>
+	  	    <input type="text" aria-required="true" id="first" name="first"/>
+	  	    </div>
+	  	      <div class="col">
+	  	    <label for="middle">Middle</label>
+	  	    <input type="text" aria-required="true" id="middle" name="middle"/>
+	  	    </div>
+	  	      <div class="col">
+	  	    <label for="last">Last</label>
+	  	    <input type="text" aria-required="true" id="last"  name="last"/>
+	  	    </div>
+			</div>
+
+	    </fieldset>
+
+	    <div class="row">
+	    <label for="email">Email*</label>
+	    <input type="email" id="email" aria-required="true" name="email"/>
+	    </div>
+
+		<div class="row">
+	    <label for="phone">Phone*</label>
+	    <input type="text" id="phone" aria-required="true" name="phone"/>
+	    </div>
+		<div class="row">
+			<label for="comment">Your comment*</label>
+			<div class="textarea-container">
+				<textarea id="comment" name="comment" aria-required="true" aria-describedby="comment-max-length"></textarea>
+				<span class="description" id="comment-max-length">300 characters maximum</span>
+			</div>
+
+		</div>
+		<div class="row">
+
+		    <button>Submit</button>
+		    <button type="reset">Reset</button>
+		</div>
+	</div>
+
+</form>
+<p><a href="index.html">Back to main page</a></p>
+</div>
+</main>
+</html>

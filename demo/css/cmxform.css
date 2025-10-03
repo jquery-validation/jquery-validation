@@ -17,18 +17,36 @@ form.cmxform legend, form.cmxform label {
 	color: #333;
 }
 
-form.cmxform fieldset {
+form.cmxform fieldset, form.cmxform .box {
 	border: none;
 	border-top: 1px solid #C9DCA6;
 	background: url(../images/cmxform-fieldset.gif) left bottom repeat-x;
 	background-color: #F8FDEF;
 }
+form.cmxform fieldset .col label {
+	margin-left: 0;
+}
+form.cmxform fieldset .col {
+	margin-right: .5rem;
+}
+form.cmxform fieldset .row .col:last-child {
+	margin-right: 0;
+}
+form.cmxform fieldset .row {
+	display: flex;
 
-form.cmxform fieldset fieldset {
+	box-sizing: border-box;
+}
+form.cmxform .box,
+form.cmxform fieldset .row,
+form.cmxform .box fieldset {
+	width: 100%;
+}
+form.cmxform fieldset fieldset, form.cmxform .box fieldset {
 	background: none;
 }
 
-form.cmxform fieldset p, form.cmxform fieldset fieldset {
+form.cmxform .box > .row, form.cmxform fieldset p, form.cmxform fieldset fieldset, form.cmxform .box fieldset {
 	padding: 5px 10px 7px;
 	background: url(../images/cmxform-divider.gif) left bottom repeat-x;
 }
