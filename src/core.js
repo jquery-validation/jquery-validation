@@ -700,14 +700,28 @@ $.extend( $.validator, {
 		elements: function() {
 			var validator = this,
 				rulesCache = {},
-				selectors = [ "input", "select", "textarea", "[contenteditable]" ];
+				selectors = [ "input", "select", "textarea", "[contenteditable]" ],
+				formId = this.currentForm.id,
+				elements;
 
 			// Select all valid inputs inside the form (no submit or reset buttons)
-			return $( this.currentForm )
+			elements = $( this.currentForm )
 			.find( selectors.concat( this.settings.customElements ).join( ", " ) )
 			.not( ":submit, :reset, :image, :disabled" )
-			.not( this.settings.ignore )
-			.filter( function() {
+			.not( this.settings.ignore );
+
+			// If the form has an ID, also include elements outside the form that have
+			// a form attribute pointing to this form
+			if ( formId ) {
+				elements = elements.add(
+					$( selectors.concat( this.settings.customElements ).join( ", " ) )
+					.filter( "[form='" + formId + "']" )
+					.not( ":submit, :reset, :image, :disabled" )
+					.not( this.settings.ignore )
+				);
+			}
+
+			return elements.filter( function() {
 				var name = this.name || $( this ).attr( "name" ); // For contenteditable
 				var isContentEditable = typeof $( this ).attr( "contenteditable" ) !== "undefined" && $( this ).attr( "contenteditable" ) !== "false";
 
