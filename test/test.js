@@ -370,9 +370,11 @@ QUnit.test( "Ignore elements that have form attribute set to other forms", funct
 } );
 
 QUnit.test( "Validate elements outside form with form attribute", function( assert ) {
-	assert.expect( 3 );
+	assert.expect( 4 );
 
 	var form = $( "#testForm29" );
+	assert.ok( form.length === 1, "Form should be found in the DOM" );
+
 	var v = form.validate();
 
 	// The form has one input inside and one input outside with form attribute
@@ -385,9 +387,11 @@ QUnit.test( "Validate elements outside form with form attribute", function( asse
 } );
 
 QUnit.test( "Validate checkboxes outside form with form attribute", function( assert ) {
-	assert.expect( 3 );
+	assert.expect( 4 );
 
 	var form = $( "#testForm30" );
+	assert.ok( form.length === 1, "Form should be found in the DOM" );
+
 	var v = form.validate();
 
 	// The form has one checkbox inside and one checkbox outside with form attribute
