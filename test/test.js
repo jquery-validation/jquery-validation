@@ -369,6 +369,36 @@ QUnit.test( "Ignore elements that have form attribute set to other forms", funct
 	$( "#testForm28-other" ).remove();
 } );
 
+QUnit.test( "Validate elements outside form with form attribute", function( assert ) {
+	assert.expect( 3 );
+
+	var form = $( "#testForm29" );
+	var v = form.validate();
+
+	// The form has one input inside and one input outside with form attribute
+	assert.equal( v.elements().length, 2, "Both elements should be included" );
+
+	// Validate the form - both fields are required and empty
+	var result = v.form();
+	assert.ok( !result, "Form validation should fail when both inputs are empty" );
+	assert.equal( v.numberOfInvalids(), 2, "Should have 2 invalid elements" );
+} );
+
+QUnit.test( "Validate checkboxes outside form with form attribute", function( assert ) {
+	assert.expect( 3 );
+
+	var form = $( "#testForm30" );
+	var v = form.validate();
+
+	// The form has one checkbox inside and one checkbox outside with form attribute
+	assert.equal( v.elements().length, 2, "Both checkboxes should be included" );
+
+	// Validate the form - both checkboxes are required and unchecked
+	var result = v.form();
+	assert.ok( !result, "Form validation should fail when both checkboxes are unchecked" );
+	assert.equal( v.numberOfInvalids(), 2, "Should have 2 invalid elements" );
+} );
+
 QUnit.test( "addMethod", function( assert ) {
 	assert.expect( 3 );
 	$.validator.addMethod( "hi", function( value ) {
