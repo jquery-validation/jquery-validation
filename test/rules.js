@@ -329,7 +329,7 @@ QUnit.test( "rules(), global/local normalizer", function( assert ) {
 			assert.equal( this, username[ 0 ], "`this` in this normalizer should be the username element." );
 
 			// Trim the value of the input
-			return $.trim( value );
+			return value == null ? "" : value.trim();
 		},
 
 		rules: {
