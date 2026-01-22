@@ -36,7 +36,7 @@
 	],
 	"main": "dist/jquery.validate.js",
 	"peerDependencies": {
-		"jquery": "^1.7 || ^2.0 || ^3.1"
+		"jquery": "^1.7 || ^2.0 || ^3.1 || ^4.0"
 	},
 	"devDependencies": {
 		"commitplease": "2.3.1",

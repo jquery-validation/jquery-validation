@@ -802,7 +802,7 @@ QUnit.test( "validation triggered on radio/checkbox when using mouseclick", func
 	} );
 
 	events = [
-		$.Event( "click" )
+		"click"
 	];
 
 	input = $( "#form :radio:first" );
