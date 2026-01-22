@@ -485,7 +485,7 @@ $.extend( $.validator, {
 
 							// Don't want to check fields if a user hasn't gotten to them yet
 							if ( cleanElement && cleanElement.name in v.invalid ) {
-								v.currentElements.push( cleanElement );
+								v.currentElements.pushStack( cleanElement );
 								result = v.check( cleanElement ) && result;
 							}
 						}
