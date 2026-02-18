@@ -120,8 +120,6 @@ grunt.initConfig( {
 			puppeteer: {
 				args: [
 					"--headless",
-					"--no-sandbox",
-					"--disable-setuid-sandbox",
 					"--disable-web-security",
 					"--allow-file-access-from-files"
 				]
