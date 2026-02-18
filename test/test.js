@@ -2837,3 +2837,20 @@ QUnit.test( "Assign rules to customElement via .validate() method", function( as
 	v.form();
 	assert.equal( v.numberOfInvalids(), 1, "The form has one error" );
 } );
+
+QUnit.test( "Form with input named 'id' should not cause TypeError", function( assert ) {
+	assert.expect( 3 );
+
+	var form = $( "#testForm31" );
+	var v = form.validate();
+
+	// The form has one input inside with name="id" (no rules, so excluded from elements()),
+	// one input inside with name="username" (required), and one input outside with form
+	// attribute with name="email" (required)
+	assert.equal( v.elements().length, 2, "Two elements with validation rules should be included" );
+
+	// Validate the form - two fields (username and email) are required and empty
+	var result = v.form();
+	assert.ok( !result, "Form validation should fail when required inputs are empty" );
+	assert.equal( v.numberOfInvalids(), 2, "Should have 2 invalid elements" );
+} );
