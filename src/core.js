@@ -701,7 +701,7 @@ $.extend( $.validator, {
 			var validator = this,
 				rulesCache = {},
 				selectors = [ "input", "select", "textarea", "[contenteditable]" ],
-				formId = this.currentForm.id,
+				formId = this.currentForm.getAttribute( "id" ),
 				elements;
 
 			// Select all valid inputs inside the form (no submit or reset buttons)
@@ -1147,7 +1147,7 @@ $.extend( $.validator, {
 		},
 
 		findByName: function( name ) {
-			var formId = this.currentForm.id,
+			var formId = this.currentForm.getAttribute( "id" ),
 				selector = "[name='" + this.escapeCssMeta( name ) + "']",
 				elements = $( this.currentForm ).find( selector );
 
