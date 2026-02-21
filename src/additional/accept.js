@@ -15,11 +15,11 @@ $.validator.addMethod( "accept", function( value, element, param ) {
 
 		// Escape string to be used in the regex
 		// see: https://stackoverflow.com/questions/3446170/escape-string-for-use-in-javascript-regex
-		// Escape also "/*" as "/.*" as a wildcard
+		// Escape also "*" as ".*" to support wildcard mime types
 		typeParam = typeParam
 				.replace( /[\-\[\]\/\{\}\(\)\+\?\.\\\^\$\|]/g, "\\$&" )
 				.replace( /,/g, "|" )
-				.replace( /\/\*/g, "/.*" );
+				.replace( /\*/g, ".*" );
 
 		// Check if the element has a FileList before checking each file
 		if ( element.files && element.files.length ) {

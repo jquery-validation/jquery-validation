@@ -1841,6 +1841,20 @@ QUnit.test( "file accept - image wildcard", function( assert ) {
 	assert.ok( proxy(), "the selected file for upload has specified mime type" );
 } );
 
+QUnit.test( "file accept - wildcard", function( assert ) {
+	var input = acceptFileDummyInput( "test.kml", "application/vnd.google-earth.kml+xml" ),
+		$form = $( "<form />" ),
+		proxy = $.proxy( $.validator.methods.accept, new $.validator( {}, $form[ 0 ] ), null, input, "*" );
+	assert.ok( proxy(), "the selected file for upload is accepted by wildcard mime type" );
+} );
+
+QUnit.test( "file accept - wildcard in mime list", function( assert ) {
+	var input = acceptFileDummyInput( "test.kml", "application/vnd.google-earth.kml+xml" ),
+		$form = $( "<form />" ),
+		proxy = $.proxy( $.validator.methods.accept, new $.validator( {}, $form[ 0 ] ), null, input, "*,image/*" );
+	assert.ok( proxy(), "the selected file for upload is accepted by wildcard in mime type list" );
+} );
+
 QUnit.test( "file accept - specified mime type", function( assert ) {
 	var input = acceptFileDummyInput( "test.kml", "application/vnd.google-earth.kml+xml" ),
 		$form = $( "<form />" ),
