@@ -44,53 +44,53 @@
 ===================
 
 ## Build
-  * Add License.md to zip tarball (#2386)
+  * Add License.md to zip tarball ([#2386](https://github.com/jquery-validation/jquery-validation/issues/2386))
 
 ## Chore
-  * Updated build status badges (#2424)
-  * Enabled stable bot (#2425)
+  * Updated build status badges ([#2424](https://github.com/jquery-validation/jquery-validation/issues/2424))
+  * Enabled stable bot ([#2425](https://github.com/jquery-validation/jquery-validation/issues/2425))
 
 ## Core
-  * Fixed validation for input type="date" (#2360)
-  * Wait for pendingRequests to finish before submitting form (#2369)
-  * Fixed bug for Html Editors (#2154) (#2422)
-  * Fixed ReDoS vulnerability in URL2 validation (#2428)
+  * Fixed validation for input type="date" ([#2360](https://github.com/jquery-validation/jquery-validation/issues/2360))
+  * Wait for pendingRequests to finish before submitting form ([#2369](https://github.com/jquery-validation/jquery-validation/issues/2369))
+  * Fixed bug for Html Editors ([#2154](https://github.com/jquery-validation/jquery-validation/issues/2154), [#2422](https://github.com/jquery-validation/jquery-validation/issues/2422))
+  * Fixed ReDoS vulnerability in URL2 validation ([#2428](https://github.com/jquery-validation/jquery-validation/issues/2428))
 
 ## Test
-  * Switch from Travis to GitHub workflows (#2423)
+  * Switch from Travis to GitHub workflows ([#2423](https://github.com/jquery-validation/jquery-validation/issues/2423))
 
 1.19.3 / 2021-01-09
 ===================
 
 ## Core
-  * CVE-2021-21252: fixed Regular Expression Denial of Service vulnerability (#2371)
-  * Replaced deprecated jQuery functions (#2335)
+  * CVE-2021-21252: fixed Regular Expression Denial of Service vulnerability ([#2371](https://github.com/jquery-validation/jquery-validation/issues/2371))
+  * Replaced deprecated jQuery functions ([#2335](https://github.com/jquery-validation/jquery-validation/issues/2335))
 
 ## Chore
-  * Add Accessibility section to Readme (#2149)
+  * Add Accessibility section to Readme ([#2149](https://github.com/jquery-validation/jquery-validation/issues/2149))
 
 ## Localization
-  * Add "pattern" translation for French (#2363)
-  * add phone validate translate for Turkish translation (#2343)
+  * Add "pattern" translation for French ([#2363](https://github.com/jquery-validation/jquery-validation/issues/2363))
+  * add phone validate translate for Turkish translation ([#2343](https://github.com/jquery-validation/jquery-validation/issues/2343))
 
 1.19.2 / 2020-05-23
 ===================
 
 ## Core
-  * Core: Fixes deprecated calls to jQuery trim for compat with newer jQuery core versions (#2328)
+  * Core: Fixes deprecated calls to jQuery trim for compat with newer jQuery core versions ([#2328](https://github.com/jquery-validation/jquery-validation/issues/2328))
 
 1.19.1 / 2019-06-15
 ===================
 
 ## Core
-  * Change focus() to trigger("focus") (#2243)
+  * Change focus() to trigger("focus") ([#2243](https://github.com/jquery-validation/jquery-validation/issues/2243))
 
 ## Build
-  * Set jQuery as a peer dependency (#2248)
+  * Set jQuery as a peer dependency ([#2248](https://github.com/jquery-validation/jquery-validation/issues/2248))
 
 ## Localization
-  * Add zh_TW translation for step message (#2245)
-  * Adding Serbian translation for step method message (#2251)
+  * Add zh_TW translation for step message ([#2245](https://github.com/jquery-validation/jquery-validation/issues/2245))
+  * Adding Serbian translation for step method message ([#2251](https://github.com/jquery-validation/jquery-validation/issues/2251))
 
 1.19.0 / 2018-11-28
 ===================
@@ -102,135 +102,135 @@ As of 1.18.0, we started to provide Subresource Integrity hashes of all distribu
 The hashes for the 1.19.0 release can be found in the file [`jquery-validation-sri.json`](https://raw.githubusercontent.com/jquery-validation/jquery-validation/1.19.0/dist/jquery-validation-sri.json) under `dist` folder.
 
 ## Additional
-  * Don't fail when field is optional in CNPJBR & CPFBR rules (#2236)
-  * Add validation rule for mobile number of Russia Federation (#2207)
-  * Add Brazillian CNPJ validation rule (#2222)
-  * Add Brazillian CNH number (Carteira Nacional de Habilitacao) (#2234)
-  * Add ABA Routing Number Validation (#2216)
+  * Don't fail when field is optional in CNPJBR & CPFBR rules ([#2236](https://github.com/jquery-validation/jquery-validation/issues/2236))
+  * Add validation rule for mobile number of Russia Federation ([#2207](https://github.com/jquery-validation/jquery-validation/issues/2207))
+  * Add Brazillian CNPJ validation rule ([#2222](https://github.com/jquery-validation/jquery-validation/issues/2222))
+  * Add Brazillian CNH number (Carteira Nacional de Habilitacao) ([#2234](https://github.com/jquery-validation/jquery-validation/issues/2234))
+  * Add ABA Routing Number Validation ([#2216](https://github.com/jquery-validation/jquery-validation/issues/2216))
 
 ## Core
-  * Fix contenteditable detection's regression introduced in #2142 (#2235)
+  * Fix contenteditable detection's regression introduced in [#2142](https://github.com/jquery-validation/jquery-validation/issues/2142) ([#2235](https://github.com/jquery-validation/jquery-validation/issues/2235))
 
 ## Localization
-  * Add Swedish translation for pattern (#2227)
+  * Add Swedish translation for pattern ([#2227](https://github.com/jquery-validation/jquery-validation/issues/2227))
 
 1.18.0 / 2018-09-09
 ===================
 
 ## Additional
-  * Add Brazillian PIS/NIS number validation method (#2204)
-  * Add validation method for Polish telephone number (#2136)
-  * Updated link to EAN docs in creditcard.js (#2120)
-  * Allow N11 exchange for non-geo US phone (#2098)
-  * Add new BIN range for MasterCard (#2088)
-  * Add maxfiles, maxsize and maxsizetotal methods (#2087)
-  * Add greaterThan and lessThan methods (#2061)
+  * Add Brazillian PIS/NIS number validation method ([#2204](https://github.com/jquery-validation/jquery-validation/issues/2204))
+  * Add validation method for Polish telephone number ([#2136](https://github.com/jquery-validation/jquery-validation/issues/2136))
+  * Updated link to EAN docs in creditcard.js ([#2120](https://github.com/jquery-validation/jquery-validation/issues/2120))
+  * Allow N11 exchange for non-geo US phone ([#2098](https://github.com/jquery-validation/jquery-validation/issues/2098))
+  * Add new BIN range for MasterCard ([#2088](https://github.com/jquery-validation/jquery-validation/issues/2088))
+  * Add maxfiles, maxsize and maxsizetotal methods ([#2087](https://github.com/jquery-validation/jquery-validation/issues/2087))
+  * Add greaterThan and lessThan methods ([#2061](https://github.com/jquery-validation/jquery-validation/issues/2061))
 
 ## Build
-  * Test on node 6.x and drop node 0.12.x (#2133)
-  * Generate sub-resource integrity hashes of the distribution files (#2082)
-  * Include localization files in tagged releases (#2057)
-  * Include minified version of additional methods in npm package (#2057)
+  * Test on node 6.x and drop node 0.12.x ([#2133](https://github.com/jquery-validation/jquery-validation/issues/2133))
+  * Generate sub-resource integrity hashes of the distribution files ([#2082](https://github.com/jquery-validation/jquery-validation/issues/2082))
+  * Include localization files in tagged releases ([#2057](https://github.com/jquery-validation/jquery-validation/issues/2057))
+  * Include minified version of additional methods in npm package ([#2057](https://github.com/jquery-validation/jquery-validation/issues/2057))
 
 ## Core
-  * Don't call submitHandler when in debug mode (#2193)
-  * Cast empty data attributes to 'true' (#2182)
-  * Ignore elements that belong to other/nested forms (#2147)
-  * Use element.isContentEditable instead of hasAttribute (#2142)
-  * Add deprecation warning to 'date' method (#2138)
-  * Allow the normalizer to return any value (#2054)
-  * Guard against null & undefined values in required method (#2053)
+  * Don't call submitHandler when in debug mode ([#2193](https://github.com/jquery-validation/jquery-validation/issues/2193))
+  * Cast empty data attributes to 'true' ([#2182](https://github.com/jquery-validation/jquery-validation/issues/2182))
+  * Ignore elements that belong to other/nested forms ([#2147](https://github.com/jquery-validation/jquery-validation/issues/2147))
+  * Use element.isContentEditable instead of hasAttribute ([#2142](https://github.com/jquery-validation/jquery-validation/issues/2142))
+  * Add deprecation warning to 'date' method ([#2138](https://github.com/jquery-validation/jquery-validation/issues/2138))
+  * Allow the normalizer to return any value ([#2054](https://github.com/jquery-validation/jquery-validation/issues/2054))
+  * Guard against null & undefined values in required method ([#2053](https://github.com/jquery-validation/jquery-validation/issues/2053))
 
 ## Demo
-  * Add sample code for Bootstrap 4 usage (#2173)
+  * Add sample code for Bootstrap 4 usage ([#2173](https://github.com/jquery-validation/jquery-validation/issues/2173))
 
 ## Localization
-  * Added Czech and Slovak translations for STEP method (#2197)
-  * Add localized methods for italian culture (it) (#2195)
-  * Add step validation string to message_zh (#2177)
-  * Fix typo in pt-BR localization file (#2139)
-  * Add message for phonePL method (#2136)
-  * Update Norwegian language file (#2132)
-  * Update Persian language file (#2122)
-  * Update German language file (#2115)
-  * Fix meaning in Bulgarian sentence (#2112)
-  * Add remote translation to no (#2097)
-  * Fixed wrong placeholder in vi translation (#2085)
-  * Add missing format method in message_{fr,tr}.js files (#2075)
-  * Fix typos in messages_pt_BR.js (#2073)
-  * Add new danish translations (#2067)
-  * Add Swedish validation message for remote (#2066)
+  * Added Czech and Slovak translations for STEP method ([#2197](https://github.com/jquery-validation/jquery-validation/issues/2197))
+  * Add localized methods for italian culture (it) ([#2195](https://github.com/jquery-validation/jquery-validation/issues/2195))
+  * Add step validation string to message_zh ([#2177](https://github.com/jquery-validation/jquery-validation/issues/2177))
+  * Fix typo in pt-BR localization file ([#2139](https://github.com/jquery-validation/jquery-validation/issues/2139))
+  * Add message for phonePL method ([#2136](https://github.com/jquery-validation/jquery-validation/issues/2136))
+  * Update Norwegian language file ([#2132](https://github.com/jquery-validation/jquery-validation/issues/2132))
+  * Update Persian language file ([#2122](https://github.com/jquery-validation/jquery-validation/issues/2122))
+  * Update German language file ([#2115](https://github.com/jquery-validation/jquery-validation/issues/2115))
+  * Fix meaning in Bulgarian sentence ([#2112](https://github.com/jquery-validation/jquery-validation/issues/2112))
+  * Add remote translation to no ([#2097](https://github.com/jquery-validation/jquery-validation/issues/2097))
+  * Fixed wrong placeholder in vi translation ([#2085](https://github.com/jquery-validation/jquery-validation/issues/2085))
+  * Add missing format method in message_{fr,tr}.js files ([#2075](https://github.com/jquery-validation/jquery-validation/issues/2075))
+  * Fix typos in messages_pt_BR.js ([#2073](https://github.com/jquery-validation/jquery-validation/issues/2073))
+  * Add new danish translations ([#2067](https://github.com/jquery-validation/jquery-validation/issues/2067))
+  * Add Swedish validation message for remote ([#2066](https://github.com/jquery-validation/jquery-validation/issues/2066))
 
 ## Test
-  * Cast empty data attributes to 'true' (#2182)
-  * Ignore elements that belong to other/nested forms (#2147)
-  * Add tests for phonePL method (#2136)
-  * Add missing description to a test (#2055)
-  * Required method should return false for null & undefined values (#2053)
+  * Cast empty data attributes to 'true' ([#2182](https://github.com/jquery-validation/jquery-validation/issues/2182))
+  * Ignore elements that belong to other/nested forms ([#2147](https://github.com/jquery-validation/jquery-validation/issues/2147))
+  * Add tests for phonePL method ([#2136](https://github.com/jquery-validation/jquery-validation/issues/2136))
+  * Add missing description to a test ([#2055](https://github.com/jquery-validation/jquery-validation/issues/2055))
+  * Required method should return false for null & undefined values ([#2053](https://github.com/jquery-validation/jquery-validation/issues/2053))
 
 1.17.0 / 2017-07-20
 ==================
 
 ## Core
-  * Pass on the value of the used submit button for scripted submits (#2019)
-  * Removed aria-required attribute (#2012)
-  * Assign rules to contenteditable via `.validate()` and `.rules()` (#1947)
-  * Count invalid fields with empty message in `numberOfInvalids()` (#1942)
-  * Added support for button elements with descendants (#1901)
-  * Add support for defining a global normalizer (#1905)
+  * Pass on the value of the used submit button for scripted submits ([#2019](https://github.com/jquery-validation/jquery-validation/issues/2019))
+  * Removed aria-required attribute ([#2012](https://github.com/jquery-validation/jquery-validation/issues/2012))
+  * Assign rules to contenteditable via `.validate()` and `.rules()` ([#1947](https://github.com/jquery-validation/jquery-validation/issues/1947))
+  * Count invalid fields with empty message in `numberOfInvalids()` ([#1942](https://github.com/jquery-validation/jquery-validation/issues/1942))
+  * Added support for button elements with descendants ([#1901](https://github.com/jquery-validation/jquery-validation/issues/1901))
+  * Add support for defining a global normalizer ([#1905](https://github.com/jquery-validation/jquery-validation/issues/1905))
 
 ## Additional
-  * Add localized number validation to methods_nl.js (#2014)
-  * Remove unreachable return from `cifES.js` (#1994)
-  * Add optional support to cifES, nifES and nieES (#1966)
-  * Add netmask validation method (#1955)
-  * Add Polish tax id validation method (#1850)
-  * Fixed validation for specific case for Spanish NIFs (#1914)
+  * Add localized number validation to methods_nl.js ([#2014](https://github.com/jquery-validation/jquery-validation/issues/2014))
+  * Remove unreachable return from `cifES.js` ([#1994](https://github.com/jquery-validation/jquery-validation/issues/1994))
+  * Add optional support to cifES, nifES and nieES ([#1966](https://github.com/jquery-validation/jquery-validation/issues/1966))
+  * Add netmask validation method ([#1955](https://github.com/jquery-validation/jquery-validation/issues/1955))
+  * Add Polish tax id validation method ([#1850](https://github.com/jquery-validation/jquery-validation/issues/1850))
+  * Fixed validation for specific case for Spanish NIFs ([#1914](https://github.com/jquery-validation/jquery-validation/issues/1914))
 
 ## Localization
-  * Added Step Range Validation  to messages_ja (#1936)
-  * Add hungarian step message (#1888)
-  * Add Sindhi locale (#1900)
-  * Added norsk step translation (#1918)
-  * Add missing french step translation (#1928)
-  * Added nl- translation for "step" property (#1902)
-  * Add French translation for notEqualTo method (#2033)
+  * Added Step Range Validation  to messages_ja ([#1936](https://github.com/jquery-validation/jquery-validation/issues/1936))
+  * Add hungarian step message ([#1888](https://github.com/jquery-validation/jquery-validation/issues/1888))
+  * Add Sindhi locale ([#1900](https://github.com/jquery-validation/jquery-validation/issues/1900))
+  * Added norsk step translation ([#1918](https://github.com/jquery-validation/jquery-validation/issues/1918))
+  * Add missing french step translation ([#1928](https://github.com/jquery-validation/jquery-validation/issues/1928))
+  * Added nl- translation for "step" property ([#1902](https://github.com/jquery-validation/jquery-validation/issues/1902))
+  * Add French translation for notEqualTo method ([#2033](https://github.com/jquery-validation/jquery-validation/issues/2033))
 
 ## Readme
-  * Add note about trimming whitespaces inside required method (#2028)
+  * Add note about trimming whitespaces inside required method ([#2028](https://github.com/jquery-validation/jquery-validation/issues/2028))
 
 ## Tests
-  * Pass on the value of the used submit button for scripted submits (#2019)
-  * Use assert#pushResult instead of assert#push (#2018)
+  * Pass on the value of the used submit button for scripted submits ([#2019](https://github.com/jquery-validation/jquery-validation/issues/2019))
+  * Use assert#pushResult instead of assert#push ([#2018](https://github.com/jquery-validation/jquery-validation/issues/2018))
 
 ## All
   * Fix links after move to organization
   * Use https
 
 ## Build
-  * Upgrade QUnit to 2.3.3 (#2018)
+  * Upgrade QUnit to 2.3.3 ([#2018](https://github.com/jquery-validation/jquery-validation/issues/2018))
 
 1.16.0 / 2016-12-01
 ==================
 
 ## Additional
-  * Refine cifES and nieES algorithms. Closes #1826
+  * Refine cifES and nieES algorithms. Closes [#1826](https://github.com/jquery-validation/jquery-validation/issues/1826)
 
 ## Build
   * Include Minified Version in NPM Package
   * Bump dev-dependencies to latest versions
 
 ## Core
-  * Add binding for input with button type. Closes #1891
-  * Support jquery3. Closes #1866
+  * Add binding for input with button type. Closes [#1891](https://github.com/jquery-validation/jquery-validation/issues/1891)
+  * Support jquery3. Closes [#1866](https://github.com/jquery-validation/jquery-validation/issues/1866)
   * Change jQuery alias 'expr[":"]' to 'expr.pseudos'
 
 ## Localisation
-  * Add Urdu translation. Closes #1873.
+  * Add Urdu translation. Closes [#1873](https://github.com/jquery-validation/jquery-validation/issues/1873).
 
 ## Localization
-  * Fixed wrong file-extension for az translation. Closes #1890.
-  * Added missing translation in pt-BR (Closes #1897)
+  * Fixed wrong file-extension for az translation. Closes [#1890](https://github.com/jquery-validation/jquery-validation/issues/1890).
+  * Added missing translation in pt-BR (Closes [#1897](https://github.com/jquery-validation/jquery-validation/issues/1897))
   * Fixed typo in arabien language file.
 
 ## Tests
@@ -244,13 +244,13 @@ The hashes for the 1.19.0 release can be found in the file [`jquery-validation-s
 
 ## Additional
   * Fix multiple mime-type validation
-  * IBAN require at least 5 chars (Closes #1797, Fixes #1674)
+  * IBAN require at least 5 chars (Closes [#1797](https://github.com/jquery-validation/jquery-validation/issues/1797), Fixes [#1674](https://github.com/jquery-validation/jquery-validation/issues/1674))
   * Correct notEqualTo jQuery reference
 
 ## Core
-  * Added failing test for #1805
+  * Added failing test for [#1805](https://github.com/jquery-validation/jquery-validation/issues/1805)
   * Fix group validation with 3 and more fields
-  * Fix regressions introduced in #1644 and #1657 (Closes #1800)
+  * Fix regressions introduced in [#1644](https://github.com/jquery-validation/jquery-validation/issues/1644) and [#1657](https://github.com/jquery-validation/jquery-validation/issues/1657) (Closes [#1800](https://github.com/jquery-validation/jquery-validation/issues/1800))
   * Update step validation to handle floating points correctly
   * Fix error when calling $.fn.rules() on a non-form element
   * Call `errorPlacement` in validator scope
@@ -264,7 +264,7 @@ The hashes for the 1.19.0 release can be found in the file [`jquery-validation-s
   * Added Azeri language
 
 ## Tests
-  * Added regression unit tests for PR #1760
+  * Added regression unit tests for PR [#1760](https://github.com/jquery-validation/jquery-validation/issues/1760)
 
 1.15.0 / 2016-02-24
 ==================
@@ -280,7 +280,7 @@ The hashes for the 1.19.0 release can be found in the file [`jquery-validation-s
   * Fix handling of error messages with input groups.
   * Fix TypeError in `showLabel` when using `groups` settings
   * Adding a way to pass method name to remote
-  * Validation fails to trigger when next field is already filled out (Fixes #1508)
+  * Validation fails to trigger when next field is already filled out (Fixes [#1508](https://github.com/jquery-validation/jquery-validation/issues/1508))
   * Required rule take precedence over number & digits rules
   * Error hidden but input error class not removed
   * Remote validation uses wrong error messages
@@ -290,9 +290,9 @@ The hashes for the 1.19.0 release can be found in the file [`jquery-validation-s
   * Move message processing from `formatAndAdd` to `defaultMessage`
   * ErrorList should contain only the errors that it should
   * Extract the file name without including "C:\fakepath\"
-  * HTML5 step attribute support. Fixes #1295
+  * HTML5 step attribute support. Fixes [#1295](https://github.com/jquery-validation/jquery-validation/issues/1295)
   * Added support for "pending" class on outstanding requests
-  * Added normalizer (#1602)
+  * Added normalizer ([#1602](https://github.com/jquery-validation/jquery-validation/issues/1602))
   * Split out `creditcard` method
   * Escape errorID for use in the regex, not to build aria-describedby
   * Escape single quotes in names avoiding a Sizzle Error being thrown
@@ -428,9 +428,9 @@ The hashes for the 1.19.0 release can be found in the file [`jquery-validation-s
 * Added NIF, NIE and CIF Spanish documents numbers validation ([#830](https://github.com/jzaefferer/jquery-validation/issues/830), [317c20f](https://github.com/jzaefferer/jquery-validation/commit/317c20fa9bb772770bb9b70d46c7081d7cfc6545))
 * Added the current form to the context of the remote ajax request ([0a18ae6](https://github.com/jzaefferer/jquery-validation/commit/0a18ae65b9b6d877e3d15650a5c2617a9d2b11d5))
 * Additionals: Update IBAN method, trim trailing whitespaces ([#970](https://github.com/jzaefferer/jquery-validation/issues/970), [347b04a](https://github.com/jzaefferer/jquery-validation/commit/347b04a7d4e798227405246a5de3fc57451d52e1))
-* BIC method: Improve RegEx, {1} is always redundant. Closes gh-744 ([5cad6b4](https://github.com/jzaefferer/jquery-validation/commit/5cad6b493575e8a9a82470d17e0900c881130873))
+* BIC method: Improve RegEx, {1} is always redundant. Closes [gh-744](https://github.com/jquery-validation/jquery-validation/issues/744) ([5cad6b4](https://github.com/jzaefferer/jquery-validation/commit/5cad6b493575e8a9a82470d17e0900c881130873))
 * Bower: Add Bower.json for package registration ([e86ccb0](https://github.com/jzaefferer/jquery-validation/commit/e86ccb06e301613172d472cf15dd4011ff71b398))
-* Changes dollar references to 'jQuery', for compability with jQuery.noConflict. Closes gh-754 ([2049afe](https://github.com/jzaefferer/jquery-validation/commit/2049afe46c1be7b3b89b1d9f0690f5bebf4fbf68))
+* Changes dollar references to 'jQuery', for compability with jQuery.noConflict. Closes [gh-754](https://github.com/jquery-validation/jquery-validation/issues/754) ([2049afe](https://github.com/jzaefferer/jquery-validation/commit/2049afe46c1be7b3b89b1d9f0690f5bebf4fbf68))
 * Core: Add "method" field to error list entry ([89a15c7](https://github.com/jzaefferer/jquery-validation/commit/89a15c7a4b17fa2caaf4ff817f09b04c094c3884))
 * Core: Added support for generic messages via data-msg attribute ([5bebaa5](https://github.com/jzaefferer/jquery-validation/commit/5bebaa5c55c73f457c0e0181ec4e3b0c409e2a9d))
 * Core: Allow attributes to have a value of zero (eg min='0') ([#854](https://github.com/jzaefferer/jquery-validation/issues/854), [9dc0d1d](https://github.com/jzaefferer/jquery-validation/commit/9dc0d1dd946b2c6178991fb16df0223c76162579))
@@ -444,10 +444,10 @@ The hashes for the 1.19.0 release can be found in the file [`jquery-validation-s
 * Core: Use plain element instead of un-wrapping the element again ([03cd4c9](https://github.com/jzaefferer/jquery-validation/commit/03cd4c93069674db5415a0bf174a5870da47e5d2))
 * Core: make sure remote is executed last ([#711](https://github.com/jzaefferer/jquery-validation/issues/711), [ad91b6f](https://github.com/jzaefferer/jquery-validation/commit/ad91b6f388b7fdfb03b74e78554cbab9fd8fca6f))
 * Demo: Use correct option in multipart demo. ([#1025](https://github.com/jzaefferer/jquery-validation/issues/1025), [070edc7](https://github.com/jzaefferer/jquery-validation/commit/070edc7be4de564cb74cfa9ee4e3f40b6b70b76f))
-* Fix $/jQuery usage in additional methods. Fixes #839 ([#839](https://github.com/jzaefferer/jquery-validation/issues/839), [59bc899](https://github.com/jzaefferer/jquery-validation/commit/59bc899e4586255a4251903712e813c21d25b3e1))
+* Fix $/jQuery usage in additional methods. Fixes [#839](https://github.com/jquery-validation/jquery-validation/issues/839) ([#839](https://github.com/jzaefferer/jquery-validation/issues/839), [59bc899](https://github.com/jzaefferer/jquery-validation/commit/59bc899e4586255a4251903712e813c21d25b3e1))
 * Improve Chinese translations ([1a0bfe3](https://github.com/jzaefferer/jquery-validation/commit/1a0bfe32b16f8912ddb57388882aa880fab04ffe))
 * Initial ARIA-Required implementation ([bf3cfb2](https://github.com/jzaefferer/jquery-validation/commit/bf3cfb234ede2891d3f7e19df02894797dd7ba5e))
-* Localization: change accept values to extension. Fixes #771, closes gh-793. ([#771](https://github.com/jzaefferer/jquery-validation/issues/771), [12edec6](https://github.com/jzaefferer/jquery-validation/commit/12edec66eb30dc7e86756222d455d49b34016f65))
+* Localization: change accept values to extension. Fixes [#771](https://github.com/jquery-validation/jquery-validation/issues/771), closes [gh-793](https://github.com/jquery-validation/jquery-validation/issues/793). ([#771](https://github.com/jzaefferer/jquery-validation/issues/771), [12edec6](https://github.com/jzaefferer/jquery-validation/commit/12edec66eb30dc7e86756222d455d49b34016f65))
 * Messages: Add icelandic localization ([dc88575](https://github.com/jzaefferer/jquery-validation/commit/dc885753c8872044b0eaa1713cecd94c19d4c73d))
 * Messages: Add missing dots to 'bg', 'fr' and 'sr' messages. ([adbc636](https://github.com/jzaefferer/jquery-validation/commit/adbc6361c377bf6b74c35df9782479b1115fbad7))
 * Messages: Create messages_sr_lat.js ([f2f9007](https://github.com/jzaefferer/jquery-validation/commit/f2f90076518014d98495c2a9afb9a35d45d184e6))
@@ -460,57 +460,57 @@ The hashes for the 1.19.0 release can be found in the file [`jquery-validation-s
 * Methods: Localized methods for chilean culture (es-CL) ([cf36b93](https://github.com/jzaefferer/jquery-validation/commit/cf36b933499e435196d951401221d533a4811810))
 * Methods: Update email to use HTML5 regex, remove email2 method ([#828](https://github.com/jzaefferer/jquery-validation/issues/828), [dd162ae](https://github.com/jzaefferer/jquery-validation/commit/dd162ae360639f73edd2dcf7a256710b2f5a4e64))
 * Pattern method: Remove delimiters, since HTML5 implementations don't include those either. ([37992c1](https://github.com/jzaefferer/jquery-validation/commit/37992c1c9e2e0be8b315ccccc2acb74863439d3e))
-* Restricting credit card validator to include length check. Closes gh-772 ([f5f47c5](https://github.com/jzaefferer/jquery-validation/commit/f5f47c5c661da5b0c0c6d59d169e82230928a804))
-* Update messages_ko.js - closes gh-715 ([5da3085](https://github.com/jzaefferer/jquery-validation/commit/5da3085ff02e0e6ecc955a8bfc3bb9a8d220581b))
-* Update messages_pt_BR.js. Closes gh-782 ([4bf813b](https://github.com/jzaefferer/jquery-validation/commit/4bf813b751ce34fac3c04eaa2e80f75da3461124))
-* Update phonesUK and mobileUK to accept new prefixes. Closes gh-750 ([d447b41](https://github.com/jzaefferer/jquery-validation/commit/d447b41b830dee984be21d8281ec7b87a852001d))
-* Verify nine-digit zip codes. Closes gh-726 ([165005d](https://github.com/jzaefferer/jquery-validation/commit/165005d4b5780e22d13d13189d107940c622a76f))
-* phoneUS: Add N11 exclusions. Closes gh-861 ([519bbc6](https://github.com/jzaefferer/jquery-validation/commit/519bbc656bcb26e8aae5166d7b2e000014e0d12a))
+* Restricting credit card validator to include length check. Closes [gh-772](https://github.com/jquery-validation/jquery-validation/issues/772) ([f5f47c5](https://github.com/jzaefferer/jquery-validation/commit/f5f47c5c661da5b0c0c6d59d169e82230928a804))
+* Update messages_ko.js - closes [gh-715](https://github.com/jquery-validation/jquery-validation/issues/715) ([5da3085](https://github.com/jzaefferer/jquery-validation/commit/5da3085ff02e0e6ecc955a8bfc3bb9a8d220581b))
+* Update messages_pt_BR.js. Closes [gh-782](https://github.com/jquery-validation/jquery-validation/issues/782) ([4bf813b](https://github.com/jzaefferer/jquery-validation/commit/4bf813b751ce34fac3c04eaa2e80f75da3461124))
+* Update phonesUK and mobileUK to accept new prefixes. Closes [gh-750](https://github.com/jquery-validation/jquery-validation/issues/750) ([d447b41](https://github.com/jzaefferer/jquery-validation/commit/d447b41b830dee984be21d8281ec7b87a852001d))
+* Verify nine-digit zip codes. Closes [gh-726](https://github.com/jquery-validation/jquery-validation/issues/726) ([165005d](https://github.com/jzaefferer/jquery-validation/commit/165005d4b5780e22d13d13189d107940c622a76f))
+* phoneUS: Add N11 exclusions. Closes [gh-861](https://github.com/jquery-validation/jquery-validation/issues/861) ([519bbc6](https://github.com/jzaefferer/jquery-validation/commit/519bbc656bcb26e8aae5166d7b2e000014e0d12a))
 * resetForm should clear any aria-invalid values ([4f8a631](https://github.com/jzaefferer/jquery-validation/commit/4f8a631cbe84f496ec66260ada52db2aa0bb3733))
-* valid(): Check all elements. Fixes #791 - valid() validates only the first (invalid) element ([#791](https://github.com/jzaefferer/jquery-validation/issues/791), [6f26803](https://github.com/jzaefferer/jquery-validation/commit/6f268031afaf4e155424ee74dd11f6c47fbb8553))
+* valid(): Check all elements. Fixes [#791](https://github.com/jquery-validation/jquery-validation/issues/791) - valid() validates only the first (invalid) element ([#791](https://github.com/jzaefferer/jquery-validation/issues/791), [6f26803](https://github.com/jzaefferer/jquery-validation/commit/6f268031afaf4e155424ee74dd11f6c47fbb8553))
 
 1.11.1 / 2013-03-22
 ==================
 
-  * Revert to also converting parameters of range method to numbers. Closes gh-702
-  * Replace most usage of PHP with mockjax handlers. Do some demo cleanup as well, update to newer masked-input plugin. Keep captcha demo in PHP. Fixes #662
+  * Revert to also converting parameters of range method to numbers. Closes [gh-702](https://github.com/jquery-validation/jquery-validation/issues/702)
+  * Replace most usage of PHP with mockjax handlers. Do some demo cleanup as well, update to newer masked-input plugin. Keep captcha demo in PHP. Fixes [#662](https://github.com/jquery-validation/jquery-validation/issues/662)
   * Remove inline code highlighting from milk demo. View source works fine.
   * Fix dynamic-totals demo by trimming whitespace from template content before passing to jQuery constructor
-  * Fix min/max validation. Closes gh-666. Fixes #648
-  * Fixed 'messages' coming up as a rule and causing an exception after being updated through rules("add"). Closes gh-670, fixes #624
-  * Add Korean (ko) localization. Closes gh-671
-  * Improved the UK postcode method to filter out more invalid postcodes. Closes #682
-  * Update messages_sv.js. Closes #683
-  * Change grunt link to the project website. Closes #684
-  * Move remote method down the list to run last, after all other methods applied to a field. Fixes #679
+  * Fix min/max validation. Closes [gh-666](https://github.com/jquery-validation/jquery-validation/issues/666). Fixes [#648](https://github.com/jquery-validation/jquery-validation/issues/648)
+  * Fixed 'messages' coming up as a rule and causing an exception after being updated through rules("add"). Closes [gh-670](https://github.com/jquery-validation/jquery-validation/issues/670), fixes [#624](https://github.com/jquery-validation/jquery-validation/issues/624)
+  * Add Korean (ko) localization. Closes [gh-671](https://github.com/jquery-validation/jquery-validation/issues/671)
+  * Improved the UK postcode method to filter out more invalid postcodes. Closes [#682](https://github.com/jquery-validation/jquery-validation/issues/682)
+  * Update messages_sv.js. Closes [#683](https://github.com/jquery-validation/jquery-validation/issues/683)
+  * Change grunt link to the project website. Closes [#684](https://github.com/jquery-validation/jquery-validation/issues/684)
+  * Move remote method down the list to run last, after all other methods applied to a field. Fixes [#679](https://github.com/jquery-validation/jquery-validation/issues/679)
   * Update plugin.json description, should include the word 'validate'
   * Fix typos
   * Fix jQuery loader to use path of itself. Fixes nested demos.
   * Update grunt-contrib-qunit to make use of PhantomJS 1.8, when installed through node module 'phantomjs'
-  * Make valid() return a boolean instead of 0 or 1. Fixes #109 - valid() does not return boolean value
+  * Make valid() return a boolean instead of 0 or 1. Fixes [#109](https://github.com/jquery-validation/jquery-validation/issues/109) - valid() does not return boolean value
 
 1.11.0 / 2013-02-04
 ==================
 
-  * Remove clearing as numbers of `min`, `max` and `range` rules. Fixes #455. Closes gh-528.
-  * Update pre-existing labels - fixes #430 closes gh-436
-  * Fix $.validator.format to avoid group interpolation, where at least IE8/9 replaces -bash with the match. Fixes #614
+  * Remove clearing as numbers of `min`, `max` and `range` rules. Fixes [#455](https://github.com/jquery-validation/jquery-validation/issues/455). Closes [gh-528](https://github.com/jquery-validation/jquery-validation/issues/528).
+  * Update pre-existing labels - fixes [#430](https://github.com/jquery-validation/jquery-validation/issues/430) closes [gh-436](https://github.com/jquery-validation/jquery-validation/issues/436)
+  * Fix $.validator.format to avoid group interpolation, where at least IE8/9 replaces -bash with the match. Fixes [#614](https://github.com/jquery-validation/jquery-validation/issues/614)
   * Fix mimetype regex
   * Add plugin manifest and update headers to just MIT license, drop unnecessary dual-licensing (like jQuery).
-  * Hebrew messages: Removed dots at end of sentences - Fixes gh-568
-  * French translation for require_from_group validation. Fixes gh-573.
-  * Allow groups to be an array or a string - Fixes #479
+  * Hebrew messages: Removed dots at end of sentences - Fixes [gh-568](https://github.com/jquery-validation/jquery-validation/issues/568)
+  * French translation for require_from_group validation. Fixes [gh-573](https://github.com/jquery-validation/jquery-validation/issues/573).
+  * Allow groups to be an array or a string - Fixes [#479](https://github.com/jquery-validation/jquery-validation/issues/479)
   * Removed spaces with multiple MIME types
   * Fix some date validations, JS syntax errors.
   * Remove support for metadata plugin, replace with data-rule- and data-msg- (added in 907467e8) properties.
   * Added sftp as a valid url-pattern
   * Add Malay (my) localization
   * Update localization/messages_hu.js
-  * Remove focusin/focusout polyfill. Fixes #542 - Inclusion of jquery.validate interfers with focusin and focusout events in IE9
+  * Remove focusin/focusout polyfill. Fixes [#542](https://github.com/jquery-validation/jquery-validation/issues/542) - Inclusion of jquery.validate interfers with focusin and focusout events in IE9
   * Localization: Fixed typo in finnish translation
   * Fix RTM demo to show invalid icon when going from valid back to invalid
   * Fixed premature return in remote function which prevented ajax call from being made in case an input was entered too quickly. Ensures remote validation always validates the newest value.
-  * Undo fix for #244. Fixes #521 - E-mail validation fires immediately when text is in the field.
+  * Undo fix for [#244](https://github.com/jquery-validation/jquery-validation/issues/244). Fixes [#521](https://github.com/jquery-validation/jquery-validation/issues/521) - E-mail validation fires immediately when text is in the field.
 
 1.10.0 / 2012-09-07
 ===================
@@ -522,43 +522,43 @@ The hashes for the 1.19.0 release can be found in the file [`jquery-validation-s
   * Added croatian (HR) localization
   * Existing French translations were edited and French translations for the additional methods were added.
   * Merged in changes for specifying custom error messages in data attributes
-  * Updated UK Mobile phone number regex for new numbers. Fixes #154
-  * Add element to success call with test. Fixes #60
-  * Fixed regex for time additional method. Fixes #131
-  * resetForm now clears old previousValue on form elements. Fixes #312
-  * Added checkbox test to require_from_group and changed require_from_group to use elementValue. Fixes #359
-  * Fixed dataFilter response issues in jQuery 1.5.2+. Fixes #405
-  * Added jQuery Mobile demo. Fixes #249
-  * Deoptimize findByName for correctness. Fixes #82 - $.validator.prototype.findByName breaks in IE7
-  * Added US zip code support and test. Fixes #90
-  * Changed lastElement to lastActive in keyup, skip validation on tab or empty element. Fixes #244
-  * Removed number stripping from stripHtml. Fixes #2
-  * Fixed invalid count on invalid to valid remote validation. Fixes #286
+  * Updated UK Mobile phone number regex for new numbers. Fixes [#154](https://github.com/jquery-validation/jquery-validation/issues/154)
+  * Add element to success call with test. Fixes [#60](https://github.com/jquery-validation/jquery-validation/issues/60)
+  * Fixed regex for time additional method. Fixes [#131](https://github.com/jquery-validation/jquery-validation/issues/131)
+  * resetForm now clears old previousValue on form elements. Fixes [#312](https://github.com/jquery-validation/jquery-validation/issues/312)
+  * Added checkbox test to require_from_group and changed require_from_group to use elementValue. Fixes [#359](https://github.com/jquery-validation/jquery-validation/issues/359)
+  * Fixed dataFilter response issues in jQuery 1.5.2+. Fixes [#405](https://github.com/jquery-validation/jquery-validation/issues/405)
+  * Added jQuery Mobile demo. Fixes [#249](https://github.com/jquery-validation/jquery-validation/issues/249)
+  * Deoptimize findByName for correctness. Fixes [#82](https://github.com/jquery-validation/jquery-validation/issues/82) - $.validator.prototype.findByName breaks in IE7
+  * Added US zip code support and test. Fixes [#90](https://github.com/jquery-validation/jquery-validation/issues/90)
+  * Changed lastElement to lastActive in keyup, skip validation on tab or empty element. Fixes [#244](https://github.com/jquery-validation/jquery-validation/issues/244)
+  * Removed number stripping from stripHtml. Fixes [#2](https://github.com/jquery-validation/jquery-validation/issues/2)
+  * Fixed invalid count on invalid to valid remote validation. Fixes [#286](https://github.com/jquery-validation/jquery-validation/issues/286)
   * Add link to file_input to demo index
-  * Moved old accept method to extension additional-method, added new accept method to handle standard browser mimetype filtering. Fixes #287 and supersedes #369
+  * Moved old accept method to extension additional-method, added new accept method to handle standard browser mimetype filtering. Fixes [#287](https://github.com/jquery-validation/jquery-validation/issues/287) and supersedes [#369](https://github.com/jquery-validation/jquery-validation/issues/369)
   * Disables blur event when onfocusout is set to false. Test added.
-  * Fixed value issue for radio buttons and checkboxes. Fixes #363
-  * Added test for rangeWords and fixed regex and bounds in method. Fixes #308
-  * Fixed TinyMCE Demo and added link on demo page. Fixes #382
-  * Changed localization message for min/max. Fixes #273
-  * Added pseudo selector for text input types to fix issue with default empty type attribute. Added tests and some test markup. Fixes #217
-  * Fixed delegate bug for dynamic-totals demo. Fixes #51
+  * Fixed value issue for radio buttons and checkboxes. Fixes [#363](https://github.com/jquery-validation/jquery-validation/issues/363)
+  * Added test for rangeWords and fixed regex and bounds in method. Fixes [#308](https://github.com/jquery-validation/jquery-validation/issues/308)
+  * Fixed TinyMCE Demo and added link on demo page. Fixes [#382](https://github.com/jquery-validation/jquery-validation/issues/382)
+  * Changed localization message for min/max. Fixes [#273](https://github.com/jquery-validation/jquery-validation/issues/273)
+  * Added pseudo selector for text input types to fix issue with default empty type attribute. Added tests and some test markup. Fixes [#217](https://github.com/jquery-validation/jquery-validation/issues/217)
+  * Fixed delegate bug for dynamic-totals demo. Fixes [#51](https://github.com/jquery-validation/jquery-validation/issues/51)
   * Fix incorrect message for alphanumeric validator
   * Removed incorrect false check on required attribute
-  * required attribute fix for non-html5 browsers. Fixes #301
+  * required attribute fix for non-html5 browsers. Fixes [#301](https://github.com/jquery-validation/jquery-validation/issues/301)
   * Added methods "require_from_group" and "skip_or_fill_minimum"
   * Use correct iso code for swedish
   * Updated demo HTML files to use HTML5 doctype
-  * Fixed regex issue for decimals without leading zeroes. Added new methods test. Fixes #41
-  * Introduce a elementValue method that normalizes only string values (don't touch array value of multi-select). Fixes #116
-  * Support for dynamically added submit buttons, and updated test case. Uses validateDelegate. Code from PR #9
+  * Fixed regex issue for decimals without leading zeroes. Added new methods test. Fixes [#41](https://github.com/jquery-validation/jquery-validation/issues/41)
+  * Introduce a elementValue method that normalizes only string values (don't touch array value of multi-select). Fixes [#116](https://github.com/jquery-validation/jquery-validation/issues/116)
+  * Support for dynamically added submit buttons, and updated test case. Uses validateDelegate. Code from PR [#9](https://github.com/jquery-validation/jquery-validation/issues/9)
   * Fix bad double quote in test fixtures
-  * Fix maxWords method to include the upper bound, not exclude it. Fixes #284
-  * Fixed grammar error in german range validator message. Fixes #315
-  * Fixed handling of multiple class names for errorClass option. Test by Max Lynch. Fixes #280
-  * Fix jQuery.format usage, should be $.validator.format. Fixes #329
+  * Fix maxWords method to include the upper bound, not exclude it. Fixes [#284](https://github.com/jquery-validation/jquery-validation/issues/284)
+  * Fixed grammar error in german range validator message. Fixes [#315](https://github.com/jquery-validation/jquery-validation/issues/315)
+  * Fixed handling of multiple class names for errorClass option. Test by Max Lynch. Fixes [#280](https://github.com/jquery-validation/jquery-validation/issues/280)
+  * Fix jQuery.format usage, should be $.validator.format. Fixes [#329](https://github.com/jquery-validation/jquery-validation/issues/329)
   * Methods for 'all' UK phone numbers + UK postcodes
-  * Pattern method: Convert string param to RegExp. Fixes issue #223
+  * Pattern method: Convert string param to RegExp. Fixes issue [#223](https://github.com/jquery-validation/jquery-validation/issues/223)
   * grammar error in german localization file
   * Added Estonian localization for messages
   * Improve tooltip handling on themerollered demo
@@ -569,33 +569,33 @@ The hashes for the 1.19.0 release can be found in the file [`jquery-validation-s
   * Update form plugin to latest version. Enhance the ajaxSubmit demo.
   * Drop dateDE and numberDE methods from classRuleSettings, leftover from moving those to localized methods
   * Passing submit event to submitHandler callback
-  * Fixed #219 - Fix valid() on elements with dependency-callback or dependency-expression.
+  * Fixed [#219](https://github.com/jquery-validation/jquery-validation/issues/219) - Fix valid() on elements with dependency-callback or dependency-expression.
   * Improve build to remove dist dir to ensure only the current release gets zipped up
 
 1.9.0
 ---
 * Added Basque (EU) localization
 * Added Slovenian (SL) localization
-* Fixed issue #127 - Finnish translations has one : instead of ;
+* Fixed issue [#127](https://github.com/jquery-validation/jquery-validation/issues/127) - Finnish translations has one : instead of ;
 * Fixed Russian localization, minor syntax issue
-* Added in support for HTML5 input types, fixes #97
+* Added in support for HTML5 input types, fixes [#97](https://github.com/jquery-validation/jquery-validation/issues/97)
 * Improved HTML5 support by setting novalidate attribute on the form, and reading the type attribute.
-* Fixed showLabel() removing all classes from error element. Remove only settings.validClass. Fixes #151.
+* Fixed showLabel() removing all classes from error element. Remove only settings.validClass. Fixes [#151](https://github.com/jquery-validation/jquery-validation/issues/151).
 * Added 'pattern' to additional-methods to validate against arbitrary regular expressions.
-* Improved email method to not allow the dot at the end (valid by RFC, but unwanted here). Fixes #143
-* Fixed swedish and norwegian translations, min/max messages got switched. Fixes #181
-* Fixed #184 - resetForm: should unset lastElement
-* Fixed #71 - improve existing time method and add time12h method for 12h am/pm time format
-* Fixed #177 - Fix validation of a single radio or checkbox input
-* Fixed #189 - :hidden elements are now ignored by default
-* Fixed #194 - Required as attribute fails if jQuery>=1.6 - Use .prop instead of .attr
-* Fixed #47, #39, #32 - Allowed credit card numbers to contain spaces as well as dashes (spaces are commonly input by users).
+* Improved email method to not allow the dot at the end (valid by RFC, but unwanted here). Fixes [#143](https://github.com/jquery-validation/jquery-validation/issues/143)
+* Fixed swedish and norwegian translations, min/max messages got switched. Fixes [#181](https://github.com/jquery-validation/jquery-validation/issues/181)
+* Fixed [#184](https://github.com/jquery-validation/jquery-validation/issues/184) - resetForm: should unset lastElement
+* Fixed [#71](https://github.com/jquery-validation/jquery-validation/issues/71) - improve existing time method and add time12h method for 12h am/pm time format
+* Fixed [#177](https://github.com/jquery-validation/jquery-validation/issues/177) - Fix validation of a single radio or checkbox input
+* Fixed [#189](https://github.com/jquery-validation/jquery-validation/issues/189) - :hidden elements are now ignored by default
+* Fixed [#194](https://github.com/jquery-validation/jquery-validation/issues/194) - Required as attribute fails if jQuery>=1.6 - Use .prop instead of .attr
+* Fixed [#47](https://github.com/jquery-validation/jquery-validation/issues/47), [#39](https://github.com/jquery-validation/jquery-validation/issues/39), [#32](https://github.com/jquery-validation/jquery-validation/issues/32) - Allowed credit card numbers to contain spaces as well as dashes (spaces are commonly input by users).
 
 1.8.1
 ---
-* Added Thai (TH) localization, fixes #85
+* Added Thai (TH) localization, fixes [#85](https://github.com/jquery-validation/jquery-validation/issues/85)
 * Added Vietnamese (VI) localization, thanks Ngoc
-* Fixed issue #78. Error/Valid styling applies to all radio buttons of same group for required validation.
+* Fixed issue [#78](https://github.com/jquery-validation/jquery-validation/issues/78). Error/Valid styling applies to all radio buttons of same group for required validation.
 * Don't use form.elements as that isn't supported in jQuery 1.6 anymore. Its buggy as hell anyway (IE6-8: form.elements === form).
 
 1.8.0
@@ -692,11 +692,11 @@ The hashes for the 1.19.0 release can be found in the file [`jquery-validation-s
 * Improved basic demo, validating confirm-password field after password changed
 * Fixed basic validation to pass the untrimmed input value as the first parameter to validation methods, changed required accordingly; breaks existing custom method that rely on the trimming
 * Added norwegian (no), italian (it), hungarian (hu) and romanian (ro) localization
-* Fixed #3195: Two flaws in swedish localization
-* Fixed #3503: Extended rules("add") to accept messages property: use to specify add custom messages to an element via rules("add", { messages: { required: "Required! " } });
-* Fixed #3356: Regression from #2908 when using meta-option
-* Fixed #3370: Added ignoreTitle option, set to skip reading messages from the title attribute, helps to avoid issues with Google Toolbar; default is false for compatibility
-* Fixed #3516: Trigger invalid-form event even when remote validation is involved
+* Fixed [#3195](https://github.com/jquery-validation/jquery-validation/issues/3195): Two flaws in swedish localization
+* Fixed [#3503](https://github.com/jquery-validation/jquery-validation/issues/3503): Extended rules("add") to accept messages property: use to specify add custom messages to an element via rules("add", { messages: { required: "Required! " } });
+* Fixed [#3356](https://github.com/jquery-validation/jquery-validation/issues/3356): Regression from [#2908](https://github.com/jquery-validation/jquery-validation/issues/2908) when using meta-option
+* Fixed [#3370](https://github.com/jquery-validation/jquery-validation/issues/3370): Added ignoreTitle option, set to skip reading messages from the title attribute, helps to avoid issues with Google Toolbar; default is false for compatibility
+* Fixed [#3516](https://github.com/jquery-validation/jquery-validation/issues/3516): Trigger invalid-form event even when remote validation is involved
 * Added invalidHandler option as a shortcut to bind("invalid-form", function() {})
 * Fixed Safari issue for loading indicator in ajaxSubmit-integration-demo (append to body first, then hide)
 * Added test for creditcard validation and improved default message
@@ -704,17 +704,17 @@ The hashes for the 1.19.0 release can be found in the file [`jquery-validation-s
 
 1.4
 ---
-* Fixed #2931, validate elements in document order and ignore type=image inputs
+* Fixed [#2931](https://github.com/jquery-validation/jquery-validation/issues/2931), validate elements in document order and ignore type=image inputs
 * Fixed usage of $ and jQuery variables, now fully compatible with all variations of noConflict usage
-* Implemented #2908, enabling custom messages via metadata ala class="{required:true,messages:{required:'required field'}}", added demo/custom-messages-metadata-demo.html
+* Implemented [#2908](https://github.com/jquery-validation/jquery-validation/issues/2908), enabling custom messages via metadata ala class="{required:true,messages:{required:'required field'}}", added demo/custom-messages-metadata-demo.html
 * Removed deprecated methods minValue (min), maxValue (max), rangeValue (rangevalue), minLength (minlength), maxLength (maxlength), rangeLength (rangelength)
-* Fixed #2215 regression: Call unhighlight only for current elements, not everything
-* Implemented #2989, enabling image button to cancel validation
+* Fixed [#2215](https://github.com/jquery-validation/jquery-validation/issues/2215) regression: Call unhighlight only for current elements, not everything
+* Implemented [#2989](https://github.com/jquery-validation/jquery-validation/issues/2989), enabling image button to cancel validation
 * Fixed issue where IE incorrectly validates against maxlength=0
 * Added czech (cs) localization
 * Reset validator.submitted on validator.resetForm(), enabling a full reset when necessary
-* Fixed #3035, skipping all falsy attributes when reading rules (0, undefined, empty string), removed part of the maxlength workaround (for 0)
-* Added dutch (nl) localization (#3201)
+* Fixed [#3035](https://github.com/jquery-validation/jquery-validation/issues/3035), skipping all falsy attributes when reading rules (0, undefined, empty string), removed part of the maxlength workaround (for 0)
+* Added dutch (nl) localization ([#3201](https://github.com/jquery-validation/jquery-validation/issues/3201))
 
 1.3
 ---
@@ -725,12 +725,12 @@ The hashes for the 1.19.0 release can be found in the file [`jquery-validation-s
 * Enhanced rules() for adding and removing (static) rules: rules("add", "method1[, methodN]"/{method1:param[, method_n:param]}) and rules("remove"[, "method1[, method_n]")
 * Enhanced rules-option, accepts space-separated string-list of methods, eg. {birthdate: "required date"}
 * Fixed checkbox group validation with inline rules: As long as the rules are specified on the first element, the group is now properly validated on click
-* Fixed #2473, ignoring all rules with an explicit parameter of boolean-false, eg. required:false is the same as not specifying required at all (it was handled as required:true so far)
-* Fixed #2424, with a modified patch from #2473: Methods returning a dependency-mismatch don't stop other rules from being evaluated anymore; still, success isn't applied for optional fields
+* Fixed [#2473](https://github.com/jquery-validation/jquery-validation/issues/2473), ignoring all rules with an explicit parameter of boolean-false, eg. required:false is the same as not specifying required at all (it was handled as required:true so far)
+* Fixed [#2424](https://github.com/jquery-validation/jquery-validation/issues/2424), with a modified patch from [#2473](https://github.com/jquery-validation/jquery-validation/issues/2473): Methods returning a dependency-mismatch don't stop other rules from being evaluated anymore; still, success isn't applied for optional fields
 * Fixed url and email validation to not use trimmed values
 * Fixed creditcard validation to accept only digits and dashes ("asdf" is not a valid creditcard number)
 * Allow both button and input elements for cancel buttons (via class="cancel")
-* Fixed #2215: Fixed message display to call unhighlight as part of showing and hiding messages, no more visual side-effects while checking an element and extracted validator.checkForm to validate a form without UI sideeffects
+* Fixed [#2215](https://github.com/jquery-validation/jquery-validation/issues/2215): Fixed message display to call unhighlight as part of showing and hiding messages, no more visual side-effects while checking an element and extracted validator.checkForm to validate a form without UI sideeffects
 * Rewrote custom selectors (:blank, :filled, :unchecked) with functions for compatibility with AIR
 
 1.2.1
