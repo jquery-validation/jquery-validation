@@ -1,3 +1,30 @@
+1.22.1 / 2026-02-18
+===================
+
+## Core
+  * Fix TypeError when form contains input with name="id" [#2528](https://github.com/jquery-validation/jquery-validation/pull/2528)
+
+1.22.0 / 2026-01-22
+===================
+
+## Core
+  * Remove unnecessary aria-describedby [#2410](https://github.com/jquery-validation/jquery-validation/pull/2410)
+  * Add support for HTML5 form attribute on elements outside form [#2521](https://github.com/jquery-validation/jquery-validation/pull/2521)
+  * Add jQuery 4.0.0 support [#2524](https://github.com/jquery-validation/jquery-validation/pull/2524)
+
+## Additional
+  * Replace deprecated substr() with slice() and charAt() in cifES.js [#2520](https://github.com/jquery-validation/jquery-validation/pull/2520)
+
+## Localisation
+  * Add additional Dutch translations for messages_nl.js [#2517](https://github.com/jquery-validation/jquery-validation/pull/2517)
+
+1.21.0 / 2024-07-17
+===================
+
+## Core
+  * Add support for Web Components [#2493](https://github.com/jquery-validation/jquery-validation/pull/2493)
+  * Allow negative decimal with no leading zero [#2483](https://github.com/jquery-validation/jquery-validation/pull/2483)
+
 1.20.1 / 2024-06-13
 ===================
 
