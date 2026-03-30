@@ -14,6 +14,7 @@ $.extend( $.validator.messages, {
 	creditcard: "Veuillez fournir un numéro de carte de crédit valide.",
 	equalTo: "Veuillez fournir encore la même valeur.",
 	notEqualTo: "Veuillez fournir une valeur différente, les valeurs ne doivent pas être identiques.",
+	accept: "Veuillez fournir une valeur avec un type MIME valide.",
 	extension: "Veuillez fournir une valeur avec une extension valide.",
 	maxlength: $.validator.format( "Veuillez fournir au plus {0} caractères." ),
 	minlength: $.validator.format( "Veuillez fournir au moins {0} caractères." ),
