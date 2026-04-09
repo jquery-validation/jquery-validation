@@ -399,6 +399,29 @@ QUnit.test( "Validate checkboxes outside form with form attribute", function( as
 	assert.equal( v.numberOfInvalids(), 2, "Should have 2 invalid elements" );
 } );
 
+QUnit.test( "No duplicate error labels for form-attributed elements on multiple submissions", function( assert ) {
+	assert.expect( 4 );
+
+	var form = $( "#testForm29" );
+	var v = form.validate();
+
+	// First validation attempt
+	var result = v.form();
+	assert.ok( !result, "Form validation should fail when inputs are empty" );
+
+	// Count error labels after first validation
+	var errorLabels1 = $( "label.error[for='f29input1'], label.error[for='f29input2']" );
+	assert.equal( errorLabels1.length, 2, "Should have exactly 2 error labels after first validation" );
+
+	// Second validation attempt
+	result = v.form();
+	assert.ok( !result, "Form validation should still fail" );
+
+	// Count error labels after second validation - should still be 2, not 4
+	var errorLabels2 = $( "label.error[for='f29input1'], label.error[for='f29input2']" );
+	assert.equal( errorLabels2.length, 2, "Should still have exactly 2 error labels after second validation (no duplicates)" );
+} );
+
 QUnit.test( "addMethod", function( assert ) {
 	assert.expect( 3 );
 	$.validator.addMethod( "hi", function( value ) {
