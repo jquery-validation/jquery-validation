@@ -17,7 +17,7 @@
 - Update MS CDN (Ping Chris Sfanos)
 - Check jsdelivr CDN: new git tags are automatically pulled, tested & merged via https://github.com/jsdelivr/jsdelivr/pulls
 - Check cdnjs CDN: new git tags are automatically committed into https://github.com/cdnjs/cdnjs/commits/master or ping @cdnjs
-- Update validation-content/pages/index.html (may have to hold off on CDN updates until available)
+- Update jquery-validation.github.io/pages/index.html (may have to hold off on CDN updates until available)
 - Write blog post: Some highlights, changelog, download links
 */
 
