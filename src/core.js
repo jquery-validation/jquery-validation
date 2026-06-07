@@ -755,8 +755,31 @@ $.extend( $.validator, {
 		},
 
 		errors: function() {
-			var errorClass = this.settings.errorClass.split( " " ).join( "." );
-			return $( this.settings.errorElement + "." + errorClass, this.errorContext );
+			var errorClass = this.settings.errorClass.split( " " ).join( "." ),
+				selector = this.settings.errorElement + "." + errorClass,
+				errors = $( selector, this.errorContext ),
+				formId = this.currentForm.getAttribute( "id" );
+
+			// If the form has an ID, also include error labels for elements outside the form
+			// that have a form attribute pointing to this form
+			if ( formId ) {
+				errors = errors.add(
+					$( selector ).filter( function() {
+						var forAttr = $( this ).attr( "for" );
+
+						// Check if this error label is for an element with form attribute matching formId
+						if ( forAttr ) {
+							var element = document.getElementById( forAttr ) || document.getElementsByName( forAttr )[ 0 ];
+							if ( element && $( element ).attr( "form" ) === formId ) {
+								return true;
+							}
+						}
+						return false;
+					} )
+				);
+			}
+
+			return errors;
 		},
 
 		resetInternals: function() {

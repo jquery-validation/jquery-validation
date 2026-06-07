@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>Test: Form Attribute Bug Fix</title>
+	<script src="../lib/jquery.js"></script>
+	<script src="../dist/jquery.validate.js"></script>
+	<style>
+		body { font-family: Arial, sans-serif; margin: 20px; }
+		.error { color: red; }
+		table { border-collapse: collapse; margin: 20px 0; }
+		td, th { border: 1px solid #ccc; padding: 10px; text-align: left; }
+		th { background: #f0f0f0; }
+		button { padding: 8px 15px; margin: 5px 0; cursor: pointer; }
+		.test-section { margin: 30px 0; }
+		input[type="text"] { padding: 5px; width: 200px; }
+	</style>
+</head>
+<body>
+	<h1>Form Attribute Bug Fix Test</h1>
+	<p>Click the submit buttons multiple times to verify that only ONE error label appears for each field.</p>
+
+	<div class="test-section">
+		<h2>Test 1: Input outside form with form attribute</h2>
+		<table>
+			<tr>
+				<th>Field Location</th>
+				<th>Input Field</th>
+			</tr>
+			<tr>
+				<td>Outside form (with form attribute)</td>
+				<td>
+					<input type="text" name="outside1" id="outside1" form="testForm1">
+				</td>
+			</tr>
+			<tr>
+				<td>Inside form</td>
+				<td>
+					<form id="testForm1">
+						<input type="text" name="inside1" id="inside1">
+						<button type="submit">Submit Form 1</button>
+					</form>
+				</td>
+			</tr>
+		</table>
+		<div id="result1" style="margin-top: 10px; padding: 10px; border: 1px solid #ccc;"></div>
+	</div>
+
+	<div class="test-section">
+		<h2>Test 2: Multiple inputs outside form</h2>
+		<table>
+			<tr>
+				<th>Field Location</th>
+				<th>Input Field</th>
+			</tr>
+			<tr>
+				<td>Outside 1 (with form attribute)</td>
+				<td>
+					<input type="text" name="outside2a" id="outside2a" form="testForm2">
+				</td>
+			</tr>
+			<tr>
+				<td>Outside 2 (with form attribute)</td>
+				<td>
+					<input type="text" name="outside2b" id="outside2b" form="testForm2">
+				</td>
+			</tr>
+			<tr>
+				<td>Inside form</td>
+				<td>
+					<form id="testForm2">
+						<input type="text" name="inside2" id="inside2">
+						<button type="submit">Submit Form 2</button>
+					</form>
+				</td>
+			</tr>
+		</table>
+		<div id="result2" style="margin-top: 10px; padding: 10px; border: 1px solid #ccc;"></div>
+	</div>
+
+	<script>
+		$(document).ready(function() {
+			// Test 1
+			var validator1 = $("#testForm1").validate({
+				rules: {
+					outside1: { required: true },
+					inside1: { required: true }
+				},
+				messages: {
+					outside1: "Outside field is required",
+					inside1: "Inside field is required"
+				},
+				submitHandler: function(form) {
+					$("#result1").html("<strong>Success!</strong> Form would submit now.");
+					return false;
+				}
+			});
+
+			$("#testForm1").submit(function(e) {
+				e.preventDefault();
+				var isValid = validator1.form();
+				var errorCount = $("label.error").filter(function() {
+					return $(this).attr("for") === "outside1" || $(this).attr("for") === "inside1";
+				}).length;
+				$("#result1").html(
+					"<strong>Validation Result:</strong> " + (isValid ? "Valid" : "Invalid") +
+					"<br><strong>Error labels count:</strong> " + errorCount +
+					(errorCount > 2 ? " <span style='color: red;'>(BUG: Should be 2 or less!)</span>" : " <span style='color: green;'>(Correct)</span>")
+				);
+			});
+
+			// Test 2
+			var validator2 = $("#testForm2").validate({
+				rules: {
+					outside2a: { required: true },
+					outside2b: { required: true },
+					inside2: { required: true }
+				},
+				messages: {
+					outside2a: "Outside 2a is required",
+					outside2b: "Outside 2b is required",
+					inside2: "Inside 2 is required"
+				},
+				submitHandler: function(form) {
+					$("#result2").html("<strong>Success!</strong> Form would submit now.");
+					return false;
+				}
+			});
+
+			$("#testForm2").submit(function(e) {
+				e.preventDefault();
+				var isValid = validator2.form();
+				var errorCount = $("label.error").filter(function() {
+					return $(this).attr("for") === "outside2a" ||
+						   $(this).attr("for") === "outside2b" ||
+						   $(this).attr("for") === "inside2";
+				}).length;
+				$("#result2").html(
+					"<strong>Validation Result:</strong> " + (isValid ? "Valid" : "Invalid") +
+					"<br><strong>Error labels count:</strong> " + errorCount +
+					(errorCount > 3 ? " <span style='color: red;'>(BUG: Should be 3 or less!)</span>" : " <span style='color: green;'>(Correct)</span>")
+				);
+			});
+		});
+	</script>
+</body>
+</html>
