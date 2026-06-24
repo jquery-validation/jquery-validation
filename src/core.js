@@ -460,6 +460,9 @@ $.extend( $.validator, {
 
 			this.form();
 
+			// When Promise is unavailable, return undefined. Callers should
+			// guard with typeof validator.formAsync() !== "undefined" or
+			// check for Promise support before using this method.
 			if ( typeof Promise === "undefined" ) {
 				return;
 			}
@@ -478,7 +481,8 @@ $.extend( $.validator, {
 			var resolves, isValid, i;
 
 			if ( this.pendingRequest === 0 && this._pendingFormResolves.length ) {
-				resolves = this._pendingFormResolves.splice( 0 );
+				resolves = this._pendingFormResolves;
+				this._pendingFormResolves = [];
 				isValid = this.valid();
 				for ( i = 0; i < resolves.length; i++ ) {
 					resolves[ i ]( isValid );
