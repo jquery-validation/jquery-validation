@@ -2957,7 +2957,7 @@ QUnit.test( "form() synchronous behavior is preserved and returns a boolean", fu
 
 	$( "#username" ).val( "someuser" );
 
-	// Form() always returns synchronously as a boolean, unlike formAsync() which returns a Promise
+	// Unlike formAsync(), form() always returns a boolean synchronously
 	var syncResult = v.form();
 	assert.strictEqual( typeof syncResult, "boolean", "form() returns a boolean synchronously" );
 	assert.strictEqual( syncResult, true, "form() returns true when all local rules pass" );

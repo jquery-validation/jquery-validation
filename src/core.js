@@ -473,6 +473,19 @@ $.extend( $.validator, {
 			} );
 		},
 
+		// Flush all pending formAsync() resolvers once no requests are outstanding
+		_resolveFormAsync: function() {
+			var resolves, isValid, i;
+
+			if ( this.pendingRequest === 0 && this._pendingFormResolves.length ) {
+				resolves = this._pendingFormResolves.splice( 0 );
+				isValid = this.valid();
+				for ( i = 0; i < resolves.length; i++ ) {
+					resolves[ i ]( isValid );
+				}
+			}
+		},
+
 		checkForm: function() {
 			this.prepareForm();
 			for ( var i = 0, elements = ( this.currentElements = this.elements() ); elements[ i ]; i++ ) {
@@ -1229,8 +1242,6 @@ $.extend( $.validator, {
 		},
 
 		stopRequest: function( element, valid ) {
-			var resolves, isValid, i;
-
 			this.pendingRequest--;
 
 			// Sometimes synchronization fails, make sure pendingRequest is never < 0
@@ -1256,18 +1267,11 @@ $.extend( $.validator, {
 				this.formSubmitted = false;
 			}
 
-			// Resolve any pending formAsync() promises once all requests have settled
-			if ( this.pendingRequest === 0 && this._pendingFormResolves.length ) {
-				resolves = this._pendingFormResolves.splice( 0 );
-				isValid = this.valid();
-				for ( i = 0; i < resolves.length; i++ ) {
-					resolves[ i ]( isValid );
-				}
-			}
+			this._resolveFormAsync();
 		},
 
 		abortRequest: function( element ) {
-			var port, resolves, isValid, i;
+			var port;
 
 			if ( this.pending[ element.name ] ) {
 				port = this.elementAjaxPort( element );
@@ -1284,14 +1288,7 @@ $.extend( $.validator, {
 				$( element ).removeClass( this.settings.pendingClass );
 			}
 
-			// Resolve any pending formAsync() promises if no more requests are outstanding
-			if ( this.pendingRequest === 0 && this._pendingFormResolves.length ) {
-				resolves = this._pendingFormResolves.splice( 0 );
-				isValid = this.valid();
-				for ( i = 0; i < resolves.length; i++ ) {
-					resolves[ i ]( isValid );
-				}
-			}
+			this._resolveFormAsync();
 		},
 
 		previousValue: function( element, method ) {
