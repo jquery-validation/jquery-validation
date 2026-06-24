@@ -121,7 +121,8 @@ grunt.initConfig( {
 				args: [
 					"--headless",
 					"--disable-web-security",
-					"--allow-file-access-from-files"
+					"--allow-file-access-from-files",
+					"--no-sandbox"
 				]
 			},
 			timeout: 10000

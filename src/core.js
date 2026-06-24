@@ -384,6 +384,7 @@ $.extend( $.validator, {
 			this.pendingRequest = 0;
 			this.pending = {};
 			this.invalid = {};
+			this._pendingFormResolves = [];
 			this.reset();
 
 			var currentForm = this.currentForm,
@@ -451,6 +452,25 @@ $.extend( $.validator, {
 			}
 			this.showErrors();
 			return this.valid();
+		},
+
+		// https://jqueryvalidation.org/Validator.formAsync/
+		formAsync: function() {
+			var validator = this;
+
+			this.form();
+
+			if ( typeof Promise === "undefined" ) {
+				return;
+			}
+
+			if ( this.pendingRequest === 0 ) {
+				return Promise.resolve( this.valid() );
+			}
+
+			return new Promise( function( resolve ) {
+				validator._pendingFormResolves.push( resolve );
+			} );
 		},
 
 		checkForm: function() {
@@ -1209,6 +1229,8 @@ $.extend( $.validator, {
 		},
 
 		stopRequest: function( element, valid ) {
+			var resolves, isValid, i;
+
 			this.pendingRequest--;
 
 			// Sometimes synchronization fails, make sure pendingRequest is never < 0
@@ -1233,10 +1255,19 @@ $.extend( $.validator, {
 				$( this.currentForm ).triggerHandler( "invalid-form", [ this ] );
 				this.formSubmitted = false;
 			}
+
+			// Resolve any pending formAsync() promises once all requests have settled
+			if ( this.pendingRequest === 0 && this._pendingFormResolves.length ) {
+				resolves = this._pendingFormResolves.splice( 0 );
+				isValid = this.valid();
+				for ( i = 0; i < resolves.length; i++ ) {
+					resolves[ i ]( isValid );
+				}
+			}
 		},
 
 		abortRequest: function( element ) {
-			var port;
+			var port, resolves, isValid, i;
 
 			if ( this.pending[ element.name ] ) {
 				port = this.elementAjaxPort( element );
@@ -1251,6 +1282,15 @@ $.extend( $.validator, {
 
 				delete this.pending[ element.name ];
 				$( element ).removeClass( this.settings.pendingClass );
+			}
+
+			// Resolve any pending formAsync() promises if no more requests are outstanding
+			if ( this.pendingRequest === 0 && this._pendingFormResolves.length ) {
+				resolves = this._pendingFormResolves.splice( 0 );
+				isValid = this.valid();
+				for ( i = 0; i < resolves.length; i++ ) {
+					resolves[ i ]( isValid );
+				}
 			}
 		},
 
