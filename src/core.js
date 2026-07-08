@@ -384,6 +384,7 @@ $.extend( $.validator, {
 			this.pendingRequest = 0;
 			this.pending = {};
 			this.invalid = {};
+			this._pendingFormResolves = [];
 			this.reset();
 
 			var currentForm = this.currentForm,
@@ -451,6 +452,42 @@ $.extend( $.validator, {
 			}
 			this.showErrors();
 			return this.valid();
+		},
+
+		// https://jqueryvalidation.org/Validator.formAsync/
+		formAsync: function() {
+			var validator = this;
+
+			this.form();
+
+			// When Promise is unavailable, return undefined. Callers should
+			// guard with typeof validator.formAsync() !== "undefined" or
+			// check for Promise support before using this method.
+			if ( typeof Promise === "undefined" ) {
+				return;
+			}
+
+			if ( this.pendingRequest === 0 ) {
+				return Promise.resolve( this.valid() );
+			}
+
+			return new Promise( function( resolve ) {
+				validator._pendingFormResolves.push( resolve );
+			} );
+		},
+
+		// Flush all pending formAsync() resolvers once no requests are outstanding
+		_resolveFormAsync: function() {
+			var resolves, isValid, i;
+
+			if ( this.pendingRequest === 0 && this._pendingFormResolves.length ) {
+				resolves = this._pendingFormResolves;
+				this._pendingFormResolves = [];
+				isValid = this.valid();
+				for ( i = 0; i < resolves.length; i++ ) {
+					resolves[ i ]( isValid );
+				}
+			}
 		},
 
 		checkForm: function() {
@@ -1233,6 +1270,8 @@ $.extend( $.validator, {
 				$( this.currentForm ).triggerHandler( "invalid-form", [ this ] );
 				this.formSubmitted = false;
 			}
+
+			this._resolveFormAsync();
 		},
 
 		abortRequest: function( element ) {
@@ -1252,6 +1291,8 @@ $.extend( $.validator, {
 				delete this.pending[ element.name ];
 				$( element ).removeClass( this.settings.pendingClass );
 			}
+
+			this._resolveFormAsync();
 		},
 
 		previousValue: function( element, method ) {

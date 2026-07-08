@@ -99,6 +99,20 @@ $.mockjax( {
     responseTime: 1
 } );
 
+$.mockjax( {
+	url: "formAsync-valid.php",
+	responseText: "true",
+	responseStatus: 200,
+	responseTime: 1
+} );
+
+$.mockjax( {
+	url: "formAsync-invalid.php",
+	responseText: "false",
+	responseStatus: 200,
+	responseTime: 1
+} );
+
 // Asserts that there is a visible error with the given text for the specified element
 QUnit.assert.hasError = function( element, text, message ) {
 	var errors = $( element ).closest( "form" ).validate().errorsFor( element[ 0 ] ),
@@ -2853,4 +2867,98 @@ QUnit.test( "Form with input named 'id' should not cause TypeError", function( a
 	var result = v.form();
 	assert.ok( !result, "Form validation should fail when required inputs are empty" );
 	assert.equal( v.numberOfInvalids(), 2, "Should have 2 invalid elements" );
+} );
+
+QUnit.test( "formAsync() resolves true for valid form with no remote rules", function( assert ) {
+	var done = assert.async(),
+		v = $( "#userForm" ).validate();
+
+	$( "#username" ).val( "anything" );
+
+	v.formAsync().then( function( isValid ) {
+		assert.strictEqual( isValid, true, "resolves true for valid form" );
+		assert.strictEqual( v.pendingRequest, 0, "no pending requests on resolution" );
+		done();
+	} );
+} );
+
+QUnit.test( "formAsync() resolves false for invalid form with no remote rules", function( assert ) {
+	var done = assert.async(),
+		v = $( "#userForm" ).validate();
+
+	$( "#username" ).val( "" );
+
+	v.formAsync().then( function( isValid ) {
+		assert.strictEqual( isValid, false, "resolves false for invalid form" );
+		done();
+	} );
+} );
+
+QUnit.test( "formAsync() resolves true after remote validation passes", function( assert ) {
+	var done = assert.async(),
+		v = $( "#userForm" ).validate( {
+			rules: {
+				username: {
+					remote: "formAsync-valid.php"
+				}
+			}
+		} );
+
+	$( "#username" ).val( "validuser" );
+
+	v.formAsync().then( function( isValid ) {
+		assert.strictEqual( isValid, true, "resolves true after remote passes" );
+		assert.strictEqual( v.pendingRequest, 0, "no pending requests on resolution" );
+		done();
+	} );
+} );
+
+QUnit.test( "formAsync() resolves false after remote validation fails", function( assert ) {
+	var done = assert.async(),
+		v = $( "#userForm" ).validate( {
+			rules: {
+				username: {
+					remote: "formAsync-invalid.php"
+				}
+			}
+		} );
+
+	$( "#username" ).val( "invaliduser" );
+
+	v.formAsync().then( function( isValid ) {
+		assert.strictEqual( isValid, false, "resolves false after remote fails" );
+		assert.strictEqual( v.pendingRequest, 0, "no pending requests on resolution" );
+		done();
+	} );
+} );
+
+QUnit.test( "formAsync() resolves after multiple concurrent remote rules complete", function( assert ) {
+	var done = assert.async(),
+		$form = $( "<form>" +
+			"<input type='text' name='asyncfield1' value='value1'>" +
+			"<input type='text' name='asyncfield2' value='value2'>" +
+			"</form>" ).appendTo( "#qunit-fixture" ),
+		v = $form.validate( {
+			rules: {
+				asyncfield1: { remote: "formAsync-valid.php" },
+				asyncfield2: { remote: "formAsync-valid.php" }
+			}
+		} );
+
+	v.formAsync().then( function( isValid ) {
+		assert.strictEqual( isValid, true, "resolves true after all remote rules pass" );
+		assert.strictEqual( v.pendingRequest, 0, "no pending requests on resolution" );
+		done();
+	} );
+} );
+
+QUnit.test( "form() synchronous behavior is preserved and returns a boolean", function( assert ) {
+	var v = $( "#userForm" ).validate();
+
+	$( "#username" ).val( "someuser" );
+
+	// Unlike formAsync(), form() always returns a boolean synchronously
+	var syncResult = v.form();
+	assert.strictEqual( typeof syncResult, "boolean", "form() returns a boolean synchronously" );
+	assert.strictEqual( syncResult, true, "form() returns true when all local rules pass" );
 } );
