@@ -1699,7 +1699,7 @@ $.extend( $.validator, {
 				dataType: "json",
 				data: data,
 				context: validator.currentForm,
-				success: function( response ) {
+				complete: function( response ) {
 					var valid = response === true || response === "true",
 						errors, message, submitted;
 
@@ -1714,6 +1714,11 @@ $.extend( $.validator, {
 					} else {
 						errors = {};
 						message = response || validator.defaultMessage( element, { method: method, parameters: value } );
+						if ( response.statusText && response.status ) {
+
+							// This request failed - show ajax error instead of message.
+							message = response.status + ": " + response.statusText;
+						}
 						errors[ element.name ] = previous.message = message;
 						validator.invalid[ element.name ] = true;
 						validator.showErrors( errors );
