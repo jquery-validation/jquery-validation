@@ -1018,9 +1018,16 @@ $.extend( $.validator, {
 		},
 
 		invalidElements: function() {
-			return $( this.errorList ).map( function() {
-				return this.element;
+			var
+				v = this,
+				invalid = $.extend( {}, v.invalid ),
+				$elements = $( [] );
+			$.each( invalid, function( key, value ) {
+				if ( value !== false && invalid.hasOwnProperty( key ) ) {
+					$elements = $elements.add( v.findByName( key ) );
+				}
 			} );
+			return $elements;
 		},
 
 		showLabel: function( element, message ) {
@@ -1673,7 +1680,7 @@ $.extend( $.validator, {
 			method = typeof method === "string" && method || "remote";
 
 			var previous = this.previousValue( element, method ),
-				validator, data, optionDataString;
+				validator, data, optionDataString, result = "pending";
 
 			if ( !this.settings.messages[ element.name ] ) {
 				this.settings.messages[ element.name ] = {};
@@ -1718,11 +1725,13 @@ $.extend( $.validator, {
 						validator.invalid[ element.name ] = true;
 						validator.showErrors( errors );
 					}
-					previous.valid = valid;
+
+					// Fix for QUnit test "remote" method with ajax immediate callback
+					result = previous.valid = valid;
 					validator.stopRequest( element, valid );
 				}
 			}, param ) );
-			return "pending";
+			return result;
 		}
 	}
 
