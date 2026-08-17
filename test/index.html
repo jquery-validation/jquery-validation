@@ -519,6 +519,27 @@
 		<input type="text" name="username" required>
 	</form>
 	<input type="text" name="email" form="testForm31" required>
+	<form id="testFormNameArray">
+		<input type="text" name="todo_item[]" data-rule-required="true" id="todoItem1">
+		<input type="text" name="todo_item[]" data-rule-required="true" id="todoItem2">
+		<input type="text" name="todo_item[]" data-rule-required="true" id="todoItem3">
+	</form>
+	<form id="testFormDuplicateName">
+		<input type="text" name="first_name" data-rule-required="true" id="dupFirstName1">
+		<input type="text" name="first_name" data-rule-required="true" id="dupFirstName2">
+	</form>
+	<form id="testFormCheckboxGroups">
+		<input type="checkbox" name="group_a" value="1" data-rule-required="true" id="groupA1">
+		<input type="checkbox" name="group_a" value="2" id="groupA2">
+		<input type="checkbox" name="group_b" value="1" data-rule-required="true" id="groupB1">
+		<input type="checkbox" name="group_b" value="2" id="groupB2">
+	</form>
+	<form id="testFormRadioGroups">
+		<input type="radio" name="radio_a" value="1" data-rule-required="true" id="radioA1">
+		<input type="radio" name="radio_a" value="2" id="radioA2">
+		<input type="radio" name="radio_b" value="1" data-rule-required="true" id="radioB1">
+		<input type="radio" name="radio_b" value="2" id="radioB2">
+	</form>
 </div>
 </body>
 </html>

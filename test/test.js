@@ -399,6 +399,71 @@ QUnit.test( "Validate checkboxes outside form with form attribute", function( as
 	assert.equal( v.numberOfInvalids(), 2, "Should have 2 invalid elements" );
 } );
 
+QUnit.test( "elements() includes every name[] input with rules", function( assert ) {
+	assert.expect( 1 );
+	var v = $( "#testFormNameArray" ).validate();
+	assert.equal( v.elements().length, 3, "All name[] inputs should be validated" );
+} );
+
+QUnit.test( "form() validates every name[] input, not only the first", function( assert ) {
+	assert.expect( 6 );
+	var v = $( "#testFormNameArray" ).validate();
+
+	assert.ok( !v.form(), "Invalid when all name[] inputs are empty" );
+	assert.ok( $( "#todoItem1" ).hasClass( "error" ), "First name[] input is marked invalid" );
+	assert.ok( $( "#todoItem2" ).hasClass( "error" ), "Second name[] input is marked invalid" );
+	assert.ok( $( "#todoItem3" ).hasClass( "error" ), "Third name[] input is marked invalid" );
+
+	$( "#todoItem1" ).val( "one" );
+	assert.ok( !v.form(), "Still invalid when later name[] inputs are empty" );
+
+	$( "#todoItem2" ).val( "two" );
+	$( "#todoItem3" ).val( "three" );
+	assert.ok( v.form(), "Valid when every name[] input has a value" );
+} );
+
+QUnit.test( "form() validates duplicate names without [] the same way", function( assert ) {
+	assert.expect( 4 );
+	var v = $( "#testFormDuplicateName" ).validate();
+
+	assert.ok( !v.form(), "Invalid when both same-name inputs are empty" );
+	assert.ok( $( "#dupFirstName2" ).hasClass( "error" ), "Second same-name input is marked invalid" );
+
+	$( "#dupFirstName1" ).val( "Ada" );
+	assert.ok( !v.form(), "Still invalid when the second same-name input is empty" );
+
+	$( "#dupFirstName2" ).val( "Lovelace" );
+	assert.ok( v.form(), "Valid when every same-name input has a value" );
+} );
+
+QUnit.test( "form() still validates the first checkbox of each name", function( assert ) {
+	assert.expect( 4 );
+	var v = $( "#testFormCheckboxGroups" ).validate();
+
+	assert.ok( !v.form(), "Invalid when both checkbox groups are unchecked" );
+	assert.equal( v.numberOfInvalids(), 2, "Each checkbox name is validated once" );
+
+	$( "#groupA1" ).prop( "checked", true );
+	assert.ok( !v.form(), "Still invalid when the second checkbox group is unchecked" );
+
+	$( "#groupB1" ).prop( "checked", true );
+	assert.ok( v.form(), "Valid when each checkbox group has a checked input" );
+} );
+
+QUnit.test( "form() still validates the first radio of each name", function( assert ) {
+	assert.expect( 4 );
+	var v = $( "#testFormRadioGroups" ).validate();
+
+	assert.ok( !v.form(), "Invalid when both radio groups are unchecked" );
+	assert.equal( v.numberOfInvalids(), 2, "Each radio name is validated once" );
+
+	$( "#radioA1" ).prop( "checked", true );
+	assert.ok( !v.form(), "Still invalid when the second radio group is unchecked" );
+
+	$( "#radioB1" ).prop( "checked", true );
+	assert.ok( v.form(), "Valid when each radio group has a checked input" );
+} );
+
 QUnit.test( "addMethod", function( assert ) {
 	assert.expect( 3 );
 	$.validator.addMethod( "hi", function( value ) {

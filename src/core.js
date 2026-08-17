@@ -454,21 +454,24 @@ $.extend( $.validator, {
 		},
 
 		checkForm: function() {
-			var checkedCache = {};
-			
+			var checkedCache = {},
+				i, elements, element, type, name;
+
 			this.prepareForm();
-			for ( var i = 0, elements = ( this.currentElements = this.elements() ); elements[ i ]; i++ ) {
-				var element = elements.eq(i);
-				
-				var type = element.attr( "type" );
-				if ( type === 'checkbox' || type === 'radio' ) {
-					// only check the first checkbox/radio input ( https://github.com/jquery-validation/jquery-validation/pull/2431#issuecomment-1172835268 )
-					if ( element.name in checkedCache ) {
+			for ( i = 0, elements = ( this.currentElements = this.elements() ); elements[ i ]; i++ ) {
+				element = elements.eq( i );
+				type = element.attr( "type" );
+				if ( type === "checkbox" || type === "radio" ) {
+
+					// Only check the first checkbox/radio input
+					// https://github.com/jquery-validation/jquery-validation/pull/2431#issuecomment-1172835268
+					name = element[ 0 ].name;
+					if ( name in checkedCache ) {
 						continue;
 					}
-					checkedCache[ element.name ] = true;
+					checkedCache[ name ] = true;
 				}
-				
+
 				this.check( element );
 			}
 			return this.valid();
@@ -754,10 +757,16 @@ $.extend( $.validator, {
 				}
 
 				if ( name in rulesCache ) {
+
+					// Checkbox/radio groups stay first-only; other same-name
+					// fields (including name[]) are all validated
+					if ( this.type === "checkbox" || this.type === "radio" ) {
+						return false;
+					}
 					return true;
 				}
 
-				// return only those with rules specified
+				// Return only those with rules specified
 				if ( !validator.objectLength( $( this ).rules() ) ) {
 					return false;
 				}
