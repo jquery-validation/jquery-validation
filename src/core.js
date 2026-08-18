@@ -384,6 +384,8 @@ $.extend( $.validator, {
 			this.pendingRequest = 0;
 			this.pending = {};
 			this.invalid = {};
+			this.nameCount = {};
+			this.keyedElements = {};
 			this.reset();
 
 			var currentForm = this.currentForm,
@@ -454,25 +456,9 @@ $.extend( $.validator, {
 		},
 
 		checkForm: function() {
-			var checkedCache = {},
-				i, elements, element, type, name;
-
 			this.prepareForm();
-			for ( i = 0, elements = ( this.currentElements = this.elements() ); elements[ i ]; i++ ) {
-				element = elements.eq( i );
-				type = element.attr( "type" );
-				if ( type === "checkbox" || type === "radio" ) {
-
-					// Only check the first checkbox/radio input
-					// https://github.com/jquery-validation/jquery-validation/pull/2431#issuecomment-1172835268
-					name = element[ 0 ].name;
-					if ( name in checkedCache ) {
-						continue;
-					}
-					checkedCache[ name ] = true;
-				}
-
-				this.check( element );
+			for ( var i = 0, elements = ( this.currentElements = this.elements() ); elements[ i ]; i++ ) {
+				this.check( elements[ i ] );
 			}
 			return this.valid();
 		},
@@ -483,10 +469,13 @@ $.extend( $.validator, {
 				checkElement = this.validationTargetFor( cleanElement ),
 				v = this,
 				result = true,
-				rs, group;
+				rs, group, key;
 
 			if ( checkElement === undefined ) {
-				delete this.invalid[ cleanElement.name ];
+
+				// Peek at any stamped key instead of calling uniqueName(),
+				// which would claim a key for a merely skipped element
+				delete this.invalid[ $.data( cleanElement, "uniqueName" ) || cleanElement.name ];
 			} else {
 				this.prepareElement( checkElement );
 				this.currentElements = $( checkElement );
@@ -510,10 +499,18 @@ $.extend( $.validator, {
 
 				rs = this.check( checkElement ) !== false;
 				result = result && rs;
+				key = this.uniqueName( checkElement );
 				if ( rs ) {
-					this.invalid[ checkElement.name ] = false;
+					this.invalid[ key ] = false;
 				} else {
-					this.invalid[ checkElement.name ] = true;
+					this.invalid[ key ] = true;
+				}
+
+				// Keep a name-keyed entry so the `element.name in this.invalid`
+				// presence checks in the default event handlers keep working for
+				// same-name elements with generated keys
+				if ( !( checkElement.name in this.invalid ) ) {
+					this.invalid[ checkElement.name ] = false;
 				}
 
 				if ( !this.numberOfInvalids() ) {
@@ -538,15 +535,30 @@ $.extend( $.validator, {
 				// Add items to error list and map
 				$.extend( this.errorMap, errors );
 				this.errorList = $.map( this.errorMap, function( message, name ) {
+
+					// Same-name elements are keyed individually, so resolve the
+					// key through the element registry first; fall back to the
+					// name lookup for keys of elements never seen before or no
+					// longer in the DOM
+					var element = validator.keyedElements[ name ];
+					if ( !element || !validator.inDom( element ) ) {
+						element = validator.findByName( name )[ 0 ];
+					}
+
+					// Drop entries whose element no longer exists; $.map
+					// removes null returns
+					if ( !element ) {
+						return null;
+					}
 					return {
 						message: message,
-						element: validator.findByName( name )[ 0 ]
+						element: element
 					};
 				} );
 
 				// Remove items from success list
 				this.successList = $.grep( this.successList, function( element ) {
-					return !( element.name in errors );
+					return !( validator.uniqueName( element ) in errors );
 				} );
 			}
 			if ( this.settings.showErrors ) {
@@ -589,7 +601,25 @@ $.extend( $.validator, {
 		},
 
 		numberOfInvalids: function() {
-			return this.objectLength( this.invalid );
+			var count = 0,
+				element, name;
+
+			for ( name in this.invalid ) {
+
+				// This check allows counting elements with empty error
+				// message as invalid elements
+				if ( this.invalid[ name ] !== undefined && this.invalid[ name ] !== null && this.invalid[ name ] !== false ) {
+					element = this.keyedElements[ name ];
+					if ( element && !this.inDom( element ) ) {
+
+						// The element was removed from the DOM; drop its stale entry
+						delete this.invalid[ name ];
+					} else {
+						count++;
+					}
+				}
+			}
+			return count;
 		},
 
 		objectLength: function( obj ) {
@@ -756,14 +786,10 @@ $.extend( $.validator, {
 					return false;
 				}
 
-				if ( name in rulesCache ) {
-
-					// Checkbox/radio groups stay first-only; other same-name
-					// fields (including name[]) are all validated
-					if ( this.type === "checkbox" || this.type === "radio" ) {
-						return false;
-					}
-					return true;
+				// Checkbox/radio groups stay first-only; other same-name
+				// fields (including name[]) are all validated
+				if ( name in rulesCache && ( this.type === "checkbox" || this.type === "radio" ) ) {
+					return false;
 				}
 
 				// Return only those with rules specified
@@ -969,6 +995,11 @@ $.extend( $.validator, {
 			}
 
 			var message = this.findDefined(
+
+					// The per-element key wins over the shared name so that
+					// same-name elements can carry their own (e.g. remote)
+					// messages; for unique names both lookups are identical
+					this.customMessage( this.uniqueName( element ), rule.method ),
 					this.customMessage( element.name, rule.method ),
 					this.customDataMessage( element, rule.method ),
 
@@ -996,7 +1027,7 @@ $.extend( $.validator, {
 				method: rule.method
 			} );
 
-			this.errorMap[ element.name ] = message;
+			this.errorMap[ this.uniqueName( element ) ] = message;
 			this.submitted[ element.name ] = message;
 		},
 
@@ -1153,8 +1184,51 @@ $.extend( $.validator, {
 			return string.replace( /([\\!"#$%&'()*+,./:;<=>?@\[\]^`{|}~])/g, "\\$1" );
 		},
 
+		// Returns a stable per-element key used for the invalid map, error
+		// labels of id-less elements, remote messages and ajax ports, so
+		// same-name elements (e.g. "tags[]") are tracked individually.
+		// The first element of each name keeps the plain name as its key for
+		// backwards compatibility; later duplicates get "name-2", "name-3", ...
+		// Checkables keep the plain name: a checkbox/radio group is a single
+		// validation target.
+		uniqueName: function( element ) {
+			var name = element.name,
+				key = $.data( element, "uniqueName" ),
+				owner;
+
+			if ( !name || this.checkable( element ) ) {
+				return name;
+			}
+
+			// Trust a stamped key only while this validator still tracks it;
+			// stale stamps (destroyed validator, cloned element) are re-minted
+			if ( key && this.keyedElements[ key ] === element ) {
+				return key;
+			}
+
+			owner = this.keyedElements[ name ];
+			if ( !owner || owner === element || !this.inDom( owner ) ) {
+
+				// First element seen for this name, or the previous owner has
+				// been removed from the DOM: (re)claim the plain name
+				key = name;
+			} else {
+
+				// Skip generated keys that are already claimed or that match
+				// the name of a real element
+				do {
+					this.nameCount[ name ] = ( this.nameCount[ name ] || 1 ) + 1;
+					key = name + "-" + this.nameCount[ name ];
+				} while ( this.keyedElements[ key ] || this.findByName( key ).length );
+			}
+
+			this.keyedElements[ key ] = element;
+			$.data( element, "uniqueName", key );
+			return key;
+		},
+
 		idOrName: function( element ) {
-			return this.groups[ element.name ] || ( this.checkable( element ) ? element.name : element.id || element.name );
+			return this.groups[ element.name ] || ( this.checkable( element ) ? element.name : element.id || this.uniqueName( element ) );
 		},
 
 		validationTargetFor: function( element ) {
@@ -1170,6 +1244,12 @@ $.extend( $.validator, {
 
 		checkable: function( element ) {
 			return ( /radio|checkbox/i ).test( element.type );
+		},
+
+		// Whether the element is still part of the document, or of the
+		// validated form's own tree when the form itself is detached
+		inDom: function( element ) {
+			return $.contains( element.ownerDocument, element ) || $.contains( this.currentForm, element );
 		},
 
 		findByName: function( name ) {
@@ -1223,14 +1303,15 @@ $.extend( $.validator, {
 		},
 
 		elementAjaxPort: function( element ) {
-			return "validate" + element.name;
+			return "validate" + this.uniqueName( element );
 		},
 
 		startRequest: function( element ) {
-			if ( !this.pending[ element.name ] ) {
+			var key = this.uniqueName( element );
+			if ( !this.pending[ key ] ) {
 				this.pendingRequest++;
 				$( element ).addClass( this.settings.pendingClass );
-				this.pending[ element.name ] = true;
+				this.pending[ key ] = true;
 			}
 		},
 
@@ -1241,7 +1322,7 @@ $.extend( $.validator, {
 			if ( this.pendingRequest < 0 ) {
 				this.pendingRequest = 0;
 			}
-			delete this.pending[ element.name ];
+			delete this.pending[ this.uniqueName( element ) ];
 			$( element ).removeClass( this.settings.pendingClass );
 			if ( valid && this.pendingRequest === 0 && this.formSubmitted && this.form() && this.pendingRequest === 0 ) {
 				$( this.currentForm ).trigger( "submit" );
@@ -1262,9 +1343,10 @@ $.extend( $.validator, {
 		},
 
 		abortRequest: function( element ) {
-			var port;
+			var port,
+				key = this.uniqueName( element );
 
-			if ( this.pending[ element.name ] ) {
+			if ( this.pending[ key ] ) {
 				port = this.elementAjaxPort( element );
 				$.ajaxAbort( port );
 
@@ -1275,7 +1357,7 @@ $.extend( $.validator, {
 					this.pendingRequest = 0;
 				}
 
-				delete this.pending[ element.name ];
+				delete this.pending[ key ];
 				$( element ).removeClass( this.settings.pendingClass );
 			}
 		},
@@ -1699,13 +1781,17 @@ $.extend( $.validator, {
 			method = typeof method === "string" && method || "remote";
 
 			var previous = this.previousValue( element, method ),
+
+				// Key the temporary message stash and the invalid map by the
+				// per-element key so same-name elements don't share them
+				key = this.uniqueName( element ),
 				validator, data, optionDataString;
 
-			if ( !this.settings.messages[ element.name ] ) {
-				this.settings.messages[ element.name ] = {};
+			if ( !this.settings.messages[ key ] ) {
+				this.settings.messages[ key ] = {};
 			}
-			previous.originalMessage = previous.originalMessage || this.settings.messages[ element.name ][ method ];
-			this.settings.messages[ element.name ][ method ] = previous.message;
+			previous.originalMessage = previous.originalMessage || this.settings.messages[ key ][ method ];
+			this.settings.messages[ key ][ method ] = previous.message;
 
 			param = typeof param === "string" && { url: param } || param;
 			optionDataString = $.param( $.extend( { data: value }, param.data ) );
@@ -1729,19 +1815,20 @@ $.extend( $.validator, {
 					var valid = response === true || response === "true",
 						errors, message, submitted;
 
-					validator.settings.messages[ element.name ][ method ] = previous.originalMessage;
+					validator.settings.messages[ key ][ method ] = previous.originalMessage;
 					if ( valid ) {
 						submitted = validator.formSubmitted;
 						validator.toHide = validator.errorsFor( element );
 						validator.formSubmitted = submitted;
 						validator.successList.push( element );
-						validator.invalid[ element.name ] = false;
+						validator.invalid[ key ] = false;
 						validator.showErrors();
 					} else {
 						errors = {};
 						message = response || validator.defaultMessage( element, { method: method, parameters: value } );
-						errors[ element.name ] = previous.message = message;
-						validator.invalid[ element.name ] = true;
+						errors[ key ] = previous.message = message;
+						validator.invalid[ key ] = true;
+						validator.submitted[ element.name ] = message;
 						validator.showErrors( errors );
 					}
 					previous.valid = valid;

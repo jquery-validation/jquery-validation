@@ -540,6 +540,38 @@
 		<input type="radio" name="radio_b" value="1" data-rule-required="true" id="radioB1">
 		<input type="radio" name="radio_b" value="2" id="radioB2">
 	</form>
+	<form id="testFormNameArrayNoIds">
+		<input type="text" name="tag[]" data-rule-required="true">
+		<input type="text" name="tag[]" data-rule-required="true">
+		<input type="text" name="tag[]" data-rule-required="true">
+	</form>
+	<div id="nameArrayErrorContainer" style="display: none"></div>
+	<form id="testFormNameArrayContainer">
+		<input type="text" name="task[]" data-rule-required="true">
+		<input type="text" name="task[]" data-rule-required="true">
+	</form>
+	<form id="testFormNameArrayMixedRules">
+		<input type="text" name="mixed_rules" data-rule-required="true" id="mixedRules1">
+		<input type="text" name="mixed_rules" id="mixedRules2">
+	</form>
+	<form id="testFormNameArrayRemote">
+		<input type="text" name="remote_item[]" id="remoteItem1">
+		<input type="text" name="remote_item[]" id="remoteItem2">
+	</form>
+	<form id="testFormNodeSwap">
+		<input type="text" name="swap_name" data-rule-required="true">
+	</form>
+	<div id="nameArrayErrorContainer2" style="display: none"></div>
+	<form id="testFormNameArrayRemove">
+		<input type="text" name="entry[]" data-rule-required="true">
+		<input type="text" name="entry[]" data-rule-required="true">
+		<input type="text" name="entry[]" data-rule-required="true">
+	</form>
+	<form id="testFormNameArrayCollision">
+		<input type="text" name="opt" data-rule-required="true">
+		<input type="text" name="opt" data-rule-required="true">
+		<input type="text" name="opt-2" data-rule-required="true">
+	</form>
 </div>
 </body>
 </html>
