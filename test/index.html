@@ -519,6 +519,84 @@
 		<input type="text" name="username" required>
 	</form>
 	<input type="text" name="email" form="testForm31" required>
+	<form id="testFormNameArray">
+		<input type="text" name="todo_item[]" data-rule-required="true" id="todoItem1">
+		<input type="text" name="todo_item[]" data-rule-required="true" id="todoItem2">
+		<input type="text" name="todo_item[]" data-rule-required="true" id="todoItem3">
+	</form>
+	<form id="testFormDuplicateName">
+		<input type="text" name="first_name" data-rule-required="true" id="dupFirstName1">
+		<input type="text" name="first_name" data-rule-required="true" id="dupFirstName2">
+	</form>
+	<form id="testFormCheckboxGroups">
+		<input type="checkbox" name="group_a" value="1" data-rule-required="true" id="groupA1">
+		<input type="checkbox" name="group_a" value="2" id="groupA2">
+		<input type="checkbox" name="group_b" value="1" data-rule-required="true" id="groupB1">
+		<input type="checkbox" name="group_b" value="2" id="groupB2">
+	</form>
+	<form id="testFormRadioGroups">
+		<input type="radio" name="radio_a" value="1" data-rule-required="true" id="radioA1">
+		<input type="radio" name="radio_a" value="2" id="radioA2">
+		<input type="radio" name="radio_b" value="1" data-rule-required="true" id="radioB1">
+		<input type="radio" name="radio_b" value="2" id="radioB2">
+	</form>
+	<form id="testFormNameArrayNoIds">
+		<input type="text" name="tag[]" data-rule-required="true">
+		<input type="text" name="tag[]" data-rule-required="true">
+		<input type="text" name="tag[]" data-rule-required="true">
+	</form>
+	<div id="nameArrayErrorContainer" style="display: none"></div>
+	<form id="testFormNameArrayContainer">
+		<input type="text" name="task[]" data-rule-required="true">
+		<input type="text" name="task[]" data-rule-required="true">
+	</form>
+	<form id="testFormNameArrayMixedRules">
+		<input type="text" name="mixed_rules" data-rule-required="true" id="mixedRules1">
+		<input type="text" name="mixed_rules" id="mixedRules2">
+	</form>
+	<form id="testFormNameArrayRemote">
+		<input type="text" name="remote_item[]" id="remoteItem1">
+		<input type="text" name="remote_item[]" id="remoteItem2">
+	</form>
+	<form id="testFormNodeSwap">
+		<input type="text" name="swap_name" data-rule-required="true">
+	</form>
+	<div id="nameArrayErrorContainer2" style="display: none"></div>
+	<form id="testFormNameArrayRemove">
+		<input type="text" name="entry[]" data-rule-required="true">
+		<input type="text" name="entry[]" data-rule-required="true">
+		<input type="text" name="entry[]" data-rule-required="true">
+	</form>
+	<form id="testFormNameArrayCollision">
+		<input type="text" name="opt" data-rule-required="true">
+		<input type="text" name="opt" data-rule-required="true">
+		<input type="text" name="opt-2" data-rule-required="true">
+	</form>
+	<form id="testFormNameArraySkip">
+		<input type="text" name="skip[]" data-rule-required="true">
+		<input type="text" name="skip[]" data-rule-required="true" style="display: none">
+	</form>
+	<form id="testFormProtoName">
+		<input type="text" name="__proto__" data-rule-required="true">
+		<input type="text" name="__proto__" data-rule-required="true">
+		<input type="text" name="__proto__" data-rule-required="true">
+		<input type="text" name="constructor" data-rule-required="true">
+	</form>
+	<div id="nameArrayWrap">
+		<form id="testFormNameArrayFormAttr"></form>
+		<input type="text" name="wrapped_x" form="testFormNameArrayFormAttr" data-rule-required="true">
+	</div>
+	<form id="testFormNameArrayShadow">
+		<input type="text" name="shadow_x" data-rule-required="true">
+		<input type="checkbox" name="shadow_x" value="1" data-rule-required="true">
+	</form>
+	<form id="testFormNameArrayHiddenFirst">
+		<input type="hidden" name="hidden_first">
+		<input type="text" name="hidden_first" data-rule-required="true">
+	</form>
+	<form id="testFormProtoCheckbox">
+		<input type="checkbox" name="__proto__" value="1" data-rule-required="true">
+	</form>
 </div>
 </body>
 </html>

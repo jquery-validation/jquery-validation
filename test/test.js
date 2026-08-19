@@ -99,6 +99,15 @@ $.mockjax( {
     responseTime: 1
 } );
 
+$.mockjax( {
+	url: "name-array.php",
+	response: function( settings ) {
+		this.responseText = /good/.test( settings.data[ "remote_item[]" ] ) ? "true" : "false";
+	},
+	responseStatus: 200,
+	responseTime: 1
+} );
+
 // Asserts that there is a visible error with the given text for the specified element
 QUnit.assert.hasError = function( element, text, message ) {
 	var errors = $( element ).closest( "form" ).validate().errorsFor( element[ 0 ] ),
@@ -397,6 +406,406 @@ QUnit.test( "Validate checkboxes outside form with form attribute", function( as
 	var result = v.form();
 	assert.ok( !result, "Form validation should fail when both checkboxes are unchecked" );
 	assert.equal( v.numberOfInvalids(), 2, "Should have 2 invalid elements" );
+} );
+
+QUnit.test( "elements() includes every name[] input with rules", function( assert ) {
+	assert.expect( 1 );
+	var v = $( "#testFormNameArray" ).validate();
+	assert.equal( v.elements().length, 3, "All name[] inputs should be validated" );
+} );
+
+QUnit.test( "form() validates every name[] input, not only the first", function( assert ) {
+	assert.expect( 6 );
+	var v = $( "#testFormNameArray" ).validate();
+
+	assert.ok( !v.form(), "Invalid when all name[] inputs are empty" );
+	assert.ok( $( "#todoItem1" ).hasClass( "error" ), "First name[] input is marked invalid" );
+	assert.ok( $( "#todoItem2" ).hasClass( "error" ), "Second name[] input is marked invalid" );
+	assert.ok( $( "#todoItem3" ).hasClass( "error" ), "Third name[] input is marked invalid" );
+
+	$( "#todoItem1" ).val( "one" );
+	assert.ok( !v.form(), "Still invalid when later name[] inputs are empty" );
+
+	$( "#todoItem2" ).val( "two" );
+	$( "#todoItem3" ).val( "three" );
+	assert.ok( v.form(), "Valid when every name[] input has a value" );
+} );
+
+QUnit.test( "form() validates duplicate names without [] the same way", function( assert ) {
+	assert.expect( 4 );
+	var v = $( "#testFormDuplicateName" ).validate();
+
+	assert.ok( !v.form(), "Invalid when both same-name inputs are empty" );
+	assert.ok( $( "#dupFirstName2" ).hasClass( "error" ), "Second same-name input is marked invalid" );
+
+	$( "#dupFirstName1" ).val( "Ada" );
+	assert.ok( !v.form(), "Still invalid when the second same-name input is empty" );
+
+	$( "#dupFirstName2" ).val( "Lovelace" );
+	assert.ok( v.form(), "Valid when every same-name input has a value" );
+} );
+
+QUnit.test( "form() still validates the first checkbox of each name", function( assert ) {
+	assert.expect( 4 );
+	var v = $( "#testFormCheckboxGroups" ).validate();
+
+	assert.ok( !v.form(), "Invalid when both checkbox groups are unchecked" );
+	assert.equal( v.numberOfInvalids(), 2, "Each checkbox name is validated once" );
+
+	$( "#groupA1" ).prop( "checked", true );
+	assert.ok( !v.form(), "Still invalid when the second checkbox group is unchecked" );
+
+	$( "#groupB1" ).prop( "checked", true );
+	assert.ok( v.form(), "Valid when each checkbox group has a checked input" );
+} );
+
+QUnit.test( "form() still validates the first radio of each name", function( assert ) {
+	assert.expect( 4 );
+	var v = $( "#testFormRadioGroups" ).validate();
+
+	assert.ok( !v.form(), "Invalid when both radio groups are unchecked" );
+	assert.equal( v.numberOfInvalids(), 2, "Each radio name is validated once" );
+
+	$( "#radioA1" ).prop( "checked", true );
+	assert.ok( !v.form(), "Still invalid when the second radio group is unchecked" );
+
+	$( "#radioB1" ).prop( "checked", true );
+	assert.ok( v.form(), "Valid when each radio group has a checked input" );
+} );
+
+QUnit.test( "form() creates one error label per id-less name[] input", function( assert ) {
+	assert.expect( 8 );
+	var form = $( "#testFormNameArrayNoIds" ),
+		inputs = form.find( "input" ),
+		v = form.validate(),
+		labelIds = {},
+		labelIdCount = 0,
+		labels, i;
+
+	assert.ok( !v.form(), "Invalid when all name[] inputs are empty" );
+	labels = form.find( "label.error" );
+	assert.equal( labels.length, 3, "Each id-less name[] input gets its own error label" );
+	for ( i = 0; i < labels.length; i++ ) {
+		assert.strictEqual( labels.eq( i ).prev()[ 0 ], inputs[ i ], "Error label " + i + " is placed after its own input" );
+		if ( labels[ i ].id && !labelIds[ labels[ i ].id ] ) {
+			labelIds[ labels[ i ].id ] = true;
+			labelIdCount++;
+		}
+	}
+	assert.equal( labelIdCount, 3, "Error labels have distinct non-empty ids" );
+
+	inputs.eq( 0 ).val( "done" );
+	v.element( inputs[ 0 ] );
+	assert.ok( labels.eq( 0 ).is( ":hidden" ), "Fixed input's error label is hidden" );
+	assert.equal( form.find( "label.error:visible" ).length, 2, "Other name[] inputs keep their error labels" );
+} );
+
+QUnit.test( "fixing one name[] input keeps the error container visible", function( assert ) {
+	assert.expect( 5 );
+	var form = $( "#testFormNameArrayContainer" ),
+		inputs = form.find( "input" ),
+		container = $( "#nameArrayErrorContainer" ),
+		v = form.validate( { errorContainer: container } );
+
+	assert.ok( !v.form(), "Invalid when both name[] inputs are empty" );
+	assert.ok( container.is( ":visible" ), "Error container shown for invalid name[] inputs" );
+	assert.equal( v.numberOfInvalids(), 2, "Every invalid name[] input is counted" );
+
+	inputs.eq( 0 ).val( "done" );
+	v.element( inputs[ 0 ] );
+	assert.ok( container.is( ":visible" ), "Error container stays visible while another name[] input is invalid" );
+
+	inputs.eq( 1 ).val( "done" );
+	v.element( inputs[ 1 ] );
+	assert.ok( !container.is( ":visible" ), "Error container hidden once every name[] input is valid" );
+} );
+
+QUnit.test( "numberOfInvalids() counts every invalid name[] input", function( assert ) {
+	assert.expect( 2 );
+	var v = $( "#testFormNameArray" ).validate();
+
+	v.form();
+	assert.equal( v.numberOfInvalids(), 3, "All empty name[] inputs are counted" );
+
+	$( "#todoItem1" ).val( "one" );
+	v.form();
+	assert.equal( v.numberOfInvalids(), 2, "Fixed name[] input is no longer counted" );
+} );
+
+QUnit.test( "elements() excludes rule-less inputs sharing a validated name", function( assert ) {
+	assert.expect( 3 );
+	var v = $( "#testFormNameArrayMixedRules" ).validate();
+
+	assert.equal( v.elements().length, 1, "Only the input with rules is validated" );
+	v.form();
+	assert.ok( !$( "#mixedRules2" ).hasClass( "valid" ), "Rule-less input is not marked valid" );
+	assert.ok( !$( "#mixedRules2" ).hasClass( "error" ), "Rule-less input is not marked invalid" );
+} );
+
+QUnit.test( "remote validates every name[] input without aborting siblings", function( assert ) {
+	assert.expect( 4 );
+	var v = $( "#testFormNameArrayRemote" ).validate( {
+			rules: {
+				"remote_item[]": {
+					required: true,
+					remote: "name-array.php"
+				}
+			}
+		} ),
+		done = assert.async();
+
+	$( document ).ajaxStop( function() {
+		$( document ).unbind( "ajaxStop" );
+		assert.equal( v.size(), 1, "Only the invalid name[] input has an error" );
+		assert.strictEqual( v.errorList[ 0 ].element, $( "#remoteItem2" )[ 0 ], "The rejected name[] input owns the error" );
+		assert.ok( $( "#remoteItem1" ).hasClass( "valid" ), "Accepted name[] input was validated by its own request" );
+		done();
+	} );
+
+	assert.notEqual(
+		v.elementAjaxPort( $( "#remoteItem1" )[ 0 ] ),
+		v.elementAjaxPort( $( "#remoteItem2" )[ 0 ] ),
+		"Each name[] input gets its own ajax port"
+	);
+	$( "#remoteItem1" ).val( "good-one" );
+	$( "#remoteItem2" ).val( "bad-one" );
+	v.form();
+} );
+
+QUnit.test( "replacing a validated input reuses its plain-name error label", function( assert ) {
+	assert.expect( 4 );
+	var form = $( "#testFormNodeSwap" ),
+		v = form.validate(),
+		replacement;
+
+	assert.ok( !v.form(), "Invalid while the input is empty" );
+	assert.equal( form.find( "label.error" ).attr( "id" ), "swap_name-error", "Error label uses the plain name" );
+
+	form.find( "input" ).remove();
+	replacement = $( "<input type=\"text\" name=\"swap_name\" data-rule-required=\"true\">" ).prependTo( form );
+	v.element( replacement );
+	assert.equal( form.find( "label.error:visible" ).attr( "id" ), "swap_name-error", "Replacement input reclaims the plain-name label" );
+
+	replacement.val( "done" );
+	v.element( replacement );
+	assert.equal( v.numberOfInvalids(), 0, "No invalids once the replacement input is valid" );
+} );
+
+QUnit.test( "removing an invalid name[] input releases its invalid state", function( assert ) {
+	assert.expect( 3 );
+	var form = $( "#testFormNameArrayRemove" ),
+		inputs = form.find( "input" ),
+		container = $( "#nameArrayErrorContainer2" ),
+		v = form.validate( { errorContainer: container } );
+
+	assert.ok( !v.form(), "Invalid when all name[] inputs are empty" );
+
+	inputs.eq( 0 ).remove();
+	inputs.eq( 1 ).val( "done" );
+	v.element( inputs[ 1 ] );
+	inputs.eq( 2 ).val( "done" );
+	v.element( inputs[ 2 ] );
+
+	assert.equal( v.numberOfInvalids(), 0, "Removed name[] input no longer counts as invalid" );
+	assert.ok( !container.is( ":visible" ), "Error container hidden once the remaining inputs are valid" );
+} );
+
+QUnit.test( "destroy() and re-validate keeps name[] keys distinct", function( assert ) {
+	assert.expect( 3 );
+	var form = $( "#testFormNameArrayNoIds" ),
+		v = form.validate(),
+		labelIds = {},
+		labelIdCount = 0,
+		labels, i;
+
+	v.form();
+	v.destroy();
+
+	form.append( "<input type=\"text\" name=\"tag[]\" data-rule-required=\"true\">" );
+	v = form.validate();
+	assert.ok( !v.form(), "Invalid when all name[] inputs are empty" );
+	labels = form.find( "label.error:visible" );
+	assert.equal( labels.length, 4, "Every name[] input gets its own error label after re-validation" );
+	for ( i = 0; i < labels.length; i++ ) {
+		if ( labels[ i ].id && !labelIds[ labels[ i ].id ] ) {
+			labelIds[ labels[ i ].id ] = true;
+			labelIdCount++;
+		}
+	}
+	assert.equal( labelIdCount, 4, "Error labels have distinct ids after destroy() and re-validate" );
+} );
+
+QUnit.test( "element() on a later name[] input before any form() keeps labels per-element", function( assert ) {
+	assert.expect( 8 );
+	var form = $( "#testFormNameArrayNoIds" ),
+		inputs = form.find( "input" ),
+		v = form.validate(),
+		labels, i;
+
+	assert.strictEqual( v.element( inputs[ 1 ] ), false, "Second name[] input is invalid" );
+	labels = form.find( "label.error" );
+	assert.equal( labels.length, 1, "Only the validated input has an error label" );
+	assert.strictEqual( labels.prev()[ 0 ], inputs[ 1 ], "Error label sits after the validated input" );
+
+	assert.ok( !v.form(), "Form is still invalid" );
+	labels = form.find( "label.error" );
+	assert.equal( labels.length, 3, "Each name[] input has its own error label" );
+	for ( i = 0; i < labels.length; i++ ) {
+		assert.strictEqual( labels.eq( i ).prev()[ 0 ], inputs[ i ], "Error label " + i + " is placed after its own input" );
+	}
+} );
+
+QUnit.test( "showErrors() with a plain name addresses the first name[] input", function( assert ) {
+	assert.expect( 2 );
+	var form = $( "#testFormNameArrayNoIds" ),
+		inputs = form.find( "input" ),
+		v = form.validate();
+
+	v.form();
+	v.showErrors( { "tag[]": "custom message" } );
+	assert.equal( v.errorsFor( inputs[ 0 ] ).text(), "custom message", "Message lands on the first name[] input" );
+	assert.equal( v.errorsFor( inputs[ 1 ] ).text(), "This field is required.", "Second name[] input keeps its own message" );
+} );
+
+QUnit.test( "remote failure after a name[] sibling is removed", function( assert ) {
+	assert.expect( 3 );
+	var v = $( "#testFormNameArrayRemote" ).validate( {
+			rules: {
+				"remote_item[]": {
+					required: true,
+					remote: "name-array.php"
+				}
+			}
+		} ),
+		done = assert.async();
+
+	$( document ).ajaxStop( function() {
+		$( document ).unbind( "ajaxStop" );
+		assert.equal( v.errorList.length, 1, "Only the remote-rejected input has an error" );
+		assert.strictEqual( v.errorList[ 0 ].element, $( "#remoteItem1" )[ 0 ], "Error belongs to the surviving input" );
+		assert.equal( v.pendingRequest, 0, "No pending requests remain" );
+		done();
+	} );
+
+	$( "#remoteItem1" ).val( "bad-one" );
+	v.form();
+	$( "#remoteItem2" ).remove();
+} );
+
+QUnit.test( "generated name[] keys skip real field names", function( assert ) {
+	assert.expect( 3 );
+	var form = $( "#testFormNameArrayCollision" ),
+		v = form.validate(),
+		labelIds = {},
+		labelIdCount = 0,
+		labels, i;
+
+	assert.ok( !v.form(), "Invalid when all inputs are empty" );
+	assert.equal( v.numberOfInvalids(), 3, "Duplicate 'opt' inputs and the real 'opt-2' input are all counted" );
+	labels = form.find( "label.error" );
+	for ( i = 0; i < labels.length; i++ ) {
+		if ( labels[ i ].id && !labelIds[ labels[ i ].id ] ) {
+			labelIds[ labels[ i ].id ] = true;
+			labelIdCount++;
+		}
+	}
+	assert.equal( labelIdCount, 3, "Every input keeps its own error label" );
+} );
+
+QUnit.test( "validating a detached form still counts name[] inputs", function( assert ) {
+	assert.expect( 2 );
+	var form = $( "#testFormNameArrayNoIds" ),
+		v = form.validate( { ignore: [] } );
+
+	form.detach();
+	v.form();
+	assert.equal( v.numberOfInvalids(), 3, "All name[] inputs of the detached form are counted" );
+	assert.equal( form.find( "label.error" ).length, 3, "Each name[] input gets its own error label" );
+} );
+
+QUnit.test( "element() on an ignored name[] sibling keeps the visible sibling invalid", function( assert ) {
+	assert.expect( 3 );
+	var form = $( "#testFormNameArraySkip" ),
+		inputs = form.find( "input" ),
+		v = form.validate();
+
+	assert.ok( !v.form(), "Visible name[] input is invalid" );
+	assert.equal( v.numberOfInvalids(), 1, "One invalid input" );
+
+	v.element( inputs[ 1 ] );
+	assert.equal( v.numberOfInvalids(), 1, "Skipping the hidden sibling leaves the visible input's state alone" );
+} );
+
+QUnit.test( "inputs named __proto__ do not corrupt tracking", function( assert ) {
+	assert.expect( 4 );
+	var form = $( "#testFormProtoName" ),
+		v = form.validate();
+
+	assert.ok( !v.form(), "Invalid when all inputs are empty" );
+	assert.equal( v.errorList.length, 4, "Every input gets an error entry" );
+	assert.equal( form.find( "label.error" ).length, 4, "Every input gets its own error label" );
+
+	// A plain "__proto__" key cannot land in the invalid map (silent no-op
+	// on plain objects, same as before); the generated keys are tracked
+	assert.equal( v.numberOfInvalids(), 3, "Suffixed and regular keys are counted" );
+} );
+
+QUnit.test( "a required checkbox named __proto__ is validated", function( assert ) {
+	assert.expect( 2 );
+	var v = $( "#testFormProtoCheckbox" ).validate();
+
+	assert.equal( v.elements().length, 1, "Checkbox is selected for validation" );
+	assert.ok( !v.form(), "Invalid while unchecked" );
+} );
+
+QUnit.test( "removed text input does not shadow a same-name checkbox group", function( assert ) {
+	assert.expect( 4 );
+	var form = $( "#testFormNameArrayShadow" ),
+		v = form.validate();
+
+	assert.ok( !v.form(), "Invalid while both fields are empty" );
+
+	form.find( "input[type='text']" ).remove();
+	assert.ok( !v.form(), "Checkbox group is still invalid after the text sibling is removed" );
+	assert.equal( v.numberOfInvalids(), 1, "Checkbox group is counted" );
+
+	v.showErrors( { "shadow_x": "check it" } );
+	assert.strictEqual( v.errorList[ 0 ].element, form.find( "input[type='checkbox']" )[ 0 ], "Error resolves to the live checkbox" );
+} );
+
+QUnit.test( "hidden same-name input does not steal the plain error label id", function( assert ) {
+	assert.expect( 2 );
+	var form = $( "#testFormNameArrayHiddenFirst" ),
+		v = form.validate();
+
+	assert.ok( !v.form(), "Visible input is invalid" );
+	assert.equal( form.find( "label.error" ).attr( "id" ), "hidden_first-error", "Error label keeps the plain name id" );
+} );
+
+QUnit.test( "findLastActive() tracks the focused name[] input", function( assert ) {
+	assert.expect( 2 );
+	var form = $( "#testFormNameArrayNoIds" ),
+		inputs = form.find( "input" ),
+		v = form.validate();
+
+	v.form();
+	v.lastActive = inputs[ 2 ];
+	assert.strictEqual( v.findLastActive(), inputs[ 2 ], "Last active invalid name[] input is found" );
+
+	inputs.eq( 2 ).val( "done" );
+	v.form();
+	assert.ok( !v.findLastActive(), "No match once the last active input is valid" );
+} );
+
+QUnit.test( "detaching a wrapper keeps form-attribute inputs counted", function( assert ) {
+	assert.expect( 2 );
+	var v = $( "#testFormNameArrayFormAttr" ).validate();
+
+	v.form();
+	assert.equal( v.numberOfInvalids(), 1, "Form-attribute input is invalid" );
+
+	$( "#nameArrayWrap" ).detach();
+	assert.equal( v.numberOfInvalids(), 1, "Still counted while detached together with its form" );
 } );
 
 QUnit.test( "addMethod", function( assert ) {
