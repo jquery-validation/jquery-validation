@@ -572,6 +572,31 @@
 		<input type="text" name="opt" data-rule-required="true">
 		<input type="text" name="opt-2" data-rule-required="true">
 	</form>
+	<form id="testFormNameArraySkip">
+		<input type="text" name="skip[]" data-rule-required="true">
+		<input type="text" name="skip[]" data-rule-required="true" style="display: none">
+	</form>
+	<form id="testFormProtoName">
+		<input type="text" name="__proto__" data-rule-required="true">
+		<input type="text" name="__proto__" data-rule-required="true">
+		<input type="text" name="__proto__" data-rule-required="true">
+		<input type="text" name="constructor" data-rule-required="true">
+	</form>
+	<div id="nameArrayWrap">
+		<form id="testFormNameArrayFormAttr"></form>
+		<input type="text" name="wrapped_x" form="testFormNameArrayFormAttr" data-rule-required="true">
+	</div>
+	<form id="testFormNameArrayShadow">
+		<input type="text" name="shadow_x" data-rule-required="true">
+		<input type="checkbox" name="shadow_x" value="1" data-rule-required="true">
+	</form>
+	<form id="testFormNameArrayHiddenFirst">
+		<input type="hidden" name="hidden_first">
+		<input type="text" name="hidden_first" data-rule-required="true">
+	</form>
+	<form id="testFormProtoCheckbox">
+		<input type="checkbox" name="__proto__" value="1" data-rule-required="true">
+	</form>
 </div>
 </body>
 </html>

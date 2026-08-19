@@ -474,8 +474,17 @@ $.extend( $.validator, {
 			if ( checkElement === undefined ) {
 
 				// Peek at any stamped key instead of calling uniqueName(),
-				// which would claim a key for a merely skipped element
-				delete this.invalid[ $.data( cleanElement, "uniqueName" ) || cleanElement.name ];
+				// which would claim a key for a merely skipped element; a
+				// non-checkable that is unstamped, or whose key has since
+				// been reassigned, has no entry of its own to delete
+				if ( this.checkable( cleanElement ) ) {
+					delete this.invalid[ cleanElement.name ];
+				} else {
+					key = $.data( cleanElement, "uniqueName" );
+					if ( key && this.keyedElements[ "#" + key ] === cleanElement ) {
+						delete this.invalid[ key ];
+					}
+				}
 			} else {
 				this.prepareElement( checkElement );
 				this.currentElements = $( checkElement );
@@ -536,19 +545,25 @@ $.extend( $.validator, {
 				$.extend( this.errorMap, errors );
 				this.errorList = $.map( this.errorMap, function( message, name ) {
 
-					// Same-name elements are keyed individually, so resolve the
-					// key through the element registry first; fall back to the
-					// name lookup for keys of elements never seen before or no
-					// longer in the DOM
-					var element = validator.keyedElements[ name ];
-					if ( !element || !validator.inDom( element ) ) {
-						element = validator.findByName( name )[ 0 ];
-					}
+					// Same-name elements are keyed individually, so resolve
+					// the key through the element registry first
+					var element = validator.keyedElements[ "#" + name ];
+					if ( element && !validator.inDom( element ) ) {
 
-					// Drop entries whose element no longer exists; $.map
-					// removes null returns
-					if ( !element ) {
-						return null;
+						// The key's element left the DOM: freshly reported
+						// errors go to the first element of that name (e.g. a
+						// checkable group shadowed by a removed text sibling);
+						// stale entries are dropped unless a same-name element
+						// owns the key. $.map removes null returns
+						element = validator.findByName( name )[ 0 ];
+						if ( !element || ( !( name in errors ) && validator.uniqueName( element ) !== name ) ) {
+							return null;
+						}
+					} else if ( !element ) {
+
+						// Unminted keys (checkables, user-provided names) keep
+						// the historical name lookup
+						element = validator.findByName( name )[ 0 ];
 					}
 					return {
 						message: message,
@@ -609,11 +624,18 @@ $.extend( $.validator, {
 				// This check allows counting elements with empty error
 				// message as invalid elements
 				if ( this.invalid[ name ] !== undefined && this.invalid[ name ] !== null && this.invalid[ name ] !== false ) {
-					element = this.keyedElements[ name ];
+					element = this.keyedElements[ "#" + name ];
 					if ( element && !this.inDom( element ) ) {
 
-						// The element was removed from the DOM; drop its stale entry
-						delete this.invalid[ name ];
+						// The key's element left the DOM: the entry still
+						// counts if a live same-name element owns the key —
+						// e.g. a checkable group shadowed by a removed text
+						// sibling. The entry itself is kept in case the
+						// element returns; form() rebuilds the map anyway
+						element = this.findByName( name )[ 0 ];
+						if ( element && this.uniqueName( element ) === name ) {
+							count++;
+						}
 					} else {
 						count++;
 					}
@@ -737,9 +759,14 @@ $.extend( $.validator, {
 		},
 
 		findLastActive: function() {
-			var lastActive = this.lastActive;
+			var v = this,
+				lastActive = this.lastActive;
+
+			// Match by element so same-name fields stay distinct; checkables
+			// match by name, as the whole group shares one errorList entry
 			return lastActive && $.grep( this.errorList, function( n ) {
-				return n.element.name === lastActive.name;
+				return n.element === lastActive ||
+					( v.checkable( lastActive ) && n.element.name === lastActive.name );
 			} ).length === 1 && lastActive;
 		},
 
@@ -787,8 +814,10 @@ $.extend( $.validator, {
 				}
 
 				// Checkbox/radio groups stay first-only; other same-name
-				// fields (including name[]) are all validated
-				if ( name in rulesCache && ( this.type === "checkbox" || this.type === "radio" ) ) {
+				// fields (including name[]) are all validated. The cache
+				// prefixes its keys so names like "__proto__" don't match
+				// inherited Object.prototype members
+				if ( rulesCache[ "#" + name ] && validator.checkable( this ) ) {
 					return false;
 				}
 
@@ -797,7 +826,7 @@ $.extend( $.validator, {
 					return false;
 				}
 
-				rulesCache[ name ] = true;
+				rulesCache[ "#" + name ] = true;
 				return true;
 			} );
 		},
@@ -1187,48 +1216,58 @@ $.extend( $.validator, {
 		// Returns a stable per-element key used for the invalid map, error
 		// labels of id-less elements, remote messages and ajax ports, so
 		// same-name elements (e.g. "tags[]") are tracked individually.
-		// The first element of each name keeps the plain name as its key for
-		// backwards compatibility; later duplicates get "name-2", "name-3", ...
-		// Checkables keep the plain name: a checkbox/radio group is a single
-		// validation target.
+		// The first element of each name in the DOM keeps the plain name as
+		// its key for backwards compatibility; later duplicates get "name-2",
+		// "name-3", ... Checkables keep the plain name: a checkbox/radio
+		// group is a single validation target.
 		uniqueName: function( element ) {
 			var name = element.name,
 				key = $.data( element, "uniqueName" ),
-				owner;
+				owner, first;
 
 			if ( !name || this.checkable( element ) ) {
 				return name;
 			}
 
 			// Trust a stamped key only while this validator still tracks it;
-			// stale stamps (destroyed validator, cloned element) are re-minted
-			if ( key && this.keyedElements[ key ] === element ) {
+			// stale stamps (destroyed validator, cloned element) are re-minted.
+			// The registry and counter maps prefix their keys so that input
+			// names like "__proto__" cannot touch Object.prototype
+			if ( key && this.keyedElements[ "#" + key ] === element ) {
 				return key;
 			}
 
-			owner = this.keyedElements[ name ];
-			if ( !owner || owner === element || !this.inDom( owner ) ) {
+			owner = this.keyedElements[ "#" + name ];
+			first = this.findByName( name ).not( this.settings.ignore )[ 0 ];
+			if ( ( !owner || owner === element || owner.name !== name || !this.inDom( owner ) ) &&
+					( !first || first === element ) ) {
 
-				// First element seen for this name, or the previous owner has
-				// been removed from the DOM: (re)claim the plain name
+				// The plain name goes to the first element of its name in the
+				// DOM, reclaiming it from an owner that has been removed from
+				// the DOM or renamed
 				key = name;
 			} else {
 
 				// Skip generated keys that are already claimed or that match
 				// the name of a real element
 				do {
-					this.nameCount[ name ] = ( this.nameCount[ name ] || 1 ) + 1;
-					key = name + "-" + this.nameCount[ name ];
-				} while ( this.keyedElements[ key ] || this.findByName( key ).length );
+					this.nameCount[ "#" + name ] = ( this.nameCount[ "#" + name ] || 1 ) + 1;
+					key = name + "-" + this.nameCount[ "#" + name ];
+				} while ( this.keyedElements[ "#" + key ] || this.findByName( key ).length );
 			}
 
-			this.keyedElements[ key ] = element;
+			this.keyedElements[ "#" + key ] = element;
 			$.data( element, "uniqueName", key );
 			return key;
 		},
 
 		idOrName: function( element ) {
-			return this.groups[ element.name ] || ( this.checkable( element ) ? element.name : element.id || this.uniqueName( element ) );
+			var group = this.groups[ element.name ];
+
+			// Group names are always strings; anything else is an inherited
+			// Object.prototype member for names like "__proto__"
+			return ( typeof group === "string" && group ) ||
+				( this.checkable( element ) ? element.name : element.id || this.uniqueName( element ) );
 		},
 
 		validationTargetFor: function( element ) {
@@ -1247,9 +1286,19 @@ $.extend( $.validator, {
 		},
 
 		// Whether the element is still part of the document, or of the
-		// validated form's own tree when the form itself is detached
+		// tree the validated form lives in when the form itself is detached
+		// (which also covers detached form-attribute elements)
 		inDom: function( element ) {
-			return $.contains( element.ownerDocument, element ) || $.contains( this.currentForm, element );
+			var root = this.currentForm;
+
+			if ( $.contains( element.ownerDocument, element ) ) {
+				return true;
+			}
+
+			while ( root.parentNode ) {
+				root = root.parentNode;
+			}
+			return root === element || $.contains( root, element );
 		},
 
 		findByName: function( name ) {
@@ -1375,6 +1424,8 @@ $.extend( $.validator, {
 		// Cleans up all forms and elements, removes validator-specific events
 		destroy: function() {
 			this.resetForm();
+			this.keyedElements = {};
+			this.nameCount = {};
 
 			$( this.currentForm )
 				.off( ".validate" )

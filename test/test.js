@@ -723,6 +723,91 @@ QUnit.test( "validating a detached form still counts name[] inputs", function( a
 	assert.equal( form.find( "label.error" ).length, 3, "Each name[] input gets its own error label" );
 } );
 
+QUnit.test( "element() on an ignored name[] sibling keeps the visible sibling invalid", function( assert ) {
+	assert.expect( 3 );
+	var form = $( "#testFormNameArraySkip" ),
+		inputs = form.find( "input" ),
+		v = form.validate();
+
+	assert.ok( !v.form(), "Visible name[] input is invalid" );
+	assert.equal( v.numberOfInvalids(), 1, "One invalid input" );
+
+	v.element( inputs[ 1 ] );
+	assert.equal( v.numberOfInvalids(), 1, "Skipping the hidden sibling leaves the visible input's state alone" );
+} );
+
+QUnit.test( "inputs named __proto__ do not corrupt tracking", function( assert ) {
+	assert.expect( 4 );
+	var form = $( "#testFormProtoName" ),
+		v = form.validate();
+
+	assert.ok( !v.form(), "Invalid when all inputs are empty" );
+	assert.equal( v.errorList.length, 4, "Every input gets an error entry" );
+	assert.equal( form.find( "label.error" ).length, 4, "Every input gets its own error label" );
+
+	// A plain "__proto__" key cannot land in the invalid map (silent no-op
+	// on plain objects, same as before); the generated keys are tracked
+	assert.equal( v.numberOfInvalids(), 3, "Suffixed and regular keys are counted" );
+} );
+
+QUnit.test( "a required checkbox named __proto__ is validated", function( assert ) {
+	assert.expect( 2 );
+	var v = $( "#testFormProtoCheckbox" ).validate();
+
+	assert.equal( v.elements().length, 1, "Checkbox is selected for validation" );
+	assert.ok( !v.form(), "Invalid while unchecked" );
+} );
+
+QUnit.test( "removed text input does not shadow a same-name checkbox group", function( assert ) {
+	assert.expect( 4 );
+	var form = $( "#testFormNameArrayShadow" ),
+		v = form.validate();
+
+	assert.ok( !v.form(), "Invalid while both fields are empty" );
+
+	form.find( "input[type='text']" ).remove();
+	assert.ok( !v.form(), "Checkbox group is still invalid after the text sibling is removed" );
+	assert.equal( v.numberOfInvalids(), 1, "Checkbox group is counted" );
+
+	v.showErrors( { "shadow_x": "check it" } );
+	assert.strictEqual( v.errorList[ 0 ].element, form.find( "input[type='checkbox']" )[ 0 ], "Error resolves to the live checkbox" );
+} );
+
+QUnit.test( "hidden same-name input does not steal the plain error label id", function( assert ) {
+	assert.expect( 2 );
+	var form = $( "#testFormNameArrayHiddenFirst" ),
+		v = form.validate();
+
+	assert.ok( !v.form(), "Visible input is invalid" );
+	assert.equal( form.find( "label.error" ).attr( "id" ), "hidden_first-error", "Error label keeps the plain name id" );
+} );
+
+QUnit.test( "findLastActive() tracks the focused name[] input", function( assert ) {
+	assert.expect( 2 );
+	var form = $( "#testFormNameArrayNoIds" ),
+		inputs = form.find( "input" ),
+		v = form.validate();
+
+	v.form();
+	v.lastActive = inputs[ 2 ];
+	assert.strictEqual( v.findLastActive(), inputs[ 2 ], "Last active invalid name[] input is found" );
+
+	inputs.eq( 2 ).val( "done" );
+	v.form();
+	assert.ok( !v.findLastActive(), "No match once the last active input is valid" );
+} );
+
+QUnit.test( "detaching a wrapper keeps form-attribute inputs counted", function( assert ) {
+	assert.expect( 2 );
+	var v = $( "#testFormNameArrayFormAttr" ).validate();
+
+	v.form();
+	assert.equal( v.numberOfInvalids(), 1, "Form-attribute input is invalid" );
+
+	$( "#nameArrayWrap" ).detach();
+	assert.equal( v.numberOfInvalids(), 1, "Still counted while detached together with its form" );
+} );
+
 QUnit.test( "addMethod", function( assert ) {
 	assert.expect( 3 );
 	$.validator.addMethod( "hi", function( value ) {
