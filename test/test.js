@@ -808,6 +808,23 @@ QUnit.test( "detaching a wrapper keeps form-attribute inputs counted", function(
 	assert.equal( v.numberOfInvalids(), 1, "Still counted while detached together with its form" );
 } );
 
+QUnit.test( "disabled, button and rule-less same-name inputs don't take the plain key", function( assert ) {
+	assert.expect( 5 );
+	var form = $( "#testFormNameArrayUnvalidatedFirst" ),
+		v = form.validate(),
+		keys = [],
+		key;
+
+	assert.ok( !v.form(), "Validated inputs are invalid" );
+	for ( key in v.errorMap ) {
+		keys.push( key );
+	}
+	assert.deepEqual( keys.sort(), [ "button_first", "disabled_first", "ruleless_first" ], "Errors are reported under the plain names" );
+	assert.equal( form.find( "label.error[for='disabled_first']" ).length, 1, "Field after a disabled sibling keeps the plain error label" );
+	assert.equal( form.find( "label.error[for='button_first']" ).length, 1, "Field after a same-name button keeps the plain error label" );
+	assert.equal( form.find( "label.error[for='ruleless_first']" ).length, 1, "Field after a rule-less sibling keeps the plain error label" );
+} );
+
 QUnit.test( "addMethod", function( assert ) {
 	assert.expect( 3 );
 	$.validator.addMethod( "hi", function( value ) {

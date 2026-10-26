@@ -1237,8 +1237,12 @@ $.extend( $.validator, {
 				return key;
 			}
 
+			// Only elements that elements() would validate compete for the
+			// plain name, so a disabled, button or rule-less element that
+			// merely precedes the validated field doesn't push it to "name-2"
+			first = this.validatableByName( name )[ 0 ];
+
 			owner = this.keyedElements[ "#" + name ];
-			first = this.findByName( name ).not( this.settings.ignore )[ 0 ];
 			if ( ( !owner || owner === element || owner.name !== name || !this.inDom( owner ) ) &&
 					( !first || first === element ) ) {
 
@@ -1299,6 +1303,20 @@ $.extend( $.validator, {
 				root = root.parentNode;
 			}
 			return root === element || $.contains( root, element );
+		},
+
+		// The same-name elements that elements() would validate: no buttons,
+		// nothing disabled or ignored, and only those with rules specified
+		validatableByName: function( name ) {
+			var validator = this;
+
+			return this.findByName( name )
+				.not( ":submit, :reset, :image, :disabled" )
+				.not( this.settings.ignore )
+				.filter( function() {
+					return ( !this.form || this.form === validator.currentForm ) &&
+						validator.objectLength( $( this ).rules() );
+				} );
 		},
 
 		findByName: function( name ) {
