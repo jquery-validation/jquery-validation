@@ -49,7 +49,7 @@ QUnit.test( "rules() - external", function( assert ) {
 } );
 
 QUnit.test( "rules() - external - complete form", function( assert ) {
-	assert.expect( 1 );
+	assert.expect( 2 );
 
 	var methods = $.extend( {}, $.validator.methods ),
 		messages = $.extend( {}, $.validator.messages ),
