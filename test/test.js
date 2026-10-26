@@ -100,6 +100,13 @@ $.mockjax( {
 } );
 
 $.mockjax( {
+	url: "proto-remote.php",
+	responseText: "\"taken\"",
+	responseStatus: 200,
+	responseTime: 1
+} );
+
+$.mockjax( {
 	url: "name-array.php",
 	response: function( settings ) {
 		this.responseText = /good/.test( settings.data[ "remote_item[]" ] ) ? "true" : "false";
@@ -866,6 +873,25 @@ QUnit.test( "a hidden companion of a checkbox is skipped even when nothing is ig
 
 	delete $.validator.methods.checkedBox;
 	delete $.validator.messages.checkedBox;
+} );
+
+QUnit.test( "remote validation of an input named __proto__ leaves Object.prototype alone", function( assert ) {
+	assert.expect( 3 );
+	var form = $( "#testFormProtoRemote" ),
+		v = form.validate(),
+		done = assert.async();
+
+	$( document ).ajaxStop( function() {
+		$( document ).unbind( "ajaxStop" );
+		assert.ok( !( "remote" in Object.prototype ), "Object.prototype has no 'remote' member" );
+		assert.ok( !( "remote" in Object ), "Object has no 'remote' member" );
+		assert.ok( Object.prototype.hasOwnProperty.call( v.settings.messages, "__proto__" ), "Message stash is an own entry of the messages map" );
+		delete Object.prototype.remote;
+		done();
+	} );
+
+	form.find( "input" ).val( "taken-name" );
+	v.form();
 } );
 
 QUnit.test( "addMethod", function( assert ) {

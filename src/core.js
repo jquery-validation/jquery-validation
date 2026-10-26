@@ -1867,13 +1867,23 @@ $.extend( $.validator, {
 				// Key the temporary message stash and the invalid map by the
 				// per-element key so same-name elements don't share them
 				key = this.uniqueName( element ),
+				messages = this.settings.messages,
 				validator, data, optionDataString;
 
-			if ( !this.settings.messages[ key ] ) {
-				this.settings.messages[ key ] = {};
+			// Only ever write to an own entry of the messages map: for a name
+			// like "__proto__" or "constructor" the plain lookup resolves to
+			// an inherited member, and assigning to it would pollute
+			// Object.prototype (or Object itself) for the whole page
+			if ( !Object.prototype.hasOwnProperty.call( messages, key ) ) {
+				Object.defineProperty( messages, key, {
+					value: {},
+					writable: true,
+					enumerable: true,
+					configurable: true
+				} );
 			}
-			previous.originalMessage = previous.originalMessage || this.settings.messages[ key ][ method ];
-			this.settings.messages[ key ][ method ] = previous.message;
+			previous.originalMessage = previous.originalMessage || messages[ key ][ method ];
+			messages[ key ][ method ] = previous.message;
 
 			param = typeof param === "string" && { url: param } || param;
 			optionDataString = $.param( $.extend( { data: value }, param.data ) );
@@ -1897,7 +1907,7 @@ $.extend( $.validator, {
 					var valid = response === true || response === "true",
 						errors, message, submitted;
 
-					validator.settings.messages[ key ][ method ] = previous.originalMessage;
+					messages[ key ][ method ] = previous.originalMessage;
 					if ( valid ) {
 						submitted = validator.formSubmitted;
 						validator.toHide = validator.errorsFor( element );
