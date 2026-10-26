@@ -796,6 +796,7 @@ $.extend( $.validator, {
 
 			return elements.filter( function() {
 				var name = this.name || $( this ).attr( "name" ); // For contenteditable
+				var claimed;
 				var isContentEditable = typeof $( this ).attr( "contenteditable" ) !== "undefined" && $( this ).attr( "contenteditable" ) !== "false";
 
 				if ( !name && validator.settings.debug && window.console ) {
@@ -813,11 +814,17 @@ $.extend( $.validator, {
 					return false;
 				}
 
-				// Checkbox/radio groups stay first-only; other same-name
-				// fields (including name[]) are all validated. The cache
-				// prefixes its keys so names like "__proto__" don't match
-				// inherited Object.prototype members
-				if ( rulesCache[ "#" + name ] && validator.checkable( this ) ) {
+				// A name claimed by a checkbox/radio group is a single
+				// validation target: every other element of that name is
+				// skipped, as before, so a companion input (e.g. a hidden
+				// field or an "Other" text box) never inherits the group's
+				// name-keyed rules. Other names let later non-checkable
+				// duplicates (e.g. name[]) through, but a checkable sharing
+				// such a name is still skipped. The cache prefixes its keys
+				// so names like "__proto__" don't match inherited
+				// Object.prototype members
+				claimed = rulesCache[ "#" + name ];
+				if ( claimed && ( claimed === "checkable" || validator.checkable( this ) ) ) {
 					return false;
 				}
 
@@ -826,7 +833,7 @@ $.extend( $.validator, {
 					return false;
 				}
 
-				rulesCache[ "#" + name ] = true;
+				rulesCache[ "#" + name ] = validator.checkable( this ) ? "checkable" : "element";
 				return true;
 			} );
 		},
@@ -1241,6 +1248,12 @@ $.extend( $.validator, {
 			// plain name, so a disabled, button or rule-less element that
 			// merely precedes the validated field doesn't push it to "name-2"
 			first = this.validatableByName( name )[ 0 ];
+			if ( first && this.checkable( first ) ) {
+
+				// The name belongs to a checkbox/radio group; a companion of
+				// another type keeps sharing the group's plain key, as before
+				return name;
+			}
 
 			owner = this.keyedElements[ "#" + name ];
 			if ( ( !owner || owner === element || owner.name !== name || !this.inDom( owner ) ) &&

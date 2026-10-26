@@ -825,6 +825,49 @@ QUnit.test( "disabled, button and rule-less same-name inputs don't take the plai
 	assert.equal( form.find( "label.error[for='ruleless_first']" ).length, 1, "Field after a rule-less sibling keeps the plain error label" );
 } );
 
+QUnit.test( "a text companion of a checkbox group is not validated with the group's rules", function( assert ) {
+	assert.expect( 6 );
+	var form = $( "#testFormCheckableCompanion" ),
+		v = form.validate( {
+			rules: {
+				"interests[]": "required"
+			}
+		} );
+
+	assert.equal( v.elements().length, 1, "Only the checkbox group is validated" );
+	assert.ok( !v.form(), "Invalid while nothing is checked" );
+	assert.equal( v.numberOfInvalids(), 1, "Only the group is counted" );
+	assert.ok( !$( "#interestsOther" ).hasClass( "error" ), "Companion text input is not marked invalid" );
+
+	$( "#interestsFirst" ).prop( "checked", true );
+	assert.ok( v.form(), "Valid once a box is checked, with the companion still empty" );
+	assert.equal( v.numberOfInvalids(), 0, "Nothing is counted as invalid" );
+} );
+
+QUnit.test( "a hidden companion of a checkbox is skipped even when nothing is ignored", function( assert ) {
+	assert.expect( 4 );
+	$.validator.addMethod( "checkedBox", function( value, element ) {
+		return element.checked;
+	}, "Tick the box" );
+	var form = $( "#testFormCheckableHiddenCompanion" ),
+		v = form.validate( {
+			ignore: [],
+			rules: {
+				terms: "checkedBox"
+			}
+		} );
+
+	assert.equal( v.elements().length, 1, "Only the checkbox is validated" );
+	assert.ok( !v.form(), "Invalid while the box is unchecked" );
+
+	$( "#termsBox" ).prop( "checked", true );
+	assert.ok( v.form(), "Valid once the box is checked" );
+	assert.ok( !$( "#termsHidden" ).hasClass( "error" ), "Hidden companion never fails the checkbox rule" );
+
+	delete $.validator.methods.checkedBox;
+	delete $.validator.messages.checkedBox;
+} );
+
 QUnit.test( "addMethod", function( assert ) {
 	assert.expect( 3 );
 	$.validator.addMethod( "hi", function( value ) {
